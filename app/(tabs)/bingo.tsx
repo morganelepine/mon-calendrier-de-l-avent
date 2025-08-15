@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Animated, ImageBackground, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
+import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { bingo } from "@/data/bingo_data";
 import cld from "@/config/cloudinaryConfig";
 
@@ -48,7 +48,7 @@ export default function BingoScreen() {
             resizeMode="cover"
             style={styles.imageBackground}
         >
-            <SafeAreaView style={styles.safeArea}>
+            <CustomSafeAreaView>
                 <LinearGradient
                     colors={["rgba(11, 46, 37, 0.8)", "rgba(0, 0, 0, 0)"]}
                     style={styles.gradientOverlay}
@@ -66,7 +66,7 @@ export default function BingoScreen() {
                         />
                     ))}
                 </View>
-            </SafeAreaView>
+            </CustomSafeAreaView>
         </ImageBackground>
     );
 }
@@ -81,9 +81,6 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         width: "100%",
         height: 300,
-    },
-    safeArea: {
-        flex: 1,
     },
     bingoContainer: {
         flex: 1,

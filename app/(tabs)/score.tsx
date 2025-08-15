@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { loadScores, getTotalScore } from "@/services/score.service";
 import { RulesButton } from "@/components/score/RulesButton";
 import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
+import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { Score } from "@/interfaces/scoreInterfaces";
 import cld from "@/config/cloudinaryConfig";
 
@@ -40,7 +40,7 @@ export default function ScoreScreen() {
             resizeMode="cover"
             style={styles.imageBackground}
         >
-            <SafeAreaView style={styles.safeArea}>
+            <CustomSafeAreaView>
                 <RulesButton setModalVisible={setModalVisible} />
 
                 <TotalScore score={score} />
@@ -59,7 +59,7 @@ export default function ScoreScreen() {
                         setModalVisible={setModalVisible}
                     />
                 </ScrollView>
-            </SafeAreaView>
+            </CustomSafeAreaView>
         </ImageBackground>
     );
 }
@@ -69,13 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-    },
-    safeArea: {
-        flex: 1,
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
     },
     container: {
         flex: 1,

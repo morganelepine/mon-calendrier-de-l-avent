@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet, ImageBackground, View } from "react-native";
-import { EdgeInsets, SafeAreaView } from "react-native-safe-area-context";
+import { EdgeInsets } from "react-native-safe-area-context";
 import { daysArray } from "@/data/days_data";
 import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
+import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
 import cld from "@/config/cloudinaryConfig";
@@ -52,7 +53,7 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
         >
             <Snowfall count={isChristmas ? 500 : 100} />
 
-            <SafeAreaView style={styles.safeArea}>
+            <CustomSafeAreaView>
                 <View
                     style={{
                         position: "absolute",
@@ -95,7 +96,7 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
                         </ThemedText>
                     )}
                 </View>
-            </SafeAreaView>
+            </CustomSafeAreaView>
         </ImageBackground>
     );
 };
@@ -105,12 +106,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-    },
-    safeArea: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
     },
     textContainer: {
         marginBottom: 250,
