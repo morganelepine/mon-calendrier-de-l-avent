@@ -9,17 +9,18 @@ import { ScoreType } from "@/enums/enums";
 interface DaysProps {
     days: Day[];
     setDays: (days: Day[]) => void;
+    goToDay: (day: Day) => void;
 }
 
-export const Days: React.FC<DaysProps> = ({ days, setDays }) => {
-    const [dayModalVisible, setDayModalVisible] = useState<number | null>(null);
+export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
+    const [dayModal, setDayModal] = useState<number | null>(null);
+    const isDecember = new Date().getMonth() === 11;
 
     const handleDayOpening = async (dayNumber: number) => {
         const todayDay = new Date().getDate();
-        const todayMonth = new Date().getMonth();
 
         const updatedDays = days.map((day) => {
-            return todayMonth === 11 &&
+            return isDecember &&
                 day.dayNumber === dayNumber &&
                 dayNumber <= todayDay &&
                 !day.isOpen
@@ -28,13 +29,13 @@ export const Days: React.FC<DaysProps> = ({ days, setDays }) => {
         });
         setDays(updatedDays);
 
-        if (todayMonth === 11 && dayNumber <= todayDay) {
-            setDayModalVisible(dayNumber);
+        if (isDecember && dayNumber <= todayDay) {
+            setDayModal(dayNumber);
         } else {
             ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
         }
 
-        if (todayMonth === 11 && dayNumber === todayDay) {
+        if (isDecember && dayNumber === todayDay) {
             await updateScores(dayNumber, ScoreType.DayOpening);
         }
     };
@@ -46,8 +47,9 @@ export const Days: React.FC<DaysProps> = ({ days, setDays }) => {
                     key={day.dayNumber}
                     day={day}
                     handleDayOpening={handleDayOpening}
-                    modalVisible={dayModalVisible === day.dayNumber}
-                    setModalVisible={() => setDayModalVisible(null)}
+                    modalVisible={dayModal === day.dayNumber}
+                    setModalVisible={() => setDayModal(null)}
+                    goToDay={goToDay}
                 />
             ))}
         </View>

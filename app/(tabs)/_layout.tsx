@@ -87,18 +87,6 @@ export default function TabLayout() {
                     ),
                 }}
             />
-            <Tabs.Screen
-                name="day"
-                options={{
-                    href: null,
-                }}
-            />
-            <Tabs.Screen
-                name="day25"
-                options={{
-                    href: null,
-                }}
-            />
         </Tabs>
     );
 }

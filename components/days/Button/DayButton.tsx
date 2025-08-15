@@ -9,6 +9,7 @@ interface DayButtonProps {
     handleDayOpening: (dayNumber: number) => void;
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
+    goToDay: (day: Day) => void;
 }
 
 export const DayButton: React.FC<DayButtonProps> = ({
@@ -16,6 +17,7 @@ export const DayButton: React.FC<DayButtonProps> = ({
     handleDayOpening,
     modalVisible,
     setModalVisible,
+    goToDay,
 }) => {
     const dayIsOpen = day.isOpen;
 
@@ -40,6 +42,7 @@ export const DayButton: React.FC<DayButtonProps> = ({
                 day={day}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+                goToDay={goToDay}
             />
         </>
     );

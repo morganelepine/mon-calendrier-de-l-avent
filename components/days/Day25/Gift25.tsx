@@ -39,7 +39,7 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
     const openGift = () => {
         if (gift.win) {
             router.push({
-                pathname: "/day25",
+                pathname: "/calendar/day25",
             });
         } else {
             setModalVisible(true);

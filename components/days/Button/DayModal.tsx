@@ -1,12 +1,9 @@
-import { useCallback } from "react";
 import {
     StyleSheet,
     View,
     Pressable,
     TouchableWithoutFeedback,
 } from "react-native";
-import { router } from "expo-router";
-import { useFocusEffect } from "@react-navigation/native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { Colors } from "@/constants/Colors";
@@ -17,31 +14,18 @@ interface DayModalProps {
     day: Day;
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
+    goToDay: (day: Day) => void;
 }
 
 export const DayModal: React.FC<DayModalProps> = ({
     day,
     modalVisible,
     setModalVisible,
+    goToDay,
 }) => {
-    const openDay = () => {
-        router.push({
-            pathname: "/day",
-            params: { dayId: day.dayNumber },
-        });
-    };
-
     const onClose = () => {
         setModalVisible(false);
     };
-
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                setModalVisible(false);
-            };
-        }, [])
-    );
 
     return (
         <CustomModal visible={modalVisible} onRequestClose={onClose}>
@@ -67,7 +51,10 @@ export const DayModal: React.FC<DayModalProps> = ({
                                 </ThemedText>
                             ) : null}
 
-                            <Pressable onPress={openDay} style={styles.button}>
+                            <Pressable
+                                onPress={() => goToDay(day)}
+                                style={styles.button}
+                            >
                                 <Ionicons
                                     name={"arrow-forward-outline"}
                                     size={25}
