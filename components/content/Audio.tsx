@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Pressable, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Audio, AVPlaybackStatus } from "expo-av";
+import { useAudioPlayer } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
@@ -11,38 +11,21 @@ interface AudioPlayerProps {
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
-    const [sound, setSound] = useState<Audio.Sound | null>(null);
-    const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
+    const audioSource = music ? { uri: music } : null;
+    const player = useAudioPlayer(audioSource);
+
     const [isPlaying, setIsPlaying] = useState(false);
+    const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
 
-    const playSound = async () => {
-        if (!sound) {
-            const { sound: newSound } = await Audio.Sound.createAsync({
-                uri: music,
-            });
-            setSound(newSound);
-            await newSound.playAsync();
-            setIsPlaying(true);
-        } else {
-            await sound.playAsync();
-            setIsPlaying(true);
-        }
-    };
+    const togglePlayPause = () => {
+        if (!player) return;
 
-    const togglePlayPause = async () => {
-        if (sound) {
-            const status: AVPlaybackStatus = await sound.getStatusAsync();
-            if (status.isLoaded) {
-                if (status.isPlaying) {
-                    await sound.pauseAsync();
-                    setIsPlaying(false);
-                } else {
-                    await sound.playAsync();
-                    setIsPlaying(true);
-                }
-            }
+        if (isPlaying) {
+            player.pause();
+            setIsPlaying(false);
         } else {
-            playSound();
+            player.play();
+            setIsPlaying(true);
         }
     };
 
@@ -59,16 +42,16 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
     }, []);
 
     useEffect(() => {
-        if (playMusic === "yes") {
-            playSound();
+        if (playMusic === "yes" && player) {
+            player.play();
+            setIsPlaying(true);
         }
-
         return () => {
-            if (sound) {
-                sound.unloadAsync();
+            if (player) {
+                player.remove();
             }
         };
-    }, [playMusic]);
+    }, [playMusic, player]);
 
     return (
         <Pressable onPress={togglePlayPause} style={styles.button}>
