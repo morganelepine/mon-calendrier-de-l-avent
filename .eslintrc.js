@@ -7,12 +7,7 @@ module.exports = {
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: { project: ["./tsconfig.json"] },
-    ignorePatterns: [
-        "*/babel.config.js",
-        "*.json",
-        "*/.eslintrc.js",
-        "*/jest.setup.js",
-    ],
+    ignorePatterns: ["*/babel.config.js", "*.json", "*/.eslintrc.js"],
     plugins: ["@typescript-eslint"],
     rules: {
         "consistent-return": 2,
