@@ -1,8 +1,7 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Bingo } from "@/interfaces/bingoInterface";
-import cld from "@/config/cloudinaryConfig";
-import { AdvancedImage } from "cloudinary-react-native";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface BingoCellProps {
     cell: Bingo;
@@ -25,8 +24,8 @@ export const BingoCell: React.FC<BingoCellProps> = ({
             ]}
             onPress={() => onClick(cell.id)}
         >
-            <AdvancedImage
-                cldImg={cld.image(cell.image)}
+            <Image
+                source={{ uri: getCloudinaryImageUrl(cell.image) }}
                 style={[
                     styles.itemBackground,
                     {

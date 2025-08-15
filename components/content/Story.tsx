@@ -7,7 +7,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { ContentButton } from "@/components/content/ContentButton";
 import { Content } from "@/interfaces/contentInterface";
 import { Colors } from "@/constants/Colors";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface StoryProps {
     content: Content;
@@ -16,7 +16,7 @@ interface StoryProps {
 
 export const Story: React.FC<StoryProps> = ({ content, dayId }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const backgroundImage = cld.image("s-instruire_xybqas");
+    const backgroundImage = getCloudinaryImageUrl("s-instruire_xybqas");
 
     return (
         <>

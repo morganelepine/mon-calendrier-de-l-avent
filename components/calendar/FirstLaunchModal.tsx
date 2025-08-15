@@ -9,7 +9,7 @@ import { MusicPreferences } from "@/components/calendar/MusicPreferences";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface FirstLaunchModalProps {
     modalVisible: boolean;
@@ -25,7 +25,7 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
     insets,
 }) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const backgroundImage = cld.image("Fond_1_s84lam");
+    const backgroundImage = getCloudinaryImageUrl("Fond_1_s84lam");
 
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
 
@@ -59,7 +59,7 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
             }}
         >
             <ImageBackground
-                source={{ uri: backgroundImage.toURL() }}
+                source={{ uri: backgroundImage }}
                 resizeMode="cover"
                 style={styles.imageBackground}
             >

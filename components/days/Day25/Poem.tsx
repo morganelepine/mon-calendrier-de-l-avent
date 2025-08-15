@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleSheet, Pressable, View } from "react-native";
+import { StyleSheet, Pressable, View, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CloseModalButton } from "@/components/utils/buttons/CloseModalButton";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export const Poem = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -24,8 +24,10 @@ export const Poem = () => {
                             { marginRight: 10, marginBottom: 15 },
                         ]}
                     >
-                        <AdvancedImage
-                            cldImg={cld.image("poeme_bjmaqy")}
+                        <Image
+                            source={{
+                                uri: getCloudinaryImageUrl("poeme_bjmaqy"),
+                            }}
                             resizeMode="cover"
                             style={styles.thumbnail}
                         />
@@ -129,8 +131,10 @@ export const Poem = () => {
 
                     <ExternalLink href={"https://bit.ly/poeme-arthur"}>
                         <View style={styles.thumbnail}>
-                            <AdvancedImage
-                                cldImg={cld.image("poeme_bjmaqy")}
+                            <Image
+                                source={{
+                                    uri: getCloudinaryImageUrl("poeme_bjmaqy"),
+                                }}
                                 resizeMode="cover"
                                 style={styles.thumbnail}
                             />

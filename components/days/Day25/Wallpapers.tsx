@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, Pressable, View, Dimensions } from "react-native";
+import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { wallpapers } from "@/data/wallpapers_data";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export const Wallpapers = () => {
     const { width, height } = Dimensions.get("window");
@@ -17,8 +17,10 @@ export const Wallpapers = () => {
                         key={wallpaper.id}
                         onPress={() => setSelectedImage(wallpaper.image)}
                     >
-                        <AdvancedImage
-                            cldImg={cld.image(wallpaper.image)}
+                        <Image
+                            source={{
+                                uri: getCloudinaryImageUrl(wallpaper.image),
+                            }}
                             resizeMode="cover"
                             style={styles.thumbnail}
                         />
@@ -33,8 +35,10 @@ export const Wallpapers = () => {
                 <View style={styles.modalContainer}>
                     <Pressable onPress={() => setSelectedImage(null)}>
                         {selectedImage && (
-                            <AdvancedImage
-                                cldImg={cld.image(selectedImage)}
+                            <Image
+                                source={{
+                                    uri: getCloudinaryImageUrl(selectedImage),
+                                }}
                                 resizeMode="contain"
                                 style={{
                                     height: height,

@@ -9,7 +9,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { ContentButton } from "@/components/content/ContentButton";
 import { Video } from "@/components/utils/custom/Video";
 import { Content } from "@/interfaces/contentInterface";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface AnecdoteProps {
     content: Content;
@@ -18,7 +18,7 @@ interface AnecdoteProps {
 
 export const Anecdote: React.FC<AnecdoteProps> = ({ content, dayId }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const backgroundImage = cld.image("kiwi1_r7kihz");
+    const backgroundImage = getCloudinaryImageUrl("kiwi1_r7kihz");
 
     return (
         <>

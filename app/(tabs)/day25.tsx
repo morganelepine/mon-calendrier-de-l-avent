@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Wallpapers } from "@/components/days/Day25/Wallpapers";
 import { FullStory } from "@/components/days/Day25/FullStory";
@@ -9,8 +9,8 @@ import { RateButton } from "@/components/utils/buttons/RateButton";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Colors } from "@/constants/Colors";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function Day25Screen() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -25,8 +25,10 @@ export default function Day25Screen() {
                 dark: Colors.darkGreen,
             }}
             headerImage={
-                <AdvancedImage
-                    cldImg={cld.image("sapin-rouge_idzwwr")}
+                <Image
+                    source={{
+                        uri: getCloudinaryImageUrl("sapin-rouge_idzwwr"),
+                    }}
                     style={styles.headerImage}
                     resizeMode="cover"
                 />
@@ -73,8 +75,12 @@ export default function Day25Screen() {
                             style={{ marginRight: 10, marginBottom: 15 }}
                         >
                             <View style={styles.thumbnail}>
-                                <AdvancedImage
-                                    cldImg={cld.image("carte-zoom_jyxjm3")}
+                                <Image
+                                    source={{
+                                        uri: getCloudinaryImageUrl(
+                                            "carte-zoom_jyxjm3"
+                                        ),
+                                    }}
                                     resizeMode="cover"
                                     style={styles.thumbnail}
                                 />
@@ -154,8 +160,12 @@ export default function Day25Screen() {
                             style={styles.image}
                         >
                             <View style={styles.thumbnail}>
-                                <AdvancedImage
-                                    cldImg={cld.image("bingo_blanc_rvflsz")}
+                                <Image
+                                    source={{
+                                        uri: getCloudinaryImageUrl(
+                                            "bingo_blanc_rvflsz"
+                                        ),
+                                    }}
                                     resizeMode="cover"
                                     style={styles.thumbnail}
                                 />

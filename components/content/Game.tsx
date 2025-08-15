@@ -11,7 +11,7 @@ import { classifyGames } from "@/services/content.service";
 import { updateScore } from "@/services/score.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface GameProps {
     games: Content[];
@@ -33,7 +33,7 @@ export const Game: React.FC<GameProps> = ({ games, dayId }) => {
                 games={games}
                 setModalVisible={setModalVisible}
                 dayId={dayId}
-                backgroundImage={cld.image("christmas_a5bsoi")}
+                backgroundImage={getCloudinaryImageUrl("christmas_a5bsoi")}
             />
             <GameModal
                 isVisible={modalVisible}

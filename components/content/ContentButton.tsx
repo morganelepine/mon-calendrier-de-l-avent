@@ -4,7 +4,6 @@ import { updateScores } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
-import { CloudinaryImage } from "@cloudinary/url-gen";
 
 interface ContentButtonProps {
     content?: Content;
@@ -12,7 +11,7 @@ interface ContentButtonProps {
     games?: Content[];
     setModalVisible: (visible: boolean) => void;
     dayId: number;
-    backgroundImage: CloudinaryImage;
+    backgroundImage: string;
 }
 
 export const ContentButton: React.FC<ContentButtonProps> = ({
@@ -40,7 +39,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
 
     return (
         <ImageBackground
-            source={{ uri: backgroundImage.toURL() }}
+            source={{ uri: backgroundImage }}
             resizeMode="cover"
             style={styles.backgroundImage}
         >

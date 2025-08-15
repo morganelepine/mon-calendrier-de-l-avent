@@ -21,40 +21,49 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
 
     return (
         <View style={styles.container}>
-            <ThemedText style={styles.score}>
-                <Text style={styles.bold}>{score}</Text>{" "}
-                {score > 1 ? "points" : "point"}
-            </ThemedText>
-
-            {score >= minScoreToWin ? (
+            {score > 0 ? (
                 <>
-                    <ThemedText>Objectif atteint 🥳</ThemedText>
-                    <ThemedText
-                        style={{
-                            marginBottom: 30,
-                            fontFamily: "PoppinsItalic",
-                            fontSize: 12,
-                        }}
-                    >
-                        Rendez-vous le 25 décembre pour la surprise !
+                    <ThemedText style={styles.score}>
+                        <Text style={styles.bold}>{score}</Text>{" "}
+                        {score > 1 ? "points" : "point"}
                     </ThemedText>
+
+                    {score >= minScoreToWin ? (
+                        <>
+                            <ThemedText>Objectif atteint 🥳</ThemedText>
+                            <ThemedText
+                                style={{
+                                    marginBottom: 30,
+                                    fontFamily: "PoppinsItalic",
+                                    fontSize: 12,
+                                }}
+                            >
+                                Rendez-vous le 25 décembre pour la surprise !
+                            </ThemedText>
+                        </>
+                    ) : (
+                        <>
+                            <View style={styles.pointsContainer}>
+                                <ThemedText style={{ fontSize: 12 }}>
+                                    Objectif : {minScoreToWin} points
+                                </ThemedText>
+                            </View>
+                            <View style={styles.barContainer}>
+                                <Animated.View
+                                    style={[styles.completion, animatedStyle]}
+                                />
+                            </View>
+                            <ThemedText style={{ marginBottom: 20 }}>
+                                {Math.round(progress)}% de l'objectif atteint 🥳
+                            </ThemedText>
+                        </>
+                    )}
                 </>
             ) : (
-                <>
-                    <View style={styles.pointsContainer}>
-                        <ThemedText style={{ fontSize: 12 }}>
-                            Objectif : {minScoreToWin} points
-                        </ThemedText>
-                    </View>
-                    <View style={styles.barContainer}>
-                        <Animated.View
-                            style={[styles.completion, animatedStyle]}
-                        />
-                    </View>
-                    <ThemedText style={{ marginBottom: 20 }}>
-                        {Math.round(progress)}% de l'objectif atteint 🥳
-                    </ThemedText>
-                </>
+                <ThemedText style={{ marginBottom: 20, marginTop: 10 }}>
+                    Rendez-vous le 1er décembre pour commencer à gagner des
+                    points !
+                </ThemedText>
             )}
         </View>
     );

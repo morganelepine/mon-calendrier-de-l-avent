@@ -5,7 +5,7 @@ import { BingoCell } from "@/components/bingo/BingoCell";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { bingo } from "@/data/bingo_data";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function BingoScreen() {
     const shuffled = bingo.sort(() => Math.random() - 0.5);
@@ -44,7 +44,9 @@ export default function BingoScreen() {
 
     return (
         <ImageBackground
-            source={{ uri: cld.image("sapin_fnbne4").toURL() }}
+            source={{
+                uri: getCloudinaryImageUrl("sapin_fnbne4"),
+            }}
             resizeMode="cover"
             style={styles.imageBackground}
         >

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Video } from "@/components/utils/custom/Video";
@@ -6,8 +6,7 @@ import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Content } from "@/interfaces/contentInterface";
 import { Collapsible } from "@/components/utils/Collapsible";
 import { ExternalLink } from "@/components/utils/ExternalLink";
-import cld from "@/config/cloudinaryConfig";
-import { AdvancedImage } from "cloudinary-react-native";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface ListProps {
     idea: Content;
@@ -73,8 +72,12 @@ export const List: React.FC<ListProps> = ({ idea }) => {
 
                         {content.image ? (
                             <View style={styles.imageContainer}>
-                                <AdvancedImage
-                                    cldImg={cld.image(content.image)}
+                                <Image
+                                    source={{
+                                        uri: getCloudinaryImageUrl(
+                                            content.image
+                                        ),
+                                    }}
                                     style={styles.image}
                                 />
                                 <ExternalLink

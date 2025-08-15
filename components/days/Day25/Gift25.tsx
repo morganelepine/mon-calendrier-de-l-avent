@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Image } from "react-native";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -9,8 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { WrongGiftModal } from "@/components/days/Day25/WrongGiftModal";
 import { Gift } from "@/interfaces/giftInterface";
-import cld from "@/config/cloudinaryConfig";
-import { AdvancedImage } from "cloudinary-react-native";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface GiftProps {
     gift: Gift;
@@ -51,8 +50,8 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
         <>
             <Pressable style={styles.cell} onPress={openGift}>
                 <Animated.View style={[animatedStyle]}>
-                    <AdvancedImage
-                        cldImg={cld.image(gift.image)}
+                    <Image
+                        source={{ uri: getCloudinaryImageUrl(gift.image) }}
                         style={styles.itemBackground}
                         resizeMode="contain"
                     />

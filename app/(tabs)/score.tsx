@@ -7,11 +7,11 @@ import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { Score } from "@/interfaces/scoreInterfaces";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function ScoreScreen() {
     const scrollViewRef = useRef<ScrollView>(null);
-    const backgroundImage = cld.image("Fond_1_s84lam");
+    const backgroundImage = getCloudinaryImageUrl("Fond_1_s84lam");
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -36,7 +36,7 @@ export default function ScoreScreen() {
 
     return (
         <ImageBackground
-            source={{ uri: backgroundImage.toURL() }}
+            source={{ uri: backgroundImage }}
             resizeMode="cover"
             style={styles.imageBackground}
         >

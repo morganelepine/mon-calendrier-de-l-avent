@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         overflow: "hidden",
         backgroundColor: "transparent",
-        elevation: 5,
     },
     content: {
         paddingHorizontal: 20,

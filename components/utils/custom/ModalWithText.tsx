@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
@@ -7,14 +7,12 @@ import { ContentType } from "@/enums/enums";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CloseModalButton } from "@/components/utils/buttons/CloseModalButton";
-import { AdvancedImage } from "cloudinary-react-native";
-import { CloudinaryImage } from "@cloudinary/url-gen";
 
 interface ModalWithTextProps {
     isVisible: boolean;
     onClose: () => void;
     contentType: string;
-    backgroundImage: CloudinaryImage;
+    backgroundImage: string;
     children?: React.ReactNode;
 }
 
@@ -63,8 +61,8 @@ export const ModalWithText: React.FC<ModalWithTextProps> = ({
                     dark: Colors.darkBlue,
                 }}
                 headerImage={
-                    <AdvancedImage
-                        cldImg={backgroundImage}
+                    <Image
+                        source={{ uri: backgroundImage }}
                         style={styles.headerImage}
                         resizeMode="cover"
                     />

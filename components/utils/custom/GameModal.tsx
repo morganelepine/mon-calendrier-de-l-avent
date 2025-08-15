@@ -7,7 +7,7 @@ import { CloseModalButton } from "@/components/utils/buttons/CloseModalButton";
 import { Colors } from "@/constants/Colors";
 import { ContentType } from "@/enums/enums";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface GameModalProps {
     isVisible: boolean;
@@ -23,7 +23,7 @@ export const GameModal: React.FC<GameModalProps> = ({
     children,
 }) => {
     const insets = useSafeAreaInsets();
-    const backgroundImage = cld.image("ofcjdqqjsl6qecpcn8xh");
+    const backgroundImage = getCloudinaryImageUrl("ofcjdqqjsl6qecpcn8xh");
 
     const getTitle = () => {
         switch (contentType) {
@@ -39,7 +39,7 @@ export const GameModal: React.FC<GameModalProps> = ({
     return (
         <CustomModal visible={isVisible} onRequestClose={onClose}>
             <ImageBackground
-                source={{ uri: backgroundImage.toURL() }}
+                source={{ uri: backgroundImage }}
                 resizeMode="cover"
                 style={styles.imageBackground}
             >

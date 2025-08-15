@@ -1,11 +1,10 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Video } from "@/components/utils/custom/Video";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 import { GameType } from "@/enums/enums";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface QuizExplanationProps {
     games: Content[];
@@ -50,8 +49,10 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
 
                 {currentGame.content5 === GameType.QuizNoel &&
                 currentGame.image ? (
-                    <AdvancedImage
-                        cldImg={cld.image(currentGame.image)}
+                    <Image
+                        source={{
+                            uri: getCloudinaryImageUrl(currentGame.image),
+                        }}
                         style={styles.image}
                     />
                 ) : null}

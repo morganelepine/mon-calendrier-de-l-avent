@@ -7,7 +7,7 @@ import { Snowfall } from "@/components/utils/Snow";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface HomeProps {
     insets: EdgeInsets;
@@ -38,8 +38,8 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
     const day = daysMap.get(today.getDate());
 
     const backgroundImage = day
-        ? cld.image(day?.background)
-        : cld.image("11_pfqcwp");
+        ? getCloudinaryImageUrl(day?.background)
+        : getCloudinaryImageUrl("11_pfqcwp");
 
     const music = day
         ? day?.music
@@ -47,7 +47,7 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
 
     return (
         <ImageBackground
-            source={{ uri: backgroundImage.toURL() }}
+            source={{ uri: backgroundImage }}
             style={styles.background}
             resizeMode="cover"
         >

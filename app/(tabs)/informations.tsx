@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "expo-router";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
@@ -13,8 +13,7 @@ import { BingoRules } from "@/components/bingo/BingoRules";
 import { Rules } from "@/components/score/Rules";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function InformationsScreen() {
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
@@ -56,8 +55,8 @@ export default function InformationsScreen() {
                 dark: Colors.darkGreen,
             }}
             headerImage={
-                <AdvancedImage
-                    cldImg={cld.image("christmas_gssam3")}
+                <Image
+                    source={{ uri: getCloudinaryImageUrl("christmas_gssam3") }}
                     style={styles.headerImage}
                     resizeMode="cover"
                 />

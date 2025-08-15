@@ -4,7 +4,7 @@ import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ModalWithText } from "@/components/utils/custom/ModalWithText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { storyData } from "@/data/SheetToJSON.Story";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Colors } from "@/constants/Colors";
 
 interface FullStoryProps {
@@ -21,7 +21,7 @@ export const FullStory: React.FC<FullStoryProps> = ({
             isVisible={modalVisible}
             onClose={() => setModalVisible(false)}
             contentType={"story"}
-            backgroundImage={cld.image("s-instruire_xybqas")}
+            backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
         >
             <CustomScrollView>
                 {storyData.map((story) => (

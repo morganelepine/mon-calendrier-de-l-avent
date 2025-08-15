@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         justifyContent: "flex-start",
-        paddingTop: 40,
+        paddingTop: 55,
         paddingHorizontal: 20,
         width: "100%",
     },

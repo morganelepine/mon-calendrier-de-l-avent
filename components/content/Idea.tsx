@@ -9,8 +9,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType, IdeaType } from "@/enums/enums";
 import { formatImage } from "@/services/image.service";
-import { CloudinaryImage } from "@cloudinary/url-gen";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface IdeaProps {
     ideas: Content[];
@@ -20,9 +19,8 @@ interface IdeaProps {
 export const Idea: React.FC<IdeaProps> = ({ ideas, dayId }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-    const backgroundImage = cld.image("se-regaler_mnonwh"); // se-divertir_xvdksq
-    const [modalBackground, setModalBackground] =
-        useState<CloudinaryImage>(backgroundImage);
+    const backgroundImage = getCloudinaryImageUrl("se-regaler_mnonwh"); // se-divertir_xvdksq
+    const [modalBackground, setModalBackground] = useState(backgroundImage);
 
     const [imageDimensions, setImageDimensions] = useState<{
         [key: string]: { width: number; height: number };
@@ -31,8 +29,8 @@ export const Idea: React.FC<IdeaProps> = ({ ideas, dayId }) => {
     const getmodalImage = (idea: Content) => {
         if (idea.content5 === IdeaType.Recipe) {
             const imageSource = idea.image
-                ? cld.image(idea.image)
-                : cld.image("se-divertir_xvdksq");
+                ? getCloudinaryImageUrl(idea.image)
+                : getCloudinaryImageUrl("se-divertir_xvdksq");
 
             setModalBackground(imageSource);
         } else {

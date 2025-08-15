@@ -1,5 +1,5 @@
 import { Dimensions, Image } from "react-native";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export const formatImage = (
     day: number,
@@ -13,7 +13,7 @@ export const formatImage = (
 ): void => {
     const screenWidth = Dimensions.get("window").width;
 
-    const imageUrl = cld.image(image).toURL();
+    const imageUrl = getCloudinaryImageUrl(image ?? "");
 
     Image.getSize(imageUrl, (width, height) => {
         const ratio = Math.min(screenWidth / width, maxHeight / height);

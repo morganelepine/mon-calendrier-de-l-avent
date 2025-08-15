@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, Pressable, View, Dimensions } from "react-native";
+import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
-import { AdvancedImage } from "cloudinary-react-native";
-import cld from "@/config/cloudinaryConfig";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface ImageProps {
     image: string;
@@ -16,8 +15,8 @@ export const Image: React.FC<ImageProps> = ({ image }) => {
         <>
             <View style={styles.gallery}>
                 <Pressable onPress={() => setSelectedImage(image)}>
-                    <AdvancedImage
-                        cldImg={cld.image(image)}
+                    <Image
+                        source={{ uri: getCloudinaryImageUrl(image) }}
                         resizeMode="cover"
                         style={styles.thumbnail}
                     />
@@ -31,8 +30,10 @@ export const Image: React.FC<ImageProps> = ({ image }) => {
                 <View style={styles.modalContainer}>
                     <Pressable onPress={() => setSelectedImage(null)}>
                         {selectedImage && (
-                            <AdvancedImage
-                                cldImg={cld.image(selectedImage)}
+                            <Image
+                                source={{
+                                    uri: getCloudinaryImageUrl(selectedImage),
+                                }}
                                 resizeMode="contain"
                                 style={{
                                     height: height,
