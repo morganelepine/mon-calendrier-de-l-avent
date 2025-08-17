@@ -8,7 +8,11 @@ interface CustomSafeAreaViewProps {
 export const CustomSafeAreaView: React.FC<CustomSafeAreaViewProps> = ({
     children,
 }) => {
-    return <SafeAreaView style={styles.safeAreaView}>{children}</SafeAreaView>;
+    return (
+        <SafeAreaView edges={["top"]} style={styles.safeAreaView}>
+            {children}
+        </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({

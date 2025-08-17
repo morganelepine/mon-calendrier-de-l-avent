@@ -47,6 +47,7 @@ export default function CalendarScreen() {
 
     return (
         <SafeAreaView
+            edges={["top"]}
             style={{
                 flex: 1,
             }}

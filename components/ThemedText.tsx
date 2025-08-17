@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     sectionText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: "Poppins",
         textAlign: "left",
         color: Colors.darkBlue,
