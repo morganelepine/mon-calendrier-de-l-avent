@@ -1,11 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function ContentScreen() {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.section}>
-                <ThemedText type="sectionText" style={styles.ital}>
+                <ThemedText type="sectionText">
                     Chaque jour, plongez dans la magie de Noël et découvrez :
                 </ThemedText>
             </View>
@@ -20,21 +20,21 @@ export default function ContentScreen() {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎄 Une citation</ThemedText>
+                <ThemedText type="sectionSubtitle">✨ Une citation</ThemedText>
                 <ThemedText type="sectionText">
                     Une citation pour s'imprégner de l'esprit de Noël.
                 </ThemedText>
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">📜 Une histoire</ThemedText>
+                <ThemedText type="sectionSubtitle">✨ Une histoire</ThemedText>
                 <ThemedText type="sectionText">
                     Un chapitre d'une nouvelle de Noël découpée en 24 épisodes.
                 </ThemedText>
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎅 Une anecdote</ThemedText>
+                <ThemedText type="sectionSubtitle">✨ Une anecdote</ThemedText>
                 <ThemedText type="sectionText">
                     Une anecdote pour découvrir l'origine des traditions et de
                     l’histoire de Noël.
@@ -43,7 +43,7 @@ export default function ContentScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🍪 Une recommandation
+                    ✨ Une recommandation
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Livre, série, activité, recette... : une idée pour
@@ -52,7 +52,7 @@ export default function ContentScreen() {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎮 Un mini-jeu</ThemedText>
+                <ThemedText type="sectionSubtitle">✨ Un mini-jeu</ThemedText>
                 <ThemedText type="sectionText">
                     Un jeu pour mettre vos connaissances de Noël à l’épreuve.
                 </ThemedText>
@@ -60,7 +60,7 @@ export default function ContentScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎁 Mais ce n'est pas tout...
+                    ✨ Mais ce n'est pas tout...
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Ouvrir la case du jour, explorer les contenus, jouer aux
@@ -75,13 +75,13 @@ export default function ContentScreen() {
                 qu'il saura vous transporter dans cette magie des fêtes que
                 j'aime tant.
             </ThemedText>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 30,
+        padding: 20,
     },
     title: {
         paddingTop: 30,

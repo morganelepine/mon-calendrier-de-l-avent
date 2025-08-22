@@ -1,20 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Switch } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
 
 export default function MusicScreen() {
-    const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
-    const [visible, setVisible] = useState<boolean>(true);
+    const [playMusic, setPlayMusic] = useState<MusicPreference>("no");
 
     useEffect(() => {
         const getMusicPreference = async (): Promise<void> => {
             const musicPref = await AsyncStorage.getItem("playMusic");
-            setPlayMusic(musicPref as MusicPreference);
+            if (musicPref === "yes" || musicPref === "no") {
+                setPlayMusic(musicPref as MusicPreference);
+            } else {
+                setPlayMusic("no");
+            }
         };
         getMusicPreference();
     }, []);
@@ -22,97 +23,68 @@ export default function MusicScreen() {
     const handleMusicPreference = async (
         preference: MusicPreference
     ): Promise<void> => {
-        if (preference) {
-            try {
-                await AsyncStorage.setItem("playMusic", preference);
-                setPlayMusic(preference);
-                setVisible(false);
-            } catch (error) {
-                console.error("Error setting music preference", error);
-            }
+        try {
+            await AsyncStorage.setItem("playMusic", preference ?? "no");
+            setPlayMusic(preference);
+        } catch (error) {
+            console.error("Error setting music preference", error);
         }
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                setVisible(true);
-            };
-        }, [])
-    );
+    const toggleSwitch = (value: boolean) => {
+        handleMusicPreference(value ? "yes" : "no");
+    };
 
     return (
         <View style={styles.musicContainer}>
-            {visible ? (
-                playMusic === "yes" ? (
-                    <>
-                        <ThemedText type="sectionText">
-                            Le fond musical est actuellement activé dans
-                            l'application. Souhaitez-vous le désactiver ?
-                        </ThemedText>
-                        <ThemedText style={styles.textExplaination}>
-                            La musique ne se déclenchera plus lorsque vous
-                            ouvrirez l'app mais vous pourrez toujours l'activer
-                            dans l'onglet "Décompte".
-                        </ThemedText>
-                        <CustomButton
-                            onPress={() => {
-                                handleMusicPreference("no");
-                            }}
-                            style={styles.button}
-                        >
-                            Désactiver
-                        </CustomButton>
-                    </>
-                ) : (
-                    <>
-                        <ThemedText type="sectionText">
-                            Le fond musical est actuellement désactivé dans
-                            l'application. Souhaitez-vous l'activer ?
-                        </ThemedText>
-                        <ThemedText style={styles.textExplaination}>
-                            La musique se déclenchera lorsque vous ouvrez l'app,
-                            mais vous pourrez l'arrêter à tout moment dans
-                            l'onglet "Décompte".
-                        </ThemedText>
-                        <CustomButton
-                            onPress={() => {
-                                handleMusicPreference("yes");
-                            }}
-                            style={styles.button}
-                        >
-                            Activer
-                        </CustomButton>
-                    </>
-                )
-            ) : (
-                <ThemedText type="sectionText" style={styles.confirmation}>
-                    Votre préférence a bien été prise en compte. Vous pourrez la
-                    modifier plus tard si besoin.
+            <ThemedText
+                type="sectionText"
+                style={{ fontFamily: "PoppinsBold" }}
+            >
+                {playMusic === "yes"
+                    ? "Le fond musical est activé."
+                    : "Le fond musical est désactivé."}
+            </ThemedText>
+            <ThemedText type="sectionText">
+                {playMusic === "yes"
+                    ? "La musique se déclenchera automatiquement lorsque vous ouvrez l'application mais vous pourrez la mettre en pause depuis l'onglet Décompte."
+                    : "La musique ne se déclenchera pas lorsque vous ouvrez l'app mais vous pourrez tout de même lancer la musique depuis l'onglet Décompte."}
+            </ThemedText>
+
+            <View style={styles.separator} />
+
+            <View style={styles.row}>
+                <ThemedText type="sectionText" style={{ color: Colors.green }}>
+                    {playMusic === "yes"
+                        ? "Désactiver l'ambiance musicale"
+                        : "Activer l'ambiance musicale"}
                 </ThemedText>
-            )}
+
+                <Switch
+                    value={playMusic === "yes"}
+                    onValueChange={toggleSwitch}
+                    trackColor={{ false: "#ccc", true: Colors.green }}
+                    thumbColor="#fff"
+                    style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
+                />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     musicContainer: {
-        marginBottom: 30,
+        padding: 20,
     },
-    button: {
-        backgroundColor: Colors.red,
-        alignSelf: "flex-start",
+    row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
-    textExplaination: {
-        fontSize: 12,
-        flexShrink: 1,
-        marginTop: 10,
-        marginBottom: 15,
-        textAlign: "left",
-    },
-    confirmation: {
-        fontFamily: "PoppinsItalic",
-        color: Colors.blue,
-        textAlign: "left",
+    separator: {
+        height: 1,
+        backgroundColor: "#ccc",
+        marginTop: 24,
+        marginBottom: 16,
     },
 });

@@ -1,10 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { RateButton } from "../../../components/utils/buttons/RateButton";
 
 export default function RateScreen() {
     return (
-        <View style={styles.section}>
+        <ScrollView style={styles.container}>
             <ThemedText type="sectionText">
                 Votre avis compte beaucoup pour moi. Alors si vous appréciez
                 cette application, prenez un moment pour laisser un avis !
@@ -17,13 +17,13 @@ export default function RateScreen() {
                 Merci pour votre soutien 🤍
             </ThemedText>
             <RateButton style={styles.button}>Laisser un avis</RateButton>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    section: {
-        marginBottom: 20,
+    container: {
+        padding: 20,
     },
     button: {
         marginVertical: 10,

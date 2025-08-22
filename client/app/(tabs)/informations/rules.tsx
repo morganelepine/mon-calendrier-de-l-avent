@@ -1,11 +1,11 @@
-import { StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function RulesScreen() {
     return (
-        <>
+        <ScrollView style={styles.container}>
             <View style={styles.section}>
-                <ThemedText type="sectionText" style={styles.ital}>
+                <ThemedText type="sectionText">
                     Chaque jour, vous pouvez accumuler des points pour tenter
                     d'accéder à une petite surprise le 25 décembre !
                 </ThemedText>
@@ -28,7 +28,7 @@ export default function RulesScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    📜 Découverte des contenus
+                    ✨ Découverte des contenus
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Chaque jour, explorez jusqu'à 4 types de contenus (une
@@ -46,7 +46,7 @@ export default function RulesScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎮 Réponse à un jeu
+                    ✨ Réponse à un jeu
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Pour chaque bonne réponse donnée au jeu du jour (3 maximum),
@@ -65,7 +65,7 @@ export default function RulesScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎯 Limite de points par jour
+                    ✨ Limite de points par jour
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Vous pouvez ainsi accumuler jusqu'à
@@ -88,7 +88,7 @@ export default function RulesScreen() {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎅 Objectif atteint
+                    ✨ Objectif atteint
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Et si le 25 décembre vous avez réussi à accumuler au moins
@@ -96,11 +96,14 @@ export default function RulesScreen() {
                     ... surprise !
                 </ThemedText>
             </View>
-        </>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
     section: {
         marginBottom: 20,
     },

@@ -1,11 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function BingoRulesScreen() {
     return (
-        <>
+        <ScrollView style={styles.container}>
             <View style={styles.section}>
-                <ThemedText type="sectionText" style={styles.ital}>
+                <ThemedText type="sectionText">
                     Vous adorez les téléfilms de Noël avec leurs histoires
                     prévisibles, mais réconfortantes, où l’esprit de Noël est
                     toujours au rendez-vous ? Pour rendre hommage à cette
@@ -47,15 +47,15 @@ export default function BingoRulesScreen() {
                     chance d’atteindre le sommet du chef-d'oeuvre de Noël !
                 </ThemedText>
             </View>
-        </>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
     section: {
         marginBottom: 20,
-    },
-    ital: {
-        fontFamily: "PoppinsItalic",
     },
 });

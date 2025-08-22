@@ -58,11 +58,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     sectionSubtitle: {
-        fontFamily: "PallyBold",
-        letterSpacing: 1,
+        fontFamily: "PoppinsBold",
         color: Colors.blue,
         textAlign: "left",
-        fontSize: 18,
+        fontSize: 16,
         paddingBottom: 5,
     },
     sectionText: {

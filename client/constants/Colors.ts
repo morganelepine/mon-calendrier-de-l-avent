@@ -13,8 +13,9 @@ export const Colors = {
     green: "#116459", // 136F63
     darkGreen: "#0b2e25",
     red: "#a0222d", // b52936
-    pink: "#ffc4c4",
-    gold: "#d6ae72",
+    pink: "#FAB3A9",
+    gold: "#e9be1a",
+    lightBlue: "#A1C6EA",
 
     light: {
         text: "#11181C",
