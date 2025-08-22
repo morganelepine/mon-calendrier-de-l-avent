@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
-export const BingoRules = () => {
+export default function BingoRulesScreen() {
     return (
         <>
             <View style={styles.section}>
@@ -49,7 +49,7 @@ export const BingoRules = () => {
             </View>
         </>
     );
-};
+}
 
 const styles = StyleSheet.create({
     section: {

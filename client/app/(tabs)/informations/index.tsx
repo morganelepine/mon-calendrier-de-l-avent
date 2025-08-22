@@ -1,0 +1,121 @@
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { router } from "expo-router";
+import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+function OptionItem({
+    title,
+    iconName,
+    iconColor,
+    onPress,
+}: Readonly<{
+    title: string;
+    iconName: keyof typeof Ionicons.glyphMap;
+    iconColor: string;
+    onPress: () => void;
+}>) {
+    return (
+        <TouchableOpacity style={styles.item} onPress={onPress}>
+            <View
+                style={[styles.iconContainer, { backgroundColor: iconColor }]}
+            >
+                <Ionicons name={iconName} size={20} color="#fff" />
+            </View>
+
+            <Text style={styles.title}>{title}</Text>
+
+            <Ionicons name="chevron-forward" size={20} color="#aaa" />
+        </TouchableOpacity>
+    );
+}
+
+export default function InformationsScreen() {
+    return (
+        <CustomSafeAreaView>
+            <View style={styles.pageContainer}>
+                <ThemedText
+                    type="modalTitle"
+                    style={{ color: Colors.blue, marginBottom: 20 }}
+                >
+                    Informations
+                </ThemedText>
+
+                <OptionItem
+                    title="Contenu de l'application"
+                    iconName="book-outline"
+                    iconColor={Colors.blue}
+                    onPress={() => router.push("/informations/content")}
+                />
+
+                <OptionItem
+                    title="Règles pour gagner des points"
+                    iconName="school-outline"
+                    iconColor={Colors.green}
+                    onPress={() => router.push("/informations/rules")}
+                />
+
+                <OptionItem
+                    title="Fonctionnement du bingo"
+                    iconName="gift-outline"
+                    iconColor={Colors.red}
+                    onPress={() => router.push("/informations/bingo")}
+                />
+
+                <OptionItem
+                    title="Gestion de la musique"
+                    iconName="musical-notes-outline"
+                    iconColor={Colors.pink}
+                    onPress={() => router.push("/informations/music")}
+                />
+
+                <OptionItem
+                    title="Noter l'application"
+                    iconName="star-outline"
+                    iconColor={Colors.gold}
+                    onPress={() => router.push("/informations/rate")}
+                />
+
+                <OptionItem
+                    title="Remerciements"
+                    iconName="information-circle-outline"
+                    iconColor={Colors.darkGreen}
+                    onPress={() => router.push("/informations/copyrights")}
+                />
+            </View>
+        </CustomSafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    pageContainer: {
+        flex: 1,
+        alignItems: "flex-start",
+        width: "100%",
+        paddingLeft: 20,
+        gap: 8,
+    },
+    item: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        backgroundColor: "#fff",
+        borderTopLeftRadius: 8,
+        borderStartEndRadius: 8,
+    },
+    iconContainer: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 12,
+    },
+    title: {
+        flex: 1,
+        fontSize: 16,
+        color: "#333",
+    },
+});

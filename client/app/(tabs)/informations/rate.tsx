@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { RateButton } from "../utils/buttons/RateButton";
+import { RateButton } from "../../../components/utils/buttons/RateButton";
 
-export const RateApp = () => {
+export default function RateScreen() {
     return (
         <View style={styles.section}>
             <ThemedText type="sectionText">
@@ -19,7 +19,7 @@ export const RateApp = () => {
             <RateButton style={styles.button}>Laisser un avis</RateButton>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     section: {

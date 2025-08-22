@@ -78,10 +78,9 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         color: Colors.green,
-        fontSize: 30,
-        fontFamily: "PallyBold",
+        fontSize: 26,
+        fontFamily: "PoppinsBold",
         textAlign: "center",
-        letterSpacing: 3,
         marginVertical: 20,
         lineHeight: 34,
     },
