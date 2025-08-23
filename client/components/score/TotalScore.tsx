@@ -30,12 +30,15 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
 
                     {score >= minScoreToWin ? (
                         <>
-                            <ThemedText>Objectif atteint ✨ </ThemedText>
+                            <ThemedText style={{ color: Colors.snow }}>
+                                Objectif atteint ✨{" "}
+                            </ThemedText>
                             <ThemedText
                                 style={{
                                     marginBottom: 30,
                                     fontFamily: "PoppinsItalic",
                                     fontSize: 12,
+                                    color: Colors.snow,
                                 }}
                             >
                                 Rendez-vous le 25 décembre pour la surprise !
@@ -61,7 +64,13 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
                     )}
                 </>
             ) : (
-                <ThemedText style={{ marginBottom: 20, marginTop: 10 }}>
+                <ThemedText
+                    style={{
+                        marginBottom: 20,
+                        marginTop: 10,
+                        color: Colors.snow,
+                    }}
+                >
                     Rendez-vous le 1er décembre pour commencer à gagner des
                     points !
                 </ThemedText>
