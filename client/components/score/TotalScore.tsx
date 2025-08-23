@@ -30,7 +30,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
 
                     {score >= minScoreToWin ? (
                         <>
-                            <ThemedText>Objectif atteint 🥳</ThemedText>
+                            <ThemedText>Objectif atteint ✨ </ThemedText>
                             <ThemedText
                                 style={{
                                     marginBottom: 30,
@@ -43,18 +43,19 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
                         </>
                     ) : (
                         <>
-                            <View style={styles.pointsContainer}>
-                                <ThemedText style={{ fontSize: 12 }}>
-                                    Objectif : {minScoreToWin} points
-                                </ThemedText>
-                            </View>
                             <View style={styles.barContainer}>
                                 <Animated.View
                                     style={[styles.completion, animatedStyle]}
                                 />
                             </View>
-                            <ThemedText style={{ marginBottom: 20 }}>
-                                {Math.round(progress)}% de l'objectif atteint 🥳
+                            <ThemedText
+                                style={{
+                                    marginBottom: 20,
+                                    color: Colors.snow,
+                                    fontSize: 14,
+                                }}
+                            >
+                                {Math.round(progress)}% de l'objectif atteint
                             </ThemedText>
                         </>
                     )}
@@ -80,8 +81,7 @@ const styles = StyleSheet.create({
     },
     score: {
         fontSize: 50,
-        marginVertical: 10,
-        color: Colors.blue,
+        color: Colors.snow,
     },
 
     pointsContainer: {

@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         justifyContent: "flex-start",
-        paddingTop: 40,
         paddingHorizontal: 20,
         width: "100%",
     },
@@ -36,8 +35,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     buttonText: {
-        color: Colors.red,
-        fontSize: 14,
+        color: Colors.snow,
+        fontSize: 12,
         fontFamily: "PoppinsItalic",
         textDecorationLine: "underline",
     },

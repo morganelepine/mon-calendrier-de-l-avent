@@ -11,7 +11,9 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function ScoreScreen() {
     const scrollViewRef = useRef<ScrollView>(null);
-    const backgroundImage = getCloudinaryImageUrl("Fond_1_s84lam");
+    const backgroundImage = getCloudinaryImageUrl(
+        "blue_background_darker_d10kn5"
+    );
 
     const [modalVisible, setModalVisible] = useState(false);
 

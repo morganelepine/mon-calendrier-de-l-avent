@@ -8,14 +8,16 @@ const tintColorDark = "#eee6d9";
 
 export const Colors = {
     snow: "#f7f5f6",
+    lightBlue: "#A1C6EA",
     blue: "#0b2956",
     darkBlue: "#010f23",
+    lightGreen: "#3f8f29",
     green: "#116459", // 136F63
     darkGreen: "#0b2e25",
     red: "#a0222d", // b52936
     pink: "#FAB3A9",
+    darkPink: "#c25f5f",
     gold: "#e9be1a",
-    lightBlue: "#A1C6EA",
 
     light: {
         text: "#11181C",
