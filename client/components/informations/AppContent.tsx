@@ -5,14 +5,14 @@ export const AppContent = () => {
     return (
         <View style={styles.container}>
             <View style={styles.section}>
-                <ThemedText type="sectionText" style={styles.ital}>
+                <ThemedText type="sectionText">
                     Chaque jour, plongez dans la magie de Noël et découvrez :
                 </ThemedText>
             </View>
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    ✨ Combien de nuits avant Noël ?
+                    Combien de nuits avant Noël ?
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Un compte à rebours pour patienter jusqu'au 25 décembre.
@@ -20,21 +20,21 @@ export const AppContent = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎄 Une citation</ThemedText>
+                <ThemedText type="sectionSubtitle">Une citation</ThemedText>
                 <ThemedText type="sectionText">
                     Une citation pour s'imprégner de l'esprit de Noël.
                 </ThemedText>
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">📜 Une histoire</ThemedText>
+                <ThemedText type="sectionSubtitle">Une histoire</ThemedText>
                 <ThemedText type="sectionText">
                     Un chapitre d'une nouvelle de Noël découpée en 24 épisodes.
                 </ThemedText>
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎅 Une anecdote</ThemedText>
+                <ThemedText type="sectionSubtitle">Une anecdote</ThemedText>
                 <ThemedText type="sectionText">
                     Une anecdote pour découvrir l'origine des traditions et de
                     l’histoire de Noël.
@@ -43,7 +43,7 @@ export const AppContent = () => {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🍪 Une recommandation
+                    Une recommandation
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Livre, série, activité, recette... : une idée pour
@@ -52,7 +52,7 @@ export const AppContent = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎮 Un mini-jeu</ThemedText>
+                <ThemedText type="sectionSubtitle">Un mini-jeu</ThemedText>
                 <ThemedText type="sectionText">
                     Un jeu pour mettre vos connaissances de Noël à l’épreuve.
                 </ThemedText>
@@ -60,7 +60,7 @@ export const AppContent = () => {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎁 Mais ce n'est pas tout...
+                    Mais ce n'est pas tout...
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Ouvrir la case du jour, explorer les contenus, jouer aux
@@ -81,11 +81,7 @@ export const AppContent = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 30,
-    },
-    title: {
-        paddingTop: 30,
-        paddingHorizontal: 20,
+        marginBottom: 20,
     },
     section: {
         marginBottom: 20,

@@ -1,10 +1,10 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { RateButton } from "../../../components/utils/buttons/RateButton";
 
 export default function RateScreen() {
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <ThemedText type="sectionText">
                 Votre avis compte beaucoup pour moi. Alors si vous appréciez
                 cette application, prenez un moment pour laisser un avis !
@@ -14,19 +14,20 @@ export default function RateScreen() {
                 utilisateur·ice·s de découvrir ce calendrier de l'avent.
             </ThemedText>
             <ThemedText type="sectionText">
-                Merci pour votre soutien 🤍
+                Merci pour votre soutien !
             </ThemedText>
             <RateButton style={styles.button}>Laisser un avis</RateButton>
-        </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        paddingVertical: 20,
+        gap: 8,
     },
     button: {
         marginVertical: 10,
-        alignSelf: "flex-start",
+        marginHorizontal: 20,
     },
 });

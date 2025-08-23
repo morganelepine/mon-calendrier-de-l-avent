@@ -17,7 +17,7 @@ export default function CopyrightsScreen() {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎨 Annaëlle</ThemedText>
+                <ThemedText type="sectionSubtitle">Annaëlle</ThemedText>
                 <ThemedText type="sectionText">
                     ...qui a dessiné 12 superbes fonds d'écran pour l'onglet
                     Décompte (jours 3, 4, 6, 7, 9, 11, 13, 14, 17, 19, 24, 25).
@@ -25,7 +25,7 @@ export default function CopyrightsScreen() {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">🎶 William</ThemedText>
+                <ThemedText type="sectionSubtitle">William</ThemedText>
                 <ThemedText type="sectionText">
                     ...qui a enregistré Petit papa Noël au piano (à écouter les
                     jours 4, 9, 14, 19 et 24).
@@ -42,11 +42,8 @@ export default function CopyrightsScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
-    },
-    title: {
-        paddingTop: 30,
-        paddingHorizontal: 20,
+        paddingVertical: 20,
+        marginBottom: 20,
     },
     section: {
         marginBottom: 20,

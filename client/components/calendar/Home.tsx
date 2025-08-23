@@ -18,14 +18,13 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
     const today = new Date();
     const christmasDay = new Date(today.getFullYear(), 11, 25);
     const calendarDay = new Date(today.getFullYear(), 11, 1);
+    const isDecember = today.getMonth() === 11;
 
     const isChristmas =
-        today.getDate() === christmasDay.getDate() &&
-        today.getMonth() === christmasDay.getMonth();
+        isDecember && today.getDate() === christmasDay.getDate();
 
     const isAfterChristmas =
-        today.getDate() > christmasDay.getDate() &&
-        today.getMonth() === christmasDay.getMonth();
+        isDecember && today.getDate() > christmasDay.getDate();
 
     const daysToChristmas = Math.ceil(
         (christmasDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY
@@ -37,9 +36,10 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
     const day = daysMap.get(today.getDate());
 
-    const backgroundImage = day
-        ? getCloudinaryImageUrl(day?.background)
-        : getCloudinaryImageUrl("11_pfqcwp");
+    const backgroundImage =
+        day && isDecember
+            ? getCloudinaryImageUrl(day?.background)
+            : getCloudinaryImageUrl("3_thng7s");
 
     const music = day
         ? day?.music
@@ -51,7 +51,7 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
             style={styles.background}
             resizeMode="cover"
         >
-            <Snowfall count={isChristmas ? 500 : 100} />
+            {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
 
             <CustomSafeAreaView>
                 <View
@@ -66,32 +66,37 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
 
                 <View style={styles.textContainer}>
                     {isChristmas && (
-                        <ThemedText
-                            type="homeTitle"
-                            style={styles.christmasText}
-                        >
+                        <ThemedText type="homeTitle" style={styles.isChristmas}>
                             Joyeux Noël
                         </ThemedText>
                     )}
 
-                    {!isChristmas && !isAfterChristmas && (
+                    {!isChristmas && !isAfterChristmas && isDecember && (
                         <>
                             <ThemedText type="homeTitle" style={styles.text1}>
                                 {daysToChristmas}{" "}
                                 {daysToChristmas > 1 ? "nuits" : "nuit"}
                             </ThemedText>
                             <ThemedText type="homeTitle">avant Noël</ThemedText>
-                            {daysToCalendar > 0 && (
-                                <ThemedText style={styles.text2}>
-                                    (et {daysToCalendar} avant le départ du
-                                    calendrier)
-                                </ThemedText>
-                            )}
+                        </>
+                    )}
+
+                    {!isDecember && (
+                        <>
+                            <ThemedText type="homeTitle" style={styles.text1}>
+                                {daysToCalendar} jours
+                            </ThemedText>
+                            <ThemedText style={styles.beforeCalendar}>
+                                avant le départ du calendrier
+                            </ThemedText>
                         </>
                     )}
 
                     {isAfterChristmas && (
-                        <ThemedText type="homeTitle" style={{ fontSize: 38 }}>
+                        <ThemedText
+                            type="homeTitle"
+                            style={styles.afterChristmas}
+                        >
                             Rendez-vous l'année prochaine !
                         </ThemedText>
                     )}
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontSize: 14,
     },
-    christmasText: {
+    isChristmas: {
         marginTop: 100,
         fontSize: 75,
         lineHeight: 80,
@@ -127,5 +132,15 @@ const styles = StyleSheet.create({
         textShadowColor: Colors.snow,
         textShadowOffset: { width: 3, height: 3 },
         textShadowRadius: 1,
+    },
+    afterChristmas: {
+        fontSize: 38,
+        letterSpacing: 2,
+        marginBottom: 30,
+    },
+    beforeCalendar: {
+        color: Colors.snow,
+        fontSize: 20,
+        marginBottom: 30,
     },
 });

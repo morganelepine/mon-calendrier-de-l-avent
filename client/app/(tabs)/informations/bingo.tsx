@@ -8,10 +8,12 @@ export default function BingoRulesScreen() {
                 <ThemedText type="sectionText">
                     Vous adorez les téléfilms de Noël avec leurs histoires
                     prévisibles, mais réconfortantes, où l’esprit de Noël est
-                    toujours au rendez-vous ? Pour rendre hommage à cette
-                    passion dévorante et apprécier à leur juste valeur les
-                    clichés de ces films, j’ai créé le Bingo des téléfilms de
-                    Noël !
+                    toujours au rendez-vous ?
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Pour rendre hommage à cette passion dévorante et apprécier à
+                    leur juste valeur les clichés de ces films, j’ai créé le
+                    Bingo des téléfilms de Noël !
                 </ThemedText>
             </View>
 
@@ -53,7 +55,8 @@ export default function BingoRulesScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        paddingVertical: 20,
+        marginBottom: 20,
     },
     section: {
         marginBottom: 20,

@@ -5,7 +5,7 @@ export const Rules = () => {
     return (
         <>
             <View style={styles.section}>
-                <ThemedText type="sectionText" style={styles.ital}>
+                <ThemedText type="sectionText">
                     Chaque jour, vous pouvez accumuler des points pour tenter
                     d'accéder à une petite surprise le 25 décembre !
                 </ThemedText>
@@ -13,7 +13,7 @@ export const Rules = () => {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    ✨ Ouverture de la case du jour
+                    Ouverture de la case du jour
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Ouvrir la case du jour vous rapporte
@@ -28,7 +28,7 @@ export const Rules = () => {
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    📜 Découverte des contenus
+                    Découverte des contenus
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Chaque jour, explorez jusqu'à 4 types de contenus (une
@@ -45,9 +45,7 @@ export const Rules = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">
-                    🎮 Réponse à un jeu
-                </ThemedText>
+                <ThemedText type="sectionSubtitle">Réponse à un jeu</ThemedText>
                 <ThemedText type="sectionText">
                     Pour chaque bonne réponse donnée au jeu du jour (3 maximum),
                     vous gagnez
@@ -57,15 +55,11 @@ export const Rules = () => {
                     Si vous participez aux jeux en retard, vous ne gagnez que
                     <Text style={styles.bold}> 10 points</Text>.
                 </ThemedText>
-                <ThemedText type="sectionText" style={styles.ital}>
-                    21 jours sur 24 vous permettront de gagner des points aux
-                    jeux.
-                </ThemedText>
             </View>
 
             <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
-                    🎯 Limite de points par jour
+                    Limite de points par jour
                 </ThemedText>
                 <ThemedText type="sectionText">
                     Vous pouvez ainsi accumuler jusqu'à
@@ -87,9 +81,7 @@ export const Rules = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">
-                    🎅 Objectif atteint
-                </ThemedText>
+                <ThemedText type="sectionSubtitle">Objectif atteint</ThemedText>
                 <ThemedText type="sectionText">
                     Et si le 25 décembre vous avez réussi à accumuler au moins
                     <Text style={styles.bold}> 2512 points</Text>
@@ -106,8 +98,5 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontFamily: "PoppinsBold",
-    },
-    ital: {
-        fontFamily: "PoppinsItalic",
     },
 });

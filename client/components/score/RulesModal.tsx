@@ -26,7 +26,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                         Règles pour gagner des&nbsp;points
                     </ThemedText>
 
-                    <CustomScrollView style={{ paddingHorizontal: 20 }}>
+                    <CustomScrollView>
                         <Rules />
                     </CustomScrollView>
 
@@ -58,13 +58,12 @@ const styles = StyleSheet.create({
     modalView: {
         height: "75%",
         marginHorizontal: 20,
-        paddingBottom: 10,
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: Colors.snow,
         borderRadius: 30,
         elevation: 5,
     },
-    modalTitle: { paddingHorizontal: 15, fontSize: 24, color: Colors.blue },
+    modalTitle: { paddingHorizontal: 14, fontSize: 22, color: Colors.blue },
     closeButton: {
         marginTop: 10,
         height: 48,

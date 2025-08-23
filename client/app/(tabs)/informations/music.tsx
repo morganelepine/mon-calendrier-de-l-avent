@@ -36,14 +36,14 @@ export default function MusicScreen() {
     };
 
     return (
-        <View style={styles.musicContainer}>
+        <View style={styles.container}>
             <ThemedText
                 type="sectionText"
                 style={{ fontFamily: "PoppinsBold" }}
             >
                 {playMusic === "yes"
-                    ? "Le fond musical est activé."
-                    : "Le fond musical est désactivé."}
+                    ? "Le fond musical est activé"
+                    : "Le fond musical est désactivé"}
             </ThemedText>
             <ThemedText type="sectionText">
                 {playMusic === "yes"
@@ -73,13 +73,15 @@ export default function MusicScreen() {
 }
 
 const styles = StyleSheet.create({
-    musicContainer: {
-        padding: 20,
+    container: {
+        paddingVertical: 20,
+        marginBottom: 20,
     },
     row: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        paddingRight: 20,
     },
     separator: {
         height: 1,

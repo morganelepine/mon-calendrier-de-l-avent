@@ -19,9 +19,11 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
         width: withTiming(`${progress}%`, { duration: 1000 }),
     }));
 
+    const isDecember = new Date().getMonth() === 11;
+
     return (
         <View style={styles.container}>
-            {score > 0 ? (
+            {score > 0 && isDecember && (
                 <>
                     <ThemedText style={styles.score}>
                         <Text style={styles.bold}>{score}</Text>{" "}
@@ -63,7 +65,9 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
                         </>
                     )}
                 </>
-            ) : (
+            )}
+
+            {!isDecember && (
                 <ThemedText
                     style={{
                         marginBottom: 20,

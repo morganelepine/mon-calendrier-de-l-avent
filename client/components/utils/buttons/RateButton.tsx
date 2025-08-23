@@ -24,11 +24,12 @@ export const RateButton: React.FC<RateButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blue,
         borderRadius: 50,
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         height: 48,
         textAlign: "center",
+        elevation: 4,
     },
     buttonText: { color: "white", lineHeight: 48 },
 });

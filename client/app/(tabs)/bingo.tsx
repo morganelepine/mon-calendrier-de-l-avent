@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Animated, ImageBackground, StyleSheet, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
@@ -8,6 +7,10 @@ import { bingo } from "@/data/bingo_data";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function BingoScreen() {
+    const backgroundImage = getCloudinaryImageUrl(
+        "blue_background_darker_d10kn5"
+    ); // "sapin_fnbne4
+
     const shuffled = bingo.sort(() => Math.random() - 0.5);
     const [bingoGrid, setBingoGrid] = useState(bingo.slice(0, 15));
     const [clickedCells, setClickedCells] = useState(new Set());
@@ -45,17 +48,12 @@ export default function BingoScreen() {
     return (
         <ImageBackground
             source={{
-                uri: getCloudinaryImageUrl("sapin_fnbne4"),
+                uri: backgroundImage,
             }}
             resizeMode="cover"
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
-                <LinearGradient
-                    colors={["rgba(11, 46, 37, 0.8)", "rgba(0, 0, 0, 0)"]}
-                    style={styles.gradientOverlay}
-                />
-
                 <BingoHeader generateBingoGrid={generateBingoGrid} />
 
                 <View style={styles.bingoContainer}>
@@ -78,11 +76,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-    },
-    gradientOverlay: {
-        ...StyleSheet.absoluteFillObject,
-        width: "100%",
-        height: 300,
     },
     bingoContainer: {
         flex: 1,

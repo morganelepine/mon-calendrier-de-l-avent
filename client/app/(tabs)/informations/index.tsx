@@ -50,22 +50,22 @@ export default function InformationsScreen() {
                 <View style={styles.pageContainer}>
                     <OptionItem
                         title="Contenu de l'application"
-                        iconName="book-outline"
+                        iconName="gift-outline"
                         iconColor={Colors.blue}
                         onPress={() => router.push("/informations/content")}
                     />
 
                     <OptionItem
                         title="Règles pour gagner des points"
-                        iconName="school-outline"
-                        iconColor={Colors.green}
+                        iconName="game-controller-outline"
+                        iconColor={Colors.lightBlue}
                         onPress={() => router.push("/informations/rules")}
                     />
 
                     <OptionItem
                         title="Fonctionnement du bingo"
-                        iconName="gift-outline"
-                        iconColor={Colors.red}
+                        iconName="eye-outline"
+                        iconColor={Colors.green}
                         onPress={() => router.push("/informations/bingo")}
                     />
 
@@ -85,8 +85,8 @@ export default function InformationsScreen() {
 
                     <OptionItem
                         title="Remerciements"
-                        iconName="information-circle-outline"
-                        iconColor={Colors.lightBlue}
+                        iconName="heart-outline"
+                        iconColor={Colors.red}
                         onPress={() => router.push("/informations/copyrights")}
                     />
                 </View>

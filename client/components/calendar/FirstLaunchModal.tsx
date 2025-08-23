@@ -58,54 +58,49 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
                 setModalVisible(false);
             }}
         >
-            <ImageBackground
-                source={{ uri: backgroundImage }}
-                resizeMode="cover"
-                style={styles.imageBackground}
-            >
-                <View style={styles.modalView}>
-                    <ThemedText
-                        type="modalTitle"
-                        style={[
-                            styles.modalTitle,
-                            { paddingTop: insets.top + 15 },
-                        ]}
-                    >
-                        Bienvenue dans votre&nbsp;calendrier de&nbsp;l'avent
-                    </ThemedText>
-                    <ScrollView
-                        ref={scrollViewRef}
-                        style={{ paddingHorizontal: 20 }}
-                        // persistentScrollbar={true} // Android only
-                    >
-                        <AppContent />
+            <View style={styles.modalView}>
+                <ThemedText
+                    type="modalTitle"
+                    style={[styles.modalTitle, { paddingTop: insets.top }]}
+                >
+                    Bienvenue dans votre&nbsp;calendrier de&nbsp;l'avent
+                </ThemedText>
+                <ScrollView
+                    ref={scrollViewRef}
+                    persistentScrollbar={true} // Android only
+                >
+                    <AppContent />
 
-                        <MusicPreferences
-                            setPlayMusic={setPlayMusic}
-                            firstLaunch={true}
-                        />
+                    <MusicPreferences
+                        setPlayMusic={setPlayMusic}
+                        firstLaunch={true}
+                    />
 
-                        <CustomButton
-                            onPress={handleStart}
-                            style={styles.button}
-                        >
-                            Commencer l'aventure 🚀
-                        </CustomButton>
-                    </ScrollView>
-                </View>
-            </ImageBackground>
+                    <CustomButton onPress={handleStart} style={styles.button}>
+                        Commencer l'aventure 🚀
+                    </CustomButton>
+                </ScrollView>
+            </View>
         </CustomModal>
     );
 };
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-    },
     modalView: {
         flex: 1,
         alignItems: "center",
+        backgroundColor: Colors.snow,
     },
-    modalTitle: { paddingHorizontal: 15, color: Colors.blue },
-    button: { marginBottom: 30, backgroundColor: Colors.blue },
+    modalTitle: {
+        paddingHorizontal: 15,
+        color: Colors.blue,
+        fontFamily: "PallyBold",
+        letterSpacing: 2,
+        fontSize: 34,
+    },
+    button: {
+        marginHorizontal: 20,
+        marginBottom: 30,
+        backgroundColor: Colors.blue,
+    },
 });
