@@ -13,64 +13,101 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
         score.scoreDetails.contentOpening +
         score.scoreDetails.game.correctAnswer;
 
+    const isToday = score.dayNumber === new Date().getDate();
+
+    const maxScoreDay = score.scoreDetails.dayOpening === 40;
+    const maxScoreContent = score.scoreDetails.contentOpening === 4 * 20;
+    const maxScoreGame = score.scoreDetails.game.correctAnswer === 3 * 20;
+
     return (
-        <View style={styles.container}>
-            <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                    <Text style={styles.cardTitle}>
-                        {score.dayNumber} décembre
-                    </Text>
-                    <Text
-                        style={[
-                            styles.cardTitle,
-                            { fontFamily: "PoppinsBold" },
-                        ]}
-                    >
-                        {scorePerDay}
+        <View style={styles.card}>
+            <View
+                style={[
+                    styles.cardHeader,
+                    isToday && { backgroundColor: Colors.red },
+                ]}
+            >
+                <Text style={styles.cardTitle}>Jour {score.dayNumber}</Text>
+                <Text style={[styles.cardTitle, { fontFamily: "PoppinsBold" }]}>
+                    {scorePerDay} pts
+                </Text>
+            </View>
+
+            <View style={styles.cardBody}>
+                <View style={styles.cardLine}>
+                    <Ionicons
+                        name="calendar"
+                        size={18}
+                        color={isToday ? Colors.red : Colors.green}
+                    />
+                    <Text style={styles.cardLineText}>
+                        Jour :{" "}
+                        <Text
+                            style={[
+                                styles.cardLineScore,
+                                isToday && { color: Colors.red },
+                            ]}
+                        >
+                            {score.scoreDetails.dayOpening}{" "}
+                        </Text>
+                        {maxScoreDay && (
+                            <Ionicons
+                                name="star"
+                                size={12}
+                                color={Colors.gold}
+                            />
+                        )}
                     </Text>
                 </View>
-
-                <View style={styles.cardBody}>
-                    <View style={styles.row}>
-                        <Ionicons
-                            name="star"
-                            size={18}
-                            color={Colors.green}
-                            style={styles.rowIcon}
-                        />
-                        <Text style={styles.rowLabel}>
-                            Ouverture de la case du jour
-                        </Text>
-                        <Text>{score.scoreDetails.dayOpening}</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Ionicons
-                            name="gift"
-                            size={18}
-                            color={Colors.green}
-                            style={styles.rowIcon}
-                        />
-                        <Text style={styles.rowLabel}>
-                            Ouverture des contenus
-                        </Text>
-                        <Text>{score.scoreDetails.contentOpening}</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Ionicons
-                            name="game-controller"
-                            size={18}
-                            color={Colors.green}
-                            style={styles.rowIcon}
-                        />
+                <View style={styles.cardLine}>
+                    <Ionicons
+                        name="gift"
+                        size={18}
+                        color={isToday ? Colors.red : Colors.green}
+                    />
+                    <Text style={styles.cardLineText}>
+                        Contenu :{" "}
                         <Text
-                            style={[styles.rowLabel, { flex: 1 }]}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
+                            style={[
+                                styles.cardLineScore,
+                                isToday && { color: Colors.red },
+                            ]}
                         >
-                            Bonnes réponses aux jeux
+                            {score.scoreDetails.contentOpening}{" "}
                         </Text>
-                        <Text>{score.scoreDetails.game.correctAnswer}</Text>
-                    </View>
+                        {maxScoreContent && (
+                            <Ionicons
+                                name="star"
+                                size={12}
+                                color={Colors.gold}
+                            />
+                        )}
+                    </Text>
+                </View>
+                <View style={styles.cardLine}>
+                    <Ionicons
+                        name="game-controller"
+                        size={18}
+                        color={isToday ? Colors.red : Colors.green}
+                    />
+                    <Text style={styles.cardLineText}>
+                        Jeu :{" "}
+                        <Text
+                            style={[
+                                styles.cardLineScore,
+                                isToday && { color: Colors.red },
+                            ]}
+                        >
+                            {score.scoreDetails.game.correctAnswer}{" "}
+                        </Text>
+                        {maxScoreGame && (
+                            <Ionicons
+                                name="star"
+                                size={12}
+                                color={Colors.gold}
+                            />
+                        )}
+                    </Text>
                 </View>
             </View>
         </View>
@@ -78,17 +115,15 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        marginBottom: 20,
-    },
     card: {
+        width: "46%",
         backgroundColor: Colors.snow,
-        borderRadius: 16,
+        borderRadius: 12,
         overflow: "hidden",
     },
     cardHeader: {
         backgroundColor: Colors.green,
-        paddingHorizontal: 16,
+        paddingHorizontal: 8,
         paddingTop: 6,
         paddingBottom: 4,
         flexDirection: "row",
@@ -97,27 +132,26 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         color: Colors.snow,
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: "Poppins",
     },
     cardBody: {
         backgroundColor: Colors.snow,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        padding: 8,
+        gap: 4,
     },
-    row: {
+    cardLine: {
         flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 4,
+        alignItems: "stretch",
     },
-    rowIcon: {
-        marginRight: 10,
-    },
-    rowLabel: {
-        flex: 1,
-        color: Colors.blue,
-        fontSize: 13,
+    cardLineText: {
+        marginLeft: 6,
         fontFamily: "Poppins",
-        paddingTop: 2,
+        fontSize: 14,
+        color: Colors.blue,
+    },
+    cardLineScore: {
+        fontFamily: "PoppinsBold",
+        color: Colors.green,
     },
 });

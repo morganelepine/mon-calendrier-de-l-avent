@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, ScrollView, ImageBackground } from "react-native";
+import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import { loadScores, getTotalScore } from "@/services/score.service";
 import { RulesButton } from "@/components/score/RulesButton";
 import { RulesModal } from "@/components/score/RulesModal";
@@ -49,12 +49,13 @@ export default function ScoreScreen() {
 
                 <ScrollView
                     ref={scrollViewRef}
-                    style={styles.container}
                     persistentScrollbar={true} // Android only
                 >
-                    {scoreHistory.map((score: Score) => (
-                        <ScoreHistory key={score.dayNumber} score={score} />
-                    ))}
+                    <View style={styles.cardsWrapper}>
+                        {scoreHistory.map((score: Score) => (
+                            <ScoreHistory key={score.dayNumber} score={score} />
+                        ))}
+                    </View>
 
                     <RulesModal
                         modalVisible={modalVisible}
@@ -72,9 +73,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    container: {
-        flex: 1,
+    cardsWrapper: {
         paddingHorizontal: 20,
+        marginBottom: 20,
         width: "100%",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        gap: 20,
     },
 });
