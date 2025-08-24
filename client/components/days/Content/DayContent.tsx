@@ -1,45 +1,65 @@
 import { StyleSheet, View } from "react-native";
-import { Story } from "@/components/content/Story";
-import { Anecdote } from "@/components/content/Anecdote";
-import { Idea } from "@/components/content/Idea";
-import { Game } from "@/components/content/Game";
-import { Content } from "@/interfaces/contentInterface";
+import { ContentButton } from "@/components/content/ContentButton";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getContentsByDay } from "@/services/content.service";
 
-interface DayContentProps {
-    anecdoteOfTheDay: Content | undefined;
-    storyOfTheDay: Content | undefined;
-    ideas: Content[];
-    games: Content[];
+type DayContentProps = {
     dayId: number;
-}
+};
 
-export const DayContent: React.FC<DayContentProps> = ({
-    anecdoteOfTheDay,
-    storyOfTheDay,
-    ideas,
-    games,
-    dayId,
-}) => {
+export const DayContent = ({ dayId }: DayContentProps) => {
+    const { anecdote, story, ideas, games } = getContentsByDay(dayId);
+
     return (
         <View style={styles.contentsContainer}>
             <View style={styles.contentContainer}>
-                {storyOfTheDay && (
-                    <Story content={storyOfTheDay} dayId={dayId} />
+                {story && (
+                    <ContentButton
+                        content={story}
+                        dayId={dayId}
+                        backgroundImage={getCloudinaryImageUrl(
+                            "s-instruire_xybqas"
+                        )}
+                        contentType="story"
+                    />
                 )}
             </View>
 
             <View style={styles.contentContainer}>
-                {ideas.length > 0 && <Idea ideas={ideas} dayId={dayId} />}
-            </View>
-
-            <View style={styles.contentContainer}>
-                {anecdoteOfTheDay && (
-                    <Anecdote content={anecdoteOfTheDay} dayId={dayId} />
+                {ideas.length > 0 && (
+                    <ContentButton
+                        ideas={ideas}
+                        dayId={dayId}
+                        backgroundImage={getCloudinaryImageUrl(
+                            "se-regaler_mnonwh"
+                        )}
+                        contentType="idea"
+                    />
                 )}
             </View>
 
             <View style={styles.contentContainer}>
-                {games.length > 0 && <Game games={games} dayId={dayId} />}
+                {anecdote && (
+                    <ContentButton
+                        content={anecdote}
+                        dayId={dayId}
+                        backgroundImage={getCloudinaryImageUrl("kiwi1_r7kihz")}
+                        contentType="anecdote"
+                    />
+                )}
+            </View>
+
+            <View style={styles.contentContainer}>
+                {games.length > 0 && (
+                    <ContentButton
+                        games={games}
+                        dayId={dayId}
+                        backgroundImage={getCloudinaryImageUrl(
+                            "christmas_a5bsoi"
+                        )}
+                        contentType="game"
+                    />
+                )}
             </View>
         </View>
     );

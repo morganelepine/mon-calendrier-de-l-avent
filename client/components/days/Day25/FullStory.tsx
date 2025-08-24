@@ -7,19 +7,9 @@ import { storyData } from "@/data/SheetToJSON.Story";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Colors } from "@/constants/Colors";
 
-interface FullStoryProps {
-    modalVisible: boolean;
-    setModalVisible: (modalVisible: boolean) => void;
-}
-
-export const FullStory: React.FC<FullStoryProps> = ({
-    modalVisible,
-    setModalVisible,
-}) => {
+export const FullStory = () => {
     return (
         <ModalWithText
-            isVisible={modalVisible}
-            onClose={() => setModalVisible(false)}
             contentType={"story"}
             backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
         >

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
-import { ContentButton } from "@/components/content/ContentButton";
+import { useLocalSearchParams } from "expo-router";
 import { Reco } from "@/components/content/ideas/Reco";
 import { Recipe } from "@/components/content/ideas/Recipe";
 import { List } from "@/components/content/ideas/List";
@@ -10,17 +10,16 @@ import { Content } from "@/interfaces/contentInterface";
 import { ContentType, IdeaType } from "@/enums/enums";
 import { formatImage } from "@/services/image.service";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getContentsByDay } from "@/services/content.service";
 
-interface IdeaProps {
-    ideas: Content[];
-    dayId: number;
-}
-
-export const Idea: React.FC<IdeaProps> = ({ ideas, dayId }) => {
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
-
+export default function IdeaScreen() {
     const backgroundImage = getCloudinaryImageUrl("se-regaler_mnonwh"); // se-divertir_xvdksq
     const [modalBackground, setModalBackground] = useState(backgroundImage);
+
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const dayId = parseInt(id, 10);
+
+    const { ideas } = getContentsByDay(dayId);
 
     const [imageDimensions, setImageDimensions] = useState<{
         [key: string]: { width: number; height: number };
@@ -55,17 +54,8 @@ export const Idea: React.FC<IdeaProps> = ({ ideas, dayId }) => {
 
     return (
         <>
-            <ContentButton
-                ideas={ideas}
-                setModalVisible={setModalVisible}
-                dayId={dayId}
-                backgroundImage={backgroundImage}
-            />
-
             {ideas.map((idea) => (
                 <ModalWithText
-                    isVisible={modalVisible}
-                    onClose={() => setModalVisible(false)}
                     contentType={ContentType.Idea}
                     backgroundImage={modalBackground}
                     key={idea.id}
@@ -100,4 +90,4 @@ export const Idea: React.FC<IdeaProps> = ({ ideas, dayId }) => {
             ))}
         </>
     );
-};
+}

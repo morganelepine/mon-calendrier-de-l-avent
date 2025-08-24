@@ -2,23 +2,15 @@ import React from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
-import { CustomModal } from "@/components/utils/custom/CustomModal";
-import { CloseModalButton } from "@/components/utils/buttons/CloseModalButton";
-import { Colors } from "@/constants/Colors";
 import { ContentType } from "@/enums/enums";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface GameModalProps {
-    isVisible: boolean;
-    onClose: () => void;
     contentType: string;
     children?: React.ReactNode;
 }
 
 export const GameModal: React.FC<GameModalProps> = ({
-    isVisible,
-    onClose,
     contentType,
     children,
 }) => {
@@ -37,40 +29,24 @@ export const GameModal: React.FC<GameModalProps> = ({
     };
 
     return (
-        <CustomModal visible={isVisible} onRequestClose={onClose}>
-            <ImageBackground
-                source={{ uri: backgroundImage }}
-                resizeMode="cover"
-                style={styles.imageBackground}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <ThemedText
-                            type="modalTitle"
-                            style={[
-                                styles.modalTitle,
-                                { paddingTop: insets.top },
-                            ]}
-                        >
-                            {getTitle()}
-                        </ThemedText>
+        <ImageBackground
+            source={{ uri: backgroundImage }}
+            resizeMode="cover"
+            style={styles.imageBackground}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <ThemedText
+                        type="modalTitle"
+                        style={[styles.modalTitle, { paddingTop: insets.top }]}
+                    >
+                        {getTitle()}
+                    </ThemedText>
 
-                        {children}
-
-                        <CloseModalButton
-                            onPress={onClose}
-                            style={{ backgroundColor: Colors.pink }}
-                        >
-                            <Ionicons
-                                name={"close-outline"}
-                                size={35}
-                                color={Colors.green}
-                            />
-                        </CloseModalButton>
-                    </View>
+                    {children}
                 </View>
-            </ImageBackground>
-        </CustomModal>
+            </View>
+        </ImageBackground>
     );
 };
 

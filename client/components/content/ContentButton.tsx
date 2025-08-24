@@ -1,4 +1,5 @@
 import { StyleSheet, Pressable, ImageBackground } from "react-native";
+import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { updateScores } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
@@ -9,9 +10,9 @@ interface ContentButtonProps {
     content?: Content;
     ideas?: Content[];
     games?: Content[];
-    setModalVisible: (visible: boolean) => void;
     dayId: number;
     backgroundImage: string;
+    contentType: "story" | "idea" | "anecdote" | "game";
 }
 
 export const ContentButton: React.FC<ContentButtonProps> = ({
@@ -28,13 +29,15 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     },
     ideas = [],
     games = [],
-    setModalVisible,
     dayId,
     backgroundImage,
+    contentType,
 }) => {
     const handleContentOpening = async () => {
         await updateScores(dayId, ScoreType.ContentOpening);
-        setModalVisible(true);
+        router.push({
+            pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
+        });
     };
 
     return (

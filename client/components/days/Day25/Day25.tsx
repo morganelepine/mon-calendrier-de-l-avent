@@ -5,11 +5,7 @@ import { Day25Lost } from "@/components/days/Day25/Day25Lost";
 import { Colors } from "@/constants/Colors";
 import { getTotalScore } from "@/services/score.service";
 
-interface Day25Props {
-    dayId: number;
-}
-
-export const Day25: React.FC<Day25Props> = ({ dayId }) => {
+export const Day25 = () => {
     const [totalScore, setTotalScore] = useState<number>(0);
 
     useEffect(() => {

@@ -124,10 +124,7 @@ export default function Day25Screen() {
                     >
                         (Re)lire l'histoire et son épilogue
                     </CustomButton>
-                    <FullStory
-                        modalVisible={modalVisible}
-                        setModalVisible={setModalVisible}
-                    />
+                    <FullStory />
                 </View>
 
                 <View style={styles.section}>

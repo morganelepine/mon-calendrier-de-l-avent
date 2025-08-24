@@ -1,7 +1,11 @@
+import { StyleSheet } from "react-native";
+import { anecdotesData } from "@/data/SheetToJSON.Anecdotes";
+import { ideasData } from "@/data/SheetToJSON.Ideas";
+import { gamesData } from "@/data/SheetToJSON.Games";
+import { storyData } from "@/data/SheetToJSON.Story";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType, GameType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
-import { StyleSheet } from "react-native";
 
 interface GamesByType {
     pendu?: Content;
@@ -10,6 +14,31 @@ interface GamesByType {
     quizNoel: Content[];
     quizEmojis: Content[];
 }
+
+export const getContentsByDay = (dayId: number) => {
+    const anecdote: Content | undefined = anecdotesData.find(
+        (anecdote) => anecdote.dayNumber === dayId
+    );
+
+    const story: Content | undefined = storyData.find(
+        (story) => story.dayNumber === dayId
+    );
+
+    const ideas: Content[] = ideasData.filter(
+        (idea) => idea.dayNumber === dayId
+    );
+
+    const games: Content[] = gamesData.filter(
+        (game) => game.dayNumber === dayId
+    );
+
+    return {
+        anecdote,
+        story,
+        ideas,
+        games,
+    };
+};
 
 export const getContentTitle = (
     content: Content,
