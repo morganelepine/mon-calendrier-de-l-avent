@@ -38,11 +38,15 @@ export default function CalendarScreen() {
         }
     }, [days]);
 
-    const goToDay = (day: Day) => {
+    const goToDay = (
+        day: Day,
+        setModalVisible: (modalVisible: boolean) => void
+    ) => {
         router.push({
-            pathname: "/calendar/day",
-            params: { dayId: day.dayNumber },
+            pathname: "/calendar/day/[id]",
+            params: { id: String(day.dayNumber) },
         });
+        setModalVisible(false);
     };
 
     return (

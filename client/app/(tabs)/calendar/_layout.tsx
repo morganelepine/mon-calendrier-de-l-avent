@@ -4,7 +4,6 @@ export default function CalendarLayout() {
     return (
         <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="index" />
-            <Stack.Screen name="day" />
             <Stack.Screen name="day25" />
         </Stack>
     );

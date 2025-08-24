@@ -9,7 +9,10 @@ import { ScoreType } from "@/enums/enums";
 interface DaysProps {
     days: Day[];
     setDays: (days: Day[]) => void;
-    goToDay: (day: Day) => void;
+    goToDay: (
+        day: Day,
+        setModalVisible: (modalVisible: boolean) => void
+    ) => void;
 }
 
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {

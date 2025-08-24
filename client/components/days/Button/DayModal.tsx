@@ -14,7 +14,10 @@ interface DayModalProps {
     day: Day;
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
-    goToDay: (day: Day) => void;
+    goToDay: (
+        day: Day,
+        setModalVisible: (modalVisible: boolean) => void
+    ) => void;
 }
 
 export const DayModal: React.FC<DayModalProps> = ({
@@ -52,7 +55,7 @@ export const DayModal: React.FC<DayModalProps> = ({
                             ) : null}
 
                             <Pressable
-                                onPress={() => goToDay(day)}
+                                onPress={() => goToDay(day, setModalVisible)}
                                 style={styles.button}
                             >
                                 <Ionicons

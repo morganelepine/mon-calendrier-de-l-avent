@@ -10,11 +10,8 @@ import { storyData } from "@/data/SheetToJSON.Story";
 import { Content } from "@/interfaces/contentInterface";
 
 export default function DayScreen() {
-    const params = useLocalSearchParams();
-    const dayParam = Array.isArray(params.dayId)
-        ? params.dayId[0]
-        : params.dayId;
-    const dayId = dayParam ? parseInt(dayParam, 10) : 0;
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const dayId = parseInt(id, 10);
 
     const anecdoteOfTheDay: Content | undefined = anecdotesData.find(
         (anecdote) => anecdote.dayNumber === dayId
