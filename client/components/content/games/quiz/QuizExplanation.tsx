@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         color: Colors.red,
     },
     finalText: {
-        fontFamily: "AnonymousProBold",
+        fontFamily: "PoppinsItalic",
         fontSize: 14,
         marginVertical: 20,
         color: Colors.red,

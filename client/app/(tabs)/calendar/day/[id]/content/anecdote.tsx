@@ -34,10 +34,7 @@ export default function AnecdoteScreen() {
             ) : null}
 
             {anecdote.content2 ? (
-                <ExternalLink
-                    href={anecdote.content3 as Href}
-                    style={{ marginBottom: 20 }}
-                >
+                <ExternalLink href={anecdote.content3 as Href}>
                     <ThemedText type="italic14">
                         Source :{" "}
                         <ThemedText

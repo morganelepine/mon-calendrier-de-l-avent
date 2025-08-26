@@ -23,18 +23,16 @@ export const Recipe: React.FC<RecipeProps> = ({ content }) => {
                 {content.title}
             </ThemedText>
 
-            <View style={styles.contentContainer}>
+            <View>
                 <ThemedText style={styles.contentTitle}>Ingrédients</ThemedText>
                 <CustomMarkdown style={styles.ingredients}>
                     {content.content2}
                 </CustomMarkdown>
             </View>
 
-            <View style={styles.contentContainer}>
+            <View style={{ marginTop: 10 }}>
                 <ThemedText style={styles.contentTitle}>Recette</ThemedText>
-                <ThemedText style={styles.recipe}>
-                    {content.content1}
-                </ThemedText>
+                <ThemedText>{content.content1}</ThemedText>
             </View>
 
             {content.content4 ? (
@@ -47,10 +45,6 @@ export const Recipe: React.FC<RecipeProps> = ({ content }) => {
 };
 
 const styles = StyleSheet.create({
-    recipe: {
-        textAlign: "left",
-    },
-    contentContainer: { textAlign: "left", marginBottom: 20 },
     contentTitle: {
         fontFamily: "PallyBold",
         textAlign: "left",
@@ -58,7 +52,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: Colors.green,
     },
-    recipeTitle: { fontSize: 24, marginBottom: 20 },
+    recipeTitle: { fontSize: 20, marginBottom: 20 },
     ingredients: {
         marginBottom: 5,
         fontSize: 16,
@@ -66,7 +60,8 @@ const styles = StyleSheet.create({
     },
     sourcePhoto: {
         fontSize: 10,
-        fontFamily: "AnonymousProItalic",
+        fontFamily: "PoppinsItalic",
         alignSelf: "flex-end",
+        marginTop: 10,
     },
 });

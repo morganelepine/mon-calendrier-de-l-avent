@@ -6,7 +6,6 @@ import Animated, {
     useAnimatedStyle,
     useScrollViewOffset,
 } from "react-native-reanimated";
-
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 
@@ -43,13 +42,18 @@ export default function ParallaxScrollView({
                         [2, 1, 1]
                     ),
                 },
+                { perspective: 1000 },
             ],
         };
     });
 
     return (
         <ThemedView style={styles.container}>
-            <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+            <Animated.ScrollView
+                ref={scrollRef}
+                scrollEventThrottle={16}
+                removeClippedSubviews={false}
+            >
                 <Animated.View
                     style={[
                         styles.header,
@@ -78,7 +82,6 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        overflow: "hidden",
     },
     contentContainer: {
         marginTop: HEADER_HEIGHT - 50,

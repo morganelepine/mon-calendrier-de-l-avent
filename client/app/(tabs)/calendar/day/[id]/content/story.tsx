@@ -37,7 +37,7 @@ export default function StoryScreen() {
 
 const styles = StyleSheet.create({
     end: {
-        paddingVertical: 20,
+        paddingTop: 10,
         fontFamily: "PoppinsItalic",
         color: Colors.green,
     },

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         color: Colors.red,
     },
     modalFinalText: {
-        fontFamily: "AnonymousProBold",
+        fontFamily: "PoppinsItalic",
         fontSize: 14,
         marginTop: 10,
         color: Colors.red,
