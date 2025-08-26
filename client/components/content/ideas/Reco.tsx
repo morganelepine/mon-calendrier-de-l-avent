@@ -23,7 +23,7 @@ export const Reco: React.FC<RecoProps> = ({
 }) => {
     return (
         <View>
-            <ThemedText type="modalSubtitle" style={{ marginBottom: 20 }}>
+            <ThemedText type="contentSubtitle" style={{ marginBottom: 20 }}>
                 {idea.title}
             </ThemedText>
 

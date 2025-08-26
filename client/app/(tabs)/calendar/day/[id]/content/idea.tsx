@@ -4,7 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { Reco } from "@/components/content/ideas/Reco";
 import { Recipe } from "@/components/content/ideas/Recipe";
 import { List } from "@/components/content/ideas/List";
-import { ModalWithText } from "@/components/utils/custom/ModalWithText";
+import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType, IdeaType } from "@/enums/enums";
@@ -55,7 +55,7 @@ export default function IdeaScreen() {
     return (
         <>
             {ideas.map((idea) => (
-                <ModalWithText
+                <ContentScreenWrapper
                     contentType={ContentType.Idea}
                     backgroundImage={modalBackground}
                     key={idea.id}
@@ -86,7 +86,7 @@ export default function IdeaScreen() {
                                 )}
                         </View>
                     </CustomScrollView>
-                </ModalWithText>
+                </ContentScreenWrapper>
             ))}
         </>
     );

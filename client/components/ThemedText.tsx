@@ -10,9 +10,11 @@ export type ThemedTextProps = TextProps & {
         | "homeTitle"
         | "sectionSubtitle"
         | "sectionText"
-        | "link"
-        | "modalTitle"
-        | "modalSubtitle";
+        | "contentTitle"
+        | "contentSubtitle"
+        | "italic14"
+        | "pallyBoldSnow"
+        | "pallyBoldBlue";
 };
 
 export function ThemedText({
@@ -32,10 +34,11 @@ export function ThemedText({
                 type === "homeTitle" ? styles.homeTitle : undefined,
                 type === "sectionSubtitle" ? styles.sectionSubtitle : undefined,
                 type === "sectionText" ? styles.sectionText : undefined,
-                type === "link" ? styles.link : undefined,
-                type === "modalTitle" ? styles.modalTitle : undefined,
-                type === "modalSubtitle" ? styles.modalSubtitle : undefined,
-
+                type === "contentTitle" ? styles.contentTitle : undefined,
+                type === "contentSubtitle" ? styles.contentSubtitle : undefined,
+                type === "italic14" ? styles.italic14 : undefined,
+                type === "pallyBoldSnow" ? styles.pallyBoldSnow : undefined,
+                type === "pallyBoldBlue" ? styles.pallyBoldBlue : undefined,
                 style,
             ]}
             {...rest}
@@ -47,7 +50,6 @@ const styles = StyleSheet.create({
     default: {
         fontSize: 16,
         fontFamily: "Poppins",
-        textAlign: "center",
         color: Colors.darkGreen,
     },
     homeTitle: {
@@ -79,24 +81,32 @@ const styles = StyleSheet.create({
         color: Colors.darkBlue,
         paddingHorizontal: 20,
     },
-    link: {
-        fontSize: 20,
-        fontFamily: "Pally",
-        color: "white",
-    },
-    modalTitle: {
+    contentTitle: {
         color: Colors.green,
-        fontSize: 26,
-        fontFamily: "PoppinsBold",
+        fontSize: 32,
+        fontFamily: "PallyBold",
         textAlign: "center",
         marginVertical: 20,
         lineHeight: 34,
+        letterSpacing: 2,
     },
-    modalSubtitle: {
-        color: Colors.darkGreen,
-        fontSize: 20,
+    contentSubtitle: {
+        color: Colors.green,
+        fontSize: 16,
+        fontFamily: "PoppinsBold",
+    },
+    italic14: {
+        fontSize: 14,
+        fontFamily: "PoppinsItalic",
+    },
+    pallyBoldSnow: {
+        color: Colors.snow,
         fontFamily: "PallyBold",
-        textAlign: "left",
-        letterSpacing: 1,
+        letterSpacing: 2,
+    },
+    pallyBoldBlue: {
+        color: Colors.blue,
+        fontFamily: "PallyBold",
+        letterSpacing: 2,
     },
 });

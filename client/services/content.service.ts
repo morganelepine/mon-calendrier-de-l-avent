@@ -15,7 +15,7 @@ interface GamesByType {
     quizEmojis: Content[];
 }
 
-export const getContentsByDay = (dayId: number) => {
+export const getContentsByDay = (dayId: number): object => {
     const anecdote: Content | undefined = anecdotesData.find(
         (anecdote) => anecdote.dayNumber === dayId
     );
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 5,
         justifyContent: "center",
+        alignItems: "center",
         minHeight: 48,
     },
     isNotCorrect: {

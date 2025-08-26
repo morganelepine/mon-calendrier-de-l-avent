@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
-import { StyleSheet, View, ImageBackground, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { EdgeInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
@@ -9,7 +9,6 @@ import { MusicPreferences } from "@/components/calendar/MusicPreferences";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface FirstLaunchModalProps {
     modalVisible: boolean;
@@ -25,8 +24,6 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
     insets,
 }) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const backgroundImage = getCloudinaryImageUrl("Fond_1_s84lam");
-
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
 
     useEffect(() => {
@@ -58,10 +55,10 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
                 setModalVisible(false);
             }}
         >
-            <View style={styles.modalView}>
+            <View style={styles.container}>
                 <ThemedText
-                    type="modalTitle"
-                    style={[styles.modalTitle, { paddingTop: insets.top }]}
+                    type="pallyBoldBlue"
+                    style={[styles.title, { paddingTop: insets.top }]}
                 >
                     Bienvenue dans votre&nbsp;calendrier de&nbsp;l'avent
                 </ThemedText>
@@ -86,17 +83,15 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
 };
 
 const styles = StyleSheet.create({
-    modalView: {
+    container: {
         flex: 1,
         alignItems: "center",
         backgroundColor: Colors.snow,
     },
-    modalTitle: {
-        paddingHorizontal: 15,
-        color: Colors.blue,
-        fontFamily: "PallyBold",
-        letterSpacing: 2,
+    title: {
+        margin: 15,
         fontSize: 34,
+        textAlign: "center",
     },
     button: {
         marginHorizontal: 20,

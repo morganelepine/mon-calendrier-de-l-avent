@@ -15,7 +15,7 @@ export const RulesButton: React.FC<RulesButtonProps> = ({
                 onPress={() => setModalVisible(true)}
                 style={styles.button}
             >
-                <ThemedText style={styles.buttonText}>
+                <ThemedText type="italic14" style={styles.buttonText}>
                     Voir les règles
                 </ThemedText>
             </Pressable>
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: Colors.snow,
-        fontSize: 12,
-        fontFamily: "PoppinsItalic",
         textDecorationLine: "underline",
     },
 });

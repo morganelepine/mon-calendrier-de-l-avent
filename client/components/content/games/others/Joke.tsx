@@ -43,7 +43,7 @@ export const Joke: React.FC<JokeProps> = ({ game, setScore }) => {
 
     return (
         <View key={game.id}>
-            <ThemedText type="modalSubtitle" style={styles.title}>
+            <ThemedText type="contentSubtitle" style={styles.title}>
                 {game.title}
             </ThemedText>
 

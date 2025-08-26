@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Collapsible } from "@/components/utils/Collapsible";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { ModalWithText } from "@/components/utils/custom/ModalWithText";
+import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { storyData } from "@/data/SheetToJSON.Story";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
@@ -9,7 +9,7 @@ import { Colors } from "@/constants/Colors";
 
 export const FullStory = () => {
     return (
-        <ModalWithText
+        <ContentScreenWrapper
             contentType={"story"}
             backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
         >
@@ -31,7 +31,7 @@ export const FullStory = () => {
                     </Collapsible>
                 ))}
             </CustomScrollView>
-        </ModalWithText>
+        </ContentScreenWrapper>
     );
 };
 

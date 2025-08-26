@@ -22,7 +22,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
         <CustomModal visible={modalVisible} onRequestClose={onClose}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
-                    <ThemedText type="modalTitle" style={styles.modalTitle}>
+                    <ThemedText style={styles.modalTitle}>
                         Règles pour gagner des&nbsp;points
                     </ThemedText>
 
@@ -60,10 +60,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         alignItems: "center",
         backgroundColor: Colors.snow,
-        borderRadius: 30,
+        borderRadius: 20,
         elevation: 5,
     },
-    modalTitle: { paddingHorizontal: 14, fontSize: 22, color: Colors.blue },
+    modalTitle: {
+        fontFamily: "PoppinsBold",
+        textAlign: "center",
+        marginVertical: 20,
+        fontSize: 22,
+        color: Colors.blue,
+    },
     closeButton: {
         marginTop: 10,
         height: 48,

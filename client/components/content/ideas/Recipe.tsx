@@ -19,7 +19,7 @@ interface RecipeProps {
 export const Recipe: React.FC<RecipeProps> = ({ content }) => {
     return (
         <View>
-            <ThemedText type="modalSubtitle" style={styles.recipeTitle}>
+            <ThemedText type="contentSubtitle" style={styles.recipeTitle}>
                 {content.title}
             </ThemedText>
 

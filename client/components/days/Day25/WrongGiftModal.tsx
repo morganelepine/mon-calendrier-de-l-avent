@@ -20,7 +20,7 @@ export const WrongGiftModal: React.FC<WrongGiftModalProps> = ({
         <CustomModal visible={modalVisible} onRequestClose={onClose}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
-                    <ThemedText style={styles.title}>
+                    <ThemedText type="pallyBoldBlue" style={styles.title}>
                         La surprise ne se cache pas ici...
                     </ThemedText>
                     <ThemedText>Ouvrez un autre cadeau !</ThemedText>
@@ -60,11 +60,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     title: {
-        color: Colors.blue,
         fontSize: 24,
-        fontFamily: "PallyBold",
         textAlign: "center",
-        letterSpacing: 2,
         marginVertical: 20,
     },
     closeButton: {

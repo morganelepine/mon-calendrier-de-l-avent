@@ -82,13 +82,12 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         marginTop: HEADER_HEIGHT - 50,
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
         overflow: "hidden",
         backgroundColor: "transparent",
     },
     content: {
-        paddingHorizontal: 20,
         backgroundColor: Colors.snow,
     },
 });

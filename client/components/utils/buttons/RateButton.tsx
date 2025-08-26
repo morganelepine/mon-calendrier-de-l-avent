@@ -24,7 +24,7 @@ export const RateButton: React.FC<RateButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         borderRadius: 50,
         paddingHorizontal: 16,
         height: 48,

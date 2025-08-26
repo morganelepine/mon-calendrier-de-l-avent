@@ -1,23 +1,13 @@
-import { useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Wallpapers } from "@/components/days/Day25/Wallpapers";
-import { FullStory } from "@/components/days/Day25/FullStory";
-import { Poem } from "@/components/days/Day25/Poem";
-import { CustomButton } from "@/components/utils/buttons/Button";
 import { RateButton } from "@/components/utils/buttons/RateButton";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Colors } from "@/constants/Colors";
-
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export default function Day25Screen() {
-    const [modalVisible, setModalVisible] = useState(false);
-    const openStoryModal = async () => {
-        setModalVisible(true);
-    };
-
     return (
         <ParallaxScrollView
             headerBackgroundColor={{
@@ -34,7 +24,7 @@ export default function Day25Screen() {
                 />
             }
         >
-            <ThemedText type="modalTitle" style={styles.title}>
+            <ThemedText style={styles.title}>
                 Merci d'être resté·e jusqu'au bout 🎅
             </ThemedText>
 
@@ -59,72 +49,6 @@ export default function Day25Screen() {
                     <ThemedText style={styles.text}>
                         Et maintenant, place aux cadeaux ! 🎁
                     </ThemedText>
-                </View>
-
-                <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">
-                        🎨 Une carte de vœux
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Une aquarelle réalisée par mon amie Annaëlle pour
-                        souhaiter une bonne année à vos proches.
-                    </ThemedText>
-                    <View style={styles.imageContainer}>
-                        <ExternalLink
-                            href={"https://bit.ly/carte-voeux-annaelle"}
-                            style={{ marginRight: 10, marginBottom: 15 }}
-                        >
-                            <View style={styles.thumbnail}>
-                                <Image
-                                    source={{
-                                        uri: getCloudinaryImageUrl(
-                                            "carte-zoom_jyxjm3"
-                                        ),
-                                    }}
-                                    resizeMode="cover"
-                                    style={styles.thumbnail}
-                                />
-                            </View>
-                        </ExternalLink>
-
-                        <ThemedText
-                            type="sectionText"
-                            style={styles.explanations}
-                        >
-                            Cliquez sur l'image pour la télécharger puis
-                            l'imprimer au format A4 !
-                        </ThemedText>
-                    </View>
-                </View>
-
-                <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">✒️ Un poème</ThemedText>
-                    <ThemedText type="sectionText">
-                        Un joli texte écrit par mon copain, à retranscrire sur
-                        une carte de vœux pour souhaiter la bonne année ?
-                    </ThemedText>
-                    <Poem />
-                </View>
-
-                <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">
-                        📖 L'épilogue de la nouvelle de Noël
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Vous avez apprécié l'histoire de Noël imaginée par
-                        Victoria ?
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Découvrez son dénouement (chapitre 25) et n'hésitez pas
-                        à la relire d'une traite !
-                    </ThemedText>
-                    <CustomButton
-                        style={styles.storyButton}
-                        onPress={openStoryModal}
-                    >
-                        (Re)lire l'histoire et son épilogue
-                    </CustomButton>
-                    <FullStory />
                 </View>
 
                 <View style={styles.section}>
@@ -189,19 +113,28 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 26,
-        color: Colors.blue,
         letterSpacing: 2,
+        color: Colors.green,
+        fontFamily: "PallyBold",
+        textAlign: "center",
+        marginVertical: 20,
+        lineHeight: 34,
+    },
+    section: {
+        marginBottom: 30,
     },
     text: {
         color: Colors.darkBlue,
         paddingVertical: 5,
         textAlign: "left",
-    },
-    section: {
-        marginBottom: 30,
+        paddingHorizontal: 20,
     },
     button: { marginTop: 10, marginBottom: 20, alignSelf: "center" },
-    imageContainer: { flexDirection: "row", marginVertical: 10 },
+    imageContainer: {
+        flexDirection: "row",
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
     image: { marginRight: 10 },
     thumbnail: {
         width: 150,
@@ -214,10 +147,5 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontFamily: "PoppinsItalic",
         flex: 1,
-    },
-    storyButton: {
-        marginTop: 5,
-        marginBottom: 15,
-        backgroundColor: Colors.green,
     },
 });

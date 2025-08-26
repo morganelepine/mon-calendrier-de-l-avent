@@ -78,9 +78,9 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     };
 
     return (
-        <View key={game.id}>
-            <ThemedText style={styles.quizTitle}>
-                Trouvez 3 mots autour de l'hiver et de Noël
+        <View key={game.id} style={{ alignItems: "center" }}>
+            <ThemedText type={"contentSubtitle"} style={styles.quizTitle}>
+                Trouvez 3 mots autour de l'hiver et&nbsp;de&nbsp;Noël
             </ThemedText>
 
             <Infos
@@ -114,9 +114,8 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
 
 const styles = StyleSheet.create({
     quizTitle: {
-        marginVertical: 10,
-        fontFamily: "PallyBold",
-        fontSize: 22,
+        marginBottom: 10,
+        textAlign: "center",
     },
     hiddenWord: { fontSize: 35, marginVertical: 20 },
 });

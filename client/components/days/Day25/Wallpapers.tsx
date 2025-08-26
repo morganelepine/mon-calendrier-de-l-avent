@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-around",
-        marginTop: 10,
-        marginBottom: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
     },
     thumbnail: {
         width: 45,

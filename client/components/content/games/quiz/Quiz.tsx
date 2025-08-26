@@ -50,8 +50,8 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         <>
             {currentGame.content5 === GameType.QuizEmojis && (
                 <ThemedText style={{ marginVertical: 10 }}>
-                    Retrouvez dans quelle chanson se trouve ce refrain en émojis
-                    :
+                    Retrouvez dans quelle chanson se trouve ce refrain en
+                    émojis&nbsp;:
                 </ThemedText>
             )}
 

@@ -5,12 +5,12 @@ import { ThemedText } from "@/components/ThemedText";
 import { ContentType } from "@/enums/enums";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
-interface GameModalProps {
+interface GameScreenWrapperProps {
     contentType: string;
     children?: React.ReactNode;
 }
 
-export const GameModal: React.FC<GameModalProps> = ({
+export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
     contentType,
     children,
 }) => {
@@ -35,16 +35,14 @@ export const GameModal: React.FC<GameModalProps> = ({
             style={styles.imageBackground}
         >
             <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <ThemedText
-                        type="modalTitle"
-                        style={[styles.modalTitle, { paddingTop: insets.top }]}
-                    >
-                        {getTitle()}
-                    </ThemedText>
+                <ThemedText
+                    type="contentTitle"
+                    style={[{ paddingTop: insets.top * 1.5 }]}
+                >
+                    {getTitle()}
+                </ThemedText>
 
-                    {children}
-                </View>
+                {children}
             </View>
         </ImageBackground>
     );
@@ -56,16 +54,8 @@ const styles = StyleSheet.create({
     },
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    modalView: {
-        paddingHorizontal: 5,
-        paddingVertical: 10,
-        alignItems: "center",
         justifyContent: "space-between",
-        flex: 1,
+        alignItems: "center",
         width: "100%",
     },
-    modalTitle: { paddingHorizontal: 15 },
 });

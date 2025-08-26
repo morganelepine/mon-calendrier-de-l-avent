@@ -54,8 +54,4 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         borderRadius: 5,
     },
-    cellText: {
-        color: Colors.snow,
-        fontSize: 14,
-    },
 });

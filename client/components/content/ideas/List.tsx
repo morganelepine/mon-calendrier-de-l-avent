@@ -15,7 +15,7 @@ interface ListProps {
 export const List: React.FC<ListProps> = ({ idea }) => {
     return (
         <View>
-            <ThemedText type="modalSubtitle" style={{ marginBottom: 20 }}>
+            <ThemedText type="contentSubtitle" style={{ marginBottom: 20 }}>
                 {idea.title}
             </ThemedText>
 

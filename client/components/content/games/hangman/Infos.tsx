@@ -32,7 +32,7 @@ export const Infos: React.FC<InfosProps> = ({
 const styles = StyleSheet.create({
     infos: {
         marginTop: 5,
-        marginBottom: 20,
+        marginBottom: 10,
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderWidth: 0.5,

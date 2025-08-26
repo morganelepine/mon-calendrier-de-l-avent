@@ -5,13 +5,13 @@ import { Colors } from "@/constants/Colors";
 import { ContentType } from "@/enums/enums";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 
-interface ModalWithTextProps {
-    contentType: string;
+interface ContentScreenWrapperProps {
+    contentType: string | undefined;
     backgroundImage: string;
     children?: React.ReactNode;
 }
 
-export const ModalWithText: React.FC<ModalWithTextProps> = ({
+export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     contentType,
     backgroundImage,
     children,
@@ -49,8 +49,8 @@ export const ModalWithText: React.FC<ModalWithTextProps> = ({
                 />
             }
         >
-            <View style={styles.modalView}>
-                <ThemedText type="modalTitle">{getTitle()}</ThemedText>
+            <View style={styles.container}>
+                <ThemedText type="contentTitle">{getTitle()}</ThemedText>
 
                 {children}
             </View>
@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
     },
-    modalView: {
-        paddingBottom: 10,
-        alignItems: "center",
+    container: {
+        paddingBottom: 20,
+        paddingHorizontal: 20,
         justifyContent: "space-between",
         flex: 1,
     },

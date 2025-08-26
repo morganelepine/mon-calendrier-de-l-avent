@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { GameModal } from "@/components/utils/custom/GameModal";
+import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
 import { Games } from "@/components/content/games/others/Games";
@@ -22,7 +22,7 @@ export default function GameScreen() {
     };
 
     return (
-        <GameModal contentType={type}>
+        <GameScreenWrapper contentType={type}>
             <CustomScrollView>
                 <View style={styles.container}>
                     {gamesByType.pendu && (
@@ -36,11 +36,11 @@ export default function GameScreen() {
                     {gamesByType.quizCitation.length > 0 && (
                         <>
                             <ThemedText
-                                type="modalSubtitle"
+                                type="contentSubtitle"
                                 style={{ textAlign: "center" }}
                             >
-                                À quel film de Noël appartient cette
-                                réplique&nbsp;?
+                                À quel film de Noël appartient
+                                cette&nbsp;réplique&nbsp;?
                             </ThemedText>
                             <Quiz
                                 games={gamesByType.quizCitation}
@@ -52,7 +52,7 @@ export default function GameScreen() {
 
                     {gamesByType.quizNoel.length > 0 && (
                         <>
-                            <ThemedText type="modalSubtitle">
+                            <ThemedText type="contentSubtitle">
                                 Êtes-vous incollable sur&nbsp;Noël&nbsp;?
                             </ThemedText>
                             <Quiz
@@ -65,7 +65,7 @@ export default function GameScreen() {
 
                     {gamesByType.quizEmojis.length > 0 && (
                         <>
-                            <ThemedText type="modalSubtitle">
+                            <ThemedText type="contentSubtitle">
                                 Êtes-vous incollable sur&nbsp;Noël&nbsp;?
                             </ThemedText>
                             <Quiz
@@ -77,15 +77,12 @@ export default function GameScreen() {
                     )}
                 </View>
             </CustomScrollView>
-        </GameModal>
+        </GameScreenWrapper>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
-    },
-    title: {
-        marginTop: 10,
     },
 });

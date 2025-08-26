@@ -36,7 +36,7 @@ export const DayModal: React.FC<DayModalProps> = ({
                 <View style={styles.modalContainer}>
                     <TouchableWithoutFeedback>
                         <View style={styles.modalView}>
-                            <View style={styles.quoteContainer}>
+                            <View>
                                 <ThemedText style={styles.quotationMark}>
                                     «
                                 </ThemedText>
@@ -49,7 +49,10 @@ export const DayModal: React.FC<DayModalProps> = ({
                             </View>
 
                             {day.quoteAuthor ? (
-                                <ThemedText style={styles.author}>
+                                <ThemedText
+                                    type="italic14"
+                                    style={{ marginTop: 10 }}
+                                >
                                     {day.quoteAuthor}
                                 </ThemedText>
                             ) : null}
@@ -76,32 +79,26 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     modalView: {
         margin: 20,
-        paddingHorizontal: 30,
-        paddingVertical: 20,
+        padding: 20,
         backgroundColor: Colors.snow,
-        borderRadius: 50,
-        boxShadow: "0px 3px 4.65px rgba(0,0,0,0.29)",
+        borderRadius: 20,
+        elevation: 4,
+        alignItems: "center",
     },
-    date: { fontFamily: "PallyBold", marginBottom: 20 },
-    quoteContainer: { marginBottom: 10 },
     quotationMark: {
         fontSize: 50,
         lineHeight: 50,
         color: Colors.green,
+        textAlign: "center",
     },
     quote: {
         fontSize: 20,
         fontStyle: "italic",
-        marginBottom: 20,
-    },
-    author: {
-        fontSize: 14,
-        fontFamily: "AnonymousProItalic",
+        textAlign: "center",
     },
     button: {
         borderRadius: 50,
@@ -109,13 +106,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         height: 48,
         width: 48,
-        alignSelf: "center",
         alignItems: "center",
         justifyContent: "center",
-    },
-    buttonText: {
-        color: "white",
-        textAlign: "center",
-        fontSize: 14,
     },
 });

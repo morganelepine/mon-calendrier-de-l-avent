@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         minHeight: 48,
         justifyContent: "center",
+        alignItems: "center",
         marginVertical: 20,
     },
     nextQuestionText: {

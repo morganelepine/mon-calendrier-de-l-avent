@@ -37,7 +37,7 @@ export const BingoHeader: React.FC<BingoHeaderProps> = ({
 
     return (
         <View style={styles.header}>
-            <ThemedText style={styles.title}>
+            <ThemedText type="pallyBoldSnow" style={styles.title}>
                 Le bingo des téléfilms de Noël
             </ThemedText>
             <Pressable onPress={handlePress} style={styles.button}>
@@ -63,12 +63,7 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        color: Colors.snow,
-        textAlign: "left",
         fontSize: 28,
-        fontFamily: "PallyBold",
-        letterSpacing: 2,
-        lineHeight: 34,
     },
     buttonBackground: {
         ...StyleSheet.absoluteFillObject,

@@ -16,7 +16,7 @@ export const GameIdea: React.FC<GameIdeaProps> = ({ game }) => {
         <View key={game.id}>
             {!game.content1.includes("Bingo") ? (
                 <>
-                    <ThemedText type="modalSubtitle" style={styles.title}>
+                    <ThemedText type="contentSubtitle" style={styles.title}>
                         Une idée de jeu pour animer le&nbsp;réveillon
                     </ThemedText>
                     <ThemedText style={styles.subtitle}>
@@ -24,7 +24,7 @@ export const GameIdea: React.FC<GameIdeaProps> = ({ game }) => {
                     </ThemedText>
                 </>
             ) : (
-                <ThemedText type="modalSubtitle" style={styles.title}>
+                <ThemedText type="contentSubtitle" style={styles.title}>
                     {game.content1}
                 </ThemedText>
             )}
