@@ -26,7 +26,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
             {score > 0 && isDecember && (
                 <>
                     <ThemedText style={styles.score}>
-                        <Text style={styles.bold}>{score}</Text>{" "}
+                        <ThemedText type="pallyBoldSnow">{score}</ThemedText>{" "}
                         {score > 1 ? "points" : "point"}
                     </ThemedText>
 
@@ -36,10 +36,9 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
                                 Objectif atteint ✨{" "}
                             </ThemedText>
                             <ThemedText
+                                type="italic14"
                                 style={{
                                     marginBottom: 30,
-                                    fontFamily: "PoppinsItalic",
-                                    fontSize: 12,
                                     color: Colors.snow,
                                 }}
                             >
@@ -88,21 +87,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         width: "100%",
     },
-
-    bold: {
-        fontFamily: "PallyBold",
-    },
     score: {
         fontSize: 50,
         color: Colors.snow,
     },
-
     pointsContainer: {
         flexDirection: "row",
         justifyContent: "flex-end",
         marginBottom: 5,
     },
-
     barContainer: {
         position: "relative",
         alignSelf: "stretch",

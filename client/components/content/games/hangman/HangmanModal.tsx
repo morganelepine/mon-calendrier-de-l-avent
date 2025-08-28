@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "white",
         borderRadius: 30,
-        elevation: 5,
+        elevation: 4,
         alignSelf: "center",
         gap: 10,
     },

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: Colors.snow,
         borderRadius: 20,
-        elevation: 5,
+        elevation: 4,
     },
     modalTitle: {
         fontFamily: "PoppinsBold",

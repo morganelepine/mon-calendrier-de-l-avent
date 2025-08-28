@@ -34,10 +34,10 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
             resizeMode="cover"
             style={styles.imageBackground}
         >
-            <View style={styles.centeredView}>
+            <View style={styles.container}>
                 <ThemedText
                     type="contentTitle"
-                    style={[{ paddingTop: insets.top * 1.5 }]}
+                    style={[{ paddingTop: insets.top }]}
                 >
                     {getTitle()}
                 </ThemedText>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     imageBackground: {
         flex: 1,
     },
-    centeredView: {
+    container: {
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",

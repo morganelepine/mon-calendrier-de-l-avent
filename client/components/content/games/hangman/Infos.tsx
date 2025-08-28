@@ -16,32 +16,40 @@ export const Infos: React.FC<InfosProps> = ({
     maxTries,
 }) => {
     return (
-        <View style={styles.infos}>
-            <ThemedText style={styles.info}>
-                Mot : {currentWordIndex + 1} sur {words.length}
-            </ThemedText>
-
-            <ThemedText style={styles.info}>
-                {mistakes < 2 ? "Erreur : " : "Erreurs : "}
-                {mistakes} sur {maxTries}
-            </ThemedText>
+        <View style={styles.container}>
+            <View style={styles.infos}>
+                <ThemedText style={styles.info}>
+                    Mot : {currentWordIndex + 1} sur {words.length}
+                </ThemedText>
+            </View>
+            <View style={styles.infos}>
+                <ThemedText style={styles.info}>
+                    {mistakes < 2 ? "Erreur : " : "Erreurs : "}
+                    {mistakes} sur {maxTries}
+                </ThemedText>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: 16,
+        marginVertical: 20,
+        paddingBottom: 10,
+    },
     infos: {
-        marginTop: 5,
-        marginBottom: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        borderWidth: 0.5,
+        flex: 1,
+        padding: 5,
+        borderWidth: 1,
         borderRadius: 20,
         borderColor: Colors.green,
-        alignSelf: "center",
     },
     info: {
-        fontSize: 16,
+        fontSize: 14,
         color: Colors.green,
+        textAlign: "center",
     },
 });

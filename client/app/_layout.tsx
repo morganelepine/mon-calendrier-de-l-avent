@@ -12,9 +12,6 @@ export default function RootLayout() {
     const colorScheme = useColorScheme();
 
     const [loaded] = useFonts({
-        AnonymousPro: require("../assets/fonts/Anonymous/AnonymousPro-Regular.ttf"),
-        AnonymousProBold: require("../assets/fonts/Anonymous/AnonymousPro-Bold.ttf"),
-        AnonymousProItalic: require("../assets/fonts/Anonymous/AnonymousPro-Italic.ttf"),
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
         PoppinsBold: require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
         PoppinsItalic: require("../assets/fonts/Poppins/Poppins-Italic.ttf"),

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { useEffect, useState } from "react";
 import { Infos } from "@/components/content/games/hangman/Infos";
@@ -79,8 +79,15 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
 
     return (
         <View key={game.id} style={{ alignItems: "center" }}>
-            <ThemedText type={"contentSubtitle"} style={styles.quizTitle}>
+            <ThemedText
+                type={"contentSubtitle"}
+                style={{ textAlign: "center" }}
+            >
                 Trouvez 3 mots autour de l'hiver et&nbsp;de&nbsp;Noël
+            </ThemedText>
+
+            <ThemedText style={{ fontSize: 35, paddingTop: 10 }}>
+                {hiddenWord.join(" ")}
             </ThemedText>
 
             <Infos
@@ -89,10 +96,6 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
                 mistakes={mistakes}
                 maxTries={maxTries}
             />
-
-            <ThemedText style={styles.hiddenWord}>
-                {hiddenWord.join(" ")}
-            </ThemedText>
 
             <Alphabet
                 clickedLetters={clickedLetters}
@@ -111,11 +114,3 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    quizTitle: {
-        marginBottom: 10,
-        textAlign: "center",
-    },
-    hiddenWord: { fontSize: 35, marginVertical: 20 },
-});

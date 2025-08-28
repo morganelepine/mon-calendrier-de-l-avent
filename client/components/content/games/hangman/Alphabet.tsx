@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
-        marginTop: 20,
         gap: 8,
     },
     letter: {
