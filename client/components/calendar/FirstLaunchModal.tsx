@@ -41,20 +41,22 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
         setMusicPreference(playMusic);
     }, [playMusic]);
 
-    const handleStart = () => {
+    const handleStart = async () => {
         setModalVisible(false);
+        await AsyncStorage.setItem("hasLaunched", "true");
         router.push({
             pathname: "/",
         });
     };
 
+    const onClose = async () => {
+        setModalVisible(false);
+        await AsyncStorage.setItem("hasLaunched", "true");
+        await AsyncStorage.setItem("newUsername", "true");
+    };
+
     return (
-        <CustomModal
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(false);
-            }}
-        >
+        <CustomModal visible={modalVisible} onRequestClose={onClose}>
             <View style={styles.container}>
                 <ThemedText
                     type="pallyBoldBlue"

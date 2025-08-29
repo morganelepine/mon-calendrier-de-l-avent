@@ -30,12 +30,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                     const savedUsername = await saveUser(userUuid, 0);
                     setUsername(savedUsername ?? null);
                 } else {
+                    await AsyncStorage.setItem("hasLaunched", "true");
                     const response = await fetch(
                         `${BASE_URL}/users/${userUuid}`
                     );
                     if (response.ok) {
                         const data = await response.json();
                         setUsername(data.username);
+                        console.log(data.username);
                     }
                 }
             } catch (error) {
