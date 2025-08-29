@@ -1,12 +1,13 @@
 import { StyleSheet, View, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { router } from "expo-router";
 
-interface RulesButtonProps {
+interface ScoresButtonProps {
     setModalVisible: (modalVisible: boolean) => void;
 }
 
-export const RulesButton: React.FC<RulesButtonProps> = ({
+export const ScoresButton: React.FC<ScoresButtonProps> = ({
     setModalVisible,
 }) => {
     return (
@@ -19,6 +20,15 @@ export const RulesButton: React.FC<RulesButtonProps> = ({
                     Voir les règles
                 </ThemedText>
             </Pressable>
+
+            <Pressable
+                onPress={() => router.push("/scores/leaderboard")}
+                style={styles.button}
+            >
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Voir le classement
+                </ThemedText>
+            </Pressable>
         </View>
     );
 };
@@ -29,6 +39,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingHorizontal: 20,
         width: "100%",
+        gap: 16,
     },
     button: {
         height: 48,

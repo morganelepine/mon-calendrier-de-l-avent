@@ -58,9 +58,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="score"
+                name="scores"
                 options={{
-                    title: "Score",
+                    title: "Scores",
                     tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon

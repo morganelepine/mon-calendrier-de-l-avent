@@ -23,7 +23,6 @@ async function resetDataIfNeeded() {
 
 export default function HomeScreen() {
     const insets = useSafeAreaInsets();
-    const { username } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {

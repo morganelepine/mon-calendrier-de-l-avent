@@ -13,4 +13,10 @@ export const ScoreRoutes = [
         controller: ScoreController,
         action: "getUserScore",
     },
+    {
+        method: "get",
+        route: "/scores/leaderboard",
+        controller: ScoreController,
+        action: "getLeaderboard",
+    },
 ];

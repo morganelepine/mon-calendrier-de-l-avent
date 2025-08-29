@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import { loadScores, getTotalScore } from "@/services/score.service";
-import { RulesButton } from "@/components/score/RulesButton";
+import { ScoresButton } from "@/components/score/ScoresButton";
 import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
@@ -43,7 +43,7 @@ export default function ScoreScreen() {
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
-                <RulesButton setModalVisible={setModalVisible} />
+                <ScoresButton setModalVisible={setModalVisible} />
 
                 <TotalScore score={score} />
 

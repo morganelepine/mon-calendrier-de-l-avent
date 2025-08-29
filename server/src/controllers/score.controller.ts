@@ -113,4 +113,13 @@ export class ScoreController {
 
         return { score: user.score, scoresByDate };
     }
+
+    async getLeaderboard(request: Request, response: Response) {
+        const leaderboard = await prisma.user.findMany({
+            orderBy: { score: "desc" },
+            select: { username: true, score: true },
+        });
+
+        return leaderboard;
+    }
 }
