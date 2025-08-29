@@ -1,9 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const AppContent = () => {
+    const insets = useSafeAreaInsets();
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { paddingBottom: insets.bottom / 2 }]}>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Chaque jour, plongez dans la magie de Noël et découvrez :

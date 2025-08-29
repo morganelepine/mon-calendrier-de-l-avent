@@ -44,7 +44,7 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
     const handleStart = async () => {
         setModalVisible(false);
         await AsyncStorage.setItem("hasLaunched", "true");
-        router.push({
+        router.replace({
             pathname: "/",
         });
     };

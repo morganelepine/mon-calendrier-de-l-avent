@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Home } from "@/components/calendar/Home";
 import { FirstLaunchModal } from "@/components/calendar/FirstLaunchModal";
-import { useUser } from "@/contexts/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsernameModal from "@/components/calendar/UsernameModal";
 
 const today = new Date();
 const currentYear = today.getFullYear();
@@ -24,19 +24,22 @@ async function resetDataIfNeeded() {
 export default function HomeScreen() {
     const insets = useSafeAreaInsets();
     const [modalVisible, setModalVisible] = useState(false);
+    const [usernameModalVisible, setUsernameModalVisible] = useState(false);
 
     useEffect(() => {
         const initializeApp = async () => {
             await resetDataIfNeeded();
 
-            const firstLaunch = !(await AsyncStorage.getItem("hasLaunched"));
+            const hasLaunched = await AsyncStorage.getItem("hasLaunched");
+            const newUsername = await AsyncStorage.getItem("newUsername");
 
-            if (firstLaunch) {
+            if (!hasLaunched) {
                 setModalVisible(true);
-                await AsyncStorage.setItem("hasLaunched", "true");
+            } else if (!newUsername) {
+                setUsernameModalVisible(true);
             }
 
-            // if (!firstLaunch) {
+            // if (hasLaunched) {
             //     await AsyncStorage.multiRemove([
             //         "userUuid",
             //         "playMusic",
@@ -44,6 +47,7 @@ export default function HomeScreen() {
             //         "scoresData",
             //         "lastResetYear",
             //         "hasLaunched",
+            //         "newUsername",
             //     ]);
             // }
         };
@@ -57,6 +61,10 @@ export default function HomeScreen() {
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 insets={insets}
+            />
+            <UsernameModal
+                modalVisible={usernameModalVisible}
+                setModalVisible={setUsernameModalVisible}
             />
         </>
     );

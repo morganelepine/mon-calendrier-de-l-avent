@@ -43,7 +43,6 @@ export default function CopyrightsScreen() {
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 20,
-        marginBottom: 20,
     },
     section: {
         marginBottom: 20,

@@ -1,54 +1,31 @@
-import { useRef } from "react";
-import { Animated, Pressable, StyleSheet, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 
 interface BingoHeaderProps {
     generateBingoGrid: () => void;
+    setModalVisible: (modalVisible: boolean) => void;
 }
 
 export const BingoHeader: React.FC<BingoHeaderProps> = ({
     generateBingoGrid,
+    setModalVisible,
 }) => {
-    const iconSpinAnim = useRef(new Animated.Value(0)).current;
-
-    const handlePress = () => {
-        Animated.sequence([
-            Animated.timing(iconSpinAnim, {
-                toValue: 1, // 360° rotation
-                duration: 500, // ms
-                useNativeDriver: true,
-            }),
-            Animated.timing(iconSpinAnim, {
-                toValue: 0,
-                duration: 0,
-                useNativeDriver: true,
-            }),
-        ]).start();
-
-        generateBingoGrid();
-    };
-
-    const spin = iconSpinAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "360deg"],
-    });
-
     return (
         <View style={styles.header}>
-            <ThemedText type="pallyBoldSnow" style={styles.title}>
-                Le bingo des téléfilms de Noël
-            </ThemedText>
-            <Pressable onPress={handlePress} style={styles.button}>
-                <View style={styles.buttonBackground} />
-                <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                    <Ionicons
-                        name="sync-outline"
-                        size={30}
-                        color={Colors.green}
-                    />
-                </Animated.View>
+            <Pressable
+                onPress={() => setModalVisible(true)}
+                style={styles.button}
+            >
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Voir les règles
+                </ThemedText>
+            </Pressable>
+
+            <Pressable onPress={generateBingoGrid} style={styles.button}>
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Générer une nouvelle grille
+                </ThemedText>
             </Pressable>
         </View>
     );
@@ -57,23 +34,17 @@ export const BingoHeader: React.FC<BingoHeaderProps> = ({
 const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        marginHorizontal: 20,
-    },
-    title: {
-        flex: 1,
-        fontSize: 28,
-    },
-    buttonBackground: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: Colors.snow,
-        borderRadius: 50,
+        justifyContent: "flex-start",
+        paddingHorizontal: 20,
+        width: "100%",
+        gap: 16,
     },
     button: {
         height: 48,
-        width: 48,
-        alignItems: "center",
         justifyContent: "center",
+    },
+    buttonText: {
+        color: Colors.snow,
+        textDecorationLine: "underline",
     },
 });

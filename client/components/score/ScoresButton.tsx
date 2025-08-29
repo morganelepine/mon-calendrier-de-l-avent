@@ -22,7 +22,7 @@ export const ScoresButton: React.FC<ScoresButtonProps> = ({
             </Pressable>
 
             <Pressable
-                onPress={() => router.push("/scores/leaderboard")}
+                onPress={() => router.navigate("/scores/leaderboard")}
                 style={styles.button}
             >
                 <ThemedText type="italic14" style={styles.buttonText}>

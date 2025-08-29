@@ -35,7 +35,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
 }) => {
     const handleContentOpening = async () => {
         await updateScores(dayId, ScoreType.ContentOpening);
-        router.push({
+        router.navigate({
             pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
         });
     };

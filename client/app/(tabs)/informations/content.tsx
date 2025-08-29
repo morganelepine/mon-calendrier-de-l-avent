@@ -11,13 +11,6 @@ export default function ContentScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 20,
         paddingVertical: 20,
-    },
-    section: {
-        marginBottom: 20,
-    },
-    ital: {
-        fontFamily: "PoppinsItalic",
     },
 });

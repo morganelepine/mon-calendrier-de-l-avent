@@ -1,54 +1,10 @@
-import { ScrollView, StyleSheet, View } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
+import { ScrollView, StyleSheet } from "react-native";
+import { BingoRules } from "@/components/bingo/BingoRules";
 
 export default function BingoRulesScreen() {
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.section}>
-                <ThemedText type="sectionText">
-                    Vous adorez les téléfilms de Noël avec leurs histoires
-                    prévisibles, mais réconfortantes, où l’esprit de Noël est
-                    toujours au rendez-vous ?
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    Pour rendre hommage à cette passion dévorante et apprécier à
-                    leur juste valeur les clichés de ces films, j’ai créé le
-                    Bingo des téléfilms de Noël !
-                </ThemedText>
-            </View>
-
-            <View style={styles.section}>
-                <ThemedText type="sectionText">
-                    Le principe est simple :
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    ▪️ Une grille remplie de 12 situations typiques que l’on
-                    retrouve dans nombreux téléfilms de Noël est proposée dans
-                    l'onglet Bingo.
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    ▪️ En cliquant sur le bouton 🔄, vous pouvez générer une
-                    nouvelle grille avec de nouvelles situations.
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    ▪️ Installez-vous confortablement devant le téléfilm du jour
-                    (spoiler alert : les inédits passent chaque jour vers 14h
-                    sur TF1 et M6…).
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    ▪️ À chaque fois qu’une des situations se produit (comme "Un
-                    personnage revient dans sa ville natale" ou "Une tempête de
-                    neige empêche le personnage de rentrer"), cliquez sur la
-                    case correspondante.
-                </ThemedText>
-            </View>
-
-            <View style={styles.section}>
-                <ThemedText type="sectionText">
-                    Évidemment, plus vous cochez de cases, plus le téléfilm a de
-                    chance d’atteindre le sommet du chef-d'oeuvre de Noël !
-                </ThemedText>
-            </View>
+            <BingoRules />
         </ScrollView>
     );
 }
@@ -56,9 +12,5 @@ export default function BingoRulesScreen() {
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 20,
-        marginBottom: 20,
-    },
-    section: {
-        marginBottom: 20,
     },
 });

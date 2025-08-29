@@ -1,9 +1,12 @@
 import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const Rules = () => {
+    const insets = useSafeAreaInsets();
+
     return (
-        <>
+        <View style={{ paddingBottom: insets.bottom / 2 }}>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Chaque jour, vous pouvez accumuler des points pour tenter
@@ -88,7 +91,7 @@ export const Rules = () => {
                     ... surprise !
                 </ThemedText>
             </View>
-        </>
+        </View>
     );
 };
 

@@ -38,7 +38,7 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
 
     const openGift = () => {
         if (gift.win) {
-            router.push({
+            router.navigate({
                 pathname: "/calendar/day25",
             });
         } else {

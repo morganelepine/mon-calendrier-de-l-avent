@@ -12,6 +12,5 @@ export default function RulesScreen() {
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 20,
-        marginBottom: 20,
     },
 });

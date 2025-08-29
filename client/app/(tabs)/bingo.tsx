@@ -5,11 +5,14 @@ import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { bingo } from "@/data/bingo_data";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 
 export default function BingoScreen() {
     const backgroundImage = getCloudinaryImageUrl(
         "blue_background_darker_d10kn5"
     ); // "sapin_fnbne4
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const shuffled = bingo.sort(() => Math.random() - 0.5);
     const [bingoGrid, setBingoGrid] = useState(bingo.slice(0, 15));
@@ -54,7 +57,10 @@ export default function BingoScreen() {
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
-                <BingoHeader generateBingoGrid={generateBingoGrid} />
+                <BingoHeader
+                    generateBingoGrid={generateBingoGrid}
+                    setModalVisible={setModalVisible}
+                />
 
                 <View style={styles.bingoContainer}>
                     {bingoGrid.map((cell) => (
@@ -66,6 +72,11 @@ export default function BingoScreen() {
                         />
                     ))}
                 </View>
+
+                <BingoRulesModal
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                />
             </CustomSafeAreaView>
         </ImageBackground>
     );
@@ -83,7 +94,8 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignContent: "space-between",
-        gap: 5,
-        margin: 20,
+        gap: 6,
+        marginHorizontal: 15,
+        marginBottom: 20,
     },
 });

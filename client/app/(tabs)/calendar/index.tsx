@@ -42,7 +42,7 @@ export default function CalendarScreen() {
         day: Day,
         setModalVisible: (modalVisible: boolean) => void
     ) => {
-        router.push({
+        router.navigate({
             pathname: "/calendar/day/[id]",
             params: { id: String(day.dayNumber) },
         });
