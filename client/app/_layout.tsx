@@ -7,6 +7,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { UserProvider } from "@/contexts/UserContext";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
@@ -27,10 +28,15 @@ export default function RootLayout() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-            </Stack>
+            <UserProvider>
+                <Stack>
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen name="+not-found" />
+                </Stack>
+            </UserProvider>
         </ThemeProvider>
     );
 }

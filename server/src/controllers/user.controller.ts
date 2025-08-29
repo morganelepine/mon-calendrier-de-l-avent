@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
+import { usernames } from "../data/usernames";
 
 const prisma = new PrismaClient();
 
@@ -27,15 +28,21 @@ export class UserController {
     // POST /users
     async save(request: Request, response: Response, next: NextFunction) {
         const { uuid, score } = request.body;
+        let username;
 
-        await prisma.user.create({
-            data: {
-                uuid,
-                score,
-            },
+        if (usernames.length === 0) {
+            username = "username";
+        }
+
+        const randomIndex = Math.floor(Math.random() * usernames.length);
+        username = usernames[randomIndex];
+        usernames.splice(randomIndex, 1);
+
+        const user = await prisma.user.create({
+            data: { uuid, username, score },
         });
 
-        return "User has been created";
+        return user;
     }
 
     // DELETE /users/:uuid

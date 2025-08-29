@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         fontSize: 55,
         fontFamily: "PallyBold",
         textAlign: "center",
-        color: "white",
+        color: Colors.snow,
         paddingHorizontal: 15,
     },
     sectionSubtitle: {

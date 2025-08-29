@@ -16,6 +16,7 @@ datasource db {
 model User {
   id             Int        @id @default(autoincrement())
   uuid           String     @unique
+  username       String     @unique
   score          Int        @default(0)
   scoreHistory   Score[]
   createdAt      DateTime   @default(now())

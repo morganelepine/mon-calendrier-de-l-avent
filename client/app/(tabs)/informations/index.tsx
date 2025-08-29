@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { ThemedText } from "@/components/ThemedText";
+import { useUser } from "@/contexts/UserContext";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
@@ -38,6 +40,8 @@ function OptionItem({
 }
 
 export default function InformationsScreen() {
+    const { username } = useUser();
+
     return (
         <ImageBackground
             source={{
@@ -48,6 +52,9 @@ export default function InformationsScreen() {
         >
             <CustomSafeAreaView>
                 <View style={styles.pageContainer}>
+                    <ThemedText style={styles.username}>
+                        Bonjour {username}
+                    </ThemedText>
                     <OptionItem
                         title="Contenu de l'application"
                         iconName="gift-outline"
@@ -96,6 +103,11 @@ export default function InformationsScreen() {
 }
 
 const styles = StyleSheet.create({
+    username: {
+        color: Colors.snow,
+        fontSize: 20,
+        fontFamily: "PoppinsBold",
+    },
     imageBackground: {
         flex: 1,
         width: "100%",
