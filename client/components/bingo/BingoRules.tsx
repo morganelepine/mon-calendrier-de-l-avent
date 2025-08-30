@@ -29,8 +29,8 @@ export const BingoRules = () => {
                     l'onglet Bingo.
                 </ThemedText>
                 <ThemedText type="sectionText">
-                    ▪️ En cliquant sur le bouton 🔄, vous pouvez générer une
-                    nouvelle grille avec de nouvelles situations.
+                    ▪️ En cliquant sur "Générer une nouvelle grille", une
+                    nouvelle grille sera créée avec de nouvelles situations.
                 </ThemedText>
                 <ThemedText type="sectionText">
                     ▪️ Installez-vous confortablement devant le téléfilm du jour

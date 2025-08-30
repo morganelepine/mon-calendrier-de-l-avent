@@ -39,6 +39,7 @@ export default function LeaderboardScreen() {
             <View style={styles.container}>
                 <FlatList
                     data={leaderboard}
+                    contentContainerStyle={{ paddingBottom: 20 }}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => (
                         <View style={styles.rowContainer}>

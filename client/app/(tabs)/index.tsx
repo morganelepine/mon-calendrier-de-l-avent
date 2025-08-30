@@ -15,7 +15,6 @@ async function resetDataIfNeeded() {
             await AsyncStorage.multiRemove(["calendar", "scoresData"]);
             await AsyncStorage.setItem("lastResetYear", currentYear.toString());
         }
-        console.log({ lastResetYear });
     } catch (error) {
         console.error("Error resetting data: ", error);
     }

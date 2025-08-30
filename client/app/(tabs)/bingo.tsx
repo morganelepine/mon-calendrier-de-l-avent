@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Animated, ImageBackground, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
@@ -7,42 +8,69 @@ import { bingo } from "@/data/bingo_data";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 
+const CLICKED_CELLS_KEY = "bingo_clicked_cells";
+const GRID_KEY = "bingo_grid";
+
 export default function BingoScreen() {
-    const backgroundImage = getCloudinaryImageUrl(
-        "blue_background_darker_d10kn5"
-    ); // "sapin_fnbne4
-
     const [modalVisible, setModalVisible] = useState(false);
-
-    const shuffled = bingo.sort(() => Math.random() - 0.5);
     const [bingoGrid, setBingoGrid] = useState(bingo.slice(0, 15));
-    const [clickedCells, setClickedCells] = useState(new Set());
+    const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
+    const [isReady, setIsReady] = useState(false);
 
-    const [fadeAnim] = useState(new Animated.Value(1));
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const savedGrid = await AsyncStorage.getItem(GRID_KEY);
+                const savedClicked = await AsyncStorage.getItem(
+                    CLICKED_CELLS_KEY
+                );
 
-    const generateBingoGrid = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0.8, // opaciy
-            duration: 200,
-            useNativeDriver: true,
-        }).start(() => {
-            setClickedCells(new Set());
-            setBingoGrid(shuffled.slice(0, 15));
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 200,
-                useNativeDriver: true,
-            }).start();
-        });
-    };
+                if (savedGrid) {
+                    const parsedGrid = JSON.parse(savedGrid);
+                    setBingoGrid(parsedGrid);
+                } else {
+                    await AsyncStorage.setItem(
+                        GRID_KEY,
+                        JSON.stringify(bingoGrid)
+                    );
+                }
 
-    const handleCellClick = (cell: number) => {
+                if (savedClicked) {
+                    const parsedClicked = JSON.parse(savedClicked);
+                    setClickedCells(new Set(parsedClicked));
+                }
+
+                setIsReady(true);
+            } catch (e) {
+                console.error("Error loading data:", e);
+            }
+        };
+        loadData();
+    }, []);
+
+    // Save clicked cells after loading
+    useEffect(() => {
+        if (!isReady) return; // ignore first render
+        const saveClicked = async () => {
+            try {
+                await AsyncStorage.setItem(
+                    CLICKED_CELLS_KEY,
+                    JSON.stringify([...clickedCells])
+                );
+            } catch (e) {
+                console.error("Error saving clicked:", e);
+            }
+        };
+        saveClicked();
+    }, [clickedCells, isReady]);
+
+    const handleCellClick = (cellId: number) => {
         setClickedCells((prev) => {
             const newSet = new Set(prev);
-            if (newSet.has(cell)) {
-                newSet.delete(cell);
+            if (newSet.has(cellId)) {
+                newSet.delete(cellId);
             } else {
-                newSet.add(cell);
+                newSet.add(cellId);
             }
             return newSet;
         });
@@ -51,15 +79,19 @@ export default function BingoScreen() {
     return (
         <ImageBackground
             source={{
-                uri: backgroundImage,
+                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
             }}
             resizeMode="cover"
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
                 <BingoHeader
-                    generateBingoGrid={generateBingoGrid}
+                    bingo={bingo}
+                    setClickedCells={setClickedCells}
+                    setBingoGrid={setBingoGrid}
                     setModalVisible={setModalVisible}
+                    gridKey={GRID_KEY}
+                    clickedCellsKey={CLICKED_CELLS_KEY}
                 />
 
                 <View style={styles.bingoContainer}>
@@ -95,7 +127,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignContent: "space-between",
         gap: 6,
-        marginHorizontal: 15,
-        marginBottom: 20,
+        marginHorizontal: 8,
+        marginBottom: 16,
     },
 });
