@@ -11,13 +11,13 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
     const scorePerDay =
         score.scoreDetails.dayOpening +
         score.scoreDetails.contentOpening +
-        score.scoreDetails.game.correctAnswer;
+        score.scoreDetails.gameAnswer;
 
     const isToday = score.dayNumber === new Date().getDate();
 
     const maxScoreDay = score.scoreDetails.dayOpening === 40;
     const maxScoreContent = score.scoreDetails.contentOpening === 4 * 20;
-    const maxScoreGame = score.scoreDetails.game.correctAnswer === 3 * 20;
+    const maxScoreGame = score.scoreDetails.gameAnswer === 3 * 20;
 
     return (
         <View style={styles.card}>
@@ -98,7 +98,7 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                                 isToday && { color: Colors.red },
                             ]}
                         >
-                            {score.scoreDetails.game.correctAnswer}{" "}
+                            {score.scoreDetails.gameAnswer}{" "}
                         </Text>
                         {maxScoreGame && (
                             <Ionicons

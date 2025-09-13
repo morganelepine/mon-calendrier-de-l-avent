@@ -7,8 +7,11 @@ export interface Score {
 export interface ScoreDetail {
     dayOpening: number;
     contentOpening: number;
-    game: {
-        correctAnswer: number;
-        played: boolean;
+    gameAnswer: number;
+}
+
+export interface GameState {
+    [dayNumber: number]: {
+        [questionNumber: number]: boolean; // true = already played
     };
 }

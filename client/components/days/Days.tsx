@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, ToastAndroid } from "react-native";
 import { DayButton } from "@/components/days/Button/DayButton";
 import { Colors } from "@/constants/Colors";
-import { updateScores } from "@/services/score.service";
+import { saveScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
 
@@ -39,7 +39,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         }
 
         if (isDecember && dayNumber === todayDay) {
-            await updateScores(dayNumber, ScoreType.DayOpening);
+            await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
         }
     };
 

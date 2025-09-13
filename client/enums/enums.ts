@@ -24,7 +24,7 @@ export enum GameType {
 }
 
 export enum ScoreType {
-    ContentOpening,
-    GameCorrectAnswer,
-    DayOpening,
+    ContentOpening = "ContentOpening",
+    GameAnswer = "GameAnswer",
+    DayOpening = "DayOpening",
 }

@@ -7,7 +7,7 @@ import { Hangman } from "@/components/content/games/hangman/Hangman";
 import { Games } from "@/components/content/games/others/Games";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
-import { updateScore } from "@/services/score.service";
+import { saveScore } from "@/services/score.service";
 import { ScoreType } from "@/enums/enums";
 
 export default function GameScreen() {
@@ -17,8 +17,15 @@ export default function GameScreen() {
     const { games } = getContentsByDay(dayId);
     const { gamesByType, type } = classifyGames(games);
 
-    const setScore = async () => {
-        await updateScore(dayId, ScoreType.GameCorrectAnswer);
+    const setScore = async (questionNumber: number) => {
+        const today = new Date().getDate();
+        const score = dayId === today ? 20 : 10;
+        await saveScore(
+            dayId,
+            score,
+            String(ScoreType.GameAnswer),
+            questionNumber
+        );
     };
 
     return (

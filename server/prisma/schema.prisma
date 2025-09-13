@@ -30,5 +30,6 @@ model Score {
   day            Int
   points         Int
   reason         String
+  questionNumber Int?
   earnedAt       DateTime   @default(now())
 }

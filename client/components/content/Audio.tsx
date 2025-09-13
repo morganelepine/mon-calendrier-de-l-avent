@@ -47,9 +47,9 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
             setIsPlaying(true);
         }
         return () => {
-            if (player) {
-                player.remove();
-            }
+            // if (player) {
+            //     player.remove();
+            // }
         };
     }, [playMusic, player]);
 

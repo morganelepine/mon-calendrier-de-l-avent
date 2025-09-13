@@ -4,12 +4,12 @@ import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { QuizAnswers } from "@/components/content/games/quiz/QuizAnswers";
 import { QuizExplanation } from "@/components/content/games/quiz/QuizExplanation";
 import { Content } from "@/interfaces/contentInterface";
-import { setGameStatus } from "@/services/score.service";
+import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 import { GameType } from "@/enums/enums";
 
 interface QuizProps {
     games: Content[];
-    setScore: () => Promise<void>;
+    setScore: (questionNumber: number) => Promise<void>;
     dayId: number;
 }
 
@@ -21,9 +21,10 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
     const [answerButtonIsDisabled, setAnswerButtonIsDisabled] =
         useState<boolean>(false);
 
-    const handleAnswer = (answer: string) => {
+    const handleAnswer = async (answer: string) => {
         setSelectedAnswer(answer);
         setAnswerButtonIsDisabled(true);
+        await saveQuestionPlayed(dayId, currentQuestionIndex);
     };
 
     const handleNextQuestion = () => {
@@ -34,12 +35,12 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
 
     useEffect(() => {
         const handleScoreUpdate = async () => {
-            if (selectedAnswer === currentGame.content3) {
-                await setScore();
-            }
-
-            if (selectedAnswer && currentQuestionIndex === games.length - 1) {
-                await setGameStatus(currentGame.dayNumber);
+            const alreadyPlayed = await isQuestionPlayed(
+                dayId,
+                currentQuestionIndex
+            );
+            if (selectedAnswer === currentGame.content3 && !alreadyPlayed) {
+                await setScore(currentQuestionIndex);
             }
         };
 

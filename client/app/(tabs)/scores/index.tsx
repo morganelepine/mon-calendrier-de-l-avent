@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
-import { loadScores, getTotalScore } from "@/services/score.service";
+import { getUserScoresByDay, getTotalScore } from "@/services/score.service";
 import { ScoresButton } from "@/components/score/ScoresButton";
 import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
@@ -17,12 +17,12 @@ export default function ScoreScreen() {
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState<number>(0);
     const [scoreHistory, setScoreHistory] = useState<Score[]>([]);
 
     useEffect(() => {
         const getScores = async () => {
-            const scores = await loadScores();
+            const scores = await getUserScoresByDay();
             setScoreHistory(scores);
         };
         getScores();

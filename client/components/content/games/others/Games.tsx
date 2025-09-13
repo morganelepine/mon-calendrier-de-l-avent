@@ -5,7 +5,7 @@ import { Content } from "@/interfaces/contentInterface";
 
 interface GamesProps {
     game: Content;
-    setScore: () => Promise<void>;
+    setScore: (questionNumber: number) => Promise<void>;
 }
 
 export const Games: React.FC<GamesProps> = ({ game, setScore }) => {

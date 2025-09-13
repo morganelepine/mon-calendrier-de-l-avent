@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 import { getButtonStyles } from "@/services/content.service";
-import { setGameStatus } from "@/services/score.service";
 
 interface JokeProps {
     game: Content;
-    setScore: () => Promise<void>;
+    setScore: (questionNumber: number) => Promise<void>;
 }
 
 export const Joke: React.FC<JokeProps> = ({ game, setScore }) => {
@@ -29,12 +28,11 @@ export const Joke: React.FC<JokeProps> = ({ game, setScore }) => {
         const handleScoreUpdate = async () => {
             if (selectedAnswer !== null) {
                 if (selectedAnswer === game.content3) {
-                    await setScore();
+                    await setScore(1);
                     setWin("Bonne réponse !");
                 } else {
                     setWin(`Raté... la bonne réponse était : ${game.content3}`);
                 }
-                await setGameStatus(game.dayNumber);
                 setShowAnswer(true);
             }
         };

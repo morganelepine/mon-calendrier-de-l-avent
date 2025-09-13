@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
+import { ScoreType } from "../enums/enums";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,8 @@ export class ScoreController {
         response: Response,
         next: NextFunction
     ) {
-        const { userUuid, dayId, points, reason } = request.body;
+        const { userUuid, dayId, points, reason, questionNumber } =
+            request.body;
 
         const user = await this.getUser(userUuid);
         if (!user) return "User not found";
@@ -26,30 +28,45 @@ export class ScoreController {
             },
         });
 
-        if (
-            reason === "l'ouverture d'un contenu" &&
-            scoreOfTheDay.length >= 5
-        ) {
-            return "All points for content openings have been awarded";
-        }
-        if (
-            reason === "une bonne réponse à un jeu" &&
-            scoreOfTheDay.length >= 4
-        ) {
-            return "All points for the game have been awarded";
+        if (reason === ScoreType.DayOpening && scoreOfTheDay.length >= 1) {
+            return "All points for day opening have been awarded";
         }
 
-        // Créer le score
+        if (reason === ScoreType.ContentOpening && scoreOfTheDay.length >= 4) {
+            return "All points for content openings have been awarded";
+        }
+
+        if (reason === ScoreType.GameAnswer) {
+            const gameAlreadyPlayed = await prisma.score.findFirst({
+                where: {
+                    userId: user.id,
+                    day: dayId,
+                    reason: ScoreType.GameAnswer,
+                    questionNumber: questionNumber,
+                },
+            });
+
+            if (gameAlreadyPlayed) {
+                return "Points for this question have already been awarded";
+            }
+
+            if (scoreOfTheDay.length >= 3) {
+                return "All points for the game have been awarded";
+            }
+        }
+
+        // Create score
         await prisma.score.create({
             data: {
                 userId: user.id,
                 day: dayId,
                 points,
                 reason,
+                questionNumber,
             },
         });
 
-        // Mettre à jour le score total de l'utilisateur
+        // Update user total score
         await prisma.user.update({
             where: { id: user.id },
             data: { score: user.score + points },
@@ -58,7 +75,7 @@ export class ScoreController {
         return "Score is saved";
     }
 
-    async getUserScore(
+    async getUserTotalScore(
         request: Request,
         response: Response,
         next: NextFunction
@@ -71,47 +88,68 @@ export class ScoreController {
 
         if (!user) return "Unregistered user";
 
-        // On regroupe les scores directement par date côté Prisma
-        const scoresGrouped = await prisma.score.groupBy({
-            by: ["earnedAt"],
-            where: { userId: user.id },
-            _sum: { points: true },
-            _count: { id: true },
-            orderBy: { earnedAt: "desc" },
+        return { totalScore: user.score };
+    }
+
+    async getUserScoresByDay(request: Request, response: Response) {
+        const uuid = request.params.uuid;
+
+        const user = await prisma.user.findUnique({
+            where: { uuid },
         });
 
-        // On récupère les détails des scores pour chaque date
-        const scoresByDate: Record<string, any[]> = {};
+        if (!user) return "Unregistered user";
 
-        for (const group of scoresGrouped) {
-            const date = group.earnedAt.toISOString().split("T")[0];
-            const scores = await prisma.score.findMany({
-                where: {
-                    userId: user.id,
-                    earnedAt: {
-                        gte: new Date(date + "T00:00:00.000Z"),
-                        lte: new Date(date + "T23:59:59.999Z"),
+        const scores = await prisma.score.findMany({
+            where: { userId: user.id },
+            orderBy: { day: "asc" },
+        });
+
+        const scoresByDay: Record<
+            number,
+            {
+                dayNumber: number;
+                scoreTotal: number;
+                scoreDetails: {
+                    dayOpening: number;
+                    contentOpening: number;
+                    gameAnswer: number;
+                };
+            }
+        > = {};
+
+        for (const score of scores) {
+            if (!scoresByDay[score.day]) {
+                scoresByDay[score.day] = {
+                    dayNumber: score.day,
+                    scoreTotal: 0,
+                    scoreDetails: {
+                        dayOpening: 0,
+                        contentOpening: 0,
+                        gameAnswer: 0,
                     },
-                },
-            });
-            scoresByDate[date] = scores.map(
-                (s: {
-                    id: any;
-                    points: any;
-                    reason: any;
-                    day: any;
-                    earnedAt: any;
-                }) => ({
-                    id: s.id,
-                    points: s.points,
-                    reason: s.reason,
-                    day: s.day,
-                    earnedAt: s.earnedAt,
-                })
-            );
+                };
+            }
+
+            scoresByDay[score.day].scoreTotal += score.points;
+
+            switch (score.reason) {
+                case ScoreType.DayOpening:
+                    scoresByDay[score.day].scoreDetails.dayOpening +=
+                        score.points;
+                    break;
+                case ScoreType.ContentOpening:
+                    scoresByDay[score.day].scoreDetails.contentOpening +=
+                        score.points;
+                    break;
+                case ScoreType.GameAnswer:
+                    scoresByDay[score.day].scoreDetails.gameAnswer +=
+                        score.points;
+                    break;
+            }
         }
 
-        return { score: user.score, scoresByDate };
+        return Object.values(scoresByDay);
     }
 
     async getLeaderboard(request: Request, response: Response) {

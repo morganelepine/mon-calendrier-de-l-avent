@@ -11,7 +11,13 @@ export const ScoreRoutes = [
         method: "get",
         route: "/scores/user/:uuid",
         controller: ScoreController,
-        action: "getUserScore",
+        action: "getUserScoresByDay",
+    },
+    {
+        method: "get",
+        route: "/scores/total/user/:uuid",
+        controller: ScoreController,
+        action: "getUserTotalScore",
     },
     {
         method: "get",

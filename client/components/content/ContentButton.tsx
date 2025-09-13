@@ -1,7 +1,7 @@
 import { StyleSheet, Pressable, ImageBackground } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { updateScores } from "@/services/score.service";
+import { saveScore } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
@@ -34,7 +34,9 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     contentType,
 }) => {
     const handleContentOpening = async () => {
-        await updateScores(dayId, ScoreType.ContentOpening);
+        const today = new Date().getDate();
+        const score = dayId === today ? 20 : 10;
+        await saveScore(dayId, score, String(ScoreType.ContentOpening));
         router.navigate({
             pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
         });

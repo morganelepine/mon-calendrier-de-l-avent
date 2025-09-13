@@ -47,6 +47,7 @@ export default function HomeScreen() {
             //         "lastResetYear",
             //         "hasLaunched",
             //         "newUsername",
+            //         "gameState",
             //     ]);
             // }
         };

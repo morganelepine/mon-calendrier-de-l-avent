@@ -5,11 +5,11 @@ import { Infos } from "@/components/content/games/hangman/Infos";
 import { Alphabet } from "@/components/content/games/hangman/Alphabet";
 import { HangmanModal } from "@/components/content/games/hangman/HangmanModal";
 import { Content } from "@/interfaces/contentInterface";
-import { setGameStatus } from "@/services/score.service";
+import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 
 interface HangmanProps {
     game: Content;
-    setScore: () => Promise<void>;
+    setScore: (questionNumber: number) => Promise<void>;
 }
 
 export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
@@ -30,16 +30,25 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     }, [currentWord]);
 
     useEffect(() => {
-        if (currentWord === hiddenWord.join("")) {
-            setScore();
-            setModalMessage("Félicitations 🥳");
-            setModalVisible(true);
-        } else if (mistakes === maxTries) {
-            setModalMessage(
-                "Dommage, vous avez atteint le nombre maximum d'essais 😟"
-            );
-            setModalVisible(true);
-        }
+        const handleScoreUpdate = async () => {
+            if (currentWord === hiddenWord.join("")) {
+                const alreadyPlayed = await isQuestionPlayed(
+                    game.dayNumber,
+                    currentWordIndex
+                );
+                if (!alreadyPlayed) {
+                    setScore(currentWordIndex);
+                }
+                setModalMessage("Félicitations 🥳");
+                setModalVisible(true);
+            } else if (mistakes === maxTries) {
+                setModalMessage(
+                    "Dommage, vous avez atteint le nombre maximum d'essais 😟"
+                );
+                setModalVisible(true);
+            }
+        };
+        handleScoreUpdate();
     }, [hiddenWord, mistakes]);
 
     const checkLetter = (letter: string) => {
@@ -61,14 +70,14 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
         }
     };
 
-    const handleNextQuestion = () => {
+    const handleNextQuestion = async () => {
+        await saveQuestionPlayed(game.dayNumber, currentWordIndex);
         setCurrentWordIndex(currentWordIndex + 1);
         setModalVisible(false);
     };
 
     const onClose = () => {
         if (currentWordIndex === words.length - 1) {
-            setGameStatus(game.dayNumber);
             setCurrentWordIndex(0);
             setModalVisible(false);
         } else {
