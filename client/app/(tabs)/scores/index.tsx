@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
-import { getUserScoresByDay, getTotalScore } from "@/services/score.service";
 import { ScoresButton } from "@/components/score/ScoresButton";
 import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
@@ -8,52 +7,34 @@ import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { Score } from "@/interfaces/scoreInterfaces";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { useScore } from "@/contexts/ScoreContext";
 
 export default function ScoreScreen() {
-    const scrollViewRef = useRef<ScrollView>(null);
-    const backgroundImage = getCloudinaryImageUrl(
-        "blue_background_darker_d10kn5"
-    );
-
     const [modalVisible, setModalVisible] = useState(false);
-
-    const [score, setScore] = useState<number>(0);
-    const [scoreHistory, setScoreHistory] = useState<Score[]>([]);
-
-    useEffect(() => {
-        const getScores = async () => {
-            const scores = await getUserScoresByDay();
-            setScoreHistory(scores);
-        };
-        getScores();
-    }, [scoreHistory]);
-
-    useEffect(() => {
-        const getScoreTotal = async () => {
-            const totalScore = await getTotalScore();
-            setScore(totalScore);
-        };
-        getScoreTotal();
-    }, [scoreHistory]);
+    const { scoreTotal, scoreHistory } = useScore();
 
     return (
         <ImageBackground
-            source={{ uri: backgroundImage }}
+            source={{
+                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
+            }}
             resizeMode="cover"
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
                 <ScoresButton setModalVisible={setModalVisible} />
 
-                <TotalScore score={score} />
+                <TotalScore score={scoreTotal} />
 
                 <ScrollView
-                    ref={scrollViewRef}
                     persistentScrollbar={true} // Android only
                 >
                     <View style={styles.cardsWrapper}>
                         {scoreHistory.map((score: Score) => (
-                            <ScoreHistory key={score.dayNumber} score={score} />
+                            <ScoreHistory
+                                key={`${score.dayNumber}-${score.scoreTotal}`}
+                                score={score}
+                            />
                         ))}
                     </View>
 

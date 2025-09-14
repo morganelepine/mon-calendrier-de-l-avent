@@ -42,7 +42,8 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
                                     color: Colors.snow,
                                 }}
                             >
-                                Rendez-vous le 25 décembre pour la surprise !
+                                Rendez-vous le 25 décembre pour
+                                la&nbsp;surprise&nbsp;!
                             </ThemedText>
                         </>
                     ) : (

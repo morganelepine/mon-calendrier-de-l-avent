@@ -10,9 +10,14 @@ import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 interface HangmanProps {
     game: Content;
     setScore: (questionNumber: number) => Promise<void>;
+    refreshScores: () => Promise<void>;
 }
 
-export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
+export const Hangman: React.FC<HangmanProps> = ({
+    game,
+    setScore,
+    refreshScores,
+}) => {
     const words = game.content1.toUpperCase().split(",");
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const currentWord = words[currentWordIndex];
@@ -37,8 +42,10 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
                     currentWordIndex
                 );
                 if (!alreadyPlayed) {
-                    setScore(currentWordIndex);
+                    await setScore(currentWordIndex);
+                    await refreshScores();
                 }
+
                 setModalMessage("Félicitations 🥳");
                 setModalVisible(true);
             } else if (mistakes === maxTries) {

@@ -1,24 +1,37 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response, NextFunction } from "express";
-import { ScoreType } from "../enums/enums";
+import { Request } from "express";
 
 const prisma = new PrismaClient();
+
+export interface Score {
+    dayNumber: number;
+    scoreTotal: number;
+    scoreDetails: ScoreDetail;
+}
+
+export interface ScoreDetail {
+    dayOpening: number;
+    contentOpening: number;
+    gameAnswer: number;
+}
+
+export enum ScoreType {
+    ContentOpening = "ContentOpening",
+    GameAnswer = "GameAnswer",
+    DayOpening = "DayOpening",
+}
 
 export class ScoreController {
     async getUser(uuid: string) {
         return prisma.user.findUnique({ where: { uuid } });
     }
 
-    async awardPoints(
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) {
+    async saveScore(request: Request) {
         const { userUuid, dayId, points, reason, questionNumber } =
             request.body;
 
         const user = await this.getUser(userUuid);
-        if (!user) return "User not found";
+        if (!user) return { status: 404, message: "User not found" };
 
         const scoreOfTheDay = await prisma.score.findMany({
             where: {
@@ -29,11 +42,17 @@ export class ScoreController {
         });
 
         if (reason === ScoreType.DayOpening && scoreOfTheDay.length >= 1) {
-            return "All points for day opening have been awarded";
+            return {
+                status: 400,
+                message: "All points for day opening have been awarded",
+            };
         }
 
         if (reason === ScoreType.ContentOpening && scoreOfTheDay.length >= 4) {
-            return "All points for content openings have been awarded";
+            return {
+                status: 400,
+                message: "All points for content openings have been awarded",
+            };
         }
 
         if (reason === ScoreType.GameAnswer) {
@@ -47,16 +66,23 @@ export class ScoreController {
             });
 
             if (gameAlreadyPlayed) {
-                return "Points for this question have already been awarded";
+                return {
+                    status: 400,
+                    message:
+                        "Points for this question have already been awarded",
+                };
             }
 
             if (scoreOfTheDay.length >= 3) {
-                return "All points for the game have been awarded";
+                return {
+                    status: 400,
+                    message: "All points for the game have been awarded",
+                };
             }
         }
 
         // Create score
-        await prisma.score.create({
+        const createdScore = await prisma.score.create({
             data: {
                 userId: user.id,
                 day: dayId,
@@ -67,70 +93,52 @@ export class ScoreController {
         });
 
         // Update user total score
-        await prisma.user.update({
+        const updatedUser = await prisma.user.update({
             where: { id: user.id },
             data: { score: user.score + points },
         });
 
-        return "Score is saved";
+        return {
+            status: 200,
+            message: "Score is saved",
+            score: createdScore,
+            totalScore: updatedUser.score,
+        };
     }
 
-    async getUserTotalScore(
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) {
+    async getUserTotalScore(request: Request) {
         const uuid = request.params.uuid;
-
-        const user = await prisma.user.findUnique({
-            where: { uuid },
-        });
-
-        if (!user) return "Unregistered user";
+        const user = await this.getUser(uuid);
+        if (!user) return { status: 404, message: "User not found" };
 
         return { totalScore: user.score };
     }
 
-    async getUserScoresByDay(request: Request, response: Response) {
+    async getUserScoresByDay(request: Request) {
         const uuid = request.params.uuid;
-
-        const user = await prisma.user.findUnique({
-            where: { uuid },
-        });
-
-        if (!user) return "Unregistered user";
+        const user = await this.getUser(uuid);
+        if (!user) return { status: 404, message: "User not found" };
 
         const scores = await prisma.score.findMany({
             where: { userId: user.id },
             orderBy: { day: "asc" },
         });
 
-        const scoresByDay: Record<
-            number,
-            {
-                dayNumber: number;
-                scoreTotal: number;
+        const scoresByDay: Record<number, Score> = {};
+
+        for (let day = 1; day <= 24; day++) {
+            scoresByDay[day] = {
+                dayNumber: day,
+                scoreTotal: 0,
                 scoreDetails: {
-                    dayOpening: number;
-                    contentOpening: number;
-                    gameAnswer: number;
-                };
-            }
-        > = {};
+                    dayOpening: 0,
+                    contentOpening: 0,
+                    gameAnswer: 0,
+                },
+            };
+        }
 
         for (const score of scores) {
-            if (!scoresByDay[score.day]) {
-                scoresByDay[score.day] = {
-                    dayNumber: score.day,
-                    scoreTotal: 0,
-                    scoreDetails: {
-                        dayOpening: 0,
-                        contentOpening: 0,
-                        gameAnswer: 0,
-                    },
-                };
-            }
-
             scoresByDay[score.day].scoreTotal += score.points;
 
             switch (score.reason) {
@@ -152,12 +160,32 @@ export class ScoreController {
         return Object.values(scoresByDay);
     }
 
-    async getLeaderboard(request: Request, response: Response) {
+    async getLeaderboard() {
         const leaderboard = await prisma.user.findMany({
             orderBy: { score: "desc" },
             select: { username: true, score: true },
         });
 
         return leaderboard;
+    }
+
+    async isDayOpen(request: Request) {
+        const { uuid, day } = request.params;
+
+        const user = await this.getUser(uuid);
+        if (!user) return { status: 404, message: "User not found" };
+
+        const score = await prisma.score.findFirst({
+            where: {
+                userId: user.id,
+                day: Number(day),
+                reason: ScoreType.DayOpening,
+            },
+        });
+
+        return {
+            dayId: Number(day),
+            isOpen: !!score,
+        };
     }
 }

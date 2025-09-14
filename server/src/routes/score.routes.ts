@@ -5,7 +5,7 @@ export const ScoreRoutes = [
         method: "post",
         route: "/scores",
         controller: ScoreController,
-        action: "awardPoints",
+        action: "saveScore",
     },
     {
         method: "get",
@@ -24,5 +24,11 @@ export const ScoreRoutes = [
         route: "/scores/leaderboard",
         controller: ScoreController,
         action: "getLeaderboard",
+    },
+    {
+        method: "get",
+        route: "/scores/user/:uuid/:day/open",
+        controller: ScoreController,
+        action: "isDayOpen",
     },
 ];

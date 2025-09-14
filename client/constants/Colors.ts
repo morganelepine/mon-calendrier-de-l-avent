@@ -18,6 +18,8 @@ export const Colors = {
     pink: "#FAB3A9",
     darkPink: "#c25f5f",
     gold: "#e9be1a",
+    disabled: "#e5e5e5",
+    disabledText: "#92959a",
 
     light: {
         text: "#11181C",

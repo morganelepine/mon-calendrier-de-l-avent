@@ -8,6 +8,7 @@ import { Stack } from "expo-router";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
+import { ScoreProvider } from "@/contexts/ScoreContext";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
@@ -29,13 +30,15 @@ export default function RootLayout() {
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
             <UserProvider>
-                <Stack>
-                    <Stack.Screen
-                        name="(tabs)"
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen name="+not-found" />
-                </Stack>
+                <ScoreProvider>
+                    <Stack>
+                        <Stack.Screen
+                            name="(tabs)"
+                            options={{ headerShown: false }}
+                        />
+                        <Stack.Screen name="+not-found" />
+                    </Stack>
+                </ScoreProvider>
             </UserProvider>
         </ThemeProvider>
     );

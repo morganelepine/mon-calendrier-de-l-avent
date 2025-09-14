@@ -15,11 +15,15 @@ function registerRoutes(app: Application, routes: any[]) {
                     next
                 );
                 if (result instanceof Promise) {
-                    result.then((result) =>
-                        result !== null && result !== undefined
-                            ? res.send(result)
-                            : undefined
-                    );
+                    result.then((result) => {
+                        if (result !== null && result !== undefined) {
+                            if (result.status) {
+                                res.status(result.status).json(result);
+                            } else {
+                                res.json(result);
+                            }
+                        }
+                    });
                 } else if (result !== null && result !== undefined) {
                     res.json(result);
                 }

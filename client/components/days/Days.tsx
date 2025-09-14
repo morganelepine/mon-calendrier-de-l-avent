@@ -5,6 +5,7 @@ import { Colors } from "@/constants/Colors";
 import { saveScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
+import { useScore } from "@/contexts/ScoreContext";
 
 interface DaysProps {
     days: Day[];
@@ -18,28 +19,28 @@ interface DaysProps {
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const [dayModal, setDayModal] = useState<number | null>(null);
     const isDecember = new Date().getMonth() === 11;
+    const { refreshScores } = useScore();
 
     const handleDayOpening = async (dayNumber: number) => {
-        const todayDay = new Date().getDate();
+        const today = new Date().getDate();
 
         const updatedDays = days.map((day) => {
             return isDecember &&
                 day.dayNumber === dayNumber &&
-                dayNumber <= todayDay &&
+                dayNumber <= today &&
                 !day.isOpen
                 ? { ...day, isOpen: !day.isOpen }
                 : day;
         });
         setDays(updatedDays);
 
-        if (isDecember && dayNumber <= todayDay) {
+        if (isDecember && dayNumber <= today) {
+            const score = dayNumber === today ? 40 : 0;
+            await saveScore(dayNumber, score, String(ScoreType.DayOpening));
+            await refreshScores();
             setDayModal(dayNumber);
         } else {
             ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
-        }
-
-        if (isDecember && dayNumber === todayDay) {
-            await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
         }
     };
 

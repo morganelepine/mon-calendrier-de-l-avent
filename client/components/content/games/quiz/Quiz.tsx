@@ -11,9 +11,15 @@ interface QuizProps {
     games: Content[];
     setScore: (questionNumber: number) => Promise<void>;
     dayId: number;
+    refreshScores: () => Promise<void>;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
+export const Quiz: React.FC<QuizProps> = ({
+    games,
+    setScore,
+    dayId,
+    refreshScores,
+}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const currentGame = games[currentQuestionIndex];
@@ -41,6 +47,7 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
             );
             if (selectedAnswer === currentGame.content3 && !alreadyPlayed) {
                 await setScore(currentQuestionIndex);
+                await refreshScores();
             }
         };
 

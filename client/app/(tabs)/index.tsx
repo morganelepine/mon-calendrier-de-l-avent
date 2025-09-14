@@ -43,7 +43,6 @@ export default function HomeScreen() {
             //         "userUuid",
             //         "playMusic",
             //         "calendar",
-            //         "scoresData",
             //         "lastResetYear",
             //         "hasLaunched",
             //         "newUsername",

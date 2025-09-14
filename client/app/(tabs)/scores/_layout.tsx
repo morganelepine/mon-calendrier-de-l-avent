@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
-export default function InformationsLayout() {
+export default function ScoresLayout() {
     return (
         <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
