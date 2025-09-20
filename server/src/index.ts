@@ -45,4 +45,8 @@ registerRoutes(app, ScoreRoutes);
 //     console.log(`Express server has started on port ${PORT}`);
 // });
 
+app.get("/", (req: Request, res: Response) => {
+    res.send("Calendar API working ✅");
+});
+
 export default app;
