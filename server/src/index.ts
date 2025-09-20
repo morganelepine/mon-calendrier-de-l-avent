@@ -36,14 +36,8 @@ const app: Application = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
-
 registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
-
-// app.listen(PORT, () => {
-//     console.log(`Express server has started on port ${PORT}`);
-// });
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Calendar API working ✅");
