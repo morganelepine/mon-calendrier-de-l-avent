@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { GameIdea } from "@/components/content/games/others/GameIdea";
-import { Joke } from "@/components/content/games/others/Joke";
+import { OtherGames } from "@/components/content/games/others/OtherGames";
 import { Content } from "@/interfaces/contentInterface";
 
 interface GamesProps {
@@ -14,7 +14,7 @@ export const Games: React.FC<GamesProps> = ({ game, setScore }) => {
             {game.title === "Idée" ? (
                 <GameIdea game={game} />
             ) : (
-                <Joke game={game} setScore={setScore} />
+                <OtherGames game={game} setScore={setScore} />
             )}
         </View>
     );
