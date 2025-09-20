@@ -32,7 +32,7 @@ function registerRoutes(app: Application, routes: any[]) {
     });
 }
 
-const app = express();
+const app: Application = express();
 app.use(cors());
 app.use(bodyParser.json());
 

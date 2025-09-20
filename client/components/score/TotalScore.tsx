@@ -6,6 +6,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Colors } from "@/constants/Colors";
+import { isDecember } from "@/constants/Dates";
 
 interface TotalScoreProps {
     score: number;
@@ -13,13 +14,10 @@ interface TotalScoreProps {
 
 export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
     const minScoreToWin = 2512;
-
     const progress = (score / minScoreToWin) * 100;
     const animatedStyle = useAnimatedStyle(() => ({
         width: withTiming(`${progress}%`, { duration: 1000 }),
     }));
-
-    const isDecember = new Date().getMonth() === 11;
 
     return (
         <View style={styles.container}>

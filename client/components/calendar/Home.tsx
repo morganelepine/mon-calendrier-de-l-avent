@@ -8,33 +8,22 @@ import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import {
+    currentDay,
+    isDecember,
+    isChristmas,
+    isAfterChristmas,
+    daysToChristmas,
+    daysToCalendar,
+} from "@/constants/Dates";
 
 interface HomeProps {
     insets: EdgeInsets;
 }
 
 export const Home: React.FC<HomeProps> = ({ insets }) => {
-    const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
-    const today = new Date();
-    const christmasDay = new Date(today.getFullYear(), 11, 25);
-    const calendarDay = new Date(today.getFullYear(), 11, 1);
-    const isDecember = today.getMonth() === 11;
-
-    const isChristmas =
-        isDecember && today.getDate() === christmasDay.getDate();
-
-    const isAfterChristmas =
-        isDecember && today.getDate() > christmasDay.getDate();
-
-    const daysToChristmas = Math.ceil(
-        (christmasDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY
-    );
-    const daysToCalendar = Math.ceil(
-        (calendarDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY
-    );
-
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
-    const day = daysMap.get(today.getDate());
+    const day = daysMap.get(currentDay);
 
     const backgroundImage =
         day && isDecember

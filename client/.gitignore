@@ -10,7 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 .env
-# data
+data
 
 # macOS
 .DS_Store
@@ -20,3 +20,5 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+.vercel
