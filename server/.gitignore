@@ -5,4 +5,4 @@ tmp/
 temp/
 .env
 /generated/prisma
-src/data
+# src/data
