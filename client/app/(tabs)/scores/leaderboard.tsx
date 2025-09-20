@@ -5,7 +5,7 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
 
-const BASE_URL = "http://192.168.1.18:3000";
+const BASE_URL = "https://advent-calendar-v3.vercel.app";
 
 export default function LeaderboardScreen() {
     const [leaderboard, setLeaderboard] = useState<

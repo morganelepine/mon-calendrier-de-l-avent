@@ -13,7 +13,8 @@ interface UserContextType {
     username: string | null;
 }
 
-const BASE_URL = "http://192.168.1.18:3000";
+const BASE_URL = "https://advent-calendar-v3.vercel.app";
+
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {

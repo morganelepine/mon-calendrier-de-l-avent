@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GameState, Score } from "@/interfaces/scoreInterfaces";
 
-const BASE_URL = "http://192.168.1.18:3000/scores";
+const BASE_URL = "https://advent-calendar-v3.vercel.app/scores";
 
 export const saveScore = async (
     dayId: number | null,
