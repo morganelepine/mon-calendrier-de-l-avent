@@ -33,9 +33,6 @@
         "build",
         "add-build"
     ],
-    "prisma": {
-        "seed": "ts-node prisma/seed.ts"
-    },
     "scripts": {
         "dev": "nodemon src/index.ts",
         "build": "rimraf dist && tsc",

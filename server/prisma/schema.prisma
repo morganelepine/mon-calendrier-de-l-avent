@@ -32,4 +32,7 @@ model Score {
   reason         String
   questionNumber Int?
   earnedAt       DateTime   @default(now())
+
+  @@index([userId, day])
+  @@index([userId, reason])
 }

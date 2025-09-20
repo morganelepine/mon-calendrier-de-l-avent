@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export interface Score {
     dayNumber: number;
-    scoreTotal: number;
+    dayIsOpen: boolean;
     scoreDetails: ScoreDetail;
 }
 
@@ -129,7 +129,7 @@ export class ScoreController {
         for (let day = 1; day <= 24; day++) {
             scoresByDay[day] = {
                 dayNumber: day,
-                scoreTotal: 0,
+                dayIsOpen: false,
                 scoreDetails: {
                     dayOpening: 0,
                     contentOpening: 0,
@@ -139,7 +139,7 @@ export class ScoreController {
         }
 
         for (const score of scores) {
-            scoresByDay[score.day].scoreTotal += score.points;
+            scoresByDay[score.day].dayIsOpen = true;
 
             switch (score.reason) {
                 case ScoreType.DayOpening:
@@ -167,25 +167,5 @@ export class ScoreController {
         });
 
         return leaderboard;
-    }
-
-    async isDayOpen(request: Request) {
-        const { uuid, day } = request.params;
-
-        const user = await this.getUser(uuid);
-        if (!user) return { status: 404, message: "User not found" };
-
-        const score = await prisma.score.findFirst({
-            where: {
-                userId: user.id,
-                day: Number(day),
-                reason: ScoreType.DayOpening,
-            },
-        });
-
-        return {
-            dayId: Number(day),
-            isOpen: !!score,
-        };
     }
 }

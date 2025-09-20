@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Score } from "@/interfaces/scoreInterfaces";
 import { Ionicons } from "@expo/vector-icons";
-import { isDayOpen } from "@/services/score.service";
 
 interface ScoreHistoryProps {
     score: Score;
@@ -21,35 +19,26 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
     const maxScoreContent = score.scoreDetails.contentOpening === 4 * 20;
     const maxScoreGame = score.scoreDetails.gameAnswer === 3 * 20;
 
-    const [isDayOpened, setIsDayOpened] = useState(false);
-    useEffect(() => {
-        const checkDay = async () => {
-            const dayStatus = await isDayOpen(score.dayNumber);
-            setIsDayOpened(dayStatus ? dayStatus.isOpen : false);
-        };
-        checkDay();
-    }, []);
-
     return (
         <View style={styles.card}>
             <View
                 style={[
                     styles.cardHeader,
                     isToday && { backgroundColor: Colors.red },
-                    !isDayOpened &&
+                    !score.dayIsOpen &&
                         !isToday && { backgroundColor: Colors.disabled },
                 ]}
             >
                 <Text
                     style={[
                         styles.cardTitle,
-                        !isDayOpened &&
+                        !score.dayIsOpen &&
                             !isToday && { color: Colors.disabledText },
                     ]}
                 >
                     Jour {score.dayNumber}
                 </Text>
-                {isDayOpened && (
+                {score.dayIsOpen && (
                     <Text
                         style={[
                             styles.cardTitle,
@@ -62,7 +51,7 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
             </View>
 
             <View style={styles.cardBody}>
-                {isDayOpened ? (
+                {score.dayIsOpen ? (
                     <>
                         <View style={styles.cardLine}>
                             <Ionicons

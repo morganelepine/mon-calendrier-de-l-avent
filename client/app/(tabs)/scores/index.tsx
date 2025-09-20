@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { ScoresButton } from "@/components/score/ScoresButton";
 import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
@@ -11,7 +12,13 @@ import { useScore } from "@/contexts/ScoreContext";
 
 export default function ScoreScreen() {
     const [modalVisible, setModalVisible] = useState(false);
-    const { scoreTotal, scoreHistory } = useScore();
+    const { scoreTotal, scoreHistory, refreshScores } = useScore();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refreshScores();
+        }, [refreshScores])
+    );
 
     return (
         <ImageBackground
@@ -31,10 +38,7 @@ export default function ScoreScreen() {
                 >
                     <View style={styles.cardsWrapper}>
                         {scoreHistory.map((score: Score) => (
-                            <ScoreHistory
-                                key={`${score.dayNumber}-${score.scoreTotal}`}
-                                score={score}
-                            />
+                            <ScoreHistory key={score.dayNumber} score={score} />
                         ))}
                     </View>
 

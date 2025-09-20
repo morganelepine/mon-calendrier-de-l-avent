@@ -24,7 +24,7 @@ export const saveScore = async (
         });
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`Failed to save score: ${errorMessage}`);
+            throw new Error(`Score was not saved: ${errorMessage}`);
         }
     } catch (error) {
         console.log("Error saving score:", error);
@@ -34,11 +34,14 @@ export const saveScore = async (
 export const getTotalScore = async (): Promise<number | undefined> => {
     try {
         const userUuid = await AsyncStorage.getItem("userUuid");
+        if (!userUuid) return 0;
+
         const response = await fetch(`${BASE_URL}/total/user/${userUuid}`);
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`Failed to save score: ${errorMessage}`);
+            throw new Error(`Failed getting total score: ${errorMessage}`);
         }
+
         const data = await response.json();
         return data.totalScore;
     } catch (error) {
@@ -50,11 +53,14 @@ export const getTotalScore = async (): Promise<number | undefined> => {
 export const getUserScoresByDay = async (): Promise<Score[]> => {
     try {
         const userUuid = await AsyncStorage.getItem("userUuid");
+        if (!userUuid) return [];
+
         const response = await fetch(`${BASE_URL}/user/${userUuid}`);
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed to get scores by day: ${errorMessage}`);
         }
+
         const data = await response.json();
         return data as Score[];
     } catch (error) {
@@ -84,27 +90,4 @@ export const isQuestionPlayed = async (
     const gameState: GameState = json ? JSON.parse(json) : {};
 
     return gameState[day]?.[questionNumber] ?? false;
-};
-
-export const isDayOpen = async (
-    day: number
-): Promise<{ dayId: number; isOpen: boolean } | undefined> => {
-    try {
-        const userUuid = await AsyncStorage.getItem("userUuid");
-
-        const response = await fetch(
-            `${BASE_URL}/user/${userUuid}/${day}/open`
-        );
-
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`Failed to check if day is open: ${errorMessage}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.log("Error checking if day is open:", error);
-        return undefined;
-    }
 };

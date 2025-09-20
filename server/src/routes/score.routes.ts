@@ -25,10 +25,4 @@ export const ScoreRoutes = [
         controller: ScoreController,
         action: "getLeaderboard",
     },
-    {
-        method: "get",
-        route: "/scores/user/:uuid/:day/open",
-        controller: ScoreController,
-        action: "isDayOpen",
-    },
 ];

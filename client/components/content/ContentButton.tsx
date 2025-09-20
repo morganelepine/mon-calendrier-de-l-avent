@@ -5,7 +5,6 @@ import { saveScore } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
-import { useScore } from "@/contexts/ScoreContext";
 
 interface ContentButtonProps {
     content?: Content;
@@ -34,13 +33,10 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     backgroundImage,
     contentType,
 }) => {
-    const { refreshScores } = useScore();
-
     const handleContentOpening = async () => {
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
-        await saveScore(dayId, score, String(ScoreType.ContentOpening));
-        await refreshScores();
+        saveScore(dayId, score, String(ScoreType.ContentOpening));
         router.navigate({
             pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
         });

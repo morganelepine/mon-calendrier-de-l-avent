@@ -1,6 +1,6 @@
 export interface Score {
     dayNumber: number;
-    scoreTotal: number;
+    dayIsOpen: boolean;
     scoreDetails: ScoreDetail;
 }
 

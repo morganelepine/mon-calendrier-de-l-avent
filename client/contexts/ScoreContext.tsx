@@ -1,5 +1,5 @@
-// context/ScoreContext.tsx
 import React, { createContext, useContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserScoresByDay, getTotalScore } from "@/services/score.service";
 import { Score } from "@/interfaces/scoreInterfaces";
 
@@ -14,6 +14,8 @@ const ScoreContext = createContext<ScoreContextType | undefined>(undefined);
 export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
+    const userUuid = AsyncStorage.getItem("userUuid");
+
     const [scoreHistory, setScoreHistory] = useState<Score[]>([]);
     const [scoreTotal, setScoreTotal] = useState<number>(0);
 
@@ -26,7 +28,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
     useEffect(() => {
         refreshScores();
-    }, []);
+    }, [userUuid]);
 
     const contextValue = React.useMemo(
         () => ({ scoreTotal, scoreHistory, refreshScores }),

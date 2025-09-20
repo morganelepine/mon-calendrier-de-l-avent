@@ -9,7 +9,6 @@ import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
 import { saveScore } from "@/services/score.service";
 import { ScoreType } from "@/enums/enums";
-import { useScore } from "@/contexts/ScoreContext";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,17 +16,11 @@ export default function GameScreen() {
 
     const { games } = getContentsByDay(dayId);
     const { gamesByType, type } = classifyGames(games);
-    const { refreshScores } = useScore();
 
-    const setScore = async (questionNumber: number) => {
+    const setScore = (questionNumber: number) => {
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
-        await saveScore(
-            dayId,
-            score,
-            String(ScoreType.GameAnswer),
-            questionNumber
-        );
+        saveScore(dayId, score, String(ScoreType.GameAnswer), questionNumber);
     };
 
     return (
@@ -35,11 +28,7 @@ export default function GameScreen() {
             <CustomScrollView>
                 <View style={styles.container}>
                     {gamesByType.pendu && (
-                        <Hangman
-                            game={gamesByType.pendu}
-                            setScore={setScore}
-                            refreshScores={refreshScores}
-                        />
+                        <Hangman game={gamesByType.pendu} setScore={setScore} />
                     )}
 
                     {gamesByType.jeu && (
@@ -59,7 +48,6 @@ export default function GameScreen() {
                                 games={gamesByType.quizCitation}
                                 setScore={setScore}
                                 dayId={dayId}
-                                refreshScores={refreshScores}
                             />
                         </>
                     )}
@@ -73,7 +61,6 @@ export default function GameScreen() {
                                 games={gamesByType.quizNoel}
                                 setScore={setScore}
                                 dayId={dayId}
-                                refreshScores={refreshScores}
                             />
                         </>
                     )}
@@ -87,7 +74,6 @@ export default function GameScreen() {
                                 games={gamesByType.quizEmojis}
                                 setScore={setScore}
                                 dayId={dayId}
-                                refreshScores={refreshScores}
                             />
                         </>
                     )}
