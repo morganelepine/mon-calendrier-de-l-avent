@@ -41,6 +41,8 @@ const PORT = process.env.PORT || 3000;
 registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Express server has started on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Express server has started on port ${PORT}`);
+// });
+
+export default app;
