@@ -85,7 +85,7 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                                 color={isToday ? Colors.red : Colors.green}
                             />
                             <Text style={styles.cardLineText}>
-                                Contenu :{" "}
+                                Contenus :{" "}
                                 <Text
                                     style={[
                                         styles.cardLineScore,
@@ -110,7 +110,7 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                                 color={isToday ? Colors.red : Colors.green}
                             />
                             <Text style={styles.cardLineText}>
-                                Jeu :{" "}
+                                Jeux :{" "}
                                 <Text
                                     style={[
                                         styles.cardLineScore,
@@ -147,7 +147,8 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: "46%",
+        flexBasis: "45%",
+        flexGrow: 1,
         backgroundColor: Colors.snow,
         borderRadius: 12,
         overflow: "hidden",

@@ -53,7 +53,7 @@ export default function InformationsScreen() {
             <CustomSafeAreaView>
                 <View style={styles.pageContainer}>
                     <ThemedText style={styles.username}>
-                        Bonjour {username}
+                        Bienvenue {username}
                     </ThemedText>
                     <OptionItem
                         title="Contenu de l'application"

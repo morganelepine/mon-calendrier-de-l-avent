@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        alignContent: "space-between",
-        gap: 6,
-        marginHorizontal: 8,
-        marginBottom: 16,
+        alignContent: "center",
+        gap: 12,
+        marginHorizontal: 20,
+        marginBottom: 15,
     },
 });
