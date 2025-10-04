@@ -47,6 +47,9 @@ export default function HomeScreen() {
             //         "hasLaunched",
             //         "newUsername",
             //         "gameState",
+            //         "bingo_clicked_cells",
+            //         "bingo_grid",
+            //         "scoresData",
             //     ]);
             // }
         };
@@ -59,7 +62,6 @@ export default function HomeScreen() {
             <FirstLaunchModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
-                insets={insets}
             />
             <UsernameModal
                 modalVisible={usernameModalVisible}

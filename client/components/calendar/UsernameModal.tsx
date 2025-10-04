@@ -44,7 +44,7 @@ export default function UsernameModal({
                             <ThemedText style={styles.container}>
                                 Vous avez désormais un pseudo qui vous permettra
                                 de comparer votre score avec celui des autres
-                                joueurs·euses !
+                                joueur·euses !
                             </ThemedText>
                             <ThemedText style={styles.container}>
                                 Alors amusez-vous bien et que le·a plus grand·e
