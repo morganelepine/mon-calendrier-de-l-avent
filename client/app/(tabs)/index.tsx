@@ -38,20 +38,19 @@ export default function HomeScreen() {
                 setUsernameModalVisible(true);
             }
 
-            // if (hasLaunched) {
-            //     await AsyncStorage.multiRemove([
-            //         "userUuid",
-            //         "playMusic",
-            //         "calendar",
-            //         "lastResetYear",
-            //         "hasLaunched",
-            //         "newUsername",
-            //         "gameState",
-            //         "bingo_clicked_cells",
-            //         "bingo_grid",
-            //         "scoresData",
-            //     ]);
-            // }
+            // await AsyncStorage.multiRemove([
+            //     "userUuid",
+            //     "playMusic",
+            //     "calendar",
+            //     "hasLaunched",
+            //     "lastResetYear",
+            //     "newUsername",
+            //     "username",
+            //     "gameState",
+            //     "bingo_clicked_cells",
+            //     "bingo_grid",
+            //     "scoresData",
+            // ]);
         };
         initializeApp();
     }, []);

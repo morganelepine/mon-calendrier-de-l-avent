@@ -14,14 +14,14 @@ export class UserController {
     // GET /users/:uuid
     async getOne(request: Request, response: Response, next: NextFunction) {
         const uuid = request.params.uuid;
-
         const user = await prisma.user.findUnique({
             where: { uuid },
         });
 
         if (!user) {
-            return "Unregistered user";
+            return { status: 404, message: "Unregistered user" };
         }
+
         return user;
     }
 

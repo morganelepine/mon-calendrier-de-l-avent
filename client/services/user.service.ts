@@ -1,4 +1,4 @@
-import { API_URL } from "@/config/api";
+import { API_URL } from "@/constants/api";
 
 export const saveUser = async (userUuid: string, score: number) => {
     try {
@@ -15,5 +15,27 @@ export const saveUser = async (userUuid: string, score: number) => {
         return data.username;
     } catch (error) {
         if (error instanceof Error) console.error(error.message);
+    }
+};
+
+export const getUser = async (userUuid: string) => {
+    try {
+        const response = await fetch(`${API_URL}/users/${userUuid}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.status === 404) return null;
+
+        if (!response.ok)
+            throw new Error(`Erreur serveur (${response.status})`);
+
+        const user = await response.json();
+        return user;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error("Error in getUser :", error.message);
+        }
+        return null;
     }
 };

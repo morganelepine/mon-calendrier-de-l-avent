@@ -7,8 +7,7 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
-import { saveUser } from "@/services/user.service";
-import { API_URL } from "@/config/api";
+import { saveUser, getUser } from "@/services/user.service";
 
 interface UserContextType {
     username: string | null;
@@ -23,23 +22,35 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         const initUser = async () => {
             try {
                 let userUuid = await AsyncStorage.getItem("userUuid");
+                let storedUsername = await AsyncStorage.getItem("username");
+
+                if (storedUsername) {
+                    setUsername(storedUsername);
+                    return;
+                }
 
                 if (!userUuid) {
                     userUuid = uuid.v4();
                     await AsyncStorage.setItem("userUuid", userUuid);
                     const savedUsername = await saveUser(userUuid, 0);
                     setUsername(savedUsername ?? null);
-                } else {
-                    await AsyncStorage.setItem("hasLaunched", "true");
-                    const response = await fetch(
-                        `${API_URL}/users/${userUuid}`
-                    );
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUsername(data.username);
-                        console.log(data.username);
+                    if (savedUsername) {
+                        await AsyncStorage.setItem("username", savedUsername);
+                    }
+                    return;
+                }
+
+                const user = await getUser(userUuid);
+
+                if (!user) {
+                    const savedUsername = await saveUser(userUuid, 0);
+                    setUsername(savedUsername ?? null);
+                    if (savedUsername) {
+                        await AsyncStorage.setItem("username", savedUsername);
                     }
                 }
+
+                await AsyncStorage.setItem("hasLaunched", "true");
             } catch (error) {
                 console.error("Error initializing user", error);
             }
