@@ -13,20 +13,19 @@ export const ScoresButton: React.FC<ScoresButtonProps> = ({
     return (
         <View style={styles.header}>
             <Pressable
-                onPress={() => setModalVisible(true)}
-                style={styles.button}
-            >
-                <ThemedText type="italic14" style={styles.buttonText}>
-                    Voir les règles
-                </ThemedText>
-            </Pressable>
-
-            <Pressable
                 onPress={() => router.navigate("/scores/leaderboard")}
                 style={styles.button}
             >
                 <ThemedText type="italic14" style={styles.buttonText}>
                     Voir le classement
+                </ThemedText>
+            </Pressable>
+            <Pressable
+                onPress={() => setModalVisible(true)}
+                style={styles.button}
+            >
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Voir les règles
                 </ThemedText>
             </Pressable>
         </View>
@@ -36,7 +35,7 @@ export const ScoresButton: React.FC<ScoresButtonProps> = ({
 const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
         paddingHorizontal: 20,
         width: "100%",
         gap: 16,

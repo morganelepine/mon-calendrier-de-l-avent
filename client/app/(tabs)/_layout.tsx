@@ -12,13 +12,13 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: Colors.snow,
                 },
+                tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
             }}
         >
             <Tabs.Screen
                 name="index"
                 options={{
                     title: "Décompte",
-                    tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? "sparkles" : "sparkles-outline"}
@@ -31,7 +31,6 @@ export default function TabLayout() {
                 name="calendar"
                 options={{
                     title: "Calendrier",
-                    tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? "gift" : "gift-outline"}
@@ -44,7 +43,6 @@ export default function TabLayout() {
                 name="bingo"
                 options={{
                     title: "Bingo",
-                    tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
@@ -61,7 +59,6 @@ export default function TabLayout() {
                 name="scores"
                 options={{
                     title: "Scores",
-                    tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
@@ -78,7 +75,6 @@ export default function TabLayout() {
                 name="informations"
                 options={{
                     title: "Infos",
-                    tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? "snow" : "snow-outline"}

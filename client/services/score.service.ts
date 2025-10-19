@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GameState, Score } from "@/interfaces/scoreInterfaces";
-
-const BASE_URL = "https://advent-calendar-v3.vercel.app/scores";
+import { API_URL } from "@/config/api";
 
 export const saveScore = async (
     dayId: number | null,
@@ -11,7 +10,7 @@ export const saveScore = async (
 ): Promise<void> => {
     try {
         const userUuid = await AsyncStorage.getItem("userUuid");
-        const response = await fetch(`${BASE_URL}`, {
+        const response = await fetch(`${API_URL}/scores`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -36,7 +35,9 @@ export const getTotalScore = async (): Promise<number | undefined> => {
         const userUuid = await AsyncStorage.getItem("userUuid");
         if (!userUuid) return 0;
 
-        const response = await fetch(`${BASE_URL}/total/user/${userUuid}`);
+        const response = await fetch(
+            `${API_URL}/scores/total/user/${userUuid}`
+        );
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed getting total score: ${errorMessage}`);
@@ -55,7 +56,7 @@ export const getUserScoresByDay = async (): Promise<Score[]> => {
         const userUuid = await AsyncStorage.getItem("userUuid");
         if (!userUuid) return [];
 
-        const response = await fetch(`${BASE_URL}/user/${userUuid}`);
+        const response = await fetch(`${API_URL}/scores/user/${userUuid}`);
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed to get scores by day: ${errorMessage}`);

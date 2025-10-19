@@ -8,12 +8,11 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { saveUser } from "@/services/user.service";
+import { API_URL } from "@/config/api";
 
 interface UserContextType {
     username: string | null;
 }
-
-const BASE_URL = "https://advent-calendar-v3.vercel.app";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -33,7 +32,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 } else {
                     await AsyncStorage.setItem("hasLaunched", "true");
                     const response = await fetch(
-                        `${BASE_URL}/users/${userUuid}`
+                        `${API_URL}/users/${userUuid}`
                     );
                     if (response.ok) {
                         const data = await response.json();

@@ -1,8 +1,8 @@
-const BASE_URL = "https://advent-calendar-v3.vercel.app";
+import { API_URL } from "@/config/api";
 
 export const saveUser = async (userUuid: string, score: number) => {
     try {
-        const response = await fetch(`${BASE_URL}/users`, {
+        const response = await fetch(`${API_URL}/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ uuid: userUuid, score }),

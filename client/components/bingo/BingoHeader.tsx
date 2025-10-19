@@ -48,18 +48,17 @@ export const BingoHeader: React.FC<BingoHeaderProps> = ({
 
     return (
         <View style={styles.header}>
+            <Pressable onPress={generateBingoGrid} style={styles.button}>
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Générer une nouvelle grille
+                </ThemedText>
+            </Pressable>
             <Pressable
                 onPress={() => setModalVisible(true)}
                 style={styles.button}
             >
                 <ThemedText type="italic14" style={styles.buttonText}>
                     Voir les règles
-                </ThemedText>
-            </Pressable>
-
-            <Pressable onPress={generateBingoGrid} style={styles.button}>
-                <ThemedText type="italic14" style={styles.buttonText}>
-                    Générer une nouvelle grille
                 </ThemedText>
             </Pressable>
         </View>
@@ -69,7 +68,7 @@ export const BingoHeader: React.FC<BingoHeaderProps> = ({
 const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
         paddingHorizontal: 20,
         width: "100%",
         gap: 16,

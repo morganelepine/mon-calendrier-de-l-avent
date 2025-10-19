@@ -4,8 +4,7 @@ import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
-
-const BASE_URL = "https://advent-calendar-v3.vercel.app";
+import { API_URL } from "@/config/api";
 
 export default function LeaderboardScreen() {
     const [leaderboard, setLeaderboard] = useState<
@@ -19,7 +18,7 @@ export default function LeaderboardScreen() {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/scores/leaderboard`);
+                const response = await fetch(`${API_URL}/scores/leaderboard`);
                 const data = await response.json();
                 setLeaderboard(data);
             } catch (error) {

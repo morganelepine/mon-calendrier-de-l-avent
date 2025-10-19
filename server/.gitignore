@@ -4,5 +4,6 @@ build/
 tmp/
 temp/
 .env
+.env.production
 /generated/prisma
 # src/data
