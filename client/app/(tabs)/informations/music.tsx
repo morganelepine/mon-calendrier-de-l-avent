@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, View, Switch } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
 
 export default function MusicScreen() {
+    const insets = useSafeAreaInsets();
     const [playMusic, setPlayMusic] = useState<MusicPreference>("no");
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export default function MusicScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
             <ThemedText
                 type="sectionText"
                 style={{ fontFamily: "PoppinsBold" }}
@@ -50,9 +52,7 @@ export default function MusicScreen() {
                     ? "La musique se déclenchera automatiquement lorsque vous ouvrez l'application mais vous pourrez la mettre en pause depuis l'onglet Décompte."
                     : "La musique ne se déclenchera pas lorsque vous ouvrez l'app mais vous pourrez tout de même lancer la musique depuis l'onglet Décompte."}
             </ThemedText>
-
             <View style={styles.separator} />
-
             <View style={styles.row}>
                 <ThemedText type="sectionText" style={{ color: Colors.green }}>
                     {playMusic === "yes"
@@ -73,10 +73,6 @@ export default function MusicScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingVertical: 20,
-        marginBottom: 20,
-    },
     row: {
         flexDirection: "row",
         justifyContent: "space-between",

@@ -1,5 +1,4 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, router } from "expo-router";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 
@@ -38,6 +37,12 @@ export default function TabLayout() {
                         />
                     ),
                 }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.replace("/calendar");
+                    },
+                }}
             />
             <Tabs.Screen
                 name="bingo"
@@ -53,6 +58,12 @@ export default function TabLayout() {
                             color={color}
                         />
                     ),
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.replace("/bingo");
+                    },
                 }}
             />
             <Tabs.Screen
@@ -70,6 +81,12 @@ export default function TabLayout() {
                         />
                     ),
                 }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.replace("/scores");
+                    },
+                }}
             />
             <Tabs.Screen
                 name="informations"
@@ -81,6 +98,12 @@ export default function TabLayout() {
                             color={color}
                         />
                     ),
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.replace("/informations");
+                    },
                 }}
             />
         </Tabs>

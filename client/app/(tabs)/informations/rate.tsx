@@ -1,10 +1,18 @@
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
-import { RateButton } from "../../../components/utils/buttons/RateButton";
+import { RateButton } from "@/components/utils/buttons/RateButton";
 
 export default function RateScreen() {
+    const insets = useSafeAreaInsets();
     return (
-        <View style={styles.container}>
+        <View
+            style={{
+                paddingTop: insets.top,
+                paddingBottom: insets.bottom,
+                gap: 8,
+            }}
+        >
             <ThemedText type="sectionText">
                 Votre avis compte beaucoup pour moi. Alors si vous appréciez
                 cette application, prenez un moment pour laisser un avis !
@@ -22,10 +30,6 @@ export default function RateScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingVertical: 20,
-        gap: 8,
-    },
     button: {
         marginVertical: 10,
         marginHorizontal: 20,

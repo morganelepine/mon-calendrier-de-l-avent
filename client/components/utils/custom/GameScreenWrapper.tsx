@@ -58,7 +58,7 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
             <View style={styles.container}>
                 <ThemedText
                     type="contentTitle"
-                    style={[{ paddingTop: insets.top, paddingBottom: 2 }]}
+                    style={[styles.title, { paddingTop: insets.top }]}
                 >
                     {getTitle()}
                 </ThemedText>
@@ -75,6 +75,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         width: "100%",
+    },
+    title: {
+        paddingBottom: 2,
         paddingHorizontal: 20,
     },
 });

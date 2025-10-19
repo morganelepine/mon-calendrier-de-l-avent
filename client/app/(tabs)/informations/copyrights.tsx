@@ -1,9 +1,13 @@
 import { StyleSheet, View, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function CopyrightsScreen() {
+    const insets = useSafeAreaInsets();
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView
+            style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
+        >
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Cette application est un projet collaboratif : 2 personnes
@@ -41,9 +45,6 @@ export default function CopyrightsScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingVertical: 20,
-    },
     section: {
         marginBottom: 20,
     },

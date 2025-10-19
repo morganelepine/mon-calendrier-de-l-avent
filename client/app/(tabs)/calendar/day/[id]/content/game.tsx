@@ -1,5 +1,5 @@
+import { StyleSheet, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
@@ -31,7 +31,7 @@ export default function GameScreen() {
     return (
         <GameScreenWrapper contentType={type} dayId={dayId}>
             <CustomScrollView>
-                <View>
+                <View style={styles.container}>
                     {gamesByType.pendu && (
                         <Hangman game={gamesByType.pendu} setScore={setScore} />
                     )}
@@ -84,3 +84,9 @@ export default function GameScreen() {
         </GameScreenWrapper>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 20,
+    },
+});
