@@ -12,6 +12,7 @@ export const FullStory = () => {
         <ContentScreenWrapper
             contentType={"story"}
             backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
+            dayId={dayId}
         >
             <CustomScrollView>
                 {storyData.map((story) => (

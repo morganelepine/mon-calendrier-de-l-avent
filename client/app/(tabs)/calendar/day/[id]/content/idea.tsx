@@ -59,6 +59,7 @@ export default function IdeaScreen() {
                     contentType={ContentType.Idea}
                     backgroundImage={modalBackground}
                     key={idea.id}
+                    dayId={dayId}
                 >
                     <CustomScrollView>
                         <View>

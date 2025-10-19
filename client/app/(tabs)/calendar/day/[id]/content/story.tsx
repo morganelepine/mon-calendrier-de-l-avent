@@ -17,6 +17,7 @@ export default function StoryScreen() {
         <ContentScreenWrapper
             contentType={story.type}
             backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
+            dayId={dayId}
         >
             <ThemedText type="contentSubtitle">{story.title}</ThemedText>
 

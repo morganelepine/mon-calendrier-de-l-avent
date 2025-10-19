@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     alphabet: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "center",
+        justifyContent: "space-between",
         gap: 8,
     },
     letter: {

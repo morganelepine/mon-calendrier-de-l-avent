@@ -89,10 +89,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
 
     return (
         <View key={game.id} style={{ alignItems: "center" }}>
-            <ThemedText
-                type={"contentSubtitle"}
-                style={{ textAlign: "center" }}
-            >
+            <ThemedText type={"contentSubtitle"}>
                 Trouvez 3 mots autour de l'hiver et&nbsp;de&nbsp;Noël
             </ThemedText>
 

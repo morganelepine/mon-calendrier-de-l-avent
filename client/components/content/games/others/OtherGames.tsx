@@ -72,7 +72,6 @@ export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
 const styles = StyleSheet.create({
     title: {
         marginBottom: 20,
-        textAlign: "center",
     },
     shortAnswer: {
         fontFamily: "PallyBold",

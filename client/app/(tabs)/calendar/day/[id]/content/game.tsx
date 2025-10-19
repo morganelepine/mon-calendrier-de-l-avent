@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
@@ -17,16 +17,21 @@ export default function GameScreen() {
     const { games } = getContentsByDay(dayId);
     const { gamesByType, type } = classifyGames(games);
 
-    const setScore = (questionNumber: number) => {
+    const setScore = async (questionNumber: number): Promise<void> => {
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
-        saveScore(dayId, score, String(ScoreType.GameAnswer), questionNumber);
+        await saveScore(
+            dayId,
+            score,
+            String(ScoreType.GameAnswer),
+            questionNumber
+        );
     };
 
     return (
-        <GameScreenWrapper contentType={type}>
+        <GameScreenWrapper contentType={type} dayId={dayId}>
             <CustomScrollView>
-                <View style={styles.container}>
+                <View>
                     {gamesByType.pendu && (
                         <Hangman game={gamesByType.pendu} setScore={setScore} />
                     )}
@@ -37,10 +42,7 @@ export default function GameScreen() {
 
                     {gamesByType.quizCitation.length > 0 && (
                         <>
-                            <ThemedText
-                                type="contentSubtitle"
-                                style={{ textAlign: "center" }}
-                            >
+                            <ThemedText type="contentSubtitle">
                                 À quel film de Noël appartient
                                 cette&nbsp;réplique&nbsp;?
                             </ThemedText>
@@ -82,9 +84,3 @@ export default function GameScreen() {
         </GameScreenWrapper>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 20,
-    },
-});

@@ -4,7 +4,7 @@ import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
-import { API_URL } from "@/config/api";
+import { API_URL } from "@/constants/api";
 
 export default function LeaderboardScreen() {
     const [leaderboard, setLeaderboard] = useState<
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginVertical: 8,
-        paddingTop: 8,
-        paddingBottom: 4,
+        paddingTop: 10,
+        paddingBottom: 6,
         paddingHorizontal: 16,
         borderRadius: 22,
         gap: 16,

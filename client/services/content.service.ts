@@ -110,6 +110,7 @@ type ButtonStyles = {
     textStyle: {
         color: string;
         fontSize: number;
+        textAlign?: string;
     };
 };
 
@@ -136,6 +137,7 @@ export const getButtonStyles = (
         textStyle: {
             color: color,
             fontSize: 16,
+            textAlign: "center",
         },
     };
 };

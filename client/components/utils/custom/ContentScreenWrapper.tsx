@@ -1,20 +1,25 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
+import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import { ContentType } from "@/enums/enums";
+import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
+import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
 
 interface ContentScreenWrapperProps {
     contentType: string | undefined;
     backgroundImage: string;
     children?: React.ReactNode;
+    dayId: number;
 }
 
 export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     contentType,
     backgroundImage,
     children,
+    dayId,
 }) => {
     const today = new Date().getDate();
 
@@ -35,26 +40,44 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
         }
     };
 
-    return (
-        <ParallaxScrollView
-            headerBackgroundColor={{
-                light: Colors.snow,
-                dark: Colors.darkBlue,
-            }}
-            headerImage={
-                <Image
-                    source={{ uri: backgroundImage }}
-                    style={styles.headerImage}
-                    resizeMode="cover"
-                />
-            }
-        >
-            <View style={styles.container}>
-                <ThemedText type="contentTitle">{getTitle()}</ThemedText>
+    const closeContent = async () => {
+        router.navigate({
+            pathname: `/calendar/day/${String(dayId)}`,
+        });
+    };
 
-                {children}
-            </View>
-        </ParallaxScrollView>
+    return (
+        <>
+            <CloseContentButton
+                onPress={closeContent}
+                style={{ backgroundColor: Colors.snow }}
+            >
+                <Ionicons
+                    name={"return-up-back-outline"}
+                    size={35}
+                    color={Colors.green}
+                />
+            </CloseContentButton>
+            <ParallaxScrollView
+                headerBackgroundColor={{
+                    light: Colors.snow,
+                    dark: Colors.darkBlue,
+                }}
+                headerImage={
+                    <Image
+                        source={{ uri: backgroundImage }}
+                        style={styles.headerImage}
+                        resizeMode="cover"
+                    />
+                }
+            >
+                <View style={styles.container}>
+                    <ThemedText type="contentTitle">{getTitle()}</ThemedText>
+
+                    {children}
+                </View>
+            </ParallaxScrollView>
+        </>
     );
 };
 

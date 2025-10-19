@@ -40,11 +40,8 @@ const styles = StyleSheet.create({
     cell: {
         flexBasis: "30%",
         flexGrow: 1,
-        aspectRatio: 1,
-        justifyContent: "center",
-        alignItems: "center",
         borderRadius: 12,
-        padding: 4,
+        padding: 2,
     },
     itemBackground: {
         width: "100%",

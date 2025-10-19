@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GameState, Score } from "@/interfaces/scoreInterfaces";
-import { API_URL } from "@/config/api";
+import { API_URL } from "@/constants/api";
 
 export const saveScore = async (
     dayId: number | null,
