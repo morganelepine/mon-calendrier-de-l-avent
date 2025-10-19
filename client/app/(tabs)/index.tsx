@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Home } from "@/components/calendar/Home";
 import { FirstLaunchModal } from "@/components/calendar/FirstLaunchModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,7 +20,6 @@ async function resetDataIfNeeded() {
 }
 
 export default function HomeScreen() {
-    const insets = useSafeAreaInsets();
     const [modalVisible, setModalVisible] = useState(false);
     const [usernameModalVisible, setUsernameModalVisible] = useState(false);
 
@@ -57,7 +55,7 @@ export default function HomeScreen() {
 
     return (
         <>
-            <Home insets={insets} />
+            <Home />
             <FirstLaunchModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}

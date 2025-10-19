@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScoresButton } from "@/components/score/ScoresButton";
@@ -15,8 +15,12 @@ export default function ScoreScreen() {
     const { scoreTotal, scoreHistory, refreshScores } = useScore();
 
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
+            // Do something when the screen is focused
             refreshScores();
+            return () => {
+                // Do something when the screen is unfocused
+            };
         }, [refreshScores])
     );
 

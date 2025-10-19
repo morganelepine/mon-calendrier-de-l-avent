@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, ImageBackground, View } from "react-native";
-import { EdgeInsets } from "react-native-safe-area-context";
+import { StyleSheet, ImageBackground, View, StatusBar } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { daysArray } from "@/data/days_data";
 import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
@@ -17,11 +17,9 @@ import {
     daysToCalendar,
 } from "@/constants/Dates";
 
-interface HomeProps {
-    insets: EdgeInsets;
-}
+export const Home = () => {
+    const insets = useSafeAreaInsets();
 
-export const Home: React.FC<HomeProps> = ({ insets }) => {
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
     const day = daysMap.get(currentDay);
 
@@ -35,63 +33,81 @@ export const Home: React.FC<HomeProps> = ({ insets }) => {
         : "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3";
 
     return (
-        <ImageBackground
-            source={{ uri: backgroundImage }}
-            style={styles.background}
-            resizeMode="cover"
-        >
-            {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
+        <>
+            <StatusBar
+                barStyle="light-content"
+                translucent
+                backgroundColor="transparent"
+            />
+            <ImageBackground
+                source={{ uri: backgroundImage }}
+                style={styles.background}
+                resizeMode="cover"
+            >
+                {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
 
-            <CustomSafeAreaView>
-                <View
-                    style={{
-                        position: "absolute",
-                        top: insets.top + 10,
-                        right: 10,
-                    }}
-                >
-                    <AudioPlayer music={music} />
-                </View>
+                <CustomSafeAreaView>
+                    <View
+                        style={{
+                            position: "absolute",
+                            top: insets.top + 10,
+                            right: 10,
+                        }}
+                    >
+                        <AudioPlayer music={music} />
+                    </View>
 
-                <View style={styles.textContainer}>
-                    {isChristmas && (
-                        <ThemedText type="homeTitle" style={styles.isChristmas}>
-                            Joyeux Noël
-                        </ThemedText>
-                    )}
-
-                    {!isChristmas && !isAfterChristmas && isDecember && (
-                        <>
-                            <ThemedText type="homeTitle" style={styles.text1}>
-                                {daysToChristmas}{" "}
-                                {daysToChristmas > 1 ? "nuits" : "nuit"}
+                    <View style={styles.textContainer}>
+                        {isChristmas && (
+                            <ThemedText
+                                type="homeTitle"
+                                style={styles.isChristmas}
+                            >
+                                Joyeux Noël
                             </ThemedText>
-                            <ThemedText type="homeTitle">avant Noël</ThemedText>
-                        </>
-                    )}
+                        )}
 
-                    {!isDecember && (
-                        <>
-                            <ThemedText type="homeTitle" style={styles.text1}>
-                                {daysToCalendar} jours
-                            </ThemedText>
-                            <ThemedText style={styles.beforeCalendar}>
-                                avant le départ du calendrier
-                            </ThemedText>
-                        </>
-                    )}
+                        {!isChristmas && !isAfterChristmas && isDecember && (
+                            <>
+                                <ThemedText
+                                    type="homeTitle"
+                                    style={styles.text1}
+                                >
+                                    {daysToChristmas}{" "}
+                                    {daysToChristmas > 1 ? "nuits" : "nuit"}
+                                </ThemedText>
+                                <ThemedText type="homeTitle">
+                                    avant Noël
+                                </ThemedText>
+                            </>
+                        )}
 
-                    {isAfterChristmas && (
-                        <ThemedText
-                            type="homeTitle"
-                            style={styles.afterChristmas}
-                        >
-                            Rendez-vous l'année prochaine !
-                        </ThemedText>
-                    )}
-                </View>
-            </CustomSafeAreaView>
-        </ImageBackground>
+                        {!isDecember && (
+                            <>
+                                <ThemedText
+                                    type="homeTitle"
+                                    style={styles.text1}
+                                >
+                                    {daysToCalendar} jours
+                                </ThemedText>
+                                <ThemedText style={styles.beforeCalendar}>
+                                    avant le départ du calendrier
+                                </ThemedText>
+                            </>
+                        )}
+
+                        {isAfterChristmas && (
+                            <ThemedText
+                                type="homeTitle"
+                                style={styles.afterChristmas}
+                            >
+                                Rendez-vous l'année prochaine !
+                            </ThemedText>
+                        )}
+                    </View>
+                </CustomSafeAreaView>
+            </ImageBackground>
+        </>
     );
 };
 
