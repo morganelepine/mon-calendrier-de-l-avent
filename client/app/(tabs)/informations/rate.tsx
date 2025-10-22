@@ -1,18 +1,12 @@
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { RateButton } from "@/components/utils/buttons/RateButton";
+import { Colors } from "@/constants/Colors";
 
 export default function RateScreen() {
-    const insets = useSafeAreaInsets();
     return (
-        <View
-            style={{
-                paddingTop: insets.top,
-                paddingBottom: insets.bottom,
-                gap: 8,
-            }}
-        >
+        <SafeAreaView style={{ backgroundColor: Colors.snow, flex: 1, gap: 8 }}>
             <ThemedText type="sectionText">
                 Votre avis compte beaucoup pour moi. Alors si vous appréciez
                 cette application, prenez un moment pour laisser un avis !
@@ -25,7 +19,7 @@ export default function RateScreen() {
                 Merci pour votre soutien !
             </ThemedText>
             <RateButton style={styles.button}>Laisser un avis</RateButton>
-        </View>
+        </SafeAreaView>
     );
 }
 

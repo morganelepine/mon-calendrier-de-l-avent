@@ -1,11 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const BingoRules = () => {
-    const insets = useSafeAreaInsets();
     return (
-        <View style={{ paddingBottom: insets.bottom / 2 }}>
+        <View>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Vous adorez les téléfilms de Noël avec leurs histoires
@@ -45,7 +43,7 @@ export const BingoRules = () => {
                 </ThemedText>
             </View>
 
-            <View style={styles.section}>
+            <View>
                 <ThemedText type="sectionText">
                     Évidemment, plus vous cochez de cases, plus le téléfilm a de
                     chance d’atteindre le sommet du chef-d'oeuvre de Noël !

@@ -1,14 +1,13 @@
-import { ScrollView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { BingoRules } from "@/components/bingo/BingoRules";
 
 export default function BingoRulesScreen() {
-    const insets = useSafeAreaInsets();
     return (
-        <ScrollView
-            style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
-        >
-            <BingoRules />
-        </ScrollView>
+        <CustomScrollView>
+            <SafeAreaView>
+                <BingoRules />
+            </SafeAreaView>
+        </CustomScrollView>
     );
 }

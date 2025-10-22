@@ -19,6 +19,7 @@ export default function UsernameModal({
 
     const onClose = async () => {
         setModalVisible(false);
+        await AsyncStorage.setItem("hasLaunched", "true");
         await AsyncStorage.setItem("newUsername", "true");
     };
 

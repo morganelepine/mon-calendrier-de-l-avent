@@ -35,13 +35,18 @@ export default function LeaderboardScreen() {
             resizeMode="cover"
             style={styles.imageBackground}
         >
-            <View style={styles.container}>
+            <View style={{ flex: 1 }}>
                 <FlatList
                     data={leaderboard}
                     contentContainerStyle={{ paddingBottom: 20 }}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => (
-                        <View style={styles.rowContainer}>
+                        <View
+                            style={[
+                                { marginHorizontal: 20 },
+                                index === 0 && { marginTop: 20 },
+                            ]}
+                        >
                             <View
                                 style={[
                                     styles.row,
@@ -109,8 +114,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    rowContainer: { marginHorizontal: 20 },
-    container: { flex: 1, paddingTop: 20 },
     row: {
         flexDirection: "row",
         justifyContent: "space-between",

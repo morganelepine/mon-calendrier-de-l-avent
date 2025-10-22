@@ -1,14 +1,13 @@
-import { ScrollView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { AppContent } from "@/components/informations/AppContent";
 
 export default function ContentScreen() {
-    const insets = useSafeAreaInsets();
     return (
-        <ScrollView
-            style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
-        >
-            <AppContent />
-        </ScrollView>
+        <CustomScrollView>
+            <SafeAreaView>
+                <AppContent />
+            </SafeAreaView>
+        </CustomScrollView>
     );
 }

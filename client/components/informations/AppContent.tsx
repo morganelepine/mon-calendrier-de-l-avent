@@ -1,12 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const AppContent = () => {
-    const insets = useSafeAreaInsets();
-
     return (
-        <View style={[styles.container, { paddingBottom: insets.bottom / 2 }]}>
+        <View>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Chaque jour, plongez dans la magie de Noël et découvrez :
@@ -73,7 +70,10 @@ export const AppContent = () => {
                 </ThemedText>
             </View>
 
-            <ThemedText type="sectionText" style={styles.ital}>
+            <ThemedText
+                type="sectionText"
+                style={{ fontFamily: "PoppinsItalic" }}
+            >
                 J'ai mis tout mon amour de Noël dans ce calendrier et j'espère
                 qu'il saura vous transporter dans cette magie des fêtes que
                 j'aime tant.
@@ -83,13 +83,7 @@ export const AppContent = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        marginBottom: 20,
-    },
     section: {
         marginBottom: 20,
-    },
-    ital: {
-        fontFamily: "PoppinsItalic",
     },
 });

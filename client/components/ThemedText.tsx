@@ -29,7 +29,7 @@ export function ThemedText({
     return (
         <Text
             style={[
-                { color },
+                // { color },
                 type === "default" ? styles.default : undefined,
                 type === "homeTitle" ? styles.homeTitle : undefined,
                 type === "sectionSubtitle" ? styles.sectionSubtitle : undefined,

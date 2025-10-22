@@ -51,7 +51,7 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
                 <Ionicons
                     name={"return-up-back-outline"}
                     size={35}
-                    color={Colors.green}
+                    color={Colors.snow}
                 />
             </CloseContentButton>
 
@@ -75,9 +75,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         width: "100%",
+        backgroundColor: Colors.green,
     },
     title: {
         paddingBottom: 2,
         paddingHorizontal: 20,
+        color: Colors.snow,
     },
 });

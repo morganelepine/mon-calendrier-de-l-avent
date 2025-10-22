@@ -49,8 +49,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                         await AsyncStorage.setItem("username", savedUsername);
                     }
                 }
-
-                await AsyncStorage.setItem("hasLaunched", "true");
             } catch (error) {
                 console.error("Error initializing user", error);
             }

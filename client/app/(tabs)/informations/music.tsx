@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Switch } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
 
 export default function MusicScreen() {
-    const insets = useSafeAreaInsets();
     const [playMusic, setPlayMusic] = useState<MusicPreference>("no");
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export default function MusicScreen() {
     };
 
     return (
-        <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
+        <SafeAreaView style={{ backgroundColor: Colors.snow, flex: 1 }}>
             <ThemedText
                 type="sectionText"
                 style={{ fontFamily: "PoppinsBold" }}
@@ -54,7 +53,7 @@ export default function MusicScreen() {
             </ThemedText>
             <View style={styles.separator} />
             <View style={styles.row}>
-                <ThemedText type="sectionText" style={{ color: Colors.green }}>
+                <ThemedText type="sectionText" style={{ color: Colors.blue }}>
                     {playMusic === "yes"
                         ? "Désactiver l'ambiance musicale"
                         : "Activer l'ambiance musicale"}
@@ -63,12 +62,12 @@ export default function MusicScreen() {
                 <Switch
                     value={playMusic === "yes"}
                     onValueChange={toggleSwitch}
-                    trackColor={{ false: "#ccc", true: Colors.green }}
+                    trackColor={{ false: "#ccc", true: Colors.blue }}
                     thumbColor="#fff"
                     style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
                 />
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

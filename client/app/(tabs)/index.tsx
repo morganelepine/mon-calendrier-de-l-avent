@@ -27,12 +27,13 @@ export default function HomeScreen() {
         const initializeApp = async () => {
             await resetDataIfNeeded();
 
+            const userUuid = await AsyncStorage.getItem("userUuid");
             const hasLaunched = await AsyncStorage.getItem("hasLaunched");
             const newUsername = await AsyncStorage.getItem("newUsername");
 
-            if (!hasLaunched) {
+            if (!userUuid && !hasLaunched) {
                 setModalVisible(true);
-            } else if (!newUsername) {
+            } else if (userUuid && !newUsername) {
                 setUsernameModalVisible(true);
             }
 

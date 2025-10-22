@@ -1,12 +1,9 @@
 import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const Rules = () => {
-    const insets = useSafeAreaInsets();
-
     return (
-        <View style={{ paddingBottom: insets.bottom / 2 }}>
+        <View>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Chaque jour, vous pouvez accumuler des points pour tenter
@@ -83,7 +80,7 @@ export const Rules = () => {
                 </ThemedText>
             </View>
 
-            <View style={styles.section}>
+            <View>
                 <ThemedText type="sectionSubtitle">Objectif atteint</ThemedText>
                 <ThemedText type="sectionText">
                     Et si le 25 décembre vous avez réussi à accumuler au moins
