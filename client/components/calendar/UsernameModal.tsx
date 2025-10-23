@@ -31,10 +31,7 @@ export default function UsernameModal({
                         <View style={styles.modalView}>
                             <View style={styles.container}>
                                 <ThemedText style={styles.title}>
-                                    Tu es désormais...
-                                </ThemedText>
-                                <ThemedText style={styles.title}>
-                                    {username}
+                                    Welcome back!
                                 </ThemedText>
                             </View>
                             <ThemedText style={styles.container}>
@@ -48,9 +45,25 @@ export default function UsernameModal({
                                 joueur·euses !
                             </ThemedText>
                             <ThemedText style={styles.container}>
-                                Alors amusez-vous bien et que le·a plus grand·e
-                                fan de Noël gagne...
+                                Le vôtre est :{" "}
+                                <ThemedText
+                                    style={{
+                                        color: Colors.red,
+                                        fontFamily: "PoppinsBold",
+                                    }}
+                                >
+                                    {username}
+                                </ThemedText>
                             </ThemedText>
+                            <ThemedText style={styles.container}>
+                                Rendez-vous dans la page "Classement" de
+                                l'onglet "Scores".
+                            </ThemedText>
+                            <ThemedText style={styles.container}>
+                                Amusez-vous bien et que le·a plus grand·e fan de
+                                Noël gagne...
+                            </ThemedText>
+
                             <CustomButton
                                 style={styles.button}
                                 onPress={onClose}
@@ -84,8 +97,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        textAlign: "center",
         fontFamily: "PoppinsBold",
+        color: Colors.blue,
     },
     button: {
         backgroundColor: Colors.blue,

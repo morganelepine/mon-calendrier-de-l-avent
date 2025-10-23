@@ -37,12 +37,11 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
 
                     <View style={{ gap: 8 }}>
                         <ThemedText type="sectionText">
-                            Chaque jour, ouvrez une case et découvrez des
-                            contenus qui vous transporteront dans la magie de
-                            Noël !
+                            Chaque jour, ouvrez une case et entrez dans la magie
+                            de Noël !
                         </ThemedText>
                         <ThemedText type="sectionText">
-                            Votre nom de joueur·euse est :{" "}
+                            Votre nom de lutin·e de Noël est :{" "}
                             <ThemedText
                                 style={{
                                     color: Colors.red,
@@ -54,7 +53,8 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
                         </ThemedText>
                         <ThemedText type="sectionText">
                             Il vous permettra de comparer votre score avec celui
-                            des autres participant·es.
+                            des autres joueur·euses dans la page "Classement" de
+                            l'onglet "Scores".
                         </ThemedText>
                         <ThemedText type="sectionText">
                             Plus vous participez, plus vous gagnez de points !

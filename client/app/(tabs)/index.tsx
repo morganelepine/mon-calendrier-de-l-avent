@@ -30,6 +30,9 @@ export default function HomeScreen() {
             const userUuid = await AsyncStorage.getItem("userUuid");
             const hasLaunched = await AsyncStorage.getItem("hasLaunched");
             const newUsername = await AsyncStorage.getItem("newUsername");
+            // console.log("userUuid : ", userUuid);
+            // console.log("hasLaunched : ", hasLaunched);
+            // console.log("newUsername : ", newUsername);
 
             if (!userUuid && !hasLaunched) {
                 setModalVisible(true);

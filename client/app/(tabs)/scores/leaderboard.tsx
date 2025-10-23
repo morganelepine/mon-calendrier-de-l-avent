@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
+import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
+import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { API_URL } from "@/constants/api";
 import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
-import React, { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
-import { API_URL } from "@/constants/api";
 
 export default function LeaderboardScreen() {
     const [leaderboard, setLeaderboard] = useState<
@@ -14,18 +15,28 @@ export default function LeaderboardScreen() {
         "blue_background_darker_d10kn5"
     );
     const { username } = useUser();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchLeaderboard = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const response = await fetch(`${API_URL}/scores/leaderboard`);
+            const data = await response.json();
+            setLeaderboard(data);
+        } catch (error) {
+            console.error("Error fetching leaderboard:", error);
+            setError(
+                "Impossible de charger le classement... Vérifiez votre connexion Internet."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const response = await fetch(`${API_URL}/scores/leaderboard`);
-                const data = await response.json();
-                setLeaderboard(data);
-            } catch (error) {
-                console.error("Error fetching leaderboard:", error);
-            }
-        };
-
         fetchLeaderboard();
     }, []);
 
@@ -36,73 +47,81 @@ export default function LeaderboardScreen() {
             style={styles.imageBackground}
         >
             <View style={{ flex: 1 }}>
-                <FlatList
-                    data={leaderboard}
-                    contentContainerStyle={{ paddingBottom: 20 }}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => (
-                        <View
-                            style={[
-                                { marginHorizontal: 20 },
-                                index === 0 && { marginTop: 20 },
-                            ]}
-                        >
+                <ErrorLoading
+                    error={error}
+                    loading={loading}
+                    refreshScores={fetchLeaderboard}
+                ></ErrorLoading>
+
+                {!error && !loading && (
+                    <FlatList
+                        data={leaderboard}
+                        contentContainerStyle={{ paddingBottom: 20 }}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item, index }) => (
                             <View
                                 style={[
-                                    styles.row,
-                                    {
-                                        backgroundColor:
-                                            item.username === username
-                                                ? Colors.green
-                                                : Colors.snow,
-                                    },
+                                    { marginHorizontal: 20 },
+                                    index === 0 && { marginTop: 20 },
                                 ]}
                             >
-                                <ThemedText
+                                <View
                                     style={[
-                                        styles.rank,
+                                        styles.row,
                                         {
+                                            backgroundColor:
+                                                item.username === username
+                                                    ? Colors.green
+                                                    : Colors.snow,
+                                        },
+                                    ]}
+                                >
+                                    <ThemedText
+                                        style={[
+                                            styles.rank,
+                                            {
+                                                color:
+                                                    item.username === username
+                                                        ? Colors.snow
+                                                        : Colors.blue,
+                                            },
+                                        ]}
+                                    >
+                                        {index + 1}
+                                    </ThemedText>
+                                    <ThemedText
+                                        style={{
+                                            flex: 1,
                                             color:
                                                 item.username === username
                                                     ? Colors.snow
                                                     : Colors.blue,
-                                        },
-                                    ]}
-                                >
-                                    {index + 1}
-                                </ThemedText>
-                                <ThemedText
-                                    style={{
-                                        flex: 1,
-                                        color:
-                                            item.username === username
-                                                ? Colors.snow
-                                                : Colors.blue,
-                                        fontFamily:
-                                            item.username === username
-                                                ? "PoppinsBold"
-                                                : "Poppins",
-                                    }}
-                                >
-                                    {item.username}
-                                </ThemedText>
-                                <ThemedText
-                                    style={[
-                                        styles.score,
-                                        {
-                                            color:
+                                            fontFamily:
                                                 item.username === username
-                                                    ? Colors.snow
-                                                    : Colors.blue,
-                                        },
-                                    ]}
-                                >
-                                    {item.score}
-                                </ThemedText>
+                                                    ? "PoppinsBold"
+                                                    : "Poppins",
+                                        }}
+                                    >
+                                        {item.username}
+                                    </ThemedText>
+                                    <ThemedText
+                                        style={[
+                                            styles.score,
+                                            {
+                                                color:
+                                                    item.username === username
+                                                        ? Colors.snow
+                                                        : Colors.blue,
+                                            },
+                                        ]}
+                                    >
+                                        {item.score}
+                                    </ThemedText>
+                                </View>
                             </View>
-                        </View>
-                    )}
-                />
+                        )}
+                    />
+                )}
             </View>
         </ImageBackground>
     );

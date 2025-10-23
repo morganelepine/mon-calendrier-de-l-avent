@@ -6,13 +6,16 @@ import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Score } from "@/interfaces/scoreInterfaces";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { useScore } from "@/contexts/ScoreContext";
+import { Colors } from "@/constants/Colors";
 
 export default function ScoreScreen() {
     const [modalVisible, setModalVisible] = useState(false);
-    const { scoreTotal, scoreHistory, refreshScores } = useScore();
+    const { scoreTotal, scoreHistory, loading, error, refreshScores } =
+        useScore();
 
     useFocusEffect(
         useCallback(() => {
@@ -34,22 +37,32 @@ export default function ScoreScreen() {
         >
             <CustomSafeAreaView>
                 <ScoresButton setModalVisible={setModalVisible} />
+                <RulesModal
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                />
 
                 <TotalScore score={scoreTotal} />
+
+                <ErrorLoading
+                    error={error}
+                    loading={loading}
+                    refreshScores={refreshScores}
+                ></ErrorLoading>
 
                 <ScrollView
                     persistentScrollbar={true} // Android only
                 >
-                    <View style={styles.cardsWrapper}>
-                        {scoreHistory.map((score: Score) => (
-                            <ScoreHistory key={score.dayNumber} score={score} />
-                        ))}
-                    </View>
-
-                    <RulesModal
-                        modalVisible={modalVisible}
-                        setModalVisible={setModalVisible}
-                    />
+                    {!error && !loading && (
+                        <View style={styles.cardsWrapper}>
+                            {scoreHistory.map((score: Score) => (
+                                <ScoreHistory
+                                    key={score.dayNumber}
+                                    score={score}
+                                />
+                            ))}
+                        </View>
+                    )}
                 </ScrollView>
             </CustomSafeAreaView>
         </ImageBackground>
