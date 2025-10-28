@@ -7,29 +7,32 @@ interface BingoCellProps {
     cell: Bingo;
     isClicked: boolean;
     onClick: (id: number) => void;
+    type: string;
 }
 
 export const BingoCell: React.FC<BingoCellProps> = ({
     cell,
     isClicked,
     onClick,
+    type,
 }) => {
     return (
         <Pressable
             style={[
-                styles.cell,
                 {
-                    backgroundColor: isClicked ? Colors.red : "white",
-                    borderColor: isClicked ? Colors.red : "white",
-                    borderWidth: 1,
-                    opacity: isClicked ? 0.8 : 1,
+                    opacity: isClicked ? 0.5 : 1,
+                    flexBasis: type === "activities" ? "20%" : "30%",
+                    flexGrow: type === "activities" ? 1 : 0,
                 },
             ]}
             onPress={() => onClick(cell.id)}
         >
             <Image
                 source={{ uri: getCloudinaryImageUrl(cell.image) }}
-                style={styles.itemBackground}
+                style={[
+                    styles.itemBackground,
+                    { aspectRatio: type === "activities" ? 1.05 : 1 },
+                ]}
                 resizeMode="contain"
             />
         </Pressable>
@@ -37,16 +40,8 @@ export const BingoCell: React.FC<BingoCellProps> = ({
 };
 
 const styles = StyleSheet.create({
-    cell: {
-        flexBasis: "30%",
-        flexGrow: 1,
-        borderRadius: 12,
-        padding: 2,
-    },
     itemBackground: {
         width: "100%",
         height: undefined,
-        aspectRatio: 1,
-        borderRadius: 10,
     },
 });

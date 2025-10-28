@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { ImageBackground, StyleSheet, View, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
-import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 import { bingo } from "@/data/bingo_data";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
-import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 
 const CLICKED_CELLS_KEY = "bingo_clicked_cells";
 const GRID_KEY = "bingo_grid";
 
-export default function BingoScreen() {
+export default function BingoTelefilmsScreen() {
     const [modalVisible, setModalVisible] = useState(false);
     const [bingoGrid, setBingoGrid] = useState(bingo.slice(0, 15));
     const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
@@ -84,7 +83,7 @@ export default function BingoScreen() {
             resizeMode="cover"
             style={styles.imageBackground}
         >
-            <CustomSafeAreaView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <BingoHeader
                     bingo={bingo}
                     setClickedCells={setClickedCells}
@@ -101,6 +100,7 @@ export default function BingoScreen() {
                             cell={cell}
                             isClicked={clickedCells.has(cell.id)}
                             onClick={handleCellClick}
+                            type={"telefilms"}
                         />
                     ))}
                 </View>
@@ -109,7 +109,7 @@ export default function BingoScreen() {
                     modalVisible={modalVisible}
                     setModalVisible={setModalVisible}
                 />
-            </CustomSafeAreaView>
+            </ScrollView>
         </ImageBackground>
     );
 }
@@ -121,13 +121,11 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     bingoContainer: {
-        flex: 1,
+        justifyContent: "center",
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between",
-        alignContent: "center",
-        gap: 12,
-        marginHorizontal: 20,
-        marginBottom: 15,
+        gap: 8,
+        marginHorizontal: 12,
+        marginBottom: 20,
     },
 });
