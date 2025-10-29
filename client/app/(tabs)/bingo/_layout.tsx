@@ -1,3 +1,4 @@
+import { CustomHeader } from "@/components/navigation/CustomHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -15,22 +16,28 @@ export default function BingoLayout() {
             <Stack.Screen
                 name="activities"
                 options={{
-                    title: "Bingo des activités",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.blue,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Bingo des activités de Noël"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="telefilms"
                 options={{
-                    title: "Bingo des téléfilms",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.blue,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Bingo des téléfilms de Noël"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
                     },
                 }}
             />

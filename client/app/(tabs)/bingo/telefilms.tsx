@@ -121,7 +121,9 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     bingoContainer: {
+        flex: 1,
         justifyContent: "center",
+        alignContent: "center",
         flexDirection: "row",
         flexWrap: "wrap",
         gap: 8,

@@ -10,7 +10,6 @@ import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Score } from "@/interfaces/scoreInterfaces";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { useScore } from "@/contexts/ScoreContext";
-import { Colors } from "@/constants/Colors";
 
 export default function ScoreScreen() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -44,15 +43,18 @@ export default function ScoreScreen() {
 
                 <TotalScore score={scoreTotal} />
 
-                <ErrorLoading
-                    error={error}
-                    loading={loading}
-                    refreshScores={refreshScores}
-                ></ErrorLoading>
-
                 <ScrollView
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                    }}
                     persistentScrollbar={true} // Android only
                 >
+                    <ErrorLoading
+                        error={error}
+                        loading={loading}
+                        refreshScores={refreshScores}
+                    ></ErrorLoading>
+
                     {!error && !loading && (
                         <View style={styles.cardsWrapper}>
                             {scoreHistory.map((score: Score) => (

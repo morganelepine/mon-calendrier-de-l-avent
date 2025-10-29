@@ -1,3 +1,4 @@
+import { CustomHeader } from "@/components/navigation/CustomHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -15,11 +16,14 @@ export default function ScoresLayout() {
             <Stack.Screen
                 name="leaderboard"
                 options={{
-                    title: "Classement",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.blue,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Classement"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
                     },
                 }}
             />

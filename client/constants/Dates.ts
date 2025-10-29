@@ -11,7 +11,7 @@ export const isChristmas =
     isDecember && today.getDate() === christmasDay.getDate();
 
 export const isAfterChristmas =
-    isDecember && today.getDate() > christmasDay.getDate();
+    isDecember && !isChristmas && today.getDate() > christmasDay.getDate();
 
 export const daysToChristmas = Math.ceil(
     (christmasDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY

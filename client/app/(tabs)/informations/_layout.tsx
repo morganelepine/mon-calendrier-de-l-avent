@@ -1,3 +1,4 @@
+import { CustomHeader } from "@/components/navigation/CustomHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -14,66 +15,84 @@ export default function InformationsLayout() {
             <Stack.Screen
                 name="content"
                 options={{
-                    title: "Contenu de l'application",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Contenu de l'application"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="rules"
                 options={{
-                    title: "Gagner des points",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Règles du jeu"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="bingo"
                 options={{
-                    title: "Bingo des téléfilms",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Bingos de Noël"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="music"
                 options={{
-                    title: "Gestion de la musique",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Gestion de la musique"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="rate"
                 options={{
-                    title: "Noter l'application",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Noter l'application"
+                                backgroundColor={Colors.green}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
             <Stack.Screen
                 name="copyrights"
                 options={{
-                    title: "Remerciements",
-                    headerTitleStyle: {
-                        fontFamily: "PoppinsBold",
-                        fontSize: 20,
-                        color: Colors.snow,
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Remerciements"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
                     },
                 }}
             />
