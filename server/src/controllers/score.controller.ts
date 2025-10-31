@@ -160,12 +160,26 @@ export class ScoreController {
         return Object.values(scoresByDay);
     }
 
-    async getLeaderboard() {
+    async getLeaderboard(req: Request) {
+        const page = Number.parseInt(req.query.page as string) || 1;
+        const limit = Number.parseInt(req.query.limit as string) || 30;
+        const skip = (page - 1) * limit;
+
         const leaderboard = await prisma.user.findMany({
-            orderBy: { score: "desc" },
+            orderBy: [{ score: "desc" }, { createdAt: "asc" }],
             select: { username: true, score: true },
+            skip,
+            take: limit,
         });
 
-        return leaderboard;
+        // Savoir s’il reste des pages
+        const total = await prisma.user.count();
+        const hasMore = skip + leaderboard.length < total;
+
+        return {
+            data: leaderboard,
+            total,
+            hasMore,
+        };
     }
 }

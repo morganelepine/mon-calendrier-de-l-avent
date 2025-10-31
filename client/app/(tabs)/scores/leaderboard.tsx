@@ -1,31 +1,52 @@
-import { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
+import { useEffect, useState, useRef } from "react";
+import {
+    View,
+    FlatList,
+    StyleSheet,
+    ImageBackground,
+    ActivityIndicator,
+} from "react-native";
+import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { API_URL } from "@/constants/api";
 import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
+const ITEMS_PER_PAGE = 30; // nombre d’items chargés par requête
+const ITEM_HEIGHT = 44;
+
 export default function LeaderboardScreen() {
     const [leaderboard, setLeaderboard] = useState<
         { username: string; score: number }[]
     >([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const flatListRef = useRef<FlatList>(null);
+
     const backgroundImage = getCloudinaryImageUrl(
         "blue_background_darker_d10kn5"
     );
     const { username } = useUser();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
-    const fetchLeaderboard = async () => {
+    const fetchLeaderboard = async (pageToFetch = 1) => {
         try {
-            setLoading(true);
-            setError(null);
+            if (pageToFetch === 1) setLoading(true);
+            else setLoadingMore(true);
 
-            const response = await fetch(`${API_URL}/scores/leaderboard`);
-            const data = await response.json();
-            setLeaderboard(data);
+            const response = await fetch(
+                `${API_URL}/scores/leaderboard?page=${pageToFetch}&limit=${ITEMS_PER_PAGE}`
+            );
+            const result = await response.json();
+
+            if (pageToFetch === 1) setLeaderboard(result.data);
+            else setLeaderboard((prev) => [...prev, ...result.data]);
+
+            setHasMore(result.hasMore);
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
             setError(
@@ -33,12 +54,42 @@ export default function LeaderboardScreen() {
             );
         } finally {
             setLoading(false);
+            setLoadingMore(false);
         }
     };
 
     useEffect(() => {
         fetchLeaderboard();
     }, []);
+
+    // Scroll automatique vers l’utilisateur connecté
+    useEffect(() => {
+        if (!loading && leaderboard.length > 0) {
+            const userIndex = leaderboard.findIndex(
+                (item) => item.username === username
+            );
+            if (userIndex !== -1 && userIndex >= 10) {
+                setTimeout(() => {
+                    flatListRef.current?.scrollToIndex({
+                        index: userIndex,
+                        animated: true,
+                    });
+                }, 500);
+            }
+        }
+    }, [loading, leaderboard]);
+
+    const renderItem = ({ item, index }: { item: any; index: number }) => (
+        <LeaderBoardItem index={index} item={item} username={username} />
+    );
+
+    const handleLoadMore = () => {
+        if (!loadingMore && hasMore) {
+            const nextPage = page + 1;
+            setPage(nextPage);
+            fetchLeaderboard(nextPage);
+        }
+    };
 
     return (
         <ImageBackground
@@ -50,76 +101,36 @@ export default function LeaderboardScreen() {
                 <ErrorLoading
                     error={error}
                     loading={loading}
-                    refreshScores={fetchLeaderboard}
-                ></ErrorLoading>
+                    refreshScores={() => fetchLeaderboard(1)}
+                />
 
                 {!error && !loading && (
                     <FlatList
+                        ref={flatListRef}
                         data={leaderboard}
-                        contentContainerStyle={{ paddingBottom: 20 }}
                         keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item, index }) => (
-                            <View
-                                style={[
-                                    { marginHorizontal: 20 },
-                                    index === 0 && { marginTop: 20 },
-                                ]}
-                            >
-                                <View
-                                    style={[
-                                        styles.row,
-                                        {
-                                            backgroundColor:
-                                                item.username === username
-                                                    ? Colors.green
-                                                    : Colors.snow,
-                                        },
-                                    ]}
-                                >
-                                    <ThemedText
-                                        style={[
-                                            styles.rank,
-                                            {
-                                                color:
-                                                    item.username === username
-                                                        ? Colors.snow
-                                                        : Colors.blue,
-                                            },
-                                        ]}
-                                    >
-                                        {index + 1}
-                                    </ThemedText>
-                                    <ThemedText
-                                        style={{
-                                            flex: 1,
-                                            color:
-                                                item.username === username
-                                                    ? Colors.snow
-                                                    : Colors.blue,
-                                            fontFamily:
-                                                item.username === username
-                                                    ? "PoppinsBold"
-                                                    : "Poppins",
-                                        }}
-                                    >
-                                        {item.username}
-                                    </ThemedText>
-                                    <ThemedText
-                                        style={[
-                                            styles.score,
-                                            {
-                                                color:
-                                                    item.username === username
-                                                        ? Colors.snow
-                                                        : Colors.blue,
-                                            },
-                                        ]}
-                                    >
-                                        {item.score}
-                                    </ThemedText>
-                                </View>
-                            </View>
-                        )}
+                        renderItem={renderItem}
+                        contentContainerStyle={{ paddingBottom: 20 }}
+                        initialNumToRender={20}
+                        maxToRenderPerBatch={10}
+                        windowSize={10}
+                        removeClippedSubviews
+                        onEndReached={handleLoadMore}
+                        onEndReachedThreshold={0.5}
+                        getItemLayout={(_, index) => ({
+                            length: ITEM_HEIGHT,
+                            offset: ITEM_HEIGHT * index,
+                            index,
+                        })}
+                        ListFooterComponent={
+                            loadingMore ? (
+                                <ActivityIndicator
+                                    size="small"
+                                    color={Colors.snow}
+                                    style={{ marginVertical: 20 }}
+                                />
+                            ) : null
+                        }
                     />
                 )}
             </View>
@@ -133,22 +144,4 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 8,
-        paddingTop: 10,
-        paddingBottom: 6,
-        paddingHorizontal: 16,
-        borderRadius: 22,
-        gap: 16,
-        borderWidth: 1,
-        borderColor: Colors.snow,
-    },
-    rank: {
-        fontFamily: "PoppinsBold",
-        color: Colors.blue,
-    },
-    score: { fontFamily: "PoppinsBold", color: Colors.blue },
 });
