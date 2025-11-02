@@ -43,10 +43,14 @@ export default function LeaderboardScreen() {
             );
             const result = await response.json();
 
-            if (pageToFetch === 1) setLeaderboard(result.data);
-            else setLeaderboard((prev) => [...prev, ...result.data]);
-
-            setHasMore(result.hasMore);
+            if (Array.isArray(result)) {
+                // Old format
+                setLeaderboard(result);
+            } else if (result.data) {
+                if (pageToFetch === 1) setLeaderboard(result.data);
+                else setLeaderboard((prev) => [...prev, ...result.data]);
+                setHasMore(result.hasMore);
+            }
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
             setError(
@@ -62,22 +66,22 @@ export default function LeaderboardScreen() {
         fetchLeaderboard();
     }, []);
 
-    // Scroll automatique vers l’utilisateur connecté
-    useEffect(() => {
-        if (!loading && leaderboard.length > 0) {
-            const userIndex = leaderboard.findIndex(
-                (item) => item.username === username
-            );
-            if (userIndex !== -1 && userIndex >= 10) {
-                setTimeout(() => {
-                    flatListRef.current?.scrollToIndex({
-                        index: userIndex,
-                        animated: true,
-                    });
-                }, 500);
-            }
-        }
-    }, [loading, leaderboard]);
+    // Scroll to user
+    // useEffect(() => {
+    //     if (!loading && leaderboard.length > 0) {
+    //         const userIndex = leaderboard.findIndex(
+    //             (item) => item.username === username
+    //         );
+    //         if (userIndex !== -1 && userIndex > 10) {
+    //             setTimeout(() => {
+    //                 flatListRef.current?.scrollToIndex({
+    //                     index: userIndex,
+    //                     animated: true,
+    //                 });
+    //             }, 400);
+    //         }
+    //     }
+    // }, [loading, leaderboard]);
 
     const renderItem = ({ item, index }: { item: any; index: number }) => (
         <LeaderBoardItem index={index} item={item} username={username} />

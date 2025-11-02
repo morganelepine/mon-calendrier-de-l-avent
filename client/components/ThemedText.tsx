@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Poppins",
         color: Colors.darkGreen,
-        paddingTop: 4,
+        paddingTop: 3,
     },
     homeTitle: {
         fontSize: 55,
