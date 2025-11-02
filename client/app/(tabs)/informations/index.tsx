@@ -70,7 +70,7 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
-                        title="Fonctionnement du bingo"
+                        title="Fonctionnement des bingos"
                         iconName="eye-outline"
                         iconColor={Colors.green}
                         onPress={() => router.push("/informations/bingo")}

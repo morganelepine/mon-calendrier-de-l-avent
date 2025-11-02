@@ -13,6 +13,7 @@ export enum IdeaType {
     TvShow = "tvshow",
     Idea = "idea",
     List = "list",
+    Video = "video",
 }
 
 export enum GameType {

@@ -14,7 +14,9 @@ export const RateButton: React.FC<RateButtonProps> = ({
 }) => {
     return (
         <ExternalLink
-            href={"https://bit.ly/3BBayBy"}
+            href={
+                "https://play.google.com/store/apps/details?id=com.merrymate.moncalendrierdelavent"
+            }
             style={{ ...style, ...styles.button }}
         >
             <ThemedText style={styles.buttonText}>{children}</ThemedText>

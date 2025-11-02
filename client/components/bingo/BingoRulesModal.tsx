@@ -23,8 +23,7 @@ export const BingoRulesModal: React.FC<Props> = ({
             <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
                     <ThemedText style={styles.modalTitle}>
-                        Comment fonctionne le&nbsp;bingo des&nbsp;téléfilms
-                        de&nbsp;Noël ?
+                        Comment fonctionne les&nbsp;bingos de&nbsp;Noël ?
                     </ThemedText>
 
                     <CustomScrollView>

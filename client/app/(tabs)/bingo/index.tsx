@@ -25,50 +25,9 @@ export default function BingoScreen() {
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
-                {/* Activités */}
-                <View style={styles.card}>
-                    <ThemedText
-                        style={[styles.cardTitle, { color: Colors.red }]}
-                    >
-                        Le bingo des activités de&nbsp;Noël
-                    </ThemedText>
-                    <ThemedText style={styles.cardSubtitle}>
-                        Profitez au maximum de la&nbsp;magie de&nbsp;Noël tout
-                        au&nbsp;long du&nbsp;mois de&nbsp;décembre
-                    </ThemedText>
-                    <TouchableOpacity
-                        style={[styles.button, { backgroundColor: Colors.red }]}
-                        onPress={() => router.push("/bingo/activities")}
-                    >
-                        <ThemedText style={styles.buttonText}>Jouer</ThemedText>
-                    </TouchableOpacity>
-                </View>
-
-                {/* Téléfilms */}
-                <View style={styles.card}>
-                    <ThemedText
-                        style={[styles.cardTitle, { color: Colors.green }]}
-                    >
-                        Le bingo des téléfilms de&nbsp;Noël
-                    </ThemedText>
-                    <ThemedText style={styles.cardSubtitle}>
-                        Repérez le plus de clichés possible devant un téléfilm
-                        de&nbsp;Noël
-                    </ThemedText>
-                    <TouchableOpacity
-                        style={[
-                            styles.button,
-                            { backgroundColor: Colors.green },
-                        ]}
-                        onPress={() => router.push("/bingo/telefilms")}
-                    >
-                        <ThemedText style={styles.buttonText}>Jouer</ThemedText>
-                    </TouchableOpacity>
-                </View>
-
                 <Pressable
                     onPress={() => setModalVisible(true)}
-                    style={styles.button}
+                    style={[styles.button, { alignSelf: "flex-end" }]}
                 >
                     <ThemedText
                         type="italic14"
@@ -80,6 +39,55 @@ export default function BingoScreen() {
                         Comment ça marche ?
                     </ThemedText>
                 </Pressable>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                    {/* Activités */}
+                    <View style={styles.card}>
+                        <ThemedText
+                            style={[styles.cardTitle, { color: Colors.red }]}
+                        >
+                            Le bingo des activités de&nbsp;Noël
+                        </ThemedText>
+                        <ThemedText style={styles.cardSubtitle}>
+                            Profitez au maximum de la&nbsp;magie de&nbsp;Noël
+                            tout au&nbsp;long du&nbsp;mois de&nbsp;décembre
+                        </ThemedText>
+                        <TouchableOpacity
+                            style={[
+                                styles.button,
+                                { backgroundColor: Colors.red },
+                            ]}
+                            onPress={() => router.push("/bingo/activities")}
+                        >
+                            <ThemedText style={styles.buttonText}>
+                                Jouer
+                            </ThemedText>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Téléfilms */}
+                    <View style={styles.card}>
+                        <ThemedText
+                            style={[styles.cardTitle, { color: Colors.green }]}
+                        >
+                            Le bingo des téléfilms de&nbsp;Noël
+                        </ThemedText>
+                        <ThemedText style={styles.cardSubtitle}>
+                            Repérez le plus de clichés possible devant un
+                            téléfilm de&nbsp;Noël
+                        </ThemedText>
+                        <TouchableOpacity
+                            style={[
+                                styles.button,
+                                { backgroundColor: Colors.green },
+                            ]}
+                            onPress={() => router.push("/bingo/telefilms")}
+                        >
+                            <ThemedText style={styles.buttonText}>
+                                Jouer
+                            </ThemedText>
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
                 <BingoRulesModal
                     modalVisible={modalVisible}

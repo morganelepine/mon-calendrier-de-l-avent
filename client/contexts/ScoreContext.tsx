@@ -22,12 +22,8 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const refreshScores = React.useCallback(async () => {
         try {
-            setLoading(true);
-            setError(null);
-
             const scores = await getUserScoresByDay();
             const totalScore = await getTotalScore();
-
             setScoreHistory(Array.isArray(scores) ? scores : []);
             setScoreTotal(typeof totalScore === "number" ? totalScore : 0);
         } catch (err: any) {

@@ -4,6 +4,10 @@ import { ThemedText } from "@/components/ThemedText";
 export const BingoRules = () => {
     return (
         <View>
+            <ThemedText type="sectionSubtitle">
+                Bingo des téléfilms de Noël
+            </ThemedText>
+
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Vous adorez les téléfilms de Noël avec leurs histoires
@@ -43,10 +47,31 @@ export const BingoRules = () => {
                 </ThemedText>
             </View>
 
-            <View>
+            <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Évidemment, plus vous cochez de cases, plus le téléfilm a de
                     chance d’atteindre le sommet du chef-d'oeuvre de Noël !
+                </ThemedText>
+            </View>
+
+            <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
+                Bingo des activités de Noël
+            </ThemedText>
+
+            <View style={styles.section}>
+                <ThemedText type="sectionText">
+                    Une bucket list d'activités typiquement hivernales pour
+                    profiter à fond du mois de décembre !
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Chaque fois que vous réalisez l’une de ces activités, il
+                    vous suffit de cliquer sur la case correspondante pour la
+                    valider.
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    L’objectif ? S’amuser, se créer de beaux souvenirs et
+                    peut-être même réussir à compléter toute la grille avant
+                    Noël !
                 </ThemedText>
             </View>
         </View>
@@ -55,6 +80,6 @@ export const BingoRules = () => {
 
 const styles = StyleSheet.create({
     section: {
-        marginBottom: 20,
+        marginVertical: 10,
     },
 });

@@ -5,7 +5,7 @@ const christmasDay = new Date(today.getFullYear(), 11, 25);
 const calendarDay = new Date(today.getFullYear(), 11, 1);
 
 export const currentDay = today.getDate();
-export const isDecember = today.getMonth() === 8;
+export const isDecember = today.getMonth() === 11;
 
 export const isChristmas =
     isDecember && today.getDate() === christmasDay.getDate();
