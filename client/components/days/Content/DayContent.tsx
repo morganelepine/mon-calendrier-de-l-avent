@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { ContentButton } from "@/components/content/ContentButton";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { getContentsByDay } from "@/services/content.service";
+import { ContentType } from "@/enums/enums";
 
 type DayContentProps = {
     dayId: number;
@@ -20,7 +21,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         backgroundImage={getCloudinaryImageUrl(
                             "s-instruire_xybqas"
                         )}
-                        contentType="story"
+                        contentType={ContentType.Story}
                     />
                 )}
             </View>
@@ -33,7 +34,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         backgroundImage={getCloudinaryImageUrl(
                             "se-regaler_mnonwh"
                         )}
-                        contentType="idea"
+                        contentType={ContentType.Idea}
                     />
                 )}
             </View>
@@ -44,7 +45,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         content={anecdote}
                         dayId={dayId}
                         backgroundImage={getCloudinaryImageUrl("kiwi1_r7kihz")}
-                        contentType="anecdote"
+                        contentType={ContentType.Anecdote}
                     />
                 )}
             </View>
@@ -57,7 +58,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         backgroundImage={getCloudinaryImageUrl(
                             "christmas_a5bsoi"
                         )}
-                        contentType="game"
+                        contentType={ContentType.Game}
                     />
                 )}
             </View>

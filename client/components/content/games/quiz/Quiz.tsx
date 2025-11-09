@@ -24,7 +24,18 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
     const handleAnswer = async (answer: string) => {
         setSelectedAnswer(answer);
         setAnswerButtonIsDisabled(true);
-        await saveQuestionPlayed(dayId, currentQuestionIndex);
+
+        const alreadyPlayed = await isQuestionPlayed(
+            dayId,
+            currentQuestionIndex
+        );
+
+        if (!alreadyPlayed) {
+            if (answer === currentGame.content3) {
+                setScore(currentQuestionIndex);
+            }
+            await saveQuestionPlayed(dayId, currentQuestionIndex);
+        }
     };
 
     const handleNextQuestion = () => {
@@ -32,20 +43,6 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         setAnswerButtonIsDisabled(false);
         setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % games.length);
     };
-
-    useEffect(() => {
-        const handleScoreUpdate = async () => {
-            const alreadyPlayed = await isQuestionPlayed(
-                dayId,
-                currentQuestionIndex
-            );
-            if (selectedAnswer === currentGame.content3 && !alreadyPlayed) {
-                setScore(currentQuestionIndex);
-            }
-        };
-
-        handleScoreUpdate();
-    }, [selectedAnswer]);
 
     return (
         <>

@@ -1,4 +1,5 @@
 import { Href, useLocalSearchParams } from "expo-router";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
@@ -23,15 +24,10 @@ export default function AnecdoteScreen() {
 
             <CustomMarkdown>{anecdote.content1}</CustomMarkdown>
 
-            {anecdote.content4 ? <Video videoId={anecdote.content4} /> : null}
-
-            {anecdote.content5 ? (
-                <>
-                    <ThemedText type="italic14" style={{ marginBottom: 10 }}>
-                        Et en version moins classique...
-                    </ThemedText>
-                    <Video videoId={anecdote.content5} />
-                </>
+            {anecdote.content4 ? (
+                <View style={{ marginVertical: 16 }}>
+                    <Video videoId={anecdote.content4} />
+                </View>
             ) : null}
 
             {anecdote.content2 ? (

@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
-import { Games } from "@/components/content/games/others/Games";
+import { OtherGames } from "@/components/content/games/others/OtherGames";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
 import { saveScore } from "@/services/score.service";
@@ -37,7 +37,10 @@ export default function GameScreen() {
                     )}
 
                     {gamesByType.jeu && (
-                        <Games game={gamesByType.jeu} setScore={setScore} />
+                        <OtherGames
+                            game={gamesByType.jeu}
+                            setScore={setScore}
+                        />
                     )}
 
                     {gamesByType.quizCitation.length > 0 && (

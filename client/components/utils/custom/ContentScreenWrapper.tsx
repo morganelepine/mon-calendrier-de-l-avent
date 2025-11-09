@@ -30,11 +30,18 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
 
         switch (contentType) {
             case ContentType.Story:
-                return "Histoire du jour";
+                return "L'histoire du\u00A0jour";
             case ContentType.Anecdote:
-                return "Anecdote du\u00A0jour";
+                return "L'anecdote du\u00A0jour";
+            case ContentType.Word:
+                return "Le mot du jour";
+            case ContentType.Song:
+                return "La chanson du\u00A0jour";
+            case ContentType.Drink:
+                return "La boisson du\u00A0jour";
+
             case ContentType.Idea:
-                return "Idée du jour";
+                return "L'idée du jour";
             default:
                 return "Contenu du jour";
         }

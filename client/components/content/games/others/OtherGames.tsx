@@ -1,11 +1,9 @@
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { useState } from "react";
-import { Colors } from "@/constants/Colors";
-import { Content } from "@/interfaces/contentInterface";
-import { Qcm } from "@/components/content/games/others/Qcm";
 import { Input } from "@/components/content/games/others/Input";
+import { NextQuestion } from "@/components/content/games/util/NextQuestion";
+import { Content } from "@/interfaces/contentInterface";
 
 interface OtherGamesProps {
     game: Content;
@@ -13,8 +11,22 @@ interface OtherGamesProps {
 }
 
 export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
-    const [showAnswer, setShowAnswer] = useState(false);
-    const [win, setWin] = useState("");
+    const words = game.content1.toUpperCase().split(",");
+    const answers = game.content2.toUpperCase().split(",");
+    const [currentWordIndex, setCurrentWordIndex] = useState(0);
+    const currentWord = words[currentWordIndex];
+    const currentAnswer = answers[currentWordIndex];
+
+    const [inputValue, setInputValue] = useState("");
+
+    const [showResult, setShowResult] = useState(false);
+    const [resultText, setResultText] = useState("");
+
+    const handleNextQuestion = async () => {
+        setCurrentWordIndex(currentWordIndex + 1);
+        setShowResult(false);
+        setInputValue("");
+    };
 
     return (
         <View key={game.id}>
@@ -22,66 +34,57 @@ export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
                 {game.title}
             </ThemedText>
 
-            <CustomMarkdown>{game.content1}</CustomMarkdown>
+            <ThemedText>
+                Ces 3 mots sur le thème de Noël ou de l'hiver ont bu un peu trop
+                de vin chaud... Tentez de replacer leurs lettres dans le bon
+                ordre !
+            </ThemedText>
 
-            {game.listOfContents ? (
-                <Qcm
-                    game={game}
-                    setScore={setScore}
-                    setShowAnswer={setShowAnswer}
-                    setWin={setWin}
-                />
-            ) : (
+            <View style={styles.inputContainer}>
+                {showResult ? (
+                    <ThemedText style={styles.word}>{currentAnswer}</ThemedText>
+                ) : (
+                    <ThemedText style={styles.word}>{currentWord}</ThemedText>
+                )}
+
                 <Input
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
                     game={game}
+                    currentWordIndex={currentWordIndex}
+                    answer={currentAnswer}
                     setScore={setScore}
-                    showAnswer={showAnswer}
-                    setShowAnswer={setShowAnswer}
-                    setWin={setWin}
+                    showResult={showResult}
+                    setShowResult={setShowResult}
+                    setResultText={setResultText}
                 />
-            )}
+            </View>
 
-            {showAnswer && (
-                <View>
-                    {win ? (
-                        <ThemedText style={styles.longAnswer}>{win}</ThemedText>
-                    ) : (
-                        <>
-                            {!!game.content2 && (
-                                <ThemedText style={styles.shortAnswer}>
-                                    {game.content2}
-                                </ThemedText>
-                            )}
-                            {!!game.content3 && (
-                                <ThemedText style={styles.longAnswer}>
-                                    {game.content3}
-                                </ThemedText>
-                            )}
-                        </>
-                    )}
-
-                    {game.content4 ? (
-                        <ThemedText>{game.content4}</ThemedText>
-                    ) : null}
-                </View>
+            {showResult && (
+                <>
+                    <ThemedText>{resultText}</ThemedText>
+                    <NextQuestion
+                        games={words}
+                        currentQuestionIndex={currentWordIndex}
+                        handleNextQuestion={handleNextQuestion}
+                    />
+                </>
             )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    title: {
-        marginBottom: 20,
+    title: { marginBottom: 20 },
+    inputContainer: {
+        marginTop: 20,
+        marginBottom: 10,
+        justifyContent: "center",
     },
-    shortAnswer: {
+    word: {
+        textAlign: "center",
         fontFamily: "PallyBold",
-        color: Colors.red,
-        fontSize: 20,
-        marginBottom: 10,
-    },
-    longAnswer: {
-        fontFamily: "PoppinsBold",
-        color: Colors.red,
-        marginBottom: 10,
+        fontSize: 32,
+        letterSpacing: 8,
     },
 });
