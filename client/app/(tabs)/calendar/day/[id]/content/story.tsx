@@ -1,11 +1,7 @@
-import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { ThemedText } from "@/components/ThemedText";
-import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
-import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { getContentsByDay } from "@/services/content.service";
+import { Article } from "@/components/content/story/Article";
+import { Story } from "@/components/content/story/Story";
 
 export default function StoryScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -13,33 +9,15 @@ export default function StoryScreen() {
 
     const { story } = getContentsByDay(dayId);
 
+    const isNewspaper = story.content3 === "article";
+
     return (
-        <ContentScreenWrapper
-            contentType={story.type}
-            backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
-            dayId={dayId}
-        >
-            <ThemedText type="contentSubtitle">{story.title}</ThemedText>
-
-            {story.content1 ? (
-                <CustomMarkdown style={{ fontFamily: "PoppinsItalic" }}>
-                    {story.content1}
-                </CustomMarkdown>
-            ) : null}
-
-            <CustomMarkdown>{story.content2}</CustomMarkdown>
-
-            {story.dayNumber < 24 && (
-                <ThemedText style={styles.end}>La suite demain...</ThemedText>
+        <>
+            {isNewspaper ? (
+                <Article story={story} />
+            ) : (
+                <Story story={story} dayId={dayId} />
             )}
-        </ContentScreenWrapper>
+        </>
     );
 }
-
-const styles = StyleSheet.create({
-    end: {
-        paddingTop: 10,
-        fontFamily: "PoppinsItalic",
-        color: Colors.green,
-    },
-});
