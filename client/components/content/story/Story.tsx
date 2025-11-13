@@ -4,15 +4,10 @@ import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWra
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { Content } from "@/interfaces/contentInterface";
 
 interface StoryProps {
-    story: {
-        dayNumber: number;
-        type: string;
-        title: string;
-        content1?: string;
-        content2: string;
-    };
+    story: Content;
     dayId: number;
 }
 

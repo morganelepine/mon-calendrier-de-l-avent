@@ -4,20 +4,20 @@ export interface Content {
     type: string;
     title: string;
     content1: string;
-    content2: string;
-    content3: string;
-    content4: string;
+    content2?: string;
+    content3?: string;
+    content4?: string;
     content5: string;
-    image?: string;
+    media?: string;
     listOfContents?: ListOfContents[];
 }
 
 export interface ListOfContents {
     id: number;
     title: string;
-    description?: string;
-    link?: string;
+    description: string;
     author?: string;
-    url?: string;
     image?: string;
+    link?: string;
+    url?: string;
 }

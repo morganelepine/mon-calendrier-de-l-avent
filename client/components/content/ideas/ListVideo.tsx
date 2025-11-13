@@ -1,17 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Video } from "@/components/utils/custom/Video";
+import { ListOfContents } from "@/interfaces/contentInterface";
 
-interface ListVideoProps {
-    content: {
-        id: number;
-        title: string;
-        description?: string;
-        url?: string;
-    };
-}
-
-export const ListVideo: React.FC<ListVideoProps> = ({ content }) => {
+export const ListVideo = (content: ListOfContents) => {
     return (
         <>
             <View style={styles.video}>

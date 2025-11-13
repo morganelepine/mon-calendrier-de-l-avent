@@ -1,6 +1,7 @@
 import { StyleSheet, TextStyle } from "react-native";
 import Markdown from "react-native-markdown-display";
 import { Colors } from "@/constants/Colors";
+import { ThemedText } from "@/components/ThemedText";
 
 interface CustomMarkdownProps {
     children?: React.ReactNode;
@@ -16,8 +17,15 @@ export const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
             style={{
                 body: { ...styles.body, ...style } as TextStyle,
             }}
+            rules={{
+                strong: (node) => (
+                    <ThemedText type={"boldMarkdown"}>
+                        {node.children[0].content}
+                    </ThemedText>
+                ),
+            }}
         >
-            {children}
+            {String(children)}
         </Markdown>
     );
 };

@@ -7,12 +7,13 @@ import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Video } from "@/components/utils/custom/Video";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { getContentsByDay } from "@/services/content.service";
+import { Content } from "@/interfaces/contentInterface";
 
 export default function AnecdoteScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { anecdote } = getContentsByDay(dayId);
+    const { anecdote } = getContentsByDay(dayId) as { anecdote: Content };
 
     return (
         <ContentScreenWrapper

@@ -10,16 +10,10 @@ import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { Content } from "@/interfaces/contentInterface";
 
 interface ArticleProps {
-    story: {
-        dayNumber: number;
-        type: string;
-        title: string;
-        content1?: string;
-        content2: string;
-        image?: string;
-    };
+    story: Content;
 }
 
 export const Article: React.FC<ArticleProps> = ({ story }) => {

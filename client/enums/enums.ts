@@ -17,6 +17,7 @@ export enum IdeaType {
     Idea = "idea",
     List = "list",
     Video = "video",
+    Game = "game",
 }
 
 export enum GameType {

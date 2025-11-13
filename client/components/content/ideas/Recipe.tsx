@@ -2,18 +2,10 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
+import { Content } from "@/interfaces/contentInterface";
 
 interface RecipeProps {
-    content: {
-        dayNumber: number;
-        type: string;
-        title: string;
-        content1: string;
-        content2: string;
-        content3: string;
-        content4: string;
-        content5: string;
-    };
+    content: Content;
 }
 
 export const Recipe: React.FC<RecipeProps> = ({ content }) => {
@@ -35,9 +27,9 @@ export const Recipe: React.FC<RecipeProps> = ({ content }) => {
                 <ThemedText>{content.content1}</ThemedText>
             </View>
 
-            {content.content4 ? (
+            {content.content3 ? (
                 <CustomMarkdown style={styles.sourcePhoto}>
-                    {content.content4}
+                    {content.content3}
                 </CustomMarkdown>
             ) : null}
         </View>

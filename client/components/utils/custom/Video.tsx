@@ -2,7 +2,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import { useCallback, useState } from "react";
 
 interface VideoProps {
-    videoId: string;
+    videoId?: string;
 }
 
 export const Video: React.FC<VideoProps> = ({ videoId }) => {

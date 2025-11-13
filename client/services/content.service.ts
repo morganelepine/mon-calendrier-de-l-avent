@@ -55,6 +55,9 @@ export const getContentTitle = (
         case ContentType.Story:
             return "S'inspirer";
         case ContentType.Anecdote:
+        case ContentType.Word:
+        case ContentType.Song:
+        case ContentType.Drink:
             return "S'instruire";
         default:
             return "Contenu du jour";
