@@ -6,31 +6,22 @@ import { ListReco } from "@/components/content/ideas/ListReco";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
 import { IdeaType } from "@/enums/enums";
-
-interface SubContent {
-    id: number;
-    title: string;
-    image?: string;
-    description?: string;
-    author?: string;
-    link?: string;
-    url?: string;
-}
+import { Content } from "@/interfaces/contentInterface";
 
 interface ListProps {
-    idea: {
-        id: number;
-        title: string;
-        content1: string;
-        content4: string;
-        content5: string;
-        listOfContents: SubContent[];
-    };
+    idea: Content;
+    imageWidth: number;
+    imageHeight: number;
 }
 
-export const List: React.FC<ListProps> = ({ idea }) => {
+export const List: React.FC<ListProps> = ({
+    idea,
+    imageWidth,
+    imageHeight,
+}) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const current = idea.listOfContents[selectedIndex];
+    const list = idea.listOfContents ?? [];
+    const current = list[selectedIndex];
 
     return (
         <View>
@@ -41,9 +32,8 @@ export const List: React.FC<ListProps> = ({ idea }) => {
             ) : null}
 
             {/* --- BUTTONS --- */}
-
             <View style={styles.buttonRow}>
-                {idea.listOfContents.map((item, index) => (
+                {list.map((item, index) => (
                     <Pressable
                         key={item.id}
                         style={[
@@ -68,9 +58,14 @@ export const List: React.FC<ListProps> = ({ idea }) => {
 
             {/* --- CONTENT --- */}
             {idea.content4 === IdeaType.Video ? (
-                <ListVideo content={current} />
+                <ListVideo {...current} />
             ) : (
-                <ListReco content={current} />
+                <ListReco
+                    type={idea.content4}
+                    content={current}
+                    imageWidth={imageWidth}
+                    imageHeight={imageHeight}
+                />
             )}
         </View>
     );

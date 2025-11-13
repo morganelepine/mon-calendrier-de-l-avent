@@ -12,6 +12,12 @@ export const ListVideo = (content: ListOfContents) => {
 
             <ThemedText style={styles.title}>{content.title}</ThemedText>
 
+            {content.author && (
+                <ThemedText style={styles.where}>
+                    À regarder sur {content.author}
+                </ThemedText>
+            )}
+
             <ThemedText style={styles.description}>
                 {content.description}
             </ThemedText>
@@ -24,6 +30,12 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: "PoppinsBold",
         textAlign: "left",
+    },
+    where: {
+        fontStyle: "italic",
+        fontSize: 14,
+        marginTop: -6,
+        marginBottom: 10,
     },
     description: { textAlign: "left", fontSize: 15 },
 });

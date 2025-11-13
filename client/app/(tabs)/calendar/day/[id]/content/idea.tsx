@@ -19,7 +19,7 @@ export default function IdeaScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { ideas } = getContentsByDay(dayId);
+    const { ideas } = getContentsByDay(dayId) as { ideas: Content[] };
 
     const [imageDimensions, setImageDimensions] = useState<{
         [key: string]: { width: number; height: number };
@@ -27,8 +27,8 @@ export default function IdeaScreen() {
 
     const getmodalImage = (idea: Content) => {
         if (idea.content5 === IdeaType.Recipe) {
-            const imageSource = idea.image
-                ? getCloudinaryImageUrl(idea.image)
+            const imageSource = idea.media
+                ? getCloudinaryImageUrl(idea.media)
                 : getCloudinaryImageUrl("se-divertir_xvdksq");
 
             setModalBackground(imageSource);
@@ -38,19 +38,24 @@ export default function IdeaScreen() {
     };
 
     useEffect(() => {
-        ideas.forEach((idea) => {
-            if (idea.image) {
-                const maxHeight = idea.content5 === IdeaType.Book ? 200 : 500;
-                formatImage(
-                    idea.dayNumber,
-                    idea.image,
-                    maxHeight,
-                    setImageDimensions
-                );
+        for (const idea of ideas) {
+            if (idea.listOfContents) {
+                for (const content of idea.listOfContents) {
+                    const maxHeight =
+                        idea.content4 === IdeaType.Book || IdeaType.TvShow
+                            ? 200
+                            : 150;
+                    formatImage(
+                        idea.dayNumber,
+                        content.image,
+                        maxHeight,
+                        setImageDimensions
+                    );
+                }
             }
             getmodalImage(idea);
-        });
-    }, [ideas]);
+        }
+    }, []);
 
     return (
         <>
@@ -68,23 +73,28 @@ export default function IdeaScreen() {
                             )}
 
                             {idea.content5 === IdeaType.List && (
-                                <List idea={idea} />
+                                <List
+                                    idea={idea}
+                                    imageWidth={
+                                        imageDimensions[idea.dayNumber]?.width
+                                    }
+                                    imageHeight={
+                                        imageDimensions[idea.dayNumber]?.height
+                                    }
+                                />
                             )}
 
-                            {idea.content5 !== IdeaType.Recipe &&
-                                idea.content5 !== IdeaType.List && (
-                                    <Reco
-                                        idea={idea}
-                                        imageWidth={
-                                            imageDimensions[idea.dayNumber]
-                                                ?.width
-                                        }
-                                        imageHeight={
-                                            imageDimensions[idea.dayNumber]
-                                                ?.height
-                                        }
-                                    />
-                                )}
+                            {idea.content5 === IdeaType.Idea && (
+                                <Reco
+                                    idea={idea}
+                                    imageWidth={
+                                        imageDimensions[idea.dayNumber]?.width
+                                    }
+                                    imageHeight={
+                                        imageDimensions[idea.dayNumber]?.height
+                                    }
+                                />
+                            )}
                         </View>
                     </CustomScrollView>
                 </ContentScreenWrapper>
