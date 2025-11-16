@@ -6,16 +6,18 @@ import { ListOfContents } from "@/interfaces/contentInterface";
 export const ListVideo = (content: ListOfContents) => {
     return (
         <>
-            <View style={styles.video}>
-                <Video videoId={content.url} />
-            </View>
-
             <ThemedText style={styles.title}>{content.title}</ThemedText>
 
             {content.author && (
                 <ThemedText style={styles.where}>
                     À regarder sur {content.author}
                 </ThemedText>
+            )}
+
+            {content.url && (
+                <View>
+                    <Video videoId={content.url} />
+                </View>
             )}
 
             <ThemedText style={styles.description}>
@@ -26,7 +28,6 @@ export const ListVideo = (content: ListOfContents) => {
 };
 
 const styles = StyleSheet.create({
-    video: { marginTop: 20 },
     title: {
         fontFamily: "PoppinsBold",
         textAlign: "left",
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         fontSize: 14,
         marginTop: -6,
-        marginBottom: 10,
+        marginBottom: 20,
     },
     description: { textAlign: "left", fontSize: 15 },
 });

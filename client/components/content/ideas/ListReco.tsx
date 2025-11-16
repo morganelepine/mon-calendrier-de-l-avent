@@ -50,9 +50,9 @@ export const ListReco: React.FC<ListRecoProps> = ({
                             }}
                             resizeMode="cover"
                         />
-                        {content.link && (
+                        {content.url && (
                             <ExternalLink
-                                href={content.link as Href}
+                                href={content.url as Href}
                                 style={styles.link}
                             />
                         )}
@@ -63,8 +63,8 @@ export const ListReco: React.FC<ListRecoProps> = ({
                 <View style={{ flex: 1, paddingLeft: 15 }}>
                     <ThemedText style={styles.description}>
                         {content.author ? content.description : null}
-                        {content.link && (
-                            <ExternalLink href={content.link as Href}>
+                        {content.url && (
+                            <ExternalLink href={content.url as Href}>
                                 <ThemedText
                                     style={[
                                         styles.description,

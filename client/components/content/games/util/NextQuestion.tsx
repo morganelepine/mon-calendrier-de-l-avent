@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         minHeight: 48,
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 20,
+        marginTop: 20,
+        marginBottom: 40,
     },
     nextQuestionText: {
         fontFamily: "PoppinsBold",

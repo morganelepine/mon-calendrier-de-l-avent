@@ -1,6 +1,7 @@
 export enum ContentType {
     Quote = "quote",
     Idea = "idea",
+    Recipe = "recipe",
     Anecdote = "anecdote",
     Word = "word",
     Song = "song",

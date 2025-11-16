@@ -39,7 +39,8 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                 return "La chanson du\u00A0jour";
             case ContentType.Drink:
                 return "La boisson du\u00A0jour";
-
+            case ContentType.Recipe:
+                return "La recette du\u00A0jour";
             case ContentType.Idea:
                 return "L'idée du jour";
             default:

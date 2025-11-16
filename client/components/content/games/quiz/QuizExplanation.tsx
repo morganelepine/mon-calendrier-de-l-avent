@@ -65,9 +65,6 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
 
 const styles = StyleSheet.create({
     response: { fontFamily: "PoppinsBold" },
-    explanationsContainer: {
-        marginTop: 20,
-    },
     explanations: {
         marginTop: 10,
         fontSize: 16,
