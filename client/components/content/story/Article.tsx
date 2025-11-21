@@ -27,19 +27,24 @@ export const Article: React.FC<ArticleProps> = ({ story }) => {
         >
             <ScrollView contentContainerStyle={styles.articleContainer}>
                 <CustomSafeAreaView>
-                    <ThemedText style={styles.headline}>Daily news</ThemedText>
+                    <ThemedText style={styles.headline}>
+                        Énisor actus
+                    </ThemedText>
 
                     <ThemedText style={styles.title}>{story.title}</ThemedText>
+
                     <ThemedText style={styles.subtitle}>
                         Par Ronan Barvel
                     </ThemedText>
 
-                    <View style={styles.separator} />
+                    <ThemedText style={styles.chapo}>
+                        {story.content1}
+                    </ThemedText>
 
-                    {story.image && (
+                    {story.content4 && (
                         <Image
                             source={{
-                                uri: getCloudinaryImageUrl(story.image),
+                                uri: getCloudinaryImageUrl(story.content4),
                             }}
                             style={styles.articleImage}
                             resizeMode="cover"
@@ -63,18 +68,18 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     articleContainer: {
-        paddingTop: 16,
+        paddingTop: 24,
         paddingBottom: 32,
         paddingHorizontal: 40,
     },
     headline: {
         fontFamily: "PallyBold",
-        fontSize: 44,
+        fontSize: 38,
         textAlign: "center",
-        letterSpacing: 4,
+        letterSpacing: 2,
         textTransform: "uppercase",
         marginBottom: 12,
-        color: Colors.blue,
+        color: Colors.darkBlue,
     },
     title: {
         fontFamily: "PoppinsBold",
@@ -88,25 +93,21 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.disabledText,
     },
-    separator: {
-        borderBottomColor: Colors.darkBlue,
-        borderBottomWidth: 1,
-        marginVertical: 20,
-        width: "70%",
-        alignSelf: "center",
-    },
     articleImage: {
         width: "100%",
         height: 180,
         borderRadius: 4,
         marginTop: 5,
-        marginBottom: 15,
+        marginBottom: 20,
+    },
+    chapo: {
+        fontFamily: "PoppinsItalic",
+        color: Colors.darkBlue,
+        textAlign: "left",
+        fontSize: 16,
+        marginVertical: 20,
     },
     articleText: {
-        fontFamily: "Georgia",
-        fontSize: 16,
-        lineHeight: 26,
-        textAlign: "justify",
         color: Colors.darkBlue,
     },
 });

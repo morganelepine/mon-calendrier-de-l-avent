@@ -35,7 +35,7 @@ export const HangmanModal: React.FC<ModalProps> = ({
                     <TouchableWithoutFeedback>
                         <View style={styles.modal}>
                             <ThemedText>{modalMessage}</ThemedText>
-                            <ThemedText>
+                            <ThemedText style={{ textAlign: "center" }}>
                                 Le mot à trouver était{" "}
                                 <Text style={{ fontFamily: "PoppinsBold" }}>
                                     {currentWord}

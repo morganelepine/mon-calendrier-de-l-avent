@@ -43,7 +43,6 @@ export default function HomeScreen() {
             // await AsyncStorage.multiRemove([
             //     "userUuid",
             //     "playMusic",
-            //     "calendar",
             //     "hasLaunched",
             //     "lastResetYear",
             //     "newUsername",
@@ -54,6 +53,8 @@ export default function HomeScreen() {
             //     "bingo_activities_clicked_cells",
             //     "bingo_activities_grid",
             //     "scoresData",
+            //     "calendar",
+            //     "storyGameAnswers",
             // ]);
         };
         initializeApp();

@@ -139,6 +139,7 @@ export class ScoreController {
         }
 
         for (const score of scores) {
+            if (!scoresByDay[score.day]) continue;
             scoresByDay[score.day].dayIsOpen = true;
 
             switch (score.reason) {

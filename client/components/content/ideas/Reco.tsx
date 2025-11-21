@@ -10,15 +10,9 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface RecoProps {
     idea: Content;
-    imageWidth: number;
-    imageHeight: number;
 }
 
-export const Reco: React.FC<RecoProps> = ({
-    idea,
-    imageWidth,
-    imageHeight,
-}) => {
+export const Reco: React.FC<RecoProps> = ({ idea }) => {
     return (
         <View>
             <ThemedText type="contentSubtitle">{idea.title}</ThemedText>
@@ -37,10 +31,7 @@ export const Reco: React.FC<RecoProps> = ({
                             source={{
                                 uri: getCloudinaryImageUrl(idea.media ?? ""),
                             }}
-                            style={[
-                                { width: imageWidth },
-                                { height: imageHeight },
-                            ]}
+                            style={[{ width: 350 }, { height: 280 }]}
                             resizeMode="cover"
                         />
                     </View>

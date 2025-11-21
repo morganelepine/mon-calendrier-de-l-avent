@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
+import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
@@ -28,9 +29,22 @@ export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
 
             <CustomMarkdown>{story.content2}</CustomMarkdown>
 
-            {story.dayNumber < 24 && (
-                <ThemedText style={styles.end}>La suite demain...</ThemedText>
-            )}
+            <ThemedText style={styles.end}>
+                {story.content5 == "end" ? "The end" : "La suite demain..."}
+            </ThemedText>
+
+            <Pressable
+                onPress={() =>
+                    router.push(
+                        `/calendar/day/${String(dayId)}/content/story/storygame`
+                    )
+                }
+                style={styles.button}
+            >
+                <ThemedText style={styles.buttonText}>
+                    J'ai trouvé la solution du jeu !
+                </ThemedText>
+            </Pressable>
         </ContentScreenWrapper>
     );
 };
@@ -40,5 +54,12 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontFamily: "PoppinsItalic",
         color: Colors.green,
+    },
+    button: { marginTop: 28, marginBottom: 8 },
+    buttonText: {
+        textDecorationLine: "underline",
+        color: Colors.green,
+        textAlign: "right",
+        fontSize: 14,
     },
 });

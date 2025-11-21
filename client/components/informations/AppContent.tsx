@@ -20,16 +20,10 @@ export const AppContent = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">Une citation</ThemedText>
-                <ThemedText type="sectionText">
-                    Une citation pour s'imprégner de l'esprit de Noël.
-                </ThemedText>
-            </View>
-
-            <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">Une histoire</ThemedText>
                 <ThemedText type="sectionText">
-                    Un chapitre d'une nouvelle de Noël découpée en 24 épisodes.
+                    Un chapitre d'une nouvelle de Noël découpée en plusieurs
+                    épisodes.
                 </ThemedText>
             </View>
 

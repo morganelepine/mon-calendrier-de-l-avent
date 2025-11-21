@@ -35,7 +35,13 @@ export const ListReco: React.FC<ListRecoProps> = ({
                     </ThemedText>
                 )}
 
-            <View style={{ flexDirection: "row" }}>
+            <View
+                style={[
+                    type === "creator"
+                        ? { flexDirection: "column" }
+                        : { flexDirection: "row" },
+                ]}
+            >
                 {/* IMAGE */}
                 {content.image && (
                     <View style={{ marginVertical: 10 }}>
@@ -43,11 +49,20 @@ export const ListReco: React.FC<ListRecoProps> = ({
                             source={{
                                 uri: getCloudinaryImageUrl(content.image),
                             }}
-                            style={{
-                                borderRadius: 8,
-                                width: imageWidth || 150,
-                                height: imageHeight || 150,
-                            }}
+                            style={[
+                                type === "creator"
+                                    ? {
+                                          borderRadius: 8,
+                                          width: "100%",
+                                          aspectRatio: 2.4,
+                                          height: undefined,
+                                      }
+                                    : {
+                                          borderRadius: 8,
+                                          width: imageWidth || 150,
+                                          height: imageHeight || 150,
+                                      },
+                            ]}
                             resizeMode="cover"
                         />
                         {content.url && (
@@ -60,27 +75,52 @@ export const ListReco: React.FC<ListRecoProps> = ({
                 )}
 
                 {/* SUMMARY */}
-                <View style={{ flex: 1, paddingLeft: 15 }}>
-                    <ThemedText style={styles.description}>
-                        {content.author ? content.description : null}
-                        {content.url && (
-                            <ExternalLink href={content.url as Href}>
-                                <ThemedText
-                                    style={[
-                                        styles.description,
-                                        {
-                                            textDecorationLine: "underline",
-                                        },
-                                    ]}
-                                >
-                                    {content.author
-                                        ? content.author
-                                        : content.description}
-                                </ThemedText>
-                            </ExternalLink>
-                        )}
-                    </ThemedText>
-                </View>
+                {type === "creator" ? (
+                    <>
+                        <ThemedText
+                            style={[styles.description, { marginVertical: 10 }]}
+                        >
+                            Vous y trouverez : {content.description}
+                        </ThemedText>
+                        <ExternalLink href={content.url as Href}>
+                            <ThemedText
+                                style={[
+                                    styles.description,
+                                    {
+                                        textDecorationLine: "underline",
+                                    },
+                                ]}
+                            >
+                                {content.author}
+                            </ThemedText>
+                        </ExternalLink>
+                    </>
+                ) : (
+                    <View style={{ flex: 1, paddingLeft: 15 }}>
+                        <ThemedText
+                            style={[styles.description, { marginBottom: 20 }]}
+                        >
+                            {content.author ? content.description : null}
+                            {content.url && (
+                                <ExternalLink href={content.url as Href}>
+                                    <ThemedText
+                                        style={[
+                                            styles.description,
+                                            {
+                                                textDecorationLine: "underline",
+                                                marginBottom: 20,
+                                            },
+                                        ]}
+                                    >
+                                        {content.author
+                                            ? content.author
+                                            : content.description}
+                                    </ThemedText>
+                                </ExternalLink>
+                            )}
+                        </ThemedText>
+                    </View>
+                )}
             </View>
         </>
     );
@@ -98,7 +138,7 @@ const styles = StyleSheet.create({
         marginTop: -12,
         marginBottom: 10,
     },
-    description: { textAlign: "left", fontSize: 15, marginBottom: 20 },
+    description: { textAlign: "left", fontSize: 15 },
     link: {
         ...StyleSheet.absoluteFillObject,
         zIndex: 1,

@@ -6,7 +6,14 @@ import { ListOfContents } from "@/interfaces/contentInterface";
 export const ListVideo = (content: ListOfContents) => {
     return (
         <>
-            <ThemedText style={styles.title}>{content.title}</ThemedText>
+            <ThemedText
+                style={[
+                    styles.title,
+                    { marginBottom: content.author ? 0 : 20 },
+                ]}
+            >
+                {content.title}
+            </ThemedText>
 
             {content.author && (
                 <ThemedText style={styles.where}>

@@ -85,15 +85,7 @@ export default function IdeaScreen() {
                             )}
 
                             {idea.content5 === IdeaType.Idea && (
-                                <Reco
-                                    idea={idea}
-                                    imageWidth={
-                                        imageDimensions[idea.dayNumber]?.width
-                                    }
-                                    imageHeight={
-                                        imageDimensions[idea.dayNumber]?.height
-                                    }
-                                />
+                                <Reco idea={idea} />
                             )}
                         </View>
                     </CustomScrollView>

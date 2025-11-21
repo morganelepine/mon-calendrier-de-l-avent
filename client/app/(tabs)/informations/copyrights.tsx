@@ -9,7 +9,7 @@ export default function CopyrightsScreen() {
             <SafeAreaView>
                 <View style={styles.section}>
                     <ThemedText type="sectionText">
-                        Cette application est un projet collaboratif : 2
+                        Cette application est un projet collaboratif : 4
                         personnes ont accepté de mettre leurs talents
                         artistiques à disposition pour rendre cette application
                         encore plus magique.
@@ -22,9 +22,26 @@ export default function CopyrightsScreen() {
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Annaëlle</ThemedText>
                     <ThemedText type="sectionText">
-                        ...qui a dessiné 12 superbes fonds d'écran pour l'onglet
+                        ...qui a dessiné des fonds d'écran pour l'onglet
                         Décompte (jours 3, 4, 6, 7, 9, 11, 13, 14, 17, 19, 24,
-                        25).
+                        25) et participé à la surprise du 25 décembre.
+                    </ThemedText>
+                </View>
+
+                <View style={styles.section}>
+                    <ThemedText type="sectionSubtitle">Arthur</ThemedText>
+                    <ThemedText type="sectionText">
+                        ...qui a écrit la nouvelle de Noël "Les étoiles
+                        d'Enisor" et participé à la rédaction de certaines
+                        anecdotes de Noël.
+                    </ThemedText>
+                </View>
+
+                <View style={styles.section}>
+                    <ThemedText type="sectionSubtitle">Marika</ThemedText>
+                    <ThemedText type="sectionText">
+                        ...qui a écrit la nouvelle de Noël "Les marges de
+                        décembre".
                     </ThemedText>
                 </View>
 

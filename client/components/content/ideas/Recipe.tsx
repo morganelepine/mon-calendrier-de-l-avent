@@ -24,7 +24,7 @@ export const Recipe: React.FC<RecipeProps> = ({ content }) => {
 
             <View style={{ marginTop: 10 }}>
                 <ThemedText style={styles.contentTitle}>Recette</ThemedText>
-                <ThemedText>{content.content1}</ThemedText>
+                <CustomMarkdown>{content.content1}</CustomMarkdown>
             </View>
 
             {content.content3 ? (
