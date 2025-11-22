@@ -9,9 +9,12 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
+import { useVersionCheck } from "@/hooks/useVersionCheck";
+import ForceUpdateScreen from "@/components/utils/ForceUpdateScreen";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
+    const requiresUpdate = useVersionCheck();
 
     const [loaded] = useFonts({
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
@@ -23,6 +26,10 @@ export default function RootLayout() {
 
     if (!loaded) {
         return null;
+    }
+
+    if (requiresUpdate) {
+        return <ForceUpdateScreen />;
     }
 
     return (
