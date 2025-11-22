@@ -6,7 +6,7 @@ import { DayContent } from "@/components/days/Content/DayContent";
 
 export default function DayScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
-    const dayId = parseInt(id, 10);
+    const dayId = Number.parseInt(id, 10);
 
     return (
         <View style={styles.background}>

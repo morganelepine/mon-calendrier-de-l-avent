@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { wallpapers } from "@/data/wallpapers_data";
-
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 export const Wallpapers = () => {

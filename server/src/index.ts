@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { UserRoutes } from "./routes/user.routes";
 import { ScoreRoutes } from "./routes/score.routes";
+import { AppConfigRoutes } from "./routes/appconfig.routes";
 
 function registerRoutes(app: Application, routes: any[]) {
     routes.forEach((route) => {
@@ -38,6 +39,7 @@ app.use(bodyParser.json());
 
 registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
+registerRoutes(app, AppConfigRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Calendar API working ✅");

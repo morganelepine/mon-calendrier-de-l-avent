@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import {
-    View,
-    FlatList,
-    StyleSheet,
-    ImageBackground,
-    ActivityIndicator,
-} from "react-native";
+import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Colors } from "@/constants/Colors";
@@ -13,7 +7,6 @@ import { API_URL } from "@/constants/api";
 import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
-const ITEMS_PER_PAGE = 30; // nombre d’items chargés par requête
 const ITEM_HEIGHT = 44;
 
 export default function LeaderboardScreen() {
@@ -23,9 +16,6 @@ export default function LeaderboardScreen() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const [loadingMore, setLoadingMore] = useState(false);
     const flatListRef = useRef<FlatList>(null);
 
     const backgroundImage = getCloudinaryImageUrl(
@@ -33,23 +23,18 @@ export default function LeaderboardScreen() {
     );
     const { username } = useUser();
 
-    const fetchLeaderboard = async (pageToFetch = 1) => {
+    const fetchLeaderboard = async () => {
         try {
-            if (pageToFetch === 1) setLoading(true);
-            else setLoadingMore(true);
+            setLoading(true);
 
-            const response = await fetch(
-                `${API_URL}/scores/leaderboard?page=${pageToFetch}&limit=${ITEMS_PER_PAGE}`
-            );
+            const response = await fetch(`${API_URL}/scores/leaderboard`);
             const result = await response.json();
 
             if (Array.isArray(result)) {
                 // Old format
                 setLeaderboard(result);
             } else if (result.data) {
-                if (pageToFetch === 1) setLeaderboard(result.data);
-                else setLeaderboard((prev) => [...prev, ...result.data]);
-                setHasMore(result.hasMore);
+                setLeaderboard(result.data);
             }
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
@@ -58,7 +43,6 @@ export default function LeaderboardScreen() {
             );
         } finally {
             setLoading(false);
-            setLoadingMore(false);
         }
     };
 
@@ -87,14 +71,6 @@ export default function LeaderboardScreen() {
         <LeaderBoardItem index={index} item={item} username={username} />
     );
 
-    const handleLoadMore = () => {
-        if (!loadingMore && hasMore) {
-            const nextPage = page + 1;
-            setPage(nextPage);
-            fetchLeaderboard(nextPage);
-        }
-    };
-
     return (
         <ImageBackground
             source={{ uri: backgroundImage }}
@@ -105,7 +81,7 @@ export default function LeaderboardScreen() {
                 <ErrorLoading
                     error={error}
                     loading={loading}
-                    refreshScores={() => fetchLeaderboard(1)}
+                    refreshScores={fetchLeaderboard}
                 />
 
                 {!error && !loading && (
@@ -119,22 +95,11 @@ export default function LeaderboardScreen() {
                         maxToRenderPerBatch={10}
                         windowSize={10}
                         removeClippedSubviews
-                        onEndReached={handleLoadMore}
-                        onEndReachedThreshold={0.5}
                         getItemLayout={(_, index) => ({
                             length: ITEM_HEIGHT,
                             offset: ITEM_HEIGHT * index,
                             index,
                         })}
-                        ListFooterComponent={
-                            loadingMore ? (
-                                <ActivityIndicator
-                                    size="small"
-                                    color={Colors.snow}
-                                    style={{ marginVertical: 20 }}
-                                />
-                            ) : null
-                        }
                     />
                 )}
             </View>

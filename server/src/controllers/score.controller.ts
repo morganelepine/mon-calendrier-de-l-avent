@@ -172,7 +172,7 @@ export class ScoreController {
         }
 
         const page = Number.parseInt(req.query.page as string) || 1;
-        const limit = Number.parseInt(req.query.limit as string) || 30;
+        const limit = Number.parseInt(req.query.limit as string) || 50;
         const skip = (page - 1) * limit;
 
         const [leaderboard, total] = await Promise.all([

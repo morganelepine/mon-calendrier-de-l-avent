@@ -46,6 +46,13 @@ export default function CopyrightsScreen() {
                 </View>
 
                 <View style={styles.section}>
+                    <ThemedText type="sectionSubtitle">Victoria</ThemedText>
+                    <ThemedText type="sectionText">
+                        ...qui a écrit la nouvelle de Noël "La lettre de Noël".
+                    </ThemedText>
+                </View>
+
+                <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">William</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a enregistré Petit papa Noël au piano (à écouter

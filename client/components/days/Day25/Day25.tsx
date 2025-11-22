@@ -11,7 +11,7 @@ export const Day25 = () => {
     useEffect(() => {
         const getScoreTotal = async () => {
             const totalScore = await getTotalScore();
-            setTotalScore(totalScore);
+            setTotalScore(totalScore ?? 0);
         };
         getScoreTotal();
     }, []);

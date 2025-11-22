@@ -75,7 +75,7 @@ export default function InformationsLayout() {
                         return (
                             <CustomHeader
                                 title="Noter l'application"
-                                backgroundColor={Colors.green}
+                                backgroundColor={Colors.blue}
                                 color={Colors.snow}
                             />
                         );

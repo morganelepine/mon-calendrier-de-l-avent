@@ -26,13 +26,9 @@ export const BingoRules = () => {
                     Le principe est simple :
                 </ThemedText>
                 <ThemedText type="sectionText">
-                    ▪️ Une grille remplie de 12 situations typiques que l’on
+                    ▪️ Une grille remplie de 28 situations typiques que l’on
                     retrouve dans nombreux téléfilms de Noël est proposée dans
                     l'onglet Bingo.
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    ▪️ En cliquant sur "Générer une nouvelle grille", une
-                    nouvelle grille sera créée avec de nouvelles situations.
                 </ThemedText>
                 <ThemedText type="sectionText">
                     ▪️ Installez-vous confortablement devant le téléfilm du jour

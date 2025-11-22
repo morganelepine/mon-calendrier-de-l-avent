@@ -1,133 +1,15 @@
-import { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, View, ScrollView } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BingoCell } from "@/components/bingo/BingoCell";
-import { BingoHeader } from "@/components/bingo/BingoHeader";
-import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
+import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { bingo } from "@/data/bingo_data";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 const CLICKED_CELLS_KEY = "bingo_clicked_cells";
 const GRID_KEY = "bingo_grid";
 
 export default function BingoTelefilmsScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [bingoGrid, setBingoGrid] = useState(bingo.slice(0, 15));
-    const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
-    const [isReady, setIsReady] = useState(false);
-
-    useEffect(() => {
-        const loadData = async () => {
-            try {
-                const savedGrid = await AsyncStorage.getItem(GRID_KEY);
-                const savedClicked = await AsyncStorage.getItem(
-                    CLICKED_CELLS_KEY
-                );
-
-                if (savedGrid) {
-                    const parsedGrid = JSON.parse(savedGrid);
-                    setBingoGrid(parsedGrid);
-                } else {
-                    await AsyncStorage.setItem(
-                        GRID_KEY,
-                        JSON.stringify(bingoGrid)
-                    );
-                }
-
-                if (savedClicked) {
-                    const parsedClicked = JSON.parse(savedClicked);
-                    setClickedCells(new Set(parsedClicked));
-                }
-
-                setIsReady(true);
-            } catch (e) {
-                console.error("Error loading data:", e);
-            }
-        };
-        loadData();
-    }, []);
-
-    // Save clicked cells after loading
-    useEffect(() => {
-        if (!isReady) return; // ignore first render
-        const saveClicked = async () => {
-            try {
-                await AsyncStorage.setItem(
-                    CLICKED_CELLS_KEY,
-                    JSON.stringify([...clickedCells])
-                );
-            } catch (e) {
-                console.error("Error saving clicked:", e);
-            }
-        };
-        saveClicked();
-    }, [clickedCells, isReady]);
-
-    const handleCellClick = (cellId: number) => {
-        setClickedCells((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(cellId)) {
-                newSet.delete(cellId);
-            } else {
-                newSet.add(cellId);
-            }
-            return newSet;
-        });
-    };
-
     return (
-        <ImageBackground
-            source={{
-                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
-            }}
-            resizeMode="cover"
-            style={styles.imageBackground}
-        >
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <BingoHeader
-                    bingo={bingo}
-                    setClickedCells={setClickedCells}
-                    setBingoGrid={setBingoGrid}
-                    setModalVisible={setModalVisible}
-                    gridKey={GRID_KEY}
-                    clickedCellsKey={CLICKED_CELLS_KEY}
-                />
-
-                <View style={styles.bingoContainer}>
-                    {bingoGrid.map((cell) => (
-                        <BingoCell
-                            key={cell.id}
-                            cell={cell}
-                            isClicked={clickedCells.has(cell.id)}
-                            onClick={handleCellClick}
-                            type={"telefilms"}
-                        />
-                    ))}
-                </View>
-
-                <BingoRulesModal
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
-                />
-            </ScrollView>
-        </ImageBackground>
+        <BingoGrid
+            clickedCellsKey={CLICKED_CELLS_KEY}
+            gridKey={GRID_KEY}
+            grid={bingo}
+        />
     );
 }
-
-const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
-    bingoContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignContent: "center",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: 8,
-        marginHorizontal: 12,
-        marginBottom: 20,
-    },
-});

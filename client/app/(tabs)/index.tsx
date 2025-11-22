@@ -48,11 +48,11 @@ export default function HomeScreen() {
             //     "newUsername",
             //     "username",
             //     "gameState",
+            //     "scoresData",
             //     "bingo_clicked_cells",
             //     "bingo_grid",
             //     "bingo_activities_clicked_cells",
             //     "bingo_activities_grid",
-            //     "scoresData",
             //     "calendar",
             //     "storyGameAnswers",
             // ]);

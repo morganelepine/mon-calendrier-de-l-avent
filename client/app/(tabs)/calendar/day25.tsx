@@ -24,16 +24,14 @@ export default function Day25Screen() {
                 />
             }
         >
-            <ThemedText style={styles.title}>
-                Merci d'être resté·e jusqu'au bout 🎅
-            </ThemedText>
+            <ThemedText style={styles.title}>Joyeux Noël ☃️</ThemedText>
 
             <View>
                 <View style={styles.section}>
                     <ThemedText style={styles.text}>
                         J'espère de tout cœur que cette application aura réussi
                         à ajouter une touche de magie à votre mois de décembre
-                        et à vous plonger dans l'ambiance de Noël ☃️
+                        et à vous plonger dans l'ambiance de Noël !
                     </ThemedText>
                     <ThemedText style={styles.text}>
                         Si vous avez apprécié mon application, rendez-vous
@@ -56,7 +54,7 @@ export default function Day25Screen() {
                         🖼️ Six fonds d'écran
                     </ThemedText>
                     <ThemedText type="sectionText">
-                        Ces dessins ont également été créés par Annaëlle pour
+                        Ces dessins ont été créés par mon amie Annaëlle pour
                         pouvoir profiter encore un peu de l'ambiance de Noël.
                     </ThemedText>
                     <ThemedText type="sectionText" style={styles.explanations}>
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 26,
         letterSpacing: 2,
-        color: Colors.green,
+        color: Colors.blue,
         fontFamily: "PallyBold",
         textAlign: "center",
         marginVertical: 20,
