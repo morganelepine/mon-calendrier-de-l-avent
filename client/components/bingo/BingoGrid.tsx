@@ -7,36 +7,22 @@ import { Bingo } from "@/interfaces/bingoInterface";
 
 interface BingoGridProps {
     clickedCellsKey: string;
-    gridKey: string;
     grid: Bingo[];
 }
 
 export const BingoGrid: React.FC<BingoGridProps> = ({
     clickedCellsKey,
-    gridKey,
     grid,
 }) => {
-    const [bingoGrid, setBingoGrid] = useState(grid);
     const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                const savedGrid = await AsyncStorage.getItem(gridKey);
                 const savedClicked = await AsyncStorage.getItem(
                     clickedCellsKey
                 );
-
-                if (savedGrid) {
-                    const parsedGrid = JSON.parse(savedGrid);
-                    setBingoGrid(parsedGrid);
-                } else {
-                    await AsyncStorage.setItem(
-                        gridKey,
-                        JSON.stringify(bingoGrid)
-                    );
-                }
 
                 if (savedClicked) {
                     const parsedClicked = JSON.parse(savedClicked);
@@ -89,7 +75,7 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
         >
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.bingoContainer}>
-                    {bingoGrid.map((cell) => (
+                    {grid.map((cell) => (
                         <BingoCell
                             key={cell.id}
                             cell={cell}

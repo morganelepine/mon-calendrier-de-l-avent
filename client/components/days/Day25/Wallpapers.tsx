@@ -1,30 +1,45 @@
 import React, { useState } from "react";
 import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
-import { wallpapers } from "@/data/wallpapers_data";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
 
-export const Wallpapers = () => {
+export const Wallpapers = ({ datas, type }) => {
     const { width, height } = Dimensions.get("window");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     return (
         <>
             <View style={styles.gallery}>
-                {wallpapers.map((wallpaper) => (
-                    <Pressable
-                        key={wallpaper.id}
-                        onPress={() => setSelectedImage(wallpaper.image)}
-                    >
-                        <Image
-                            source={{
-                                uri: getCloudinaryImageUrl(wallpaper.image),
-                            }}
-                            resizeMode="cover"
-                            style={styles.thumbnail}
-                        />
-                    </Pressable>
-                ))}
+                {datas.map((data) =>
+                    type === "wallpapers" ? (
+                        <Pressable
+                            key={data.id}
+                            onPress={() => setSelectedImage(data.image)}
+                        >
+                            <Image
+                                source={{
+                                    uri: getCloudinaryImageUrl(data.image),
+                                }}
+                                resizeMode="cover"
+                                style={styles.thumbnail}
+                            />
+                        </Pressable>
+                    ) : (
+                        <Pressable
+                            key={data.id}
+                            onPress={() => setSelectedImage(data.image)}
+                            style={styles.button}
+                        >
+                            <ThemedText
+                                style={{ fontSize: 14, textAlign: "center" }}
+                            >
+                                {data.title}
+                            </ThemedText>
+                        </Pressable>
+                    )
+                )}
             </View>
 
             <CustomModal
@@ -57,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
     },
     gallery: {
         flexDirection: "row",
@@ -71,5 +86,15 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 5,
         margin: 2,
+    },
+    button: {
+        width: "45%",
+        margin: 4,
+        borderRadius: 50,
+        paddingVertical: 2,
+        paddingHorizontal: 8,
+        borderWidth: 1,
+        borderColor: Colors.red,
+        alignSelf: "center",
     },
 });

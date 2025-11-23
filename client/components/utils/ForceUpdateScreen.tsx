@@ -6,7 +6,6 @@ import {
     Pressable,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Colors } from "@/constants/Colors";
 
