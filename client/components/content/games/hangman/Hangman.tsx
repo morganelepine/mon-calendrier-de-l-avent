@@ -29,26 +29,33 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
         setMistakes(0);
     }, [currentWord]);
 
-    useEffect(() => {
-        const handleScoreUpdate = async () => {
-            if (currentWord === hiddenWord.join("")) {
-                const alreadyPlayed = await isQuestionPlayed(
-                    game.dayNumber,
-                    currentWordIndex
-                );
-                if (!alreadyPlayed) {
-                    await setScore(currentWordIndex);
-                }
+    const handleScoreUpdate = async () => {
+        const alreadyPlayed = await isQuestionPlayed(
+            game.dayNumber,
+            currentWordIndex
+        );
 
-                setModalMessage("Félicitations 🥳");
-                setModalVisible(true);
-            } else if (mistakes === maxTries) {
-                setModalMessage(
-                    "Dommage, vous avez atteint le nombre maximum d'essais 😟"
-                );
-                setModalVisible(true);
+        if (currentWord === hiddenWord.join("")) {
+            if (!alreadyPlayed) {
+                await setScore(currentWordIndex);
+                await saveQuestionPlayed(game.dayNumber, currentWordIndex);
             }
-        };
+
+            setModalMessage("Félicitations 🥳");
+            setModalVisible(true);
+        } else if (mistakes === maxTries) {
+            if (!alreadyPlayed) {
+                await saveQuestionPlayed(game.dayNumber, currentWordIndex);
+            }
+
+            setModalMessage(
+                "Dommage, vous avez atteint le nombre maximum d'essais 😟"
+            );
+            setModalVisible(true);
+        }
+    };
+
+    useEffect(() => {
         handleScoreUpdate();
     }, [hiddenWord, mistakes]);
 
@@ -72,7 +79,6 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     };
 
     const handleNextQuestion = async () => {
-        await saveQuestionPlayed(game.dayNumber, currentWordIndex);
         setCurrentWordIndex(currentWordIndex + 1);
         setModalVisible(false);
     };

@@ -5,6 +5,7 @@ import { saveScore } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
+import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 
 interface ContentButtonProps {
     content?: Content;
@@ -13,6 +14,7 @@ interface ContentButtonProps {
     dayId: number;
     backgroundImage: string;
     contentType: "story" | "idea" | "anecdote" | "game";
+    contentNumber: number;
 }
 
 export const ContentButton: React.FC<ContentButtonProps> = ({
@@ -32,11 +34,25 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     dayId,
     backgroundImage,
     contentType,
+    contentNumber,
 }) => {
     const handleContentOpening = async () => {
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
-        saveScore(dayId, score, String(ScoreType.ContentOpening));
+
+        const alreadyPlayed = await isQuestionPlayed(dayId, contentNumber);
+        if (alreadyPlayed) {
+            await saveQuestionPlayed(dayId, contentNumber);
+        } else {
+            saveScore(
+                dayId,
+                score,
+                String(ScoreType.ContentOpening),
+                contentNumber
+            );
+            await saveQuestionPlayed(dayId, contentNumber);
+        }
+
         router.navigate({
             pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
         });

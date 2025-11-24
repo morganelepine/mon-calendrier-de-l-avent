@@ -23,8 +23,9 @@ export default function CopyrightsScreen() {
                     <ThemedText type="sectionSubtitle">Annaëlle</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a dessiné des fonds d'écran pour l'onglet
-                        Décompte (jours 3, 4, 6, 7, 9, 11, 13, 14, 17, 19, 24,
-                        25) et participé à la surprise du 25 décembre.
+                        Décompte (jours 3, 4, 6, 7, 9, 11, 12, 13, 14, 17, 19,
+                        20, 23, 24, 25) et participé à la surprise du 25
+                        décembre.
                     </ThemedText>
                 </View>
 

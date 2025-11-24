@@ -50,6 +50,13 @@ export const BingoRules = () => {
                 </ThemedText>
             </View>
 
+            <View style={styles.section}>
+                <ThemedText type="sectionText">
+                    Il vous suffit de recliquer sur les cases pour recommencer
+                    le bingo de zéro.
+                </ThemedText>
+            </View>
+
             <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
                 Bingo des activités de Noël
             </ThemedText>

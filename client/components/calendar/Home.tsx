@@ -41,6 +41,7 @@ export const Home = () => {
             />
             <ImageBackground
                 source={{ uri: backgroundImage }}
+                // source={require("../../assets/images/44.jpeg")}
                 style={styles.background}
                 resizeMode="cover"
             >
@@ -58,14 +59,14 @@ export const Home = () => {
                     </View>
 
                     <View style={styles.textContainer}>
-                        {isChristmas && (
+                        {/* {isChristmas && (
                             <ThemedText
                                 type="homeTitle"
                                 style={styles.isChristmas}
                             >
                                 Joyeux Noël
                             </ThemedText>
-                        )}
+                        )} */}
 
                         {!isChristmas && !isAfterChristmas && isDecember && (
                             <>
