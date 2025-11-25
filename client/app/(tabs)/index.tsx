@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
 import { FirstLaunchModal } from "@/components/calendar/FirstLaunchModal";
-import UsernameModal from "@/components/calendar/UsernameModal";
 
 const today = new Date();
 const currentYear = today.getFullYear();
@@ -22,22 +21,15 @@ async function resetDataIfNeeded() {
 
 export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [usernameModalVisible, setUsernameModalVisible] = useState(false);
 
     const initializeApp = async () => {
         await resetDataIfNeeded();
 
-        const userUuid = await AsyncStorage.getItem("userUuid");
         const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-        const newUsername = await AsyncStorage.getItem("newUsername");
-        // console.log("userUuid : ", userUuid);
-        // console.log("hasLaunched : ", hasLaunched);
-        // console.log("newUsername : ", newUsername);
+        console.log("hasLaunched : ", hasLaunched);
 
-        if (!userUuid && !hasLaunched) {
+        if (!hasLaunched) {
             setModalVisible(true);
-        } else if (userUuid && !newUsername) {
-            setUsernameModalVisible(true);
         }
 
         // await AsyncStorage.multiRemove([
@@ -45,14 +37,10 @@ export default function HomeScreen() {
         //     "playMusic",
         //     "hasLaunched",
         //     "lastResetYear",
-        //     "newUsername",
         //     "username",
         //     "gameState",
-        //     "scoresData",
         //     "bingo_clicked_cells",
-        //     "bingo_grid",
         //     "bingo_activities_clicked_cells",
-        //     "bingo_activities_grid",
         //     "calendar",
         //     "storyGameAnswers",
         // ]);
@@ -68,10 +56,6 @@ export default function HomeScreen() {
             <FirstLaunchModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
-            />
-            <UsernameModal
-                modalVisible={usernameModalVisible}
-                setModalVisible={setUsernameModalVisible}
             />
         </>
     );
