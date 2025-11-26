@@ -2,10 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { View, FlatList, StyleSheet, ImageBackground } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { Colors } from "@/constants/Colors";
 import { API_URL } from "@/constants/api";
-import { useUser } from "@/contexts/UserContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ITEM_HEIGHT = 44;
 
@@ -21,10 +20,14 @@ export default function LeaderboardScreen() {
     const backgroundImage = getCloudinaryImageUrl(
         "blue_background_darker_d10kn5"
     );
-    const { username } = useUser();
+
+    const [username, setUsername] = useState<string | null>(null);
 
     const fetchLeaderboard = async () => {
         try {
+            const name = await AsyncStorage.getItem("username");
+            setUsername(name);
+
             setLoading(true);
 
             const response = await fetch(`${API_URL}/scores/leaderboard`);

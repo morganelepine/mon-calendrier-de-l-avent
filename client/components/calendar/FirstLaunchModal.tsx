@@ -1,28 +1,25 @@
 import { router } from "expo-router";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
-import { useUser } from "@/contexts/UserContext";
 
 interface FirstLaunchModalProps {
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
+    username: string | null;
 }
 
 export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
     modalVisible,
     setModalVisible,
+    username,
 }) => {
-    const { username } = useUser();
-
     const handleStart = async () => {
         setModalVisible(false);
-        if (username) {
-            await AsyncStorage.setItem("hasLaunched", "true");
-        }
+        await AsyncStorage.setItem("hasLaunched", "true");
         router.replace({
             pathname: "/",
         });
@@ -37,63 +34,36 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
                     </ThemedText>
 
                     <View style={{ gap: 8 }}>
-                        {username ? (
-                            <>
-                                <ThemedText type="sectionText">
-                                    Chaque jour, ouvrez une case et entrez dans
-                                    la magie de Noël !
-                                </ThemedText>
-                                <ThemedText type="sectionText">
-                                    Votre nom de lutin·e de Noël est :{" "}
-                                    <ThemedText
-                                        style={{
-                                            color: Colors.red,
-                                            fontFamily: "PoppinsBold",
-                                        }}
-                                    >
-                                        {username}
-                                    </ThemedText>
-                                </ThemedText>
-                                <ThemedText type="sectionText">
-                                    Il vous permettra de comparer votre score
-                                    avec celui des autres joueur·euses dans la
-                                    page "Classement" de l'onglet "Scores".
-                                </ThemedText>
-                                <ThemedText type="sectionText">
-                                    Plus vous participez, plus vous gagnez de
-                                    points ! Les règles détaillées se trouvent
-                                    dans l'onglet "Infos".
-                                </ThemedText>
-                                <ThemedText type="sectionText">
-                                    J’ai mis tout mon amour de Noël dans ce
-                                    calendrier et j’espère qu’il vous apportera
-                                    un peu de magie chaque jour ✨
-                                </ThemedText>
-                            </>
-                        ) : (
-                            <>
-                                <ThemedText type="sectionText">
-                                    J’y ai mis tout mon amour de Noël et
-                                    j’espère qu’il vous apportera un&nbsp;peu de
-                                    magie chaque jour ✨
-                                </ThemedText>
-                                <ThemedText type="sectionText">
-                                    Rendez-vous dans l'onglet "Infos" pour
-                                    découvrir toutes
-                                    ses&nbsp;fonctionnalités&nbsp;!
-                                </ThemedText>
-                                <></>
-                                <Text style={styles.text}>
-                                    <Text style={styles.boldText}>
-                                        Si votre nom de lutin·e de Noël
-                                        n'apparaît pas en haut de la page Infos
-                                    </Text>{" "}
-                                    ("Bienvenue Flocon_Doré" par exemple),
-                                    tentez de supprimer l'application puis de la
-                                    réinstaller.
-                                </Text>
-                            </>
-                        )}
+                        <ThemedText type="sectionText">
+                            Chaque jour, ouvrez une case et entrez dans la magie
+                            de Noël !
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            Votre nom de lutin·e de Noël est :{" "}
+                            <ThemedText
+                                style={{
+                                    color: Colors.red,
+                                    fontFamily: "PoppinsBold",
+                                }}
+                            >
+                                {username}
+                            </ThemedText>
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            Il vous permettra de comparer votre score avec celui
+                            des autres joueur·euses dans la page "Classement" de
+                            l'onglet "Scores".
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            Plus vous participez, plus vous gagnez de points !
+                            Les règles détaillées se trouvent dans l'onglet
+                            "Infos".
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            J’ai mis tout mon amour de Noël dans ce calendrier
+                            et j’espère qu’il vous apportera un peu de magie
+                            chaque jour ✨
+                        </ThemedText>
                     </View>
 
                     <CustomButton onPress={handleStart} style={styles.button}>
@@ -127,15 +97,5 @@ const styles = StyleSheet.create({
     button: {
         margin: 20,
         backgroundColor: Colors.blue,
-    },
-    text: {
-        fontSize: 15,
-        fontFamily: "Poppins",
-        textAlign: "left",
-        color: Colors.darkBlue,
-        paddingHorizontal: 20,
-    },
-    boldText: {
-        fontFamily: "PoppinsBold",
     },
 });

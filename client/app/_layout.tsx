@@ -3,18 +3,16 @@ import {
     DefaultTheme,
     ThemeProvider,
 } from "@react-navigation/native";
+import "react-native-reanimated";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
-import { useVersionCheck } from "@/hooks/useVersionCheck";
-import ForceUpdateScreen from "@/components/utils/ForceUpdateScreen";
+import { InitializationGate } from "@/components/navigation/InitializationGate";
+import { VersionGate } from "@/components/navigation/VersionGate";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
-    const requiresUpdate = useVersionCheck();
 
     const [loaded] = useFonts({
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
@@ -28,25 +26,23 @@ export default function RootLayout() {
         return null;
     }
 
-    if (requiresUpdate) {
-        return <ForceUpdateScreen />;
-    }
-
     return (
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <UserProvider>
-                <ScoreProvider>
-                    <Stack>
-                        <Stack.Screen
-                            name="(tabs)"
-                            options={{ headerShown: false }}
-                        />
-                        <Stack.Screen name="+not-found" />
-                    </Stack>
-                </ScoreProvider>
-            </UserProvider>
+            <InitializationGate>
+                <VersionGate>
+                    <ScoreProvider>
+                        <Stack>
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen name="+not-found" />
+                        </Stack>
+                    </ScoreProvider>
+                </VersionGate>
+            </InitializationGate>
         </ThemeProvider>
     );
 }

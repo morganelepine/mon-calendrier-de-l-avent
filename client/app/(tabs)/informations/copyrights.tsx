@@ -9,7 +9,7 @@ export default function CopyrightsScreen() {
             <SafeAreaView>
                 <View style={styles.section}>
                     <ThemedText type="sectionText">
-                        Cette application est un projet collaboratif : 4
+                        Cette application est un projet collaboratif : 5
                         personnes ont accepté de mettre leurs talents
                         artistiques à disposition pour rendre cette application
                         encore plus magique.
