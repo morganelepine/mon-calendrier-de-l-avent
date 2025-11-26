@@ -19,7 +19,7 @@ export default function BingoLayout() {
                     header: () => {
                         return (
                             <CustomBingoHeader
-                                title="Bingo des activités"
+                                title="Bingo des activités de Noël"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
                                 clickedCellsKey={
@@ -36,7 +36,7 @@ export default function BingoLayout() {
                     header: () => {
                         return (
                             <CustomBingoHeader
-                                title="Bingo des téléfilms"
+                                title="Bingo des téléfilms de Noël"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
                                 clickedCellsKey={"bingo_films_clicked_cells"}

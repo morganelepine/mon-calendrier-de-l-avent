@@ -29,7 +29,6 @@ export function InitializationGate({
             >
                 <View style={styles.container}>
                     <ActivityIndicator size="large" color={Colors.snow} />
-                    <ThemedText style={styles.text}>Initialisation…</ThemedText>
                 </View>
             </ImageBackground>
         );
@@ -52,7 +51,13 @@ export function InitializationGate({
                     <ThemedText style={styles.text}>
                         Vérifiez votre connexion internet puis réessayez.
                     </ThemedText>
-                    <Pressable onPress={retry} style={styles.button}>
+                    <Pressable
+                        onPress={retry}
+                        style={({ pressed }) => [
+                            styles.button,
+                            pressed && { backgroundColor: Colors.goldLight },
+                        ]}
+                    >
                         <ThemedText style={styles.buttonText}>
                             Réessayer
                         </ThemedText>

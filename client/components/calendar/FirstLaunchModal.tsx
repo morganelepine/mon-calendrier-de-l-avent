@@ -5,18 +5,19 @@ import { ThemedText } from "@/components/ThemedText";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
+import { useUser } from "@/contexts/UserContext";
 
 interface FirstLaunchModalProps {
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
-    username: string | null;
 }
 
 export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
     modalVisible,
     setModalVisible,
-    username,
 }) => {
+    const { username } = useUser();
+
     const handleStart = async () => {
         setModalVisible(false);
         await AsyncStorage.setItem("hasLaunched", "true");

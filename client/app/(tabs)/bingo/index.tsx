@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-    ImageBackground,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    Pressable,
-} from "react-native";
+import { ImageBackground, StyleSheet, View, Pressable } from "react-native";
 import { router } from "expo-router";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
@@ -51,7 +45,7 @@ export default function BingoScreen() {
                             Profitez au maximum de la&nbsp;magie de&nbsp;Noël
                             tout au&nbsp;long du&nbsp;mois de&nbsp;décembre
                         </ThemedText>
-                        <TouchableOpacity
+                        <Pressable
                             style={[
                                 styles.button,
                                 { backgroundColor: Colors.red },
@@ -61,7 +55,7 @@ export default function BingoScreen() {
                             <ThemedText style={styles.buttonText}>
                                 Jouer
                             </ThemedText>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
 
                     {/* Téléfilms */}
@@ -75,7 +69,7 @@ export default function BingoScreen() {
                             Repérez le plus de clichés possible devant un
                             téléfilm de&nbsp;Noël
                         </ThemedText>
-                        <TouchableOpacity
+                        <Pressable
                             style={[
                                 styles.button,
                                 { backgroundColor: Colors.green },
@@ -85,7 +79,7 @@ export default function BingoScreen() {
                             <ThemedText style={styles.buttonText}>
                                 Jouer
                             </ThemedText>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </View>
 

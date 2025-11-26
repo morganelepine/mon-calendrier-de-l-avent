@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
     StyleSheet,
     TouchableOpacity,
@@ -7,12 +6,12 @@ import {
     ImageBackground,
 } from "react-native";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { useUser } from "@/contexts/UserContext";
 
 function OptionItem({
     title,
@@ -41,14 +40,7 @@ function OptionItem({
 }
 
 export default function InformationsScreen() {
-    const [username, setUsername] = useState<string | null>(null);
-    const setName = async () => {
-        const name = await AsyncStorage.getItem("username");
-        setUsername(name);
-    };
-    useEffect(() => {
-        setName();
-    }, []);
+    const { username } = useUser();
 
     return (
         <ImageBackground

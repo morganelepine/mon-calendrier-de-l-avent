@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { getUser, saveUser } from "@/services/user.service";
 import { logClient } from "@/services/log.service";
+import { useUser } from "@/contexts/UserContext";
 
 const MAX_RETRY = 3;
 const RETRY_DELAY = 1500;
@@ -37,12 +38,13 @@ async function generateUUIDWithRetry() {
 }
 
 export function useInitialization() {
+    const { setUsername } = useUser();
     const [status, setStatus] = useState<"loading" | "error" | "ready">(
-        "ready"
+        "loading"
     );
 
     async function init() {
-        // setStatus("loading");
+        setStatus("loading");
 
         try {
             // Get or create UUID
@@ -74,6 +76,7 @@ export function useInitialization() {
 
             if (user?.username) {
                 await AsyncStorage.setItem("username", user.username);
+                setUsername(user.username);
                 setStatus("ready");
                 return;
             }
@@ -107,12 +110,29 @@ export function useInitialization() {
             }
 
             await AsyncStorage.setItem("username", createdUsername);
+            setUsername(createdUsername);
             setStatus("ready");
         } catch (e) {
             await logClient("Fatal error", { error: String(e) });
             setStatus("error");
         }
     }
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const [userUuid, storedUsername] = await Promise.all([
+    //             AsyncStorage.getItem("userUuid"),
+    //             AsyncStorage.getItem("username"),
+    //         ]);
+
+    //         if (userUuid && storedUsername) {
+    //             setUsername(storedUsername);
+    //             setStatus("ready");
+    //         } else {
+    //             await init();
+    //         }
+    //     })();
+    // }, []);
 
     useEffect(() => {
         init();

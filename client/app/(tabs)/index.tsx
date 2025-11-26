@@ -21,18 +21,12 @@ async function resetDataIfNeeded() {
 
 export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [username, setUsername] = useState<string | null>(null);
 
     const initializeApp = async () => {
         await resetDataIfNeeded();
 
-        const name = await AsyncStorage.getItem("username");
-        setUsername(name);
-
         const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-        console.log("hasLaunched : ", hasLaunched);
-
-        if (!hasLaunched && name) {
+        if (!hasLaunched) {
             setModalVisible(true);
         }
 
@@ -60,7 +54,6 @@ export default function HomeScreen() {
             <FirstLaunchModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
-                username={username}
             />
         </>
     );
