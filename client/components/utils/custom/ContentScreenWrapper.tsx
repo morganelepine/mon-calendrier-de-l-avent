@@ -21,13 +21,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     children,
     dayId,
 }) => {
-    const today = new Date().getDate();
-
     const getTitle = () => {
-        if (contentType === ContentType.Story && today > 24) {
-            return "Les souliers rouges";
-        }
-
         switch (contentType) {
             case ContentType.Story:
                 return "L'histoire du\u00A0jour";

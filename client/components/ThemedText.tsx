@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     italicMarkdown: {
         fontFamily: "PoppinsItalic",
-        color: Colors.darkGreen,
+        color: Colors.darkBlue,
         textAlign: "left",
         fontSize: 16,
     },

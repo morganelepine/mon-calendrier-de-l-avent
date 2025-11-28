@@ -43,8 +43,8 @@ export const StoryIntro: React.FC<StoryIntroProps> = ({ story, dayId }) => {
 
                 <ThemedText>
                     Par exemple, si je vous avais proposé une revisite de Roméo
-                    et Juliette, peut-être nos héros s'appeleraient-ils Romain
-                    et Julie...
+                    et Juliette, peut-être nos héros s'appelleraient-ils Romie
+                    et Julien...
                 </ThemedText>
 
                 <ThemedText>

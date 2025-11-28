@@ -40,7 +40,7 @@ export const StoryGameRulesModal: React.FC<Props> = ({
                             <ThemedText>
                                 Par exemple, si je vous avais proposé une
                                 revisite de Roméo et Juliette, peut-être nos
-                                héros s'appeleraient-ils Romain et Julie...
+                                héros s'appelleraient-ils Romie et Julien...
                             </ThemedText>
 
                             <ThemedText>

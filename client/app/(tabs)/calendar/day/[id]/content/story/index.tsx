@@ -7,7 +7,7 @@ import { Content } from "@/interfaces/contentInterface";
 
 export default function StoryScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
-    const dayId = parseInt(id, 10);
+    const dayId = Number.parseInt(id, 10);
 
     const { story } = getContentsByDay(dayId) as { story: Content };
 

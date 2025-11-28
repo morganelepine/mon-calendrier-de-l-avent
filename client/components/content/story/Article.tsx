@@ -62,7 +62,6 @@ export const Article: React.FC<ArticleProps> = ({ story }) => {
 
 const styles = StyleSheet.create({
     imageBackground: {
-        backgroundColor: Colors.darkGreen,
         flex: 1,
         width: "100%",
         height: "100%",

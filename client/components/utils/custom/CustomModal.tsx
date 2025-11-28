@@ -20,7 +20,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
             onRequestClose={onRequestClose}
             statusBarTranslucent={true}
         >
-            {children}
+            {visible ? children : null}
         </Modal>
     );
 };

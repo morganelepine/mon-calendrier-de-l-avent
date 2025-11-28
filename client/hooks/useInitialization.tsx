@@ -40,13 +40,18 @@ async function generateUUIDWithRetry() {
 export function useInitialization() {
     const { setUsername } = useUser();
     const [status, setStatus] = useState<"loading" | "error" | "ready">(
-        "loading"
+        "ready"
     );
 
     async function init() {
-        setStatus("loading");
-
         try {
+            let isUsername = await AsyncStorage.getItem("username");
+            if (isUsername) {
+                setUsername(isUsername);
+                setStatus("ready");
+                return;
+            }
+
             // Get or create UUID
             let userUuid = await AsyncStorage.getItem("userUuid");
 
