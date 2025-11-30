@@ -9,7 +9,7 @@ export default function CopyrightsScreen() {
             <SafeAreaView>
                 <View style={styles.section}>
                     <ThemedText type="sectionText">
-                        Cette application est un projet collaboratif : 5
+                        Cette application est un projet collaboratif : 6
                         personnes ont accepté de mettre leurs talents
                         artistiques à disposition pour rendre cette application
                         encore plus magique.
@@ -23,9 +23,9 @@ export default function CopyrightsScreen() {
                     <ThemedText type="sectionSubtitle">Annaëlle</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a dessiné des fonds d'écran pour l'onglet
-                        Décompte (jours 3, 4, 6, 7, 9, 11, 12, 13, 14, 17, 19,
-                        20, 23, 24, 25) et participé à la surprise du 25
-                        décembre.
+                        Décompte (jours 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+                        17, 18, 19, 20, 23, 24, 25) et participé à la surprise
+                        du 25 décembre.
                     </ThemedText>
                 </View>
 
@@ -39,25 +39,34 @@ export default function CopyrightsScreen() {
                 </View>
 
                 <View style={styles.section}>
+                    <ThemedText type="sectionSubtitle">Francia</ThemedText>
+                    <ThemedText type="sectionText">
+                        ...qui a enregistré "Greensleeves" au piano (à écouter
+                        les jours 3, 9, 15 et 21).
+                    </ThemedText>
+                </View>
+
+                <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Marika</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a écrit la nouvelle de Noël "Les marges de
-                        décembre".
+                        décembre", à découvrir à partir du 13 décembre.
                     </ThemedText>
                 </View>
 
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Victoria</ThemedText>
                     <ThemedText type="sectionText">
-                        ...qui a écrit la nouvelle de Noël "La lettre de Noël".
+                        ...qui a écrit la nouvelle de Noël "La lettre de Noël",
+                        à découvrir à partir du 19 décembre.
                     </ThemedText>
                 </View>
 
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">William</ThemedText>
                     <ThemedText type="sectionText">
-                        ...qui a enregistré Petit papa Noël au piano (à écouter
-                        les jours 4, 9, 14, 19 et 24).
+                        ...qui a enregistré "Petit papa Noël" au piano (à
+                        écouter les jours 5, 11, 17 et 23).
                     </ThemedText>
                 </View>
 

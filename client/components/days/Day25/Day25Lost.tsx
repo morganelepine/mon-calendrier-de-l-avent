@@ -26,15 +26,6 @@ export const Day25Lost = () => {
                     }}
                     style={styles.gif}
                 />
-
-                <ThemedText style={styles.text}>
-                    J'espère tout de même que l'application vous aura plu...
-                </ThemedText>
-                <ThemedText style={styles.text}>
-                    ...et si c'est le cas, n'hésitez pas à laisser un avis sur
-                    le Play Store 😊
-                </ThemedText>
-                <RateButton style={{ marginTop: 10 }}>J'y vais !</RateButton>
             </View>
         </>
     );

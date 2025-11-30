@@ -89,7 +89,8 @@ export const Home = () => {
                                     type="homeTitle"
                                     style={styles.text1}
                                 >
-                                    {daysToCalendar} jours
+                                    {daysToCalendar}{" "}
+                                    {daysToCalendar > 1 ? "jours" : "jour"}
                                 </ThemedText>
                                 <ThemedText style={styles.beforeCalendar}>
                                     avant le départ du calendrier
