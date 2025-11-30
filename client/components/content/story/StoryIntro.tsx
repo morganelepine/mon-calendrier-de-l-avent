@@ -42,12 +42,6 @@ export const StoryIntro: React.FC<StoryIntroProps> = ({ story, dayId }) => {
                 </ThemedText>
 
                 <ThemedText>
-                    Par exemple, si je vous avais proposé une revisite de Roméo
-                    et Juliette, peut-être nos héros s'appelleraient-ils Romie
-                    et Julien...
-                </ThemedText>
-
-                <ThemedText>
                     Vous pourrez tenter une réponse à tout moment en bas de la
                     page de l'histoire du jour en cliquant sur "J'ai trouvé la
                     solution du jeu !".

@@ -31,8 +31,9 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         setDays(updatedDays);
 
         if (isDecember && dayNumber <= currentDay) {
-            const score = dayNumber === currentDay ? 40 : 0;
-            saveScore(dayNumber, score, String(ScoreType.DayOpening));
+            if (dayNumber === currentDay) {
+                saveScore(dayNumber, 40, String(ScoreType.DayOpening));
+            }
             setDayModal(dayNumber);
         } else {
             ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);

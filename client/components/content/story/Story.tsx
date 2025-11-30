@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { StyleSheet, Pressable } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, Pressable, ToastAndroid } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { NewStoryModal } from "@/components/content/story/NewStoryModal";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Content } from "@/interfaces/contentInterface";
@@ -15,53 +14,48 @@ interface StoryProps {
 }
 
 export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
-    // const [modalVisible, setModalVisible] = useState(false);
-    // useEffect(() => {
-    //     const show = story?.dayNumber === 13 || story?.dayNumber === 19;
-    //     setModalVisible(show);
-    // }, [dayId]);
+    useEffect(() => {
+        if (story?.dayNumber === 13 || story?.dayNumber === 19) {
+            ToastAndroid.show(
+                "Une nouvelle histoire commence !",
+                ToastAndroid.LONG
+            );
+        }
+    }, [story.dayNumber]);
 
     return (
-        <>
-            {/* <NewStoryModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-            /> */}
-            <ContentScreenWrapper
-                contentType={story.type}
-                backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
-                dayId={dayId}
+        <ContentScreenWrapper
+            contentType={story.type}
+            backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
+            dayId={dayId}
+        >
+            <ThemedText type="contentSubtitle">{story.title}</ThemedText>
+
+            {story.content1 ? (
+                <CustomMarkdown style={{ fontFamily: "PoppinsItalic" }}>
+                    {story.content1}
+                </CustomMarkdown>
+            ) : null}
+
+            <CustomMarkdown>{story.content2}</CustomMarkdown>
+
+            <ThemedText style={styles.end}>
+                {story.content5 == "end" ? "The end" : "La suite demain..."}
+            </ThemedText>
+
+            <Pressable
+                onPress={() =>
+                    router.push(
+                        `/calendar/day/${String(dayId)}/content/story/storygame`
+                    )
+                }
+                style={styles.button}
             >
-                <ThemedText type="contentSubtitle">{story.title}</ThemedText>
-
-                {story.content1 ? (
-                    <CustomMarkdown style={{ fontFamily: "PoppinsItalic" }}>
-                        {story.content1}
-                    </CustomMarkdown>
-                ) : null}
-
-                <CustomMarkdown>{story.content2}</CustomMarkdown>
-
-                <ThemedText style={styles.end}>
-                    {story.content5 == "end" ? "The end" : "La suite demain..."}
+                <ThemedText style={styles.buttonText}>
+                    J'ai trouvé la solution du jeu !
                 </ThemedText>
-
-                <Pressable
-                    onPress={() =>
-                        router.push(
-                            `/calendar/day/${String(
-                                dayId
-                            )}/content/story/storygame`
-                        )
-                    }
-                    style={styles.button}
-                >
-                    <ThemedText style={styles.buttonText}>
-                        J'ai trouvé la solution du jeu !
-                    </ThemedText>
-                </Pressable>
-            </ContentScreenWrapper>
-        </>
+            </Pressable>
+        </ContentScreenWrapper>
     );
 };
 

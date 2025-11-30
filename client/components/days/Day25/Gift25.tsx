@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { router } from "expo-router";
-import { Pressable, StyleSheet, Image } from "react-native";
+import { Pressable, StyleSheet, Image, ToastAndroid } from "react-native";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withRepeat,
     withTiming,
 } from "react-native-reanimated";
-import { WrongGiftModal } from "@/components/days/Day25/WrongGiftModal";
 import { Gift } from "@/interfaces/giftInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
@@ -16,8 +15,6 @@ interface GiftProps {
 }
 
 export const Gift25: React.FC<GiftProps> = ({ gift }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-
     const rotation = useSharedValue(0);
 
     useEffect(() => {
@@ -42,7 +39,7 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
                 pathname: "/calendar/day25",
             });
         } else {
-            setModalVisible(true);
+            ToastAndroid.show("Ouvrez un autre cadeau !", ToastAndroid.SHORT);
         }
     };
 
@@ -57,11 +54,6 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
                     />
                 </Animated.View>
             </Pressable>
-
-            <WrongGiftModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-            />
         </>
     );
 };

@@ -38,12 +38,6 @@ export const StoryGameRulesModal: React.FC<Props> = ({
                             </ThemedText>
 
                             <ThemedText>
-                                Par exemple, si je vous avais proposé une
-                                revisite de Roméo et Juliette, peut-être nos
-                                héros s'appelleraient-ils Romie et Julien...
-                            </ThemedText>
-
-                            <ThemedText>
                                 Vous pourrez tenter une réponse à tout moment en
                                 bas de page de l'histoire du jour en cliquant
                                 sur "J'ai trouvé la solution au jeu littéraire
@@ -54,6 +48,9 @@ export const StoryGameRulesModal: React.FC<Props> = ({
                                 50 points bonus seront attribués pour chaque
                                 titre trouvé ! Attention, vous ne pourrez tenter
                                 votre chance qu'une fois pour chaque histoire...
+                                (les points bonus ne seront pas listés dans le
+                                détail des scores mais seront bien comptabilisés
+                                dans le total 😉).
                             </ThemedText>
                         </View>
                     </CustomScrollView>

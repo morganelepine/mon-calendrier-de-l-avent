@@ -23,10 +23,14 @@ export const Home = () => {
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
     const day = daysMap.get(currentDay);
 
-    const backgroundImage =
-        day && isDecember
-            ? getCloudinaryImageUrl(day?.background)
-            : getCloudinaryImageUrl("3_thng7s");
+    let backgroundImage;
+    if (day && isDecember) {
+        backgroundImage = getCloudinaryImageUrl(day?.background);
+    } else if (!day && isDecember) {
+        backgroundImage = getCloudinaryImageUrl("11_pfqcwp");
+    } else {
+        backgroundImage = getCloudinaryImageUrl("3_thng7s");
+    }
 
     const music = day
         ? day?.music
@@ -141,9 +145,8 @@ const styles = StyleSheet.create({
         textShadowRadius: 1,
     },
     afterChristmas: {
-        fontSize: 38,
-        letterSpacing: 2,
-        marginBottom: 30,
+        fontSize: 40,
+        letterSpacing: 3,
     },
     beforeCalendar: {
         color: Colors.snow,
