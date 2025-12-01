@@ -81,29 +81,56 @@ export class ScoreController {
             }
         }
 
-        // Create score
-        const createdScore = await prisma.score.create({
-            data: {
-                userId: user.id,
-                day: dayId,
-                points,
-                reason,
-                questionNumber,
-            },
-        });
+        try {
+            // Create score
+            const createdScore = await prisma.score.create({
+                data: {
+                    userId: user.id,
+                    day: dayId,
+                    points,
+                    reason,
+                    questionNumber,
+                },
+            });
 
-        // Update user total score
-        const updatedUser = await prisma.user.update({
-            where: { id: user.id },
-            data: { score: user.score + points },
-        });
+            // Update user total score
+            const updatedUser = await prisma.user.update({
+                where: { id: user.id },
+                data: { score: user.score + points },
+            });
 
-        return {
-            status: 200,
-            message: "Score is saved",
-            score: createdScore,
-            totalScore: updatedUser.score,
-        };
+            return {
+                status: 200,
+                message: "Score is saved",
+                score: createdScore,
+                totalScore: updatedUser.score,
+            };
+        } catch (error) {
+            // Save log on error
+            await prisma.clientLog.create({
+                data: {
+                    message: "DB error when saving score",
+                    data: JSON.stringify({
+                        errorMessage: error.message,
+                        errorStack: error.stack,
+                        errorName: error.name,
+                        errorCode: error.code,
+                        errorMeta: error.meta,
+                        dayId,
+                        reason,
+                        points,
+                        questionNumber,
+                    }),
+                    appVersion: "0",
+                    uuid: userUuid,
+                },
+            });
+
+            return {
+                status: 500,
+                message: "Error while saving score",
+            };
+        }
     }
 
     async getUserTotalScore(request: Request) {
