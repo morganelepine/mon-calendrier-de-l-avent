@@ -6,6 +6,7 @@ import { QuizExplanation } from "@/components/content/games/quiz/QuizExplanation
 import { Content } from "@/interfaces/contentInterface";
 import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 import { GameType } from "@/enums/enums";
+import useAppState from "@/hooks/useAppState";
 
 interface QuizProps {
     games: Content[];
@@ -14,10 +15,11 @@ interface QuizProps {
 }
 
 export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
+    const appState = useAppState();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const currentGame = games[currentQuestionIndex];
-    const answers = currentGame.content2.split(",");
+    const answers = currentGame.content2?.split(",") || [];
     const [answerButtonIsDisabled, setAnswerButtonIsDisabled] =
         useState<boolean>(false);
 
@@ -43,6 +45,12 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         setAnswerButtonIsDisabled(false);
         setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % games.length);
     };
+
+    useEffect(() => {
+        if (appState !== "active") {
+            saveQuestionPlayed(dayId, currentQuestionIndex);
+        }
+    }, [appState]);
 
     return (
         <>

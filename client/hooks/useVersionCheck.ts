@@ -20,10 +20,7 @@ export function useVersionCheck() {
             try {
                 const response = await fetch(`${API_URL}/version`);
                 const { min_required_version } = await response.json();
-
                 const current = Constants.expoConfig?.version ?? "0.0.0";
-                console.log({ min_required_version });
-                console.log({ current });
 
                 if (isOlderVersion(current, min_required_version)) {
                     setRequiresUpdate(true);
