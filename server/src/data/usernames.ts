@@ -594,32 +594,32 @@ export const usernames: string[] = [
     "Sapin_Mystérieux",
     "Sapin_Rouge",
     "Sapin_Vert",
-    "Sucrerie_Argenté",
-    "Sucrerie_Blanc",
-    "Sucrerie_Bleu",
-    "Sucrerie_Brillant",
-    "Sucrerie_Doré",
-    "Sucrerie_Doux",
-    "Sucrerie_Enchanté",
-    "Sucrerie_Enneigé",
-    "Sucrerie_Épicé",
-    "Sucrerie_Étincelant",
-    "Sucrerie_Étoilé",
-    "Sucrerie_Gelé",
-    "Sucrerie_Glacé",
+    "Sucrerie_Argentée",
+    "Sucrerie_Blanche",
+    "Sucrerie_Bleu", //
+    "Sucrerie_Brillant", //
+    "Sucrerie_Doré", //
+    "Sucrerie_Doux", //
+    "Sucrerie_Enchanté", //
+    "Sucrerie_Enneigée",
+    "Sucrerie_Épicée",
+    "Sucrerie_Étincelante",
+    "Sucrerie_Étoilé", //
+    "Sucrerie_Gelée",
+    "Sucrerie_Glacé", //
     "Sucrerie_Féérique",
-    "Sucrerie_Festif",
-    "Sucrerie_Givré",
-    "Sucrerie_Gourmand",
-    "Sucrerie_Illuminé",
-    "Sucrerie_Joyeux",
-    "Sucrerie_Lumineux",
-    "Sucrerie_Magique",
-    "Sucrerie_Mélodieux",
-    "Sucrerie_Mignon",
-    "Sucrerie_Mystérieux",
-    "Sucrerie_Rouge",
-    "Sucrerie_Vert",
+    "Sucrerie_Festif", //
+    "Sucrerie_Givrée",
+    "Sucrerie_Gourmand", //
+    "Sucrerie_Illuminée",
+    "Sucrerie_Joyeuse",
+    "Sucrerie_Lumineuse",
+    "Sucrerie_Magique", //
+    "Sucrerie_Mélodieux", //
+    "Sucrerie_Mignonne",
+    "Sucrerie_Mystérieuse",
+    "Sucrerie_Rouge", //
+    "Sucrerie_Vert", //
     "Traîneau_Argenté",
     "Traîneau_Blanc",
     "Traîneau_Bleu",
