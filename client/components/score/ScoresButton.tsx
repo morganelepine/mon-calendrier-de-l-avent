@@ -17,7 +17,15 @@ export const ScoresButton: React.FC<ScoresButtonProps> = ({
                 style={styles.button}
             >
                 <ThemedText type="italic14" style={styles.buttonText}>
-                    Voir le classement
+                    Classement
+                </ThemedText>
+            </Pressable>
+            <Pressable
+                onPress={() => router.navigate("/scores/group")}
+                style={styles.button}
+            >
+                <ThemedText type="italic14" style={styles.buttonText}>
+                    Mon groupe
                 </ThemedText>
             </Pressable>
             <Pressable
@@ -25,7 +33,7 @@ export const ScoresButton: React.FC<ScoresButtonProps> = ({
                 style={styles.button}
             >
                 <ThemedText type="italic14" style={styles.buttonText}>
-                    Voir les règles
+                    Règles du jeu
                 </ThemedText>
             </Pressable>
         </View>

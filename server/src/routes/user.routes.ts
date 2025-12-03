@@ -14,6 +14,12 @@ export const UserRoutes = [
         action: "getOne",
     },
     {
+        method: "get",
+        route: "/users/search/:query",
+        controller: UserController,
+        action: "searchUser",
+    },
+    {
         method: "post",
         route: "/users",
         controller: UserController,

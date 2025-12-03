@@ -25,26 +25,49 @@ export class UserController {
         return user;
     }
 
+    // GET /users/search/:query
+    async searchUser(request: Request) {
+        const { query } = request.query;
+        console.log("Searching users with query:", query);
+
+        if (typeof query !== "string") {
+            return [];
+        }
+
+        const users = await prisma.user.findMany({
+            where: {
+                username: {
+                    contains: query,
+                    mode: "insensitive",
+                },
+            },
+            // take: 20,
+        });
+
+        return users;
+    }
+
     // POST /users
     async save(request: Request, response: Response, next: NextFunction) {
         const { uuid, score } = request.body;
 
         const usedUsers = await prisma.user.findMany({
-            select: { username: true }
+            select: { username: true },
         });
-        const usedUsernames = usedUsers.map(u => u.username);
-        console.log(usedUsernames);
+        const usedUsernames = usedUsers.map((u) => u.username);
 
-        const availableUsernames = usernames.filter(name => !usedUsernames.includes(name));
-        console.log(availableUsernames);
+        const availableUsernames = usernames.filter(
+            (name) => !usedUsernames.includes(name)
+        );
 
         if (availableUsernames.length === 0) {
             return { status: 404, message: "No username available" };
         }
 
-        const randomIndex = Math.floor(Math.random() * availableUsernames.length);
+        const randomIndex = Math.floor(
+            Math.random() * availableUsernames.length
+        );
         const username = availableUsernames[randomIndex];
-        console.log(username);
 
         const user = await prisma.user.create({
             data: { uuid, username, score },

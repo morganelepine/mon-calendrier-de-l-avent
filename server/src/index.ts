@@ -5,6 +5,7 @@ import { UserRoutes } from "./routes/user.routes";
 import { ScoreRoutes } from "./routes/score.routes";
 import { AppConfigRoutes } from "./routes/appconfig.routes";
 import { ClientLogRoutes } from "./routes/clientLog.routes";
+import { GroupRoutes } from "./routes/group.routes";
 
 function registerRoutes(app: Application, routes: any[]) {
     routes.forEach((route) => {
@@ -42,6 +43,7 @@ registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
 registerRoutes(app, AppConfigRoutes);
 registerRoutes(app, ClientLogRoutes);
+registerRoutes(app, GroupRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Calendar API working ✅");

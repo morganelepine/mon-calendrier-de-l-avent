@@ -27,6 +27,20 @@ export default function ScoresLayout() {
                     },
                 }}
             />
+            <Stack.Screen
+                name="group"
+                options={{
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Mon groupe"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
+                    },
+                }}
+            />
         </Stack>
     );
 }
