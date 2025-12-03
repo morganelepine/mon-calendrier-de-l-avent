@@ -30,21 +30,22 @@ export class UserController {
         const { uuid, score } = request.body;
 
         const usedUsers = await prisma.user.findMany({
-            select: { username: true }
+            select: { username: true },
         });
-        const usedUsernames = usedUsers.map(u => u.username);
-        console.log(usedUsernames);
+        const usedUsernames = new Set(usedUsers.map((u) => u.username));
 
-        const availableUsernames = usernames.filter(name => !usedUsernames.includes(name));
-        console.log(availableUsernames);
+        const availableUsernames = usernames.filter(
+            (name) => !usedUsernames.has(name)
+        );
 
         if (availableUsernames.length === 0) {
             return { status: 404, message: "No username available" };
         }
 
-        const randomIndex = Math.floor(Math.random() * availableUsernames.length);
+        const randomIndex = Math.floor(
+            Math.random() * availableUsernames.length
+        );
         const username = availableUsernames[randomIndex];
-        console.log(username);
 
         const user = await prisma.user.create({
             data: { uuid, username, score },

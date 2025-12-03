@@ -45,12 +45,12 @@ export function useInitialization() {
 
     async function init() {
         try {
-            let isUsername = await AsyncStorage.getItem("username");
-            if (isUsername) {
-                setUsername(isUsername);
-                setStatus("ready");
-                return;
-            }
+            // let isUsername = await AsyncStorage.getItem("username");
+            // if (isUsername) {
+            //     setUsername(isUsername);
+            //     setStatus("ready");
+            //     return;
+            // }
 
             // Get or create UUID
             let userUuid = await AsyncStorage.getItem("userUuid");
@@ -84,6 +84,8 @@ export function useInitialization() {
                 setUsername(user.username);
                 setStatus("ready");
                 return;
+            } else {
+                await AsyncStorage.removeItem("username");
             }
 
             // Create user with retry
@@ -122,22 +124,6 @@ export function useInitialization() {
             setStatus("error");
         }
     }
-
-    // useEffect(() => {
-    //     (async () => {
-    //         const [userUuid, storedUsername] = await Promise.all([
-    //             AsyncStorage.getItem("userUuid"),
-    //             AsyncStorage.getItem("username"),
-    //         ]);
-
-    //         if (userUuid && storedUsername) {
-    //             setUsername(storedUsername);
-    //             setStatus("ready");
-    //         } else {
-    //             await init();
-    //         }
-    //     })();
-    // }, []);
 
     useEffect(() => {
         init();
