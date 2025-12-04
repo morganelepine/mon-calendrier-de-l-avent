@@ -190,6 +190,11 @@ export class ScoreController {
 
     async getLeaderboard(req: Request) {
         const users = await prisma.user.findMany({
+            where: {
+                score: {
+                    gt: 0, // greater than 0
+                },
+            },
             select: {
                 username: true,
                 score: true,
