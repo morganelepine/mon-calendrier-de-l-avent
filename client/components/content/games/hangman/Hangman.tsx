@@ -36,13 +36,13 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
         );
 
         if (currentWord === hiddenWord.join("")) {
+            setModalMessage("Félicitations 🥳");
+            setModalVisible(true);
+
             if (!alreadyPlayed) {
                 await setScore(currentWordIndex);
                 await saveQuestionPlayed(game.dayNumber, currentWordIndex);
             }
-
-            setModalMessage("Félicitations 🥳");
-            setModalVisible(true);
         } else if (mistakes === maxTries) {
             if (!alreadyPlayed) {
                 await saveQuestionPlayed(game.dayNumber, currentWordIndex);

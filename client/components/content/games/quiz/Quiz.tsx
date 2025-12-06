@@ -46,11 +46,11 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % games.length);
     };
 
-    useEffect(() => {
-        if (appState !== "active") {
-            saveQuestionPlayed(dayId, currentQuestionIndex);
-        }
-    }, [appState]);
+    // useEffect(() => {
+    //     if (appState !== "active") {
+    //         saveQuestionPlayed(dayId, currentQuestionIndex);
+    //     }
+    // }, [appState]);
 
     return (
         <>
