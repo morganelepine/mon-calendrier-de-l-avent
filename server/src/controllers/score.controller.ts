@@ -189,29 +189,32 @@ export class ScoreController {
     }
 
     async getLeaderboard(req: Request) {
-        if (!req.query.page && !req.query.limit) {
-            const users = await prisma.user.findMany({
-                select: {
-                    username: true,
-                    score: true,
-                    scoreHistory: {
-                        // get last earned score
-                        select: { earnedAt: true },
-                        orderBy: { earnedAt: "desc" },
-                        take: 1,
-                    },
+        const users = await prisma.user.findMany({
+            where: {
+                score: {
+                    gt: 0, // greater than 0
                 },
-            });
+            },
+            select: {
+                username: true,
+                score: true,
+                scoreHistory: {
+                    // get last earned score
+                    select: { earnedAt: true },
+                    orderBy: { earnedAt: "desc" },
+                    take: 1,
+                },
+            },
+        });
 
-            const leaderboard = [...users].sort((a, b) => {
-                if (b.score !== a.score) return b.score - a.score;
-                const aTime =
-                    a.scoreHistory[0]?.earnedAt?.getTime() ?? Infinity;
-                const bTime =
-                    b.scoreHistory[0]?.earnedAt?.getTime() ?? Infinity;
-                return aTime - bTime;
-            });
+        const leaderboard = [...users].sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            const aTime = a.scoreHistory[0]?.earnedAt?.getTime() ?? Infinity;
+            const bTime = b.scoreHistory[0]?.earnedAt?.getTime() ?? Infinity;
+            return aTime - bTime;
+        });
 
+        if (!req.query.page && !req.query.limit) {
             return leaderboard.map((u) => ({
                 username: u.username,
                 score: u.score,
@@ -219,24 +222,18 @@ export class ScoreController {
         }
 
         const page = Number.parseInt(req.query.page as string) || 1;
-        const limit = Number.parseInt(req.query.limit as string) || 50;
+        const limit = Number.parseInt(req.query.limit as string) || 75;
         const skip = (page - 1) * limit;
 
-        const [leaderboard, total] = await Promise.all([
-            prisma.user.findMany({
-                orderBy: [{ score: "desc" }, { createdAt: "asc" }],
-                select: { username: true, score: true },
-                skip,
-                take: limit,
-            }),
-            prisma.user.count(),
-        ]);
-
-        const hasMore = skip + leaderboard.length < total;
+        const leaderboardPage = leaderboard.slice(skip, skip + limit);
+        const hasMore = skip + leaderboardPage.length < leaderboard.length;
 
         return {
-            data: leaderboard,
-            total,
+            data: leaderboardPage.map((u) => ({
+                username: u.username,
+                score: u.score,
+            })),
+            total: leaderboard.length,
             hasMore,
         };
     }

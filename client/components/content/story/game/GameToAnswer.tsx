@@ -39,7 +39,7 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
         const answers = stored ? JSON.parse(stored) : {};
 
         if (!answers[index] && isCorrect) {
-            await saveScore(dayId, 50, String(ScoreType.StoryGame), 0);
+            await saveScore(dayId, 50, String(ScoreType.StoryGame), index);
         }
 
         answers[index] = valueTrim;

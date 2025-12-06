@@ -54,10 +54,10 @@ export class UserController {
         const usedUsers = await prisma.user.findMany({
             select: { username: true },
         });
-        const usedUsernames = usedUsers.map((u) => u.username);
+        const usedUsernames = new Set(usedUsers.map((u) => u.username));
 
         const availableUsernames = usernames.filter(
-            (name) => !usedUsernames.includes(name)
+            (name) => !usedUsernames.has(name)
         );
 
         if (availableUsernames.length === 0) {
