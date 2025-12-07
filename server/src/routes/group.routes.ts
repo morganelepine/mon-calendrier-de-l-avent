@@ -25,10 +25,4 @@ export const GroupRoutes = [
         controller: GroupController,
         action: "removeMember",
     },
-    {
-        method: "get",
-        route: "/groups/:groupId/leaderboard",
-        controller: GroupController,
-        action: "getMembersLeaderboard",
-    },
 ];

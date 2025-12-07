@@ -1,48 +1,41 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, TextInput, FlatList, Pressable } from "react-native";
-import { useRouter } from "expo-router";
-import { API_URL } from "@/constants/api";
+import {
+    StyleSheet,
+    View,
+    TextInput,
+    FlatList,
+    Pressable,
+    ToastAndroid,
+} from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import { BlueStarsBackground } from "@/components/utils/BlueStarsBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
-
-type User = { id: number; username: string };
-type Group = { id: number; name: string };
+import { User } from "@/types/types";
+import { searchUsers } from "@/services/user.service";
+import { addMember } from "@/services/group.service";
 
 export default function AddMembersScreen() {
-    const router = useRouter();
+    const params = useLocalSearchParams();
+    const groupId = params.groupId as string;
 
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<User[]>([]);
     const [selected, setSelected] = useState<number[]>([]);
-    const [myGroup, setMyGroup] = useState<Group | null>(null);
 
-    const userId = 1; // utilisateur courant
-
-    const fetchMyGroup = async () => {
-        const res = await fetch(`${API_URL}/groups/${userId}`);
-        setMyGroup(await res.json());
-    };
-
-    const searchUsers = async (text: string) => {
+    const searchUser = async (text: string) => {
         if (text.length < 2) {
             setResults([]);
             return;
         }
-
-        const res = await fetch(`${API_URL}/users/search?query=${text}`);
-        const data = await res.json();
-        setResults(data);
+        const users = await searchUsers(text, groupId);
+        setResults(users);
     };
 
     useEffect(() => {
-        const t = setTimeout(() => searchUsers(query), 300);
+        const t = setTimeout(() => searchUser(query), 300);
         return () => clearTimeout(t);
     }, [query]);
-
-    useEffect(() => {
-        fetchMyGroup();
-    }, []);
 
     const toggleSelect = (id: number) =>
         setSelected((prev) =>
@@ -50,41 +43,37 @@ export default function AddMembersScreen() {
         );
 
     const handleAdd = async () => {
-        if (!myGroup) return;
-
         for (const id of selected) {
-            await fetch(`${API_URL}/groups/${myGroup.id}/members`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId: id }),
-            });
+            await addMember(Number(groupId), id);
+            ToastAndroid.show("Ajouté·e·s !", ToastAndroid.SHORT);
         }
-
-        fetchMyGroup();
-        router.back();
+        setQuery("");
+        setResults([]);
+        setSelected([]);
     };
 
     return (
         <BlueStarsBackground>
-            <View style={{ padding: 20, gap: 20 }}>
-                <ThemedText
-                    style={{
-                        color: Colors.snow,
-                        textAlign: "center",
-                    }}
-                >
-                    Recherchez des lutin·e·s à ajouter :
-                </ThemedText>
-
+            <View style={styles.container}>
                 <TextInput
                     value={query}
                     onChangeText={setQuery}
-                    placeholder="Rechercher un nom..."
-                    placeholderTextColor={Colors.darkBlue}
+                    placeholder="Chercher des utilisateur⸱ice⸱s"
                     style={styles.search}
                     returnKeyType="search"
-                    onSubmitEditing={() => searchUsers(query)}
+                    onSubmitEditing={() => searchUser(query)}
                 />
+
+                {results.length === 0 && query.length >= 2 && (
+                    <ThemedText
+                        style={{
+                            color: Colors.snow,
+                            alignSelf: "center",
+                        }}
+                    >
+                        Aucun résultat
+                    </ThemedText>
+                )}
 
                 <FlatList
                     data={results}
@@ -105,7 +94,7 @@ export default function AddMembersScreen() {
                                 style={{
                                     color: selected.includes(item.id)
                                         ? Colors.snow
-                                        : Colors.darkBlue,
+                                        : Colors.blue,
                                 }}
                             >
                                 {item.username}
@@ -114,44 +103,43 @@ export default function AddMembersScreen() {
                     )}
                 />
 
-                <Pressable
-                    style={[
-                        styles.button,
-                        { opacity: selected.length === 0 ? 0.4 : 1 },
-                    ]}
-                    onPress={handleAdd}
-                    disabled={selected.length === 0}
-                >
-                    <ThemedText style={{ color: Colors.snow }}>
-                        Ajouter au groupe
-                    </ThemedText>
-                </Pressable>
+                {selected.length > 0 && (
+                    <Pressable style={styles.button} onPress={handleAdd}>
+                        <ThemedText style={{ color: Colors.snow }}>
+                            Ajouter au groupe
+                        </ThemedText>
+                    </Pressable>
+                )}
             </View>
         </BlueStarsBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    container: { padding: 20, gap: 20, flex: 1 },
     search: {
-        backgroundColor: Colors.snow,
+        borderWidth: 1,
+        borderColor: Colors.disabledText,
+        backgroundColor: Colors.disabled,
         borderRadius: 50,
         paddingHorizontal: 20,
-        paddingVertical: 8,
-        color: Colors.darkBlue,
+        height: 48,
+        paddingTop: 16,
+        color: Colors.blue,
         fontFamily: "Poppins",
+    },
+    user: {
+        paddingHorizontal: 28,
+        paddingVertical: 4,
+        marginVertical: 8,
+        borderRadius: 50,
+        alignSelf: "center",
     },
     button: {
         backgroundColor: Colors.red,
         borderRadius: 50,
         paddingVertical: 4,
         paddingHorizontal: 28,
-        alignSelf: "center",
-    },
-    user: {
-        paddingHorizontal: 28,
-        paddingVertical: 4,
-        marginTop: 5,
-        borderRadius: 50,
         alignSelf: "center",
     },
 });

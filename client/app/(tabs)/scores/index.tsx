@@ -1,8 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScoresButton } from "@/components/score/ScoresButton";
-import { RulesModal } from "@/components/score/RulesModal";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
@@ -12,7 +11,6 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { useScore } from "@/contexts/ScoreContext";
 
 export default function ScoreScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
     const { scoreTotal, scoreHistory, loading, error, refreshScores } =
         useScore();
 
@@ -35,11 +33,7 @@ export default function ScoreScreen() {
             style={styles.imageBackground}
         >
             <CustomSafeAreaView>
-                <ScoresButton setModalVisible={setModalVisible} />
-                <RulesModal
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
-                />
+                <ScoresButton />
 
                 <TotalScore score={scoreTotal} />
 

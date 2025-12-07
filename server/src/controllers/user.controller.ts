@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 
 export class UserController {
     // GET /users
-    async getAll(request: Request, response: Response, next: NextFunction) {
+    async getUsers(request: Request, response: Response, next: NextFunction) {
         const users = await prisma.user.findMany();
         return users;
     }
 
     // GET /users/:uuid
-    async getOne(request: Request, response: Response, next: NextFunction) {
+    async getUser(request: Request, response: Response, next: NextFunction) {
         const uuid = request.params.uuid;
         const user = await prisma.user.findUnique({
             where: { uuid },
@@ -26,13 +26,21 @@ export class UserController {
     }
 
     // GET /users/search/:query
-    async searchUser(request: Request) {
-        const { query } = request.query;
-        console.log("Searching users with query:", query);
+    async searchUsers(request: Request) {
+        const { query, groupId } = request.query;
 
-        if (typeof query !== "string") {
+        if (typeof query !== "string" || !groupId) {
             return [];
         }
+
+        const group = await prisma.group.findUnique({
+            where: { id: Number(groupId) },
+            include: { members: true },
+        });
+
+        if (!group) return [];
+
+        const excludedIds = group.members.map((member) => member.userId);
 
         const users = await prisma.user.findMany({
             where: {
@@ -40,15 +48,17 @@ export class UserController {
                     contains: query,
                     mode: "insensitive",
                 },
+                id: {
+                    notIn: excludedIds,
+                },
             },
-            // take: 20,
         });
 
         return users;
     }
 
     // POST /users
-    async save(request: Request, response: Response, next: NextFunction) {
+    async saveUser(request: Request, response: Response, next: NextFunction) {
         const { uuid, score } = request.body;
 
         const usedUsers = await prisma.user.findMany({
@@ -77,7 +87,7 @@ export class UserController {
     }
 
     // DELETE /users/:uuid
-    async remove(request: Request, response: Response, next: NextFunction) {
+    async removeUser(request: Request, response: Response, next: NextFunction) {
         const uuid = request.params.uuid;
 
         const user = await prisma.user.findUnique({

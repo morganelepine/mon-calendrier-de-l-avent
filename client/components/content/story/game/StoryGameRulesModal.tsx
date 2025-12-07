@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         fontFamily: "PoppinsBold",
         textAlign: "center",
         marginHorizontal: 20,
-        marginVertical: 20,
+        marginTop: 20,
         fontSize: 22,
         color: Colors.green,
     },

@@ -33,3 +33,11 @@ export const getUser = async (userUuid: string) => {
     const user = await response.json();
     return user;
 };
+
+export async function searchUsers(query: string, groupId: string) {
+    const response = await fetch(
+        `${API_URL}/users/search?query=${query}&groupId=${groupId}`
+    );
+    const users = await response.json();
+    return users;
+}

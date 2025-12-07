@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.7)",
     },
     modalView: {
-        marginHorizontal: 40,
-        paddingVertical: 20,
+        maxHeight: "75%",
+        margin: 30,
         alignItems: "center",
         backgroundColor: Colors.snow,
         borderRadius: 20,

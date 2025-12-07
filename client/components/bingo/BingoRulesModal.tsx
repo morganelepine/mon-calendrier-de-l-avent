@@ -20,7 +20,7 @@ export const BingoRulesModal: React.FC<Props> = ({
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
             <ThemedText style={styles.modalTitle}>
-                Comment fonctionne les&nbsp;bingos de&nbsp;Noël ?
+                Les&nbsp;bingos de&nbsp;Noël
             </ThemedText>
             <CustomScrollView>
                 <BingoRules />
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontFamily: "PoppinsBold",
         textAlign: "center",
-        margin: 20,
+        marginTop: 20,
         fontSize: 22,
         color: Colors.blue,
     },

@@ -36,6 +36,22 @@ export default function ScoresLayout() {
                                 title="Mon groupe"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
+                                page={"group"}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
+                name="addMembers"
+                options={{
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Ajouter des membres"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                                page={"addMembers"}
                             />
                         );
                     },

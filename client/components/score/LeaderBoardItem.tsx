@@ -1,20 +1,31 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
+import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { removeMember } from "@/services/group.service";
 
 const ITEM_HEIGHT = 44;
 
 interface LeaderBoardItemProps {
     index: number;
-    item: { username: string; score: number };
+    item: { id?: number; username: string; score: number };
     username: string | null;
+    groupId?: number;
+    onRemove?: (id: number) => void;
 }
 
 export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
     index,
     item,
     username,
+    groupId,
 }) => {
+    const removeMemberFromGroup = async () => {
+        if (!groupId || !item.id || item.username === username) return;
+        await removeMember(groupId, item.id);
+        router.replace(`/scores/group`);
+    };
+
     return (
         <View
             style={[{ marginHorizontal: 20 }, index === 0 && { marginTop: 20 }]}
@@ -43,21 +54,22 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                 >
                     {index + 1}
                 </ThemedText>
-                <ThemedText
-                    style={{
-                        flex: 1,
-                        color:
-                            item.username === username
-                                ? Colors.snow
-                                : Colors.blue,
-                        fontFamily:
-                            item.username === username
-                                ? "PoppinsBold"
-                                : "Poppins",
-                    }}
-                >
-                    {item.username}
-                </ThemedText>
+                <Pressable onPress={removeMemberFromGroup}>
+                    <ThemedText
+                        style={{
+                            color:
+                                item.username === username
+                                    ? Colors.snow
+                                    : Colors.blue,
+                            fontFamily:
+                                item.username === username
+                                    ? "PoppinsBold"
+                                    : "Poppins",
+                        }}
+                    >
+                        {item.username}
+                    </ThemedText>
+                </Pressable>
                 <ThemedText
                     style={[
                         styles.score,

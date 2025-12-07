@@ -41,6 +41,7 @@ export default function HomeScreen() {
         //     "bingo_activities_clicked_cells",
         //     "calendar",
         //     "storyGameAnswers",
+        //     "groupCreated",
         // ]);
     };
 

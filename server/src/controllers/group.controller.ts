@@ -5,12 +5,19 @@ const prisma = new PrismaClient();
 
 export class GroupController {
     async createGroup(request: Request) {
-        const { name, ownerId } = request.body;
+        const { ownerId } = request.body;
 
         const group = await prisma.group.create({
             data: {
-                name,
+                name: "Mon groupe",
                 ownerId: Number(ownerId),
+            },
+        });
+
+        await prisma.groupMember.create({
+            data: {
+                groupId: group.id,
+                userId: Number(ownerId),
             },
         });
 
@@ -24,6 +31,11 @@ export class GroupController {
             where: { ownerId: Number(userId) },
             include: {
                 members: {
+                    orderBy: {
+                        user: {
+                            score: "desc",
+                        },
+                    },
                     include: {
                         user: true,
                     },
@@ -62,42 +74,5 @@ export class GroupController {
         });
 
         return { success: true };
-    }
-
-    async showMembers(request: Request) {
-        const { groupId } = request.params;
-
-        const members = await prisma.groupMember.findMany({
-            where: { groupId: Number(groupId) },
-            include: {
-                user: true,
-            },
-        });
-
-        return members;
-    }
-
-    async getMembersLeaderboard(request: Request) {
-        const { groupId } = request.params;
-
-        const leaderboard = await prisma.groupMember.findMany({
-            where: { groupId: Number(groupId) },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        username: true,
-                        score: true,
-                    },
-                },
-            },
-            orderBy: {
-                user: {
-                    score: "desc",
-                },
-            },
-        });
-
-        return leaderboard;
     }
 }
