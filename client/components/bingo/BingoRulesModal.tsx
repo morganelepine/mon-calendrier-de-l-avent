@@ -1,10 +1,9 @@
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
-import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { BingoRules } from "@/components/bingo/BingoRules";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
+import { ModalWithCloseButton } from "../utils/custom/ModalWithCloseButton";
 
 interface Props {
     modalVisible: boolean;
@@ -19,62 +18,23 @@ export const BingoRulesModal: React.FC<Props> = ({
         setModalVisible(false);
     };
     return (
-        <CustomModal visible={modalVisible} onRequestClose={onClose}>
-            <View style={styles.modalContainer}>
-                <View style={styles.modalView}>
-                    <ThemedText style={styles.modalTitle}>
-                        Comment fonctionne les&nbsp;bingos de&nbsp;Noël ?
-                    </ThemedText>
-
-                    <CustomScrollView>
-                        <BingoRules />
-                    </CustomScrollView>
-
-                    <Pressable
-                        onPress={() => {
-                            setModalVisible(false);
-                        }}
-                        style={styles.closeButton}
-                    >
-                        <Ionicons
-                            name={"close-outline"}
-                            size={35}
-                            color={Colors.blue}
-                        />
-                    </Pressable>
-                </View>
-            </View>
-        </CustomModal>
+        <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
+            <ThemedText style={styles.modalTitle}>
+                Comment fonctionne les&nbsp;bingos de&nbsp;Noël ?
+            </ThemedText>
+            <CustomScrollView>
+                <BingoRules />
+            </CustomScrollView>
+        </ModalWithCloseButton>
     );
 };
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    modalView: {
-        height: "75%",
-        marginHorizontal: 20,
-        alignItems: "center",
-        backgroundColor: Colors.snow,
-        borderRadius: 20,
-        elevation: 4,
-    },
     modalTitle: {
         fontFamily: "PoppinsBold",
         textAlign: "center",
         margin: 20,
         fontSize: 22,
         color: Colors.blue,
-    },
-    closeButton: {
-        marginTop: 10,
-        height: 48,
-        width: 48,
-        justifyContent: "center",
-        alignItems: "center",
     },
 });

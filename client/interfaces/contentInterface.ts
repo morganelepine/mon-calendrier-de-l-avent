@@ -21,3 +21,9 @@ export interface ListOfContents {
     link?: string;
     url?: string;
 }
+
+export interface WallpaperData {
+    id: string | number;
+    image: string;
+    title?: string;
+}

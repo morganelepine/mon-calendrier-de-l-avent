@@ -4,8 +4,14 @@ import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { WallpaperData } from "@/interfaces/contentInterface";
 
-export const Wallpapers = ({ datas, type }) => {
+interface WallpapersProps {
+    datas: WallpaperData[];
+    type: string;
+}
+
+export const Wallpapers = ({ datas, type }: WallpapersProps) => {
     const { width, height } = Dimensions.get("window");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
