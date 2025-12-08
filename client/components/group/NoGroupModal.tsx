@@ -21,7 +21,7 @@ export const NoGroupModal = ({
                 <View style={styles.modalView}>
                     <ThemedText
                         style={{
-                            color: Colors.green,
+                            color: Colors.darkGreen,
                             textAlign: "center",
                         }}
                     >

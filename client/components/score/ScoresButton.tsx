@@ -32,28 +32,22 @@ export const ScoresButton = () => {
     };
 
     return (
-        <>
-            <View style={styles.header}>
-                <Pressable
-                    onPress={() => router.navigate("/scores/leaderboard")}
-                    style={styles.button}
-                >
-                    <ThemedText style={styles.buttonText}>
-                        Classement
-                    </ThemedText>
-                </Pressable>
-                <Pressable onPress={goToMyGroup} style={styles.button}>
-                    <ThemedText style={styles.buttonText}>
-                        Mon groupe
-                    </ThemedText>
-                </Pressable>
-            </View>
+        <View style={styles.header}>
+            <Pressable
+                onPress={() => router.navigate("/scores/leaderboard")}
+                style={styles.button}
+            >
+                <ThemedText style={styles.buttonText}>Classement</ThemedText>
+            </Pressable>
+            <Pressable onPress={goToMyGroup} style={styles.button}>
+                <ThemedText style={styles.buttonText}>Mon groupe</ThemedText>
+            </Pressable>
             <NoGroupModal
                 createMyGroup={createMyGroup}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
             />
-        </>
+        </View>
     );
 };
 
@@ -67,6 +61,8 @@ const styles = StyleSheet.create({
         marginVertical: 8,
     },
     button: {
+        flexBasis: "45%",
+        flexGrow: 1,
         height: 38,
         justifyContent: "center",
         borderWidth: 1,
@@ -74,9 +70,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.snow,
         opacity: 0.8,
         borderRadius: 50,
-        paddingHorizontal: 24,
     },
     buttonText: {
         color: Colors.blue,
+        textAlign: "center",
     },
 });

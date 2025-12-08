@@ -123,10 +123,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.disabled,
         borderRadius: 50,
         paddingHorizontal: 20,
-        height: 48,
-        paddingTop: 16,
-        color: Colors.blue,
-        fontFamily: "Poppins",
+        height: 56,
     },
     user: {
         paddingHorizontal: 28,

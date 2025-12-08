@@ -5,26 +5,21 @@ import { ThemedText } from "@/components/ThemedText";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
-import { useUser } from "@/contexts/UserContext";
 
-interface FirstLaunchModalProps {
+interface Props {
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
 }
 
-export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
+export const NewsModal: React.FC<Props> = ({
     modalVisible,
     setModalVisible,
 }) => {
-    const { username } = useUser();
-
     const handleStart = async () => {
         setModalVisible(false);
-        await AsyncStorage.setItem("hasLaunched", "true");
         await AsyncStorage.setItem("isNew", "news-groups");
-
         router.replace({
-            pathname: "/",
+            pathname: "/scores",
         });
     };
 
@@ -33,44 +28,22 @@ export const FirstLaunchModal: React.FC<FirstLaunchModalProps> = ({
             <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
                     <ThemedText type="pallyBoldBlue" style={styles.title}>
-                        Bienvenue dans votre calendrier de&nbsp;l'avent
+                        C'est nouveau !
                     </ThemedText>
 
                     <View style={{ gap: 8 }}>
                         <ThemedText type="sectionText">
-                            Chaque jour, ouvrez une case et entrez dans la magie
-                            de Noël !
+                            Vous pouvez maintenant créer votre propre classement
+                            pour suivre les scores de vos proches !
                         </ThemedText>
                         <ThemedText type="sectionText">
-                            Votre nom de lutin·e de Noël est :{" "}
-                            <ThemedText
-                                style={{
-                                    color: Colors.red,
-                                    fontFamily: "PoppinsBold",
-                                }}
-                            >
-                                {username}
-                            </ThemedText>
-                        </ThemedText>
-                        <ThemedText type="sectionText">
-                            Il vous permettra de comparer votre score avec celui
-                            des autres joueur·euses dans la page "Classement" de
-                            l'onglet "Scores".
-                        </ThemedText>
-                        <ThemedText type="sectionText">
-                            Plus vous participez, plus vous gagnez de points !
-                            Les règles détaillées se trouvent dans l'onglet
-                            "Infos".
-                        </ThemedText>
-                        <ThemedText type="sectionText">
-                            J’ai mis tout mon amour de Noël dans ce calendrier
-                            et j’espère qu’il vous apportera un peu de magie
-                            chaque jour ✨
+                            Rendez-vous dans l'onglet "Scores" puis cliquez sur
+                            "Mon groupe".
                         </ThemedText>
                     </View>
 
                     <CustomButton onPress={handleStart} style={styles.button}>
-                        Commencer l'aventure 🚀
+                        J'y vais !
                     </CustomButton>
                 </View>
             </View>
@@ -100,5 +73,6 @@ const styles = StyleSheet.create({
     button: {
         margin: 20,
         backgroundColor: Colors.blue,
+        alignSelf: "center",
     },
 });

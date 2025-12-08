@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
 import { FirstLaunchModal } from "@/components/calendar/FirstLaunchModal";
+import { NewsModal } from "@/components/calendar/NewsModal";
 
 const today = new Date();
 const currentYear = today.getFullYear();
@@ -21,13 +22,18 @@ async function resetDataIfNeeded() {
 
 export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
+    const [newsModalVisible, setNewsModalVisible] = useState(false);
 
     const initializeApp = async () => {
         await resetDataIfNeeded();
 
         const hasLaunched = await AsyncStorage.getItem("hasLaunched");
+        const news = await AsyncStorage.getItem("isNew");
+
         if (!hasLaunched) {
             setModalVisible(true);
+        } else if (news !== "news-groups") {
+            setNewsModalVisible(true);
         }
 
         // await AsyncStorage.multiRemove([
@@ -42,6 +48,7 @@ export default function HomeScreen() {
         //     "calendar",
         //     "storyGameAnswers",
         //     "groupCreated",
+        //     "isNew",
         // ]);
     };
 
@@ -55,6 +62,10 @@ export default function HomeScreen() {
             <FirstLaunchModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+            />
+            <NewsModal
+                modalVisible={newsModalVisible}
+                setModalVisible={setNewsModalVisible}
             />
         </>
     );
