@@ -1,8 +1,6 @@
 import { View, StyleSheet, Pressable } from "react-native";
-import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
-import { removeMember } from "@/services/group.service";
 
 const ITEM_HEIGHT = 44;
 
@@ -10,22 +8,15 @@ interface LeaderBoardItemProps {
     index: number;
     item: { id?: number; username: string; score: number };
     username: string | null;
-    groupId?: number;
-    onRemove?: (id: number) => void;
+    onPress: (item: { id?: number; username: string; score: number }) => void;
 }
 
 export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
     index,
     item,
     username,
-    groupId,
+    onPress,
 }) => {
-    const removeMemberFromGroup = async () => {
-        if (!groupId || !item.id || item.username === username) return;
-        await removeMember(groupId, item.id);
-        router.replace(`/scores/group`);
-    };
-
     return (
         <View
             style={[{ marginHorizontal: 20 }, index === 0 && { marginTop: 20 }]}
@@ -54,7 +45,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                 >
                     {index + 1}
                 </ThemedText>
-                <Pressable onPress={removeMemberFromGroup}>
+                <Pressable onPress={() => onPress(item)}>
                     <ThemedText
                         style={{
                             color:

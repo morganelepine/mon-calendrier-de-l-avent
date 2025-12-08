@@ -38,9 +38,14 @@ export async function addMember(groupId: number, userId: number) {
 }
 
 export async function removeMember(groupId: number, userId: number) {
-    await fetch(`${API_URL}/groups/${groupId}/members`, {
+    const response = await fetch(`${API_URL}/groups/${groupId}/members`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
     });
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Error removing member: ${errorMessage}`);
+    }
 }
