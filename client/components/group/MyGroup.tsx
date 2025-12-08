@@ -17,10 +17,14 @@ import { removeMember } from "@/services/group.service";
 
 export const MyGroup = ({
     myGroup,
+    userId,
     username,
+    fetchMyGroup,
 }: {
     myGroup: Group;
+    userId: number;
     username: string | null;
+    fetchMyGroup: (userId: number) => Promise<void>;
 }) => {
     const router = useRouter();
 
@@ -35,6 +39,7 @@ export const MyGroup = ({
         try {
             setLoading(true);
             await removeMember(myGroup.id, item.id);
+            fetchMyGroup(userId);
         } catch {
             ToastAndroid.show(
                 "Oops... Veuillez réessayer !",
@@ -42,7 +47,6 @@ export const MyGroup = ({
             );
         } finally {
             setLoading(false);
-            router.replace(`/scores/group`);
         }
     };
 

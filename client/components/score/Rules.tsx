@@ -58,16 +58,6 @@ export const Rules = () => {
             </View>
 
             <View style={styles.section}>
-                <ThemedText type="sectionSubtitle">Triche</ThemedText>
-                <ThemedText type="sectionText">
-                    Attention, si vous sortez de l'application pour aller
-                    chercher la réponse sur internet, la question sera
-                    considérée comme jouée et les points ne seront pas
-                    enregistrés !
-                </ThemedText>
-            </View>
-
-            <View style={styles.section}>
                 <ThemedText type="sectionSubtitle">
                     Limite de points par jour
                 </ThemedText>

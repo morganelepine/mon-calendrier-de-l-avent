@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontFamily: "PoppinsBold",
         textAlign: "center",
-        margin: 20,
+        marginTop: 20,
+        paddingHorizontal: 8,
         fontSize: 22,
         color: Colors.blue,
     },

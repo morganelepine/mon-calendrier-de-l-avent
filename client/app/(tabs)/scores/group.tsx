@@ -53,5 +53,12 @@ export default function GroupScreen() {
         );
     }
 
-    return <MyGroup myGroup={myGroup} username={username} />;
+    return (
+        <MyGroup
+            myGroup={myGroup}
+            userId={userId}
+            username={username}
+            fetchMyGroup={fetchMyGroup}
+        />
+    );
 }

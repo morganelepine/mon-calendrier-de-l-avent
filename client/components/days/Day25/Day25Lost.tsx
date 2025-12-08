@@ -1,6 +1,5 @@
 import { StyleSheet, View, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { RateButton } from "@/components/utils/buttons/RateButton";
 import { Snowfall } from "@/components/utils/Snow";
 import { Colors } from "@/constants/Colors";
 
@@ -10,22 +9,18 @@ export const Day25Lost = () => {
             <Snowfall count={100} />
             <View style={{ paddingHorizontal: 20 }}>
                 <ThemedText type="pallyBoldSnow" style={styles.title}>
-                    Dommage 😔
+                    Vous y étiez presque&nbsp;!
                 </ThemedText>
                 <ThemedText style={styles.text}>
-                    Vous n'avez pas atteint les 2512 points requis pour accéder
-                    à la surprise...
+                    Le seuil de 2512 points n’a pas été atteint cette fois-ci,
+                    mais votre parcours était impressionnant&nbsp;!
                 </ThemedText>
                 <ThemedText style={styles.text}>
-                    Retentez votre chance l'année prochaine !
+                    Préparez-vous : la magie de Noël revient chaque année…
                 </ThemedText>
-
-                <Image
-                    source={{
-                        uri: "https://media.giphy.com/media/3o6wrywE9d1SJNd0wU/giphy.gif",
-                    }}
-                    style={styles.gif}
-                />
+                <ThemedText style={styles.text}>
+                    Et les lutins comptent sur vous pour la prochaine mission ✨
+                </ThemedText>
             </View>
         </>
     );
@@ -35,8 +30,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         paddingBottom: 20,
+        textAlign: "center",
     },
-    text: { color: Colors.snow, paddingVertical: 5 },
+    text: {
+        color: Colors.snow,
+        paddingVertical: 5,
+        textAlign: "center",
+        fontSize: 18,
+    },
     gif: {
         width: 300,
         height: 180,
