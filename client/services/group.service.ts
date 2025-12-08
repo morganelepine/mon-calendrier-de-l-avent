@@ -6,12 +6,24 @@ export async function createGroup(ownerId: number) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ownerId }),
     });
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Error creating group: ${errorMessage}`);
+    }
+
     const group = await response.json();
     return group;
 }
 
 export async function getGroup(userId: number) {
     const response = await fetch(`${API_URL}/groups/${userId}`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Error fetching group: ${errorMessage}`);
+    }
+
     const group = await response.json();
     return group;
 }

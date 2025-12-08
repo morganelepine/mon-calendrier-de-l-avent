@@ -17,11 +17,7 @@ export const ErrorLoading = ({
     if (error) {
         return (
             <View style={styles.container}>
-                <ThemedText style={styles.text}>
-                    {/* Impossible de charger les scores...
-                    Vérifiez votre connexion Internet. */}
-                    {error}
-                </ThemedText>
+                <ThemedText style={styles.text}>{error}</ThemedText>
                 <CustomButton onPress={refreshScores} style={styles.button}>
                     Réessayer
                 </CustomButton>

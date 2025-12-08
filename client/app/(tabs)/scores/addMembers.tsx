@@ -59,6 +59,7 @@ export default function AddMembersScreen() {
                     value={query}
                     onChangeText={setQuery}
                     placeholder="Chercher des utilisateur⸱ice⸱s"
+                    placeholderTextColor={Colors.disabledText}
                     style={styles.search}
                     returnKeyType="search"
                     onSubmitEditing={() => searchUser(query)}
@@ -116,7 +117,7 @@ export default function AddMembersScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { padding: 20, gap: 20, flex: 1 },
+    container: { paddingHorizontal: 20, gap: 20, flex: 1 },
     search: {
         borderWidth: 1,
         borderColor: Colors.disabledText,
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         paddingHorizontal: 20,
         height: 56,
+        marginTop: 20,
     },
     user: {
         paddingHorizontal: 28,
@@ -138,5 +140,6 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         paddingHorizontal: 28,
         alignSelf: "center",
+        marginBottom: 20,
     },
 });
