@@ -33,7 +33,7 @@ export default function AddMembersScreen() {
     };
 
     useEffect(() => {
-        const t = setTimeout(() => searchUser(query), 300);
+        const t = setTimeout(() => searchUser(query), 150);
         return () => clearTimeout(t);
     }, [query]);
 

@@ -189,10 +189,16 @@ export class ScoreController {
     }
 
     async getLeaderboard(req: Request) {
+        const fiveDaysAgo = new Date();
+        fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
+
         const users = await prisma.user.findMany({
             where: {
                 score: {
                     gt: 0, // greater than 0
+                },
+                updatedAt: {
+                    gte: fiveDaysAgo,
                 },
             },
             select: {
