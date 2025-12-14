@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     DarkTheme,
     DefaultTheme,
@@ -5,10 +6,12 @@ import {
 } from "@react-navigation/native";
 import "react-native-reanimated";
 import { useFonts } from "expo-font";
+import { Image } from "expo-image";
 import { Stack } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 
@@ -22,6 +25,16 @@ export default function RootLayout() {
         Pally: require("../assets/fonts/Pally_Complete/Fonts/OTF/Pally-Regular.otf"),
         PallyBold: require("../assets/fonts/Pally_Complete/Fonts/OTF/Pally-Bold.otf"),
     });
+
+    useEffect(() => {
+        [
+            "blue_background_darker_d10kn5",
+            "s-instruire_xybqas", // s'inspirer
+            "se-regaler_mnonwh", // se divertir
+            "kiwi1_r7kihz", // s'instruire
+            "christmas_a5bsoi", // s'amuser
+        ].forEach((id) => Image.prefetch(getCloudinaryImageUrl(id)));
+    }, []);
 
     if (!loaded) {
         return null;

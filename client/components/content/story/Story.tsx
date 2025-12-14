@@ -5,7 +5,6 @@ import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Content } from "@/interfaces/contentInterface";
 
 interface StoryProps {
@@ -26,7 +25,7 @@ export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
     return (
         <ContentScreenWrapper
             contentType={story.type}
-            backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
+            backgroundImage={"s-instruire_xybqas"}
             dayId={dayId}
         >
             <ThemedText type="contentSubtitle">{story.title}</ThemedText>

@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Content } from "@/interfaces/contentInterface";
 
 interface StoryIntroProps {
@@ -13,7 +12,7 @@ export const StoryIntro: React.FC<StoryIntroProps> = ({ story, dayId }) => {
     return (
         <ContentScreenWrapper
             contentType={story.type}
-            backgroundImage={getCloudinaryImageUrl("s-instruire_xybqas")}
+            backgroundImage={"s-instruire_xybqas"}
             dayId={dayId}
         >
             <View style={{ gap: 8 }}>

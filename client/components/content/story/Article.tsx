@@ -1,14 +1,9 @@
-import {
-    StyleSheet,
-    View,
-    Image,
-    ScrollView,
-    ImageBackground,
-} from "react-native";
+import { StyleSheet, Image, ScrollView } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { Content } from "@/interfaces/contentInterface";
 
@@ -18,13 +13,7 @@ interface ArticleProps {
 
 export const Article: React.FC<ArticleProps> = ({ story }) => {
     return (
-        <ImageBackground
-            source={{
-                uri: getCloudinaryImageUrl("newspaper_4_ofarnv"),
-            }}
-            resizeMode="cover"
-            style={styles.imageBackground}
-        >
+        <BackgroundImage image="newspaper_4_ofarnv">
             <ScrollView contentContainerStyle={styles.articleContainer}>
                 <CustomSafeAreaView>
                     <ThemedText style={styles.headline}>
@@ -56,16 +45,11 @@ export const Article: React.FC<ArticleProps> = ({ story }) => {
                     </CustomMarkdown>
                 </CustomSafeAreaView>
             </ScrollView>
-        </ImageBackground>
+        </BackgroundImage>
     );
 };
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     articleContainer: {
         paddingTop: 24,
         paddingBottom: 32,

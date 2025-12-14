@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { View, FlatList, StyleSheet, Pressable } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { BlueStarsBackground } from "@/components/utils/BlueStarsBackground";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ThemedText } from "@/components/ThemedText";
 import { API_URL } from "@/constants/api";
 import { Colors } from "@/constants/Colors";
@@ -87,7 +87,7 @@ export default function LeaderboardScreen() {
     };
 
     return (
-        <BlueStarsBackground>
+        <BackgroundImage image="blue_background_darker_d10kn5">
             <View style={{ flex: 1 }}>
                 <ErrorLoading
                     error={error}
@@ -131,7 +131,7 @@ export default function LeaderboardScreen() {
                     </>
                 )}
             </View>
-        </BlueStarsBackground>
+        </BackgroundImage>
     );
 }
 

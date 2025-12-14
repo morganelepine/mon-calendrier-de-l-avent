@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
@@ -7,6 +8,7 @@ import { ContentType } from "@/enums/enums";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
+import { getCloudinaryImageUrl } from "@/services/cloudinary";
 
 interface ContentScreenWrapperProps {
     contentType: string | undefined;
@@ -67,9 +69,10 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                 }}
                 headerImage={
                     <Image
-                        source={{ uri: backgroundImage }}
+                        source={{ uri: getCloudinaryImageUrl(backgroundImage) }}
                         style={styles.headerImage}
-                        resizeMode="cover"
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
                     />
                 }
             >

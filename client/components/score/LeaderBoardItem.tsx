@@ -8,7 +8,7 @@ interface LeaderBoardItemProps {
     index: number;
     item: { id?: number; username: string; score: number };
     username: string | null;
-    onPress: (item: { id?: number; username: string; score: number }) => void;
+    onPress?: (item: { id?: number; username: string; score: number }) => void;
 }
 
 export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
@@ -45,7 +45,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                 >
                     {index + 1}
                 </ThemedText>
-                <Pressable onPress={() => onPress(item)}>
+                <Pressable onPress={() => onPress?.(item)}>
                     <ThemedText
                         style={{
                             color:

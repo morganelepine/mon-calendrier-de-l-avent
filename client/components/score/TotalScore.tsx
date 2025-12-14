@@ -24,24 +24,35 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
             {score > 0 && isDecember && (
                 <>
                     <ThemedText style={styles.score}>
-                        <ThemedText type="pallyBoldSnow">{score}</ThemedText>{" "}
+                        <ThemedText
+                            type="pallyBoldSnow"
+                            style={{ textAlign: "center" }}
+                        >
+                            {score}
+                        </ThemedText>{" "}
                         {score > 1 ? "points" : "point"}
                     </ThemedText>
 
                     {score >= minScoreToWin ? (
                         <>
-                            <ThemedText style={{ color: Colors.snow }}>
-                                Objectif atteint ✨{" "}
+                            <ThemedText
+                                style={{
+                                    color: Colors.snow,
+                                    textAlign: "center",
+                                }}
+                            >
+                                Objectif atteint ✨
                             </ThemedText>
                             <ThemedText
                                 type="italic14"
                                 style={{
                                     marginBottom: 30,
                                     color: Colors.snow,
+                                    textAlign: "center",
                                 }}
                             >
-                                Rendez-vous le 25 décembre pour
-                                la&nbsp;surprise&nbsp;!
+                                Rendez-vous le 25 décembre
+                                pour&nbsp;la&nbsp;surprise&nbsp;!
                             </ThemedText>
                         </>
                     ) : (

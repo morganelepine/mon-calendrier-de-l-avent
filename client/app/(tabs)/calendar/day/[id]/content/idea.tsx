@@ -7,13 +7,12 @@ import { List } from "@/components/content/ideas/List";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Content } from "@/interfaces/contentInterface";
-import { ContentType, IdeaType } from "@/enums/enums";
+import { IdeaType } from "@/enums/enums";
 import { formatImage } from "@/services/image.service";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { getContentsByDay } from "@/services/content.service";
 
 export default function IdeaScreen() {
-    const backgroundImage = getCloudinaryImageUrl("se-regaler_mnonwh"); // se-divertir_xvdksq
+    const backgroundImage = "se-regaler_mnonwh";
     const [modalBackground, setModalBackground] = useState(backgroundImage);
 
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -27,9 +26,7 @@ export default function IdeaScreen() {
 
     const getmodalImage = (idea: Content) => {
         if (idea.content5 === IdeaType.Recipe) {
-            const imageSource = idea.media
-                ? getCloudinaryImageUrl(idea.media)
-                : getCloudinaryImageUrl("se-divertir_xvdksq");
+            const imageSource = idea.media ? idea.media : "se-divertir_xvdksq";
 
             setModalBackground(imageSource);
         } else {

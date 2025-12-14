@@ -5,7 +5,6 @@ import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWra
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Video } from "@/components/utils/custom/Video";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { getContentsByDay } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 
@@ -18,7 +17,7 @@ export default function AnecdoteScreen() {
     return (
         <ContentScreenWrapper
             contentType={anecdote.type}
-            backgroundImage={getCloudinaryImageUrl("kiwi1_r7kihz")}
+            backgroundImage={"kiwi1_r7kihz"}
             dayId={dayId}
         >
             <ThemedText type="contentSubtitle">{anecdote.title}</ThemedText>

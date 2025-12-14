@@ -1,14 +1,8 @@
 import React from "react";
-import {
-    StyleSheet,
-    View,
-    ActivityIndicator,
-    ImageBackground,
-    Pressable,
-} from "react-native";
+import { StyleSheet, View, ActivityIndicator, Pressable } from "react-native";
 import { useInitialization } from "@/hooks/useInitialization";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { ThemedText } from "@/components/ThemedText";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { Colors } from "@/constants/Colors";
 
 export function InitializationGate({
@@ -20,29 +14,17 @@ export function InitializationGate({
 
     if (status === "loading") {
         return (
-            <ImageBackground
-                source={{
-                    uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
-                }}
-                resizeMode="cover"
-                style={styles.imageBackground}
-            >
+            <BackgroundImage image="blue_background_darker_d10kn5">
                 <View style={styles.container}>
                     <ActivityIndicator size="large" color={Colors.snow} />
                 </View>
-            </ImageBackground>
+            </BackgroundImage>
         );
     }
 
     if (status === "error") {
         return (
-            <ImageBackground
-                source={{
-                    uri: getCloudinaryImageUrl("11_pfqcwp"),
-                }}
-                resizeMode="cover"
-                style={styles.imageBackground}
-            >
+            <BackgroundImage image="11_pfqcwp">
                 <View style={styles.container}>
                     <ThemedText style={styles.text}>
                         Oops ! Les lutins n’arrivent pas à&nbsp;ouvrir la porte
@@ -63,7 +45,7 @@ export function InitializationGate({
                         </ThemedText>
                     </Pressable>
                 </View>
-            </ImageBackground>
+            </BackgroundImage>
         );
     }
 
@@ -71,11 +53,6 @@ export function InitializationGate({
 }
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     container: {
         flex: 1,
         justifyContent: "center",

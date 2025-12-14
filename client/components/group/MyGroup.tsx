@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { BlueStarsBackground } from "@/components/utils/BlueStarsBackground";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { Colors } from "@/constants/Colors";
 import { Group } from "@/types/types";
@@ -51,7 +51,7 @@ export const MyGroup = ({
     };
 
     return (
-        <BlueStarsBackground>
+        <BackgroundImage image="blue_background_darker_d10kn5">
             <View style={{ flex: 1 }}>
                 {loading ? (
                     <View style={styles.container}>
@@ -94,7 +94,7 @@ export const MyGroup = ({
                     </>
                 )}
             </View>
-        </BlueStarsBackground>
+        </BackgroundImage>
     );
 };
 

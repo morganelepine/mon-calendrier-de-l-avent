@@ -1,13 +1,13 @@
 import { useCallback } from "react";
-import { StyleSheet, ScrollView, ImageBackground, View } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScoresButton } from "@/components/score/ScoresButton";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Score } from "@/interfaces/scoreInterfaces";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { useScore } from "@/contexts/ScoreContext";
 
 export default function ScoreScreen() {
@@ -25,13 +25,7 @@ export default function ScoreScreen() {
     );
 
     return (
-        <ImageBackground
-            source={{
-                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
-            }}
-            resizeMode="cover"
-            style={styles.imageBackground}
-        >
+        <BackgroundImage image="blue_background_darker_d10kn5">
             <CustomSafeAreaView>
                 <ScoresButton />
 
@@ -61,16 +55,11 @@ export default function ScoreScreen() {
                     )}
                 </ScrollView>
             </CustomSafeAreaView>
-        </ImageBackground>
+        </BackgroundImage>
     );
 }
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     cardsWrapper: {
         paddingHorizontal: 20,
         marginBottom: 20,

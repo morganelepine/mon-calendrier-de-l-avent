@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { StyleSheet, View, Image, Pressable, Linking } from "react-native";
+import { StyleSheet, View, Pressable, Linking } from "react-native";
+import { Image } from "expo-image";
 import { ThemedText } from "@/components/ThemedText";
 import { Wallpapers } from "@/components/days/Day25/Wallpapers";
 import { RateButton } from "@/components/utils/buttons/RateButton";
@@ -29,7 +30,8 @@ export default function Day25Screen() {
                         uri: getCloudinaryImageUrl("sapin-rouge_idzwwr"),
                     }}
                     style={styles.headerImage}
-                    resizeMode="cover"
+                    contentFit="cover"
+                    cachePolicy="memory-disk"
                 />
             }
         >
@@ -133,8 +135,9 @@ export default function Day25Screen() {
                                             "defis_mimes_o5mj3a"
                                         ),
                                     }}
-                                    resizeMode="cover"
                                     style={styles.thumbnail}
+                                    contentFit="cover"
+                                    cachePolicy="memory-disk"
                                 />
                             </View>
                         </ExternalLink>
@@ -170,8 +173,9 @@ export default function Day25Screen() {
                                             "bingo_blanc_rvflsz"
                                         ),
                                     }}
-                                    resizeMode="cover"
                                     style={styles.thumbnail}
+                                    contentFit="cover"
+                                    cachePolicy="memory-disk"
                                 />
                             </View>
                         </ExternalLink>

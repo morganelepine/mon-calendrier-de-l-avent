@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet, ImageBackground, View, StatusBar } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { daysArray } from "@/data/days_data";
 import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import {
     currentDay,
     isDecember,
@@ -25,11 +25,11 @@ export const Home = () => {
 
     let backgroundImage;
     if (day && isDecember) {
-        backgroundImage = getCloudinaryImageUrl(day?.background);
+        backgroundImage = day?.background;
     } else if (!day && isDecember) {
-        backgroundImage = getCloudinaryImageUrl("11_pfqcwp");
+        backgroundImage = "11_pfqcwp";
     } else {
-        backgroundImage = getCloudinaryImageUrl("3_thng7s");
+        backgroundImage = "3_thng7s";
     }
 
     const music = day
@@ -43,12 +43,7 @@ export const Home = () => {
                 translucent
                 backgroundColor="transparent"
             />
-            <ImageBackground
-                source={{ uri: backgroundImage }}
-                // source={require("../../assets/images/44.jpeg")}
-                style={styles.background}
-                resizeMode="cover"
-            >
+            <BackgroundImage image={backgroundImage}>
                 {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
 
                 <CustomSafeAreaView>
@@ -112,17 +107,12 @@ export const Home = () => {
                         )}
                     </View>
                 </CustomSafeAreaView>
-            </ImageBackground>
+            </BackgroundImage>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     textContainer: {
         marginBottom: 250,
         flexDirection: "column",

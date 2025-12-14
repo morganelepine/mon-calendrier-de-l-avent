@@ -1,23 +1,13 @@
-import {
-    StyleSheet,
-    Linking,
-    ImageBackground,
-    View,
-    Pressable,
-} from "react-native";
+import { StyleSheet, Linking, View, Pressable } from "react-native";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ThemedText } from "@/components/ThemedText";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { Colors } from "@/constants/Colors";
 
 export default function ForceUpdateScreen() {
     const storeUrl = "market://details?id=com.merrymate.moncalendrierdelavent";
 
     return (
-        <ImageBackground
-            source={{ uri: getCloudinaryImageUrl("17_mz6l5c") }}
-            style={styles.background}
-            resizeMode="cover"
-        >
+        <BackgroundImage image="17_mz6l5c">
             <View style={styles.container}>
                 <ThemedText style={styles.text}>
                     Pour profiter pleinement de ce que les lutins ont préparé
@@ -33,16 +23,11 @@ export default function ForceUpdateScreen() {
                     </ThemedText>
                 </Pressable>
             </View>
-        </ImageBackground>
+        </BackgroundImage>
     );
 }
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     container: {
         margin: 20,
         gap: 16,

@@ -7,7 +7,7 @@ import { getGroup } from "@/services/group.service";
 import { logClient } from "@/services/log.service";
 import { MyGroup } from "@/components/group/MyGroup";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { BlueStarsBackground } from "@/components/utils/BlueStarsBackground";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 
 export default function GroupScreen() {
     const { username, userId, userUuid } = useUser();
@@ -41,7 +41,7 @@ export default function GroupScreen() {
 
     if (loading || error || !myGroup) {
         return (
-            <BlueStarsBackground>
+            <BackgroundImage image="blue_background_darker_d10kn5">
                 <View style={{ flex: 1 }}>
                     <ErrorLoading
                         loading={true}
@@ -49,7 +49,7 @@ export default function GroupScreen() {
                         refreshScores={() => fetchMyGroup(userId)}
                     />
                 </View>
-            </BlueStarsBackground>
+            </BackgroundImage>
         );
     }
 

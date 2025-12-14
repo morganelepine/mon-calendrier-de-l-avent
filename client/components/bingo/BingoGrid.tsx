@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { Bingo } from "@/interfaces/bingoInterface";
 
 interface BingoGridProps {
@@ -66,13 +66,7 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
     };
 
     return (
-        <ImageBackground
-            source={{
-                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
-            }}
-            resizeMode="cover"
-            style={styles.imageBackground}
-        >
+        <BackgroundImage image="blue_background_darker_d10kn5">
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.bingoContainer}>
                     {grid.map((cell) => (
@@ -85,16 +79,11 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
                     ))}
                 </View>
             </ScrollView>
-        </ImageBackground>
+        </BackgroundImage>
     );
 };
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     bingoContainer: {
         flex: 1,
         alignContent: "center",
