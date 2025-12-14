@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, ToastAndroid } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
@@ -31,7 +31,9 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
         const valueTrim = input.trim();
         if (!valueTrim) return;
 
-        const isCorrect = valueTrim.toLowerCase() === answer.toLowerCase();
+        const isCorrect = answer
+            .toLowerCase()
+            .includes(valueTrim.toLowerCase());
         setWin(isCorrect);
         setShowResult(true);
 
@@ -40,6 +42,16 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
 
         if (!answers[index] && isCorrect) {
             await saveScore(dayId, 50, String(ScoreType.StoryGame), index);
+            ToastAndroid.show(
+                "+ 50 points sur votre score total !",
+                ToastAndroid.LONG
+            );
+        } else if (!answers[index] && !isCorrect) {
+            await saveScore(dayId, 15, String(ScoreType.StoryGame), index);
+            ToastAndroid.show(
+                "Surprise : + 15 points pour avoir tenté votre chance !",
+                ToastAndroid.LONG
+            );
         }
 
         answers[index] = valueTrim;
