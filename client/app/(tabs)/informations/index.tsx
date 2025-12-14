@@ -1,16 +1,10 @@
-import {
-    StyleSheet,
-    TouchableOpacity,
-    View,
-    Text,
-    ImageBackground,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { router } from "expo-router";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
+import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
 import { useUser } from "@/contexts/UserContext";
 
 function OptionItem({
@@ -43,13 +37,7 @@ export default function InformationsScreen() {
     const { username } = useUser();
 
     return (
-        <ImageBackground
-            source={{
-                uri: getCloudinaryImageUrl("blue_background_darker_d10kn5"),
-            }}
-            resizeMode="cover"
-            style={styles.imageBackground}
-        >
+        <BackgroundImage image="blue_background_darker_d10kn5">
             <CustomSafeAreaView>
                 <View style={styles.pageContainer}>
                     <ThemedText style={styles.username}>
@@ -96,9 +84,16 @@ export default function InformationsScreen() {
                         iconColor={Colors.red}
                         onPress={() => router.push("/informations/copyrights")}
                     />
+
+                    <OptionItem
+                        title="Me contacter"
+                        iconName="flower-outline"
+                        iconColor={"#646681"}
+                        onPress={() => router.push("/informations/contact")}
+                    />
                 </View>
             </CustomSafeAreaView>
-        </ImageBackground>
+        </BackgroundImage>
     );
 }
 
@@ -107,11 +102,6 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontSize: 20,
         fontFamily: "PoppinsBold",
-    },
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
     },
     pageContainer: {
         flex: 1,
@@ -123,7 +113,7 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: "row",
         alignItems: "center",
-        paddingVertical: 14,
+        paddingVertical: 12,
         paddingHorizontal: 16,
         backgroundColor: Colors.snow,
         borderTopLeftRadius: 8,

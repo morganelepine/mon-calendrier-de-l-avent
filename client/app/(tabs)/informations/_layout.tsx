@@ -96,6 +96,20 @@ export default function InformationsLayout() {
                     },
                 }}
             />
+            <Stack.Screen
+                name="contact"
+                options={{
+                    header: () => {
+                        return (
+                            <CustomHeader
+                                title="Me contacter"
+                                backgroundColor={Colors.blue}
+                                color={Colors.snow}
+                            />
+                        );
+                    },
+                }}
+            />
         </Stack>
     );
 }
