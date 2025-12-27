@@ -18,9 +18,12 @@ export default function GameScreen() {
     const { games } = getContentsByDay(dayId) as { games: Content[] };
     const { gamesByType, type } = classifyGames(games);
 
-    const setScore = async (questionNumber: number): Promise<void> => {
+    const setScore = async (
+        questionNumber: number,
+        isCorrect: boolean
+    ): Promise<void> => {
         const today = new Date().getDate();
-        const score = dayId === today ? 20 : 10;
+        const score = dayId === today && isCorrect ? 20 : isCorrect ? 10 : 0;
         await saveScore(
             dayId,
             score,

@@ -11,10 +11,17 @@ async function resetDataIfNeeded() {
     try {
         const lastResetYear = await AsyncStorage.getItem("lastResetYear");
         if (!lastResetYear || lastResetYear !== currentYear.toString()) {
-            await AsyncStorage.multiRemove(["calendar", "scoresData"]);
+            await AsyncStorage.multiRemove([
+                "calendar",
+                "scoresData",
+                "gameState",
+                "storyGameAnswers",
+                "bingo_clicked_cells",
+                "bingo_grid",
+                "bingo_activities_clicked_cells",
+            ]);
             await AsyncStorage.setItem("lastResetYear", currentYear.toString());
         }
-        await AsyncStorage.multiRemove(["bingo_clicked_cells", "bingo_grid"]);
     } catch (error) {
         console.error("Error resetting data: ", error);
     }

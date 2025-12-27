@@ -2,7 +2,6 @@ import { StyleSheet, View, TextInput } from "react-native";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
-import { saveQuestionPlayed, isQuestionPlayed } from "@/services/score.service";
 
 interface InputProps {
     inputValue: string;
@@ -10,7 +9,7 @@ interface InputProps {
     game: Content;
     currentWordIndex: number;
     answer: string;
-    setScore: (questionNumber: number) => Promise<void>;
+    setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
     showResult: boolean;
     setShowResult: (show: boolean) => void;
     setResultText: (text: string) => void;
@@ -33,17 +32,7 @@ export const Input: React.FC<InputProps> = ({
         const isCorrect =
             inputValue.trim().toLowerCase() === answer.toLowerCase();
 
-        const alreadyPlayed = await isQuestionPlayed(
-            game.dayNumber,
-            currentWordIndex
-        );
-
-        if (!alreadyPlayed) {
-            if (isCorrect) {
-                setScore(currentWordIndex);
-            }
-            await saveQuestionPlayed(game.dayNumber, currentWordIndex);
-        }
+        setScore(currentWordIndex, isCorrect);
 
         if (isCorrect) {
             setResultText("Bravo ! Le mot à trouver était bien : " + answer);

@@ -4,7 +4,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 
 export default function ForceUpdateScreen() {
-    const storeUrl = "market://details?id=com.merrymate.moncalendrierdelavent";
+    const storeUrl =
+        "https://play.google.com/store/apps/details?id=com.merrymate.moncalendrierdelavent";
 
     return (
         <BackgroundImage image="17_mz6l5c">

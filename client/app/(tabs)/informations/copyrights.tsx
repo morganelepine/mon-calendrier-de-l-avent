@@ -55,6 +55,16 @@ export default function CopyrightsScreen() {
                 </View>
 
                 <View style={styles.section}>
+                    <ThemedText type="sectionSubtitle">
+                        Morgane (c'est moi 😄)
+                    </ThemedText>
+                    <ThemedText type="sectionText">
+                        ...qui a développé l'application et créé la plupart des
+                        contenus, à votre service !
+                    </ThemedText>
+                </View>
+
+                <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Victoria</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a écrit la nouvelle de Noël "La lettre de Noël",

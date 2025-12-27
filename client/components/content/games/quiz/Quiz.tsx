@@ -4,13 +4,12 @@ import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { QuizAnswers } from "@/components/content/games/quiz/QuizAnswers";
 import { QuizExplanation } from "@/components/content/games/quiz/QuizExplanation";
 import { Content } from "@/interfaces/contentInterface";
-import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 import { GameType } from "@/enums/enums";
 import useAppState from "@/hooks/useAppState";
 
 interface QuizProps {
     games: Content[];
-    setScore: (questionNumber: number) => Promise<void>;
+    setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
     dayId: number;
 }
 
@@ -27,17 +26,8 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         setSelectedAnswer(answer);
         setAnswerButtonIsDisabled(true);
 
-        const alreadyPlayed = await isQuestionPlayed(
-            dayId,
-            currentQuestionIndex
-        );
-
-        if (!alreadyPlayed) {
-            if (answer === currentGame.content3) {
-                setScore(currentQuestionIndex);
-            }
-            await saveQuestionPlayed(dayId, currentQuestionIndex);
-        }
+        const isCorrect = answer === currentGame.content3;
+        setScore(currentQuestionIndex, isCorrect);
     };
 
     const handleNextQuestion = () => {

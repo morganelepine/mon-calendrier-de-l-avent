@@ -1,15 +1,14 @@
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useEffect, useState } from "react";
 import { Infos } from "@/components/content/games/hangman/Infos";
 import { Alphabet } from "@/components/content/games/hangman/Alphabet";
 import { HangmanModal } from "@/components/content/games/hangman/HangmanModal";
 import { Content } from "@/interfaces/contentInterface";
-import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 
 interface HangmanProps {
     game: Content;
-    setScore: (questionNumber: number) => Promise<void>;
+    setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
 }
 
 export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
@@ -30,28 +29,17 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     }, [currentWord]);
 
     const handleScoreUpdate = async () => {
-        const alreadyPlayed = await isQuestionPlayed(
-            game.dayNumber,
-            currentWordIndex
-        );
-
-        if (currentWord === hiddenWord.join("")) {
+        const isCorrect = currentWord === hiddenWord.join("");
+        if (isCorrect) {
             setModalMessage("Félicitations 🥳");
             setModalVisible(true);
-
-            if (!alreadyPlayed) {
-                await setScore(currentWordIndex);
-                await saveQuestionPlayed(game.dayNumber, currentWordIndex);
-            }
+            await setScore(currentWordIndex, isCorrect);
         } else if (mistakes === maxTries) {
-            if (!alreadyPlayed) {
-                await saveQuestionPlayed(game.dayNumber, currentWordIndex);
-            }
-
             setModalMessage(
                 "Dommage, vous avez atteint le nombre maximum d'essais 😟"
             );
             setModalVisible(true);
+            await setScore(currentWordIndex, isCorrect);
         }
     };
 
