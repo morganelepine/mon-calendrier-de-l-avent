@@ -36,6 +36,10 @@
     "scripts": {
         "dev": "nodemon src/server.ts",
         "build": "rimraf dist && tsc",
+        "prisma:generate": "prisma generate",
+        "prisma:migrate": "prisma migrate deploy",
+        "prisma:seed:appconfig": "ts-node prisma/seeds/appconfig.seeds.ts",
+        "db:setup": "npm run prisma:generate && npm run prisma:migrate && npm run prisma:seed:appconfig",
         "postinstall": "prisma generate",
         "start": "node dist/index.js",
         "ts.check": "tsc --project tsconfig.json",
