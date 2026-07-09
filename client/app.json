@@ -2,7 +2,7 @@
     "expo": {
         "name": "Calendrier de l'avent",
         "slug": "advent-calendar",
-        "version": "1.3.3",
+        "version": "2.0.0",
         "newArchEnabled": true,
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
@@ -22,7 +22,6 @@
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#0b2956"
             },
-            "minSdkVersion": 24,
             "permissions": [
                 "android.permission.RECORD_AUDIO",
                 "android.permission.MODIFY_AUDIO_SETTINGS"
@@ -33,7 +32,13 @@
             "output": "static",
             "favicon": "./assets/images/favicon.png"
         },
-        "plugins": ["expo-router", "expo-font", "expo-audio"],
+        "plugins": [
+            "expo-router",
+            "expo-font",
+            "expo-audio",
+            "expo-web-browser",
+            "expo-asset"
+        ],
         "experiments": {
             "typedRoutes": true
         },

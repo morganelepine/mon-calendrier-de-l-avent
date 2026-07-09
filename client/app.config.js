@@ -1,5 +1,5 @@
 export default ({ config }) => {
-    if (process.env.EAS_BUILD_PROFILE === "prod-test-apk") {
+    if (process.env.EAS_BUILD_PROFILE === "preview") {
         return {
             ...config,
             name: "Calendrier TEST",
@@ -18,4 +18,4 @@ export default ({ config }) => {
     return config;
 };
 
-// npx eas build --platform android --profile prod-test-apk
+// npx eas build --platform android --profile preview
