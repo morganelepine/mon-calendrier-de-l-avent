@@ -1,4 +1,4 @@
-import { CustomHeader } from "@/components/navigation/CustomHeader";
+import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -17,7 +17,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Contenu de l'application"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -31,7 +31,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Règles du jeu"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -45,7 +45,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Bingos de Noël"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -59,7 +59,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Gestion de la musique"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -73,7 +73,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Noter l'application"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -87,7 +87,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Remerciements"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}
@@ -101,7 +101,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Me contacter"
                                 backgroundColor={Colors.blue}
                                 color={Colors.snow}

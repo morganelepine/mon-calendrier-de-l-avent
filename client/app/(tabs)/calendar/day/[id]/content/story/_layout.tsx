@@ -1,4 +1,4 @@
-import { CustomHeader } from "@/components/navigation/CustomHeader";
+import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -17,7 +17,7 @@ export default function InformationsLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomHeader
+                            <ScreenHeader
                                 title="Le jeu littéraire"
                                 backgroundColor={Colors.green}
                                 color={Colors.snow}

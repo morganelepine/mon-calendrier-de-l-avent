@@ -1,4 +1,4 @@
-import { CustomBingoHeader } from "@/components/navigation/CustomBingoHeader";
+import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 
@@ -18,13 +18,10 @@ export default function BingoLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomBingoHeader
+                            <ScreenHeader
                                 title="Bingo des activités de Noël"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
-                                clickedCellsKey={
-                                    "bingo_activities_clicked_cells"
-                                }
                             />
                         );
                     },
@@ -35,11 +32,10 @@ export default function BingoLayout() {
                 options={{
                     header: () => {
                         return (
-                            <CustomBingoHeader
+                            <ScreenHeader
                                 title="Bingo des téléfilms de Noël"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
-                                clickedCellsKey={"bingo_films_clicked_cells"}
                             />
                         );
                     },

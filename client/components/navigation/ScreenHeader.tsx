@@ -1,31 +1,29 @@
-import { useState } from "react";
+import { ReactNode } from "react";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
-import { GroupInfoModal } from "@/components/group/GroupInfoModal";
 
-interface CustomHeaderProps {
+interface ScreenHeaderProps {
     title: string;
     backgroundColor: string;
     color: string;
-    page?: string;
+    rightAction?: ReactNode;
 }
 
-export const CustomHeader: React.FC<CustomHeaderProps> = ({
+export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
     title,
     backgroundColor,
     color,
-    page,
+    rightAction,
 }) => {
     const router = useRouter();
-    const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <SafeAreaView
             style={{
-                backgroundColor: backgroundColor,
+                backgroundColor,
                 flexDirection: "row",
                 alignItems: "center",
                 paddingHorizontal: 20,
@@ -40,7 +38,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
                 style={{
                     fontFamily: "PoppinsBold",
                     fontSize: 18,
-                    color: color,
+                    color,
                     marginLeft: 12,
                     paddingTop: 2,
                 }}
@@ -48,22 +46,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
                 {title}
             </ThemedText>
 
-            {(page === "group" || page === "addMembers") && (
-                <Pressable
-                    style={{ marginLeft: "auto" }}
-                    onPress={() => setModalVisible(true)}
-                >
-                    <Ionicons
-                        name="help-circle-outline"
-                        size={28}
-                        color={color}
-                    />
-                </Pressable>
-            )}
-            <GroupInfoModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-            />
+            {rightAction}
         </SafeAreaView>
     );
 };
