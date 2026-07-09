@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { GameToAnswer } from "@/components/content/story/game/GameToAnswer";
@@ -73,5 +73,3 @@ export const StoryGameModal: React.FC<StoryGameModalProps> = ({
         </ModalWithCloseButton>
     );
 };
-
-const styles = StyleSheet.create({});

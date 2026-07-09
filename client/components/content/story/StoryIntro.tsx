@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { Content } from "@/interfaces/contentInterface";
@@ -60,5 +60,3 @@ export const StoryIntro: React.FC<StoryIntroProps> = ({ story, dayId }) => {
         </ContentScreenWrapper>
     );
 };
-
-const styles = StyleSheet.create({});

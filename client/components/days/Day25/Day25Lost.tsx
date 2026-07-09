@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
 import { Colors } from "@/constants/Colors";
@@ -37,11 +37,5 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         textAlign: "center",
         fontSize: 18,
-    },
-    gif: {
-        width: 300,
-        height: 180,
-        marginBottom: 20,
-        marginTop: 10,
     },
 });

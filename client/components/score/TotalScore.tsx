@@ -101,11 +101,6 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: Colors.snow,
     },
-    pointsContainer: {
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        marginBottom: 5,
-    },
     barContainer: {
         position: "relative",
         alignSelf: "stretch",

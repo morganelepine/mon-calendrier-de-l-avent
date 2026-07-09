@@ -1,11 +1,14 @@
 import { StyleSheet, Pressable, ImageBackground } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { saveScore } from "@/services/score.service";
+import {
+    saveScore,
+    isQuestionPlayed,
+    saveQuestionPlayed,
+} from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
-import { isQuestionPlayed, saveQuestionPlayed } from "@/services/score.service";
 
 interface ContentButtonProps {
     content?: Content;

@@ -120,9 +120,4 @@ const styles = StyleSheet.create({
         alignContent: "center",
         justifyContent: "center",
     },
-    text: {
-        color: Colors.snow,
-        fontFamily: "PoppinsItalic",
-        textAlign: "center",
-    },
 });

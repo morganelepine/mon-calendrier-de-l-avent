@@ -1,10 +1,8 @@
-import { StyleSheet, Pressable, View, ToastAndroid } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
 
 interface CustomBingoHeaderProps {
     title: string;
@@ -17,14 +15,8 @@ export const CustomBingoHeader: React.FC<CustomBingoHeaderProps> = ({
     title,
     backgroundColor,
     color,
-    clickedCellsKey,
 }) => {
     const router = useRouter();
-
-    const clearBingo = async () => {
-        await AsyncStorage.setItem(clickedCellsKey, JSON.stringify([]));
-        ToastAndroid.show("Grille réinitialisée !", ToastAndroid.SHORT);
-    };
 
     return (
         <SafeAreaView
@@ -60,29 +52,6 @@ export const CustomBingoHeader: React.FC<CustomBingoHeaderProps> = ({
                     {title}
                 </ThemedText>
             </View>
-
-            {/* <Pressable onPress={clearBingo} style={styles.button}>
-                <View style={styles.buttonBackground} />
-                <Ionicons
-                    name={"sync-outline"}
-                    size={24}
-                    color={Colors.snow}
-                ></Ionicons>
-            </Pressable> */}
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    buttonBackground: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: Colors.blue,
-        borderRadius: 50,
-    },
-    button: {
-        height: 40,
-        width: 40,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});

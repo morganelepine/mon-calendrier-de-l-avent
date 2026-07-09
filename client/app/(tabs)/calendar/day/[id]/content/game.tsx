@@ -56,7 +56,6 @@ export default function GameScreen() {
                             <Quiz
                                 games={gamesByType.quizCitation}
                                 setScore={setScore}
-                                dayId={dayId}
                             />
                         </>
                     )}
@@ -69,7 +68,6 @@ export default function GameScreen() {
                             <Quiz
                                 games={gamesByType.quizNoel}
                                 setScore={setScore}
-                                dayId={dayId}
                             />
                         </>
                     )}
@@ -82,7 +80,6 @@ export default function GameScreen() {
                             <Quiz
                                 games={gamesByType.quizEmojis}
                                 setScore={setScore}
-                                dayId={dayId}
                             />
                         </>
                     )}

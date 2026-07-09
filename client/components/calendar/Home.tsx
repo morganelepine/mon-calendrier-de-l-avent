@@ -120,11 +120,6 @@ const styles = StyleSheet.create({
     text1: {
         letterSpacing: 9,
     },
-    text2: {
-        paddingTop: 20,
-        color: Colors.snow,
-        fontSize: 14,
-    },
     isChristmas: {
         marginTop: 100,
         fontSize: 75,

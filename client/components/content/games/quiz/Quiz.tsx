@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { QuizAnswers } from "@/components/content/games/quiz/QuizAnswers";
 import { QuizExplanation } from "@/components/content/games/quiz/QuizExplanation";
 import { Content } from "@/interfaces/contentInterface";
 import { GameType } from "@/enums/enums";
-import useAppState from "@/hooks/useAppState";
 
 interface QuizProps {
     games: Content[];
     setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
-    dayId: number;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
-    const appState = useAppState();
+export const Quiz: React.FC<QuizProps> = ({ games, setScore }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const currentGame = games[currentQuestionIndex];
@@ -35,12 +32,6 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore, dayId }) => {
         setAnswerButtonIsDisabled(false);
         setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % games.length);
     };
-
-    // useEffect(() => {
-    //     if (appState !== "active") {
-    //         saveQuestionPlayed(dayId, currentQuestionIndex);
-    //     }
-    // }, [appState]);
 
     return (
         <>

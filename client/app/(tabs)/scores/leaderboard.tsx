@@ -136,11 +136,6 @@ export default function LeaderboardScreen() {
 }
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-    },
     stickyContainer: {
         position: "absolute",
         bottom: 20,
