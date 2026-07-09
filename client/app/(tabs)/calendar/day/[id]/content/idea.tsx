@@ -39,7 +39,8 @@ export default function IdeaScreen() {
             if (idea.listOfContents) {
                 for (const content of idea.listOfContents) {
                     const maxHeight =
-                        idea.content4 === IdeaType.Book || IdeaType.TvShow
+                        idea.content4 === IdeaType.Book ||
+                        idea.content4 === IdeaType.TvShow
                             ? 200
                             : 150;
                     formatImage(
