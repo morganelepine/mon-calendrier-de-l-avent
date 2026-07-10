@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Day } from "@/interfaces/dayInterface";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface DayNumberProps {
     day: Day;

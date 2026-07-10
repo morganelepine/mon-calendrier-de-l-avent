@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 import { Colors } from "@/constants/Colors";
-import { Score } from "@/interfaces/scoreInterfaces";
+import { Score } from "@/interfaces/scoreInterface";
 import { Ionicons } from "@expo/vector-icons";
 
 interface ScoreHistoryProps {

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ContentButton } from "@/components/content/ContentButton";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { getContentsByDay } from "@/services/content.service";
 import { ContentType } from "@/enums/enums";
 

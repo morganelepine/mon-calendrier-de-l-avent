@@ -8,7 +8,7 @@ import { ExternalLink } from "@/components/utils/ExternalLink";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Horoscope } from "@/components/days/Day25/Horoscope";
 import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { wallpapers } from "@/data/wallpapers_data";
 import { recipes } from "@/data/recipes_data";
 

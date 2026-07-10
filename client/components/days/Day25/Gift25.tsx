@@ -8,7 +8,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Gift } from "@/interfaces/giftInterface";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface GiftProps {
     gift: Gift;

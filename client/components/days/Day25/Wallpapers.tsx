@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { WallpaperData } from "@/interfaces/contentInterface";

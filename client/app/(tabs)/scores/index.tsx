@@ -7,7 +7,7 @@ import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { Score } from "@/interfaces/scoreInterfaces";
+import { Score } from "@/interfaces/scoreInterface";
 import { useScore } from "@/contexts/ScoreContext";
 
 export default function ScoreScreen() {

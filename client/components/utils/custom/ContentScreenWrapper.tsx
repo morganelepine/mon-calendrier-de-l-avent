@@ -8,7 +8,7 @@ import { ContentType } from "@/enums/enums";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface ContentScreenWrapperProps {
     contentType: string | undefined;

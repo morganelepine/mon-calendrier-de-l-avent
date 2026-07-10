@@ -11,7 +11,7 @@ import { Stack } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 

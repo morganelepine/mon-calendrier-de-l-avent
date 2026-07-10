@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Image } from "react-native";
 import { Bingo } from "@/interfaces/bingoInterface";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface BingoCellProps {
     cell: Bingo;

@@ -6,7 +6,7 @@ import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface RecoProps {
     idea: Content;

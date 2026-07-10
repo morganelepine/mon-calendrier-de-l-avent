@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface Props {
     image?: string;

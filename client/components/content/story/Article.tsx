@@ -2,7 +2,7 @@ import { StyleSheet, Image, ScrollView } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { Content } from "@/interfaces/contentInterface";

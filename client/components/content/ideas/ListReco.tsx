@@ -3,7 +3,7 @@ import { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLink } from "@/components/utils/ExternalLink";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { Colors } from "@/constants/Colors";
 import { ListOfContents } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
@@ -37,7 +37,7 @@ export const ListReco: React.FC<ListRecoProps> = ({
 
             <View
                 style={[
-                    type === "creator"
+                    type === IdeaType.Creator
                         ? { flexDirection: "column" }
                         : { flexDirection: "row" },
                 ]}
@@ -50,7 +50,7 @@ export const ListReco: React.FC<ListRecoProps> = ({
                                 uri: getCloudinaryImageUrl(content.image),
                             }}
                             style={[
-                                type === "creator"
+                                type === IdeaType.Creator
                                     ? {
                                           borderRadius: 8,
                                           width: "100%",
@@ -75,7 +75,7 @@ export const ListReco: React.FC<ListRecoProps> = ({
                 )}
 
                 {/* SUMMARY */}
-                {type === "creator" ? (
+                {type === IdeaType.Creator ? (
                     <>
                         <ThemedText
                             style={[styles.description, { marginVertical: 10 }]}

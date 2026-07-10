@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getUserScoresByDay, getTotalScore } from "@/services/score.service";
-import { Score } from "@/interfaces/scoreInterfaces";
+import { Score } from "@/interfaces/scoreInterface";
 
 type ScoreContextType = {
     scoreTotal: number;

@@ -1,5 +1,5 @@
 import { Dimensions, Image } from "react-native";
-import { getCloudinaryImageUrl } from "@/services/cloudinary";
+import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 export const formatImage = (
     day: number,

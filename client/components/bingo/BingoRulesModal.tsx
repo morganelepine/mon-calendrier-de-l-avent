@@ -3,7 +3,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { BingoRules } from "@/components/bingo/BingoRules";
 import { Colors } from "@/constants/Colors";
-import { ModalWithCloseButton } from "../utils/custom/ModalWithCloseButton";
+import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 
 interface Props {
     modalVisible: boolean;
