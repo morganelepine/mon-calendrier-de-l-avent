@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
-import { CustomModal } from "@/components/utils/custom/CustomModal";
+import { CenteredModal } from "@/components/utils/custom/CenteredModal";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 
@@ -24,45 +24,37 @@ export const NewsModal: React.FC<Props> = ({
     };
 
     return (
-        <CustomModal visible={modalVisible} onRequestClose={handleStart}>
-            <View style={styles.modalContainer}>
-                <View style={styles.modalView}>
-                    <ThemedText type="pallyBoldBlue" style={styles.title}>
-                        C'est nouveau !
-                    </ThemedText>
+        <CenteredModal
+            visible={modalVisible}
+            onRequestClose={handleStart}
+            contentStyle={styles.modalView}
+        >
+            <ThemedText type="pallyBoldBlue" style={styles.title}>
+                C'est nouveau !
+            </ThemedText>
 
-                    <View style={{ gap: 8 }}>
-                        <ThemedText type="sectionText">
-                            Vous pouvez maintenant créer votre propre classement
-                            pour suivre les scores de vos proches !
-                        </ThemedText>
-                        <ThemedText type="sectionText">
-                            Rendez-vous dans l'onglet "Scores" puis cliquez sur
-                            "Mon groupe".
-                        </ThemedText>
-                    </View>
-
-                    <CustomButton onPress={handleStart} style={styles.button}>
-                        J'y vais !
-                    </CustomButton>
-                </View>
+            <View style={{ gap: 8 }}>
+                <ThemedText type="sectionText">
+                    Vous pouvez maintenant créer votre propre classement pour
+                    suivre les scores de vos proches !
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Rendez-vous dans l'onglet "Scores" puis cliquez sur "Mon
+                    groupe".
+                </ThemedText>
             </View>
-        </CustomModal>
+
+            <CustomButton onPress={handleStart} style={styles.button}>
+                J'y vais !
+            </CustomButton>
+        </CenteredModal>
     );
 };
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
     modalView: {
         margin: 20,
         paddingHorizontal: 8,
-        backgroundColor: Colors.snow,
-        borderRadius: 20,
         elevation: 4,
     },
     title: {
