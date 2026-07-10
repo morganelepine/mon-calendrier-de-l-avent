@@ -31,8 +31,9 @@ export const MyGroup = ({
     const [loading, setLoading] = useState(false);
 
     const removeMemberFromGroup = async (item: {
-        id: number;
+        id?: number;
         username: string;
+        score: number;
     }) => {
         if (!myGroup.id || !item.id || item.username === username) return;
 

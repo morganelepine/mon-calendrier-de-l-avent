@@ -5,8 +5,12 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "expo",
     ],
+    env: { node: true },
     parser: "@typescript-eslint/parser",
-    parserOptions: { project: ["./tsconfig.json"] },
+    parserOptions: {
+        project: ["./tsconfig.json"],
+        tsconfigRootDir: __dirname,
+    },
     ignorePatterns: ["*/babel.config.js", "*.json", "*/.eslintrc.js"],
     plugins: ["@typescript-eslint"],
     rules: {
@@ -18,6 +22,14 @@ module.exports = {
             files: ["*.ts"],
             rules: {
                 "@typescript-eslint/explicit-function-return-type": 2,
+            },
+        },
+        {
+            files: ["*.ts", "*.tsx"],
+            settings: {
+                "import/resolver": {
+                    typescript: {},
+                },
             },
         },
     ],

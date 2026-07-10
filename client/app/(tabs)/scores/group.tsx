@@ -35,18 +35,20 @@ export default function GroupScreen() {
 
     useFocusEffect(
         useCallback(() => {
-            fetchMyGroup(userId);
-        }, [])
+            if (userId) fetchMyGroup(userId);
+        }, [userId])
     );
 
-    if (loading || error || !myGroup) {
+    if (loading || error || !myGroup || !userId) {
         return (
             <BackgroundImage image="blue_background_darker_d10kn5">
                 <View style={{ flex: 1 }}>
                     <ErrorLoading
                         loading={true}
                         error={null}
-                        refreshScores={() => fetchMyGroup(userId)}
+                        refreshScores={() => {
+                            if (userId) fetchMyGroup(userId);
+                        }}
                     />
                 </View>
             </BackgroundImage>

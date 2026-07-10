@@ -7,12 +7,12 @@ import { Content } from "@/interfaces/contentInterface";
 
 interface OtherGamesProps {
     game: Content;
-    setScore: (questionNumber: number) => Promise<void>;
+    setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
 }
 
 export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
     const words = game.content1.toUpperCase().split(",");
-    const answers = game.content2.toUpperCase().split(",");
+    const answers = (game.content2 ?? "").toUpperCase().split(",");
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const currentWord = words[currentWordIndex];
     const currentAnswer = answers[currentWordIndex];
@@ -50,7 +50,6 @@ export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
                 <Input
                     inputValue={inputValue}
                     setInputValue={setInputValue}
-                    game={game}
                     currentWordIndex={currentWordIndex}
                     answer={currentAnswer}
                     setScore={setScore}

@@ -1,12 +1,10 @@
 import { StyleSheet, View, TextInput } from "react-native";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
-import { Content } from "@/interfaces/contentInterface";
 
 interface InputProps {
     inputValue: string;
     setInputValue: (value: string) => void;
-    game: Content;
     currentWordIndex: number;
     answer: string;
     setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
@@ -18,7 +16,6 @@ interface InputProps {
 export const Input: React.FC<InputProps> = ({
     inputValue,
     setInputValue,
-    game,
     currentWordIndex,
     answer,
     setScore,

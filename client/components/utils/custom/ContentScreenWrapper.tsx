@@ -46,7 +46,8 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
 
     const closeContent = async () => {
         router.navigate({
-            pathname: `/calendar/day/${String(dayId)}`,
+            pathname: "/calendar/day/[id]",
+            params: { id: String(dayId) },
         });
     };
 

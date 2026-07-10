@@ -9,13 +9,12 @@ import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
 import { saveScore } from "@/services/score.service";
 import { ScoreType } from "@/enums/enums";
-import { Content } from "@/interfaces/contentInterface";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { games } = getContentsByDay(dayId) as { games: Content[] };
+    const { games } = getContentsByDay(dayId);
     const { gamesByType, type } = classifyGames(games);
 
     const setScore = async (

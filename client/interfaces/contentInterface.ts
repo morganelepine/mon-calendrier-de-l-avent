@@ -7,7 +7,7 @@ export interface Content {
     content2?: string;
     content3?: string;
     content4?: string;
-    content5: string;
+    content5?: string;
     media?: string;
     listOfContents?: ListOfContents[];
 }

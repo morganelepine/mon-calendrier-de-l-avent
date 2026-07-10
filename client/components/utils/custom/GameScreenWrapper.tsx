@@ -34,7 +34,8 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
 
     const closeContent = async () => {
         router.navigate({
-            pathname: `/calendar/day/${String(dayId)}`,
+            pathname: "/calendar/day/[id]",
+            params: { id: String(dayId) },
         });
     };
 

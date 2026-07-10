@@ -22,7 +22,7 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
 }) => {
     return (
         <View>
-            <View style={[styles.explanationsContainer]}>
+            <View>
                 {selectedAnswer === currentGame.content3 ? (
                     <ThemedText style={styles.response}>
                         Bonne réponse !

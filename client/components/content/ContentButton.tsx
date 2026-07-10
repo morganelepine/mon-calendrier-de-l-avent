@@ -57,7 +57,8 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
         }
 
         router.navigate({
-            pathname: `/calendar/day/${String(dayId)}/content/${contentType}`,
+            pathname: `/calendar/day/[id]/content/${contentType}`,
+            params: { id: String(dayId) },
         });
     };
 

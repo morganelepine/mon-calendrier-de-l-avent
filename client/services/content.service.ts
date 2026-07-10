@@ -15,7 +15,14 @@ interface GamesByType {
     quizEmojis: Content[];
 }
 
-export const getContentsByDay = (dayId: number): object => {
+interface DayContents {
+    anecdote: Content | undefined;
+    story: Content | undefined;
+    ideas: Content[];
+    games: Content[];
+}
+
+export const getContentsByDay = (dayId: number): DayContents => {
     const anecdote: Content | undefined = anecdotesData.find(
         (anecdote) => anecdote.dayNumber === dayId
     );
