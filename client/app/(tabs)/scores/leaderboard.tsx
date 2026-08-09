@@ -4,7 +4,7 @@ import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { ThemedText } from "@/components/ThemedText";
-import { API_URL } from "@/constants/api";
+import { getLeaderboard } from "@/services/score.service";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/contexts/UserContext";
 
@@ -24,9 +24,9 @@ export default function LeaderboardScreen() {
     const fetchLeaderboard = async () => {
         try {
             setLoading(true);
+            setError(null);
 
-            const response = await fetch(`${API_URL}/scores/leaderboard`);
-            const result = await response.json();
+            const result = await getLeaderboard();
 
             if (Array.isArray(result)) {
                 // Old format
@@ -37,7 +37,7 @@ export default function LeaderboardScreen() {
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
             setError(
-                "Impossible de charger le classement. Vérifiez votre connexion Internet."
+                "Impossible de charger le classement. Vérifiez votre connexion Internet.",
             );
         } finally {
             setLoading(false);
@@ -51,15 +51,19 @@ export default function LeaderboardScreen() {
     useEffect(() => {
         if (leaderboard.length > 0 && username) {
             const index = leaderboard.findIndex(
-                (item) => item.username === username
+                (item) => item.username === username,
             );
             setShowButton(index > 9);
         }
     }, [leaderboard, username]);
 
-    const renderItem = ({ item, index }: { item: any; index: number }) => (
-        <LeaderBoardItem index={index} item={item} username={username} />
-    );
+    const renderItem = ({
+        item,
+        index,
+    }: {
+        item: { username: string; score: number };
+        index: number;
+    }) => <LeaderBoardItem index={index} item={item} username={username} />;
 
     // Go to user score
     const scrollToUser = async () => {
@@ -72,7 +76,7 @@ export default function LeaderboardScreen() {
         }
 
         const index = leaderboard.findIndex(
-            (item) => item.username === username
+            (item) => item.username === username,
         );
 
         if (index !== -1) {

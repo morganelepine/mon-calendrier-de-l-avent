@@ -12,7 +12,7 @@ interface DaysProps {
     setDays: (days: Day[]) => void;
     goToDay: (
         day: Day,
-        setModalVisible: (modalVisible: boolean) => void
+        setModalVisible: (modalVisible: boolean) => void,
     ) => void;
 }
 
@@ -32,7 +32,19 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
 
         if (isDecember && dayNumber <= currentDay) {
             if (dayNumber === currentDay) {
-                saveScore(dayNumber, 40, String(ScoreType.DayOpening));
+                try {
+                    await saveScore(
+                        dayNumber,
+                        40,
+                        String(ScoreType.DayOpening),
+                    );
+                } catch (error) {
+                    console.log("Error saving score:", error);
+                    ToastAndroid.show(
+                        "Oops... les points n'ont pas pu être enregistrés.",
+                        ToastAndroid.LONG,
+                    );
+                }
             }
             setDayModal(dayNumber);
         } else {

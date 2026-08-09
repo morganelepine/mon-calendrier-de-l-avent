@@ -21,6 +21,8 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     const [error, setError] = useState<string | null>(null);
 
     const refreshScores = React.useCallback(async () => {
+        setLoading(true);
+        setError(null);
         try {
             const scores = await getUserScoresByDay();
             const totalScore = await getTotalScore();

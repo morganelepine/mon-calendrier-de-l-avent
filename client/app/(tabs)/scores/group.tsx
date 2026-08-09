@@ -18,6 +18,7 @@ export default function GroupScreen() {
     const fetchMyGroup = async (userId: number) => {
         try {
             setLoading(true);
+            setError(null);
             const group = await getGroup(userId);
             setMyGroup(group);
         } catch (error) {

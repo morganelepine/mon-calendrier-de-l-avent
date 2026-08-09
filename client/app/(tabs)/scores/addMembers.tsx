@@ -28,8 +28,16 @@ export default function AddMembersScreen() {
             setResults([]);
             return;
         }
-        const users = await searchUsers(text, groupId);
-        setResults(users);
+        try {
+            const users = await searchUsers(text, groupId);
+            setResults(users);
+        } catch (error) {
+            console.error("Error searching users:", error);
+            ToastAndroid.show(
+                "Oops... la recherche a échoué. Veuillez réessayer.",
+                ToastAndroid.LONG,
+            );
+        }
     };
 
     useEffect(() => {
@@ -39,17 +47,25 @@ export default function AddMembersScreen() {
 
     const toggleSelect = (id: number) =>
         setSelected((prev) =>
-            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
         );
 
     const handleAdd = async () => {
-        for (const id of selected) {
-            await addMember(Number(groupId), id);
+        try {
+            for (const id of selected) {
+                await addMember(Number(groupId), id);
+            }
             ToastAndroid.show("Ajouté·e·s !", ToastAndroid.SHORT);
+            setQuery("");
+            setResults([]);
+            setSelected([]);
+        } catch (error) {
+            console.error("Error adding members:", error);
+            ToastAndroid.show(
+                "Oops... Ces lutin·e·s n'ont pas pu être ajouté·e·s. Veuillez réessayer.",
+                ToastAndroid.LONG,
+            );
         }
-        setQuery("");
-        setResults([]);
-        setSelected([]);
     };
 
     return (
