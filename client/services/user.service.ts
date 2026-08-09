@@ -1,43 +1,30 @@
-import { API_URL } from "@/constants/api";
+import { User } from "@/types/types";
+import { apiFetch, ApiError } from "@/services/apiFetch";
 
-export const saveUser = async (userUuid: string, score: number) => {
-    try {
-        const response = await fetch(`${API_URL}/users`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uuid: userUuid, score }),
-        });
-
-        if (!response.ok) throw new Error("Failed to save user");
-
-        const data = await response.json();
-        console.log("User saved:", data.username);
-        return data.username;
-    } catch (error) {
-        throw new Error(`saveUser error: (${error})`);
-    }
-};
-
-export const getUser = async (userUuid: string) => {
-    const response = await fetch(`${API_URL}/users/${userUuid}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+export const saveUser = async (
+    userUuid: string,
+    score: number,
+): Promise<string> => {
+    const user = await apiFetch<User>("/users", {
+        method: "POST",
+        body: { uuid: userUuid, score },
     });
 
-    if (response.status === 404) return null;
-
-    if (!response.ok) {
-        throw new Error(`getUser error: (${response.status})`);
-    }
-
-    const user = await response.json();
-    return user;
+    return user.username;
 };
 
-export async function searchUsers(query: string, groupId: string) {
-    const response = await fetch(
-        `${API_URL}/users/search?query=${query}&groupId=${groupId}`
-    );
-    const users = await response.json();
-    return users;
+export const getUser = async (userUuid: string): Promise<User | null> => {
+    try {
+        return await apiFetch<User>(`/users/${userUuid}`);
+    } catch (err) {
+        if (err instanceof ApiError && err.status === 404) return null;
+        throw err;
+    }
+};
+
+export async function searchUsers(
+    query: string,
+    groupId: string,
+): Promise<User[]> {
+    return apiFetch<User[]>(`/users/search?query=${query}&groupId=${groupId}`);
 }

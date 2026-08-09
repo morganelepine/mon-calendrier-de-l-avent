@@ -1,51 +1,33 @@
-import { API_URL } from "@/constants/api";
+import { Group } from "@/types/types";
+import { apiFetch } from "@/services/apiFetch";
 
-export async function createGroup(ownerId: number) {
-    const response = await fetch(`${API_URL}/groups`, {
+export async function createGroup(ownerId: number): Promise<Group> {
+    return apiFetch<Group>("/groups", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ownerId }),
+        body: { ownerId },
     });
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Error creating group: ${errorMessage}`);
-    }
-
-    const group = await response.json();
-    return group;
 }
 
-export async function getGroup(userId: number) {
-    const response = await fetch(`${API_URL}/groups/${userId}`);
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Error fetching group: ${errorMessage}`);
-    }
-
-    const group = await response.json();
-    return group;
+export async function getGroup(userId: number): Promise<Group> {
+    return apiFetch<Group>(`/groups/${userId}`);
 }
 
-export async function addMember(groupId: number, userId: number) {
-    const response = await fetch(`${API_URL}/groups/${groupId}/members`, {
+export async function addMember(
+    groupId: number,
+    userId: number,
+): Promise<void> {
+    return apiFetch(`/groups/${groupId}/members`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
+        body: { userId },
     });
-    return response.json();
 }
 
-export async function removeMember(groupId: number, userId: number) {
-    const response = await fetch(`${API_URL}/groups/${groupId}/members`, {
+export async function removeMember(
+    groupId: number,
+    userId: number,
+): Promise<void> {
+    await apiFetch(`/groups/${groupId}/members`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
+        body: { userId },
     });
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Error removing member: ${errorMessage}`);
-    }
 }

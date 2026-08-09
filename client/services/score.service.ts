@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GameState, Score } from "@/interfaces/scoreInterface";
-import { API_URL } from "@/constants/api";
+import { apiFetch } from "@/services/apiFetch";
 
 export const saveScore = async (
     dayId: number | null,
@@ -8,66 +8,37 @@ export const saveScore = async (
     reason: string,
     questionNumber?: number
 ): Promise<void> => {
-    try {
-        const userUuid = await AsyncStorage.getItem("userUuid");
-        const response = await fetch(`${API_URL}/scores`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                userUuid: userUuid,
-                dayId,
-                points,
-                reason,
-                questionNumber,
-            }),
-        });
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`Score was not saved: ${errorMessage}`);
-        }
-    } catch (error) {
-        console.log("Error saving score:", error);
-    }
+    const userUuid = await AsyncStorage.getItem("userUuid");
+
+    await apiFetch("/scores", {
+        method: "POST",
+        body: { userUuid, dayId, points, reason, questionNumber },
+    });
 };
 
-export const getTotalScore = async (): Promise<number | undefined> => {
-    try {
-        const userUuid = await AsyncStorage.getItem("userUuid");
-        if (!userUuid) return 0;
+export const getTotalScore = async (): Promise<number> => {
+    const userUuid = await AsyncStorage.getItem("userUuid");
+    if (!userUuid) return 0;
 
-        const response = await fetch(
-            `${API_URL}/scores/total/user/${userUuid}`
-        );
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`Failed getting total score: ${errorMessage}`);
-        }
-
-        const data = await response.json();
-        return data.totalScore;
-    } catch (error) {
-        console.log("Error getting total score:", error);
-        return undefined;
-    }
+    const data = await apiFetch<{ totalScore: number }>(
+        `/scores/total/user/${userUuid}`
+    );
+    return data.totalScore;
 };
 
 export const getUserScoresByDay = async (): Promise<Score[]> => {
-    try {
-        const userUuid = await AsyncStorage.getItem("userUuid");
-        if (!userUuid) return [];
+    const userUuid = await AsyncStorage.getItem("userUuid");
+    if (!userUuid) return [];
 
-        const response = await fetch(`${API_URL}/scores/user/${userUuid}`);
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`Failed to get scores by day: ${errorMessage}`);
-        }
+    return apiFetch<Score[]>(`/scores/user/${userUuid}`);
+};
 
-        const data = await response.json();
-        return data as Score[];
-    } catch (error) {
-        console.log("Error getting scores by day:", error);
-        return [];
-    }
+type LeaderboardEntry = { username: string; score: number };
+
+export const getLeaderboard = async (): Promise<
+    LeaderboardEntry[] | { data: LeaderboardEntry[]; total: number; hasMore: boolean }
+> => {
+    return apiFetch("/scores/leaderboard");
 };
 
 export const saveQuestionPlayed = async (

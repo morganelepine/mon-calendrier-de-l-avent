@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
+import { Colors } from "@/constants/Colors";
 
 interface Props {
     image?: string;
@@ -13,7 +14,7 @@ export const BackgroundImage: React.FC<Props> = ({ image, children }) => {
     );
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: Colors.blue }}>
             <Image
                 source={{ uri: backgroundImage }}
                 style={StyleSheet.absoluteFill}

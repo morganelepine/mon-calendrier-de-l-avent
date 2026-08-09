@@ -43,8 +43,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const fetchUserId = async () => {
             if (!userUuid) return;
 
-            const user = await getUser(userUuid);
-            setUserId(user.id);
+            try {
+                const user = await getUser(userUuid);
+                if (user) setUserId(user.id);
+            } catch (error) {
+                console.log("Error fetching userId:", error);
+            }
         };
 
         fetchUserId();

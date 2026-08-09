@@ -38,7 +38,7 @@ async function generateUUIDWithRetry() {
 }
 
 export function useInitialization() {
-    const { setUsername } = useUser();
+    const { setUsername, setUserUuid } = useUser();
     const [status, setStatus] = useState<"loading" | "error" | "ready">(
         "ready"
     );
@@ -64,6 +64,7 @@ export function useInitialization() {
             }
 
             userUuid = ensureStringUUID(userUuid);
+            setUserUuid(userUuid);
 
             // Check if user exists in DB
             let user = null;
