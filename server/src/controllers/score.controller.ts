@@ -43,15 +43,20 @@ export class ScoreController {
 
         if (reason === ScoreType.DayOpening && scoreOfTheDay.length >= 1) {
             return {
-                status: 400,
-                message: "All points for day opening have been awarded",
+                status: 200,
+                message: "All points for day opening have already been awarded",
+                alreadyAwarded: true,
+                totalScore: user.score,
             };
         }
 
         if (reason === ScoreType.ContentOpening && scoreOfTheDay.length >= 4) {
             return {
-                status: 400,
-                message: "All points for content openings have been awarded",
+                status: 200,
+                message:
+                    "All points for content openings have already been awarded",
+                alreadyAwarded: true,
+                totalScore: user.score,
             };
         }
 
@@ -67,16 +72,21 @@ export class ScoreController {
 
             if (gameAlreadyPlayed) {
                 return {
-                    status: 400,
+                    status: 200,
                     message:
                         "Points for this question have already been awarded",
+                    alreadyAwarded: true,
+                    totalScore: user.score,
                 };
             }
 
             if (scoreOfTheDay.length >= 3) {
                 return {
-                    status: 400,
-                    message: "All points for the game have been awarded",
+                    status: 200,
+                    message:
+                        "All points for the game have already been awarded",
+                    alreadyAwarded: true,
+                    totalScore: user.score,
                 };
             }
         }
