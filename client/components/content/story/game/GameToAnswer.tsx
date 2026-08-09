@@ -41,17 +41,33 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
         const answers = stored ? JSON.parse(stored) : {};
 
         if (!answers[index] && isCorrect) {
-            await saveScore(dayId, 50, String(ScoreType.StoryGame), index);
-            ToastAndroid.show(
-                "+ 50 points sur votre score total !",
-                ToastAndroid.LONG
-            );
+            try {
+                await saveScore(dayId, 50, String(ScoreType.StoryGame), index);
+                ToastAndroid.show(
+                    "+ 50 points sur votre score total !",
+                    ToastAndroid.LONG
+                );
+            } catch (error) {
+                console.log("Error saving score:", error);
+                ToastAndroid.show(
+                    "Oops... votre score n'a pas pu être enregistré.",
+                    ToastAndroid.LONG
+                );
+            }
         } else if (!answers[index] && !isCorrect) {
-            await saveScore(dayId, 15, String(ScoreType.StoryGame), index);
-            ToastAndroid.show(
-                "Surprise : + 15 points pour avoir tenté votre chance !",
-                ToastAndroid.LONG
-            );
+            try {
+                await saveScore(dayId, 15, String(ScoreType.StoryGame), index);
+                ToastAndroid.show(
+                    "Surprise : + 15 points pour avoir tenté votre chance !",
+                    ToastAndroid.LONG
+                );
+            } catch (error) {
+                console.log("Error saving score:", error);
+                ToastAndroid.show(
+                    "Oops... votre score n'a pas pu être enregistré.",
+                    ToastAndroid.LONG
+                );
+            }
         }
 
         answers[index] = valueTrim;

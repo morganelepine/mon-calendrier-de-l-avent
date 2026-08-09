@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ToastAndroid } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
@@ -23,12 +23,20 @@ export default function GameScreen() {
     ): Promise<void> => {
         const today = new Date().getDate();
         const score = dayId === today && isCorrect ? 20 : isCorrect ? 10 : 0;
-        await saveScore(
-            dayId,
-            score,
-            String(ScoreType.GameAnswer),
-            questionNumber
-        );
+        try {
+            await saveScore(
+                dayId,
+                score,
+                String(ScoreType.GameAnswer),
+                questionNumber
+            );
+        } catch (error) {
+            console.log("Error saving score:", error);
+            ToastAndroid.show(
+                "Oops... votre score n'a pas pu être enregistré.",
+                ToastAndroid.LONG
+            );
+        }
     };
 
     return (
