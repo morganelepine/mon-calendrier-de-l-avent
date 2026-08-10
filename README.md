@@ -67,10 +67,13 @@ Fichier conseillé : `client/.env`
 ```env
 EXPO_PUBLIC_API_URL_DEV=http://localhost:3000
 EXPO_PUBLIC_API_URL_PROD=https://your-production-api.example.com
+EXPO_PUBLIC_SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
 ```
 
 En développement, l'application lit `EXPO_PUBLIC_API_URL_DEV`.
 En production, elle lit `EXPO_PUBLIC_API_URL_PROD`.
+
+`EXPO_PUBLIC_SENTRY_DSN` active le reporting d'erreurs Sentry. Laissé vide, Sentry est simplement désactivé.
 
 ### Serveur
 
@@ -79,7 +82,10 @@ Le serveur attend au minimum :
 ```env
 PORT=3000
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
+SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
 ```
+
+`SENTRY_DSN` active le reporting d'erreurs Sentry côté serveur. Laissé vide, Sentry est simplement désactivé.
 
 ## Démarrage local
 

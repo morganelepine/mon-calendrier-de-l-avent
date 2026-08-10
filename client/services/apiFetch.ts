@@ -1,4 +1,5 @@
 import { API_URL } from "@/constants/api";
+import { Sentry } from "@/services/sentry.service";
 
 export class ApiError extends Error {
     status: number;
@@ -18,7 +19,7 @@ type ApiFetchOptions = Omit<RequestInit, "body"> & {
 
 export async function apiFetch<T>(
     path: string,
-    options: ApiFetchOptions = {}
+    options: ApiFetchOptions = {},
 ): Promise<T> {
     const { timeoutMs = 10000, body, headers, ...rest } = options;
 
@@ -40,12 +41,28 @@ export async function apiFetch<T>(
         if (res.status === 204) return undefined as T;
 
         return (await res.json()) as T;
-    } catch (err) {
-        if (err instanceof ApiError) throw err;
-        if (err instanceof Error && err.name === "AbortError") {
-            throw new ApiError(0, "", "Timeout réseau");
+    } catch (error) {
+        let apiError: ApiError;
+
+        if (error instanceof ApiError) {
+            apiError = error;
+        } else if (error instanceof Error && error.name === "AbortError") {
+            apiError = new ApiError(0, "", "Timeout réseau");
+        } else {
+            apiError = new ApiError(0, "", `Network error: ${String(error)}`);
         }
-        throw new ApiError(0, "", `Network error: ${String(err)}`);
+
+        // “Expected” 4xx errors (404, 409...) are treated as warnings;
+        // the rest (5xx, network, timeout) are treated as actual errors.
+        Sentry.captureException(apiError, {
+            level:
+                apiError.status >= 400 && apiError.status < 500
+                    ? "warning"
+                    : "error",
+            extra: { path, status: apiError.status, body: apiError.bodyText },
+        });
+
+        throw apiError;
     } finally {
         clearTimeout(timer);
     }

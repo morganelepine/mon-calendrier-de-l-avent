@@ -14,8 +14,11 @@ import { ScoreProvider } from "@/contexts/ScoreContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
+import { initSentry, Sentry } from "@/services/sentry.service";
 
-export default function RootLayout() {
+initSentry();
+
+function RootLayout() {
     const colorScheme = useColorScheme();
 
     const [loaded] = useFonts({
@@ -62,3 +65,5 @@ export default function RootLayout() {
         </ThemeProvider>
     );
 }
+
+export default Sentry.wrap(RootLayout);

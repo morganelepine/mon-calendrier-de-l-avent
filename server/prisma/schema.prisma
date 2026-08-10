@@ -42,15 +42,6 @@ model AppConfig {
   updatedAt DateTime @updatedAt
 }
 
-model ClientLog {
-  id         Int      @id @default(autoincrement())
-  uuid       String?
-  appVersion String?
-  message    String
-  data       Json?
-  createdAt  DateTime @default(now())
-}
-
 model Group {
   id        Int           @id @default(autoincrement())
   name      String
