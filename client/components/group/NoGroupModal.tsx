@@ -1,17 +1,28 @@
 import { Pressable, StyleSheet } from "react-native";
+import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
+import { CreateGroupPrompt } from "@/components/group/CreateGroupPrompt";
+import { useCreateGroup } from "@/hooks/useCreateGroup";
+import { useUser } from "@/contexts/UserContext";
 
 export const NoGroupModal = ({
-    createMyGroup,
     modalVisible,
     setModalVisible,
 }: {
-    createMyGroup: () => void;
     modalVisible: boolean;
     setModalVisible: (visible: boolean) => void;
 }) => {
+    const { userId, userUuid } = useUser();
+    const createMyGroup = useCreateGroup(userId, userUuid);
+
+    const handleCreate = async () => {
+        const created = await createMyGroup();
+        setModalVisible(false);
+        if (created) router.navigate("/scores/group");
+    };
+
     return (
         <CenteredModal
             visible={modalVisible}
@@ -19,21 +30,10 @@ export const NoGroupModal = ({
             overlayOpacity={0.7}
             contentStyle={styles.modalView}
         >
-            <ThemedText
-                style={{
-                    color: Colors.darkGreen,
-                    textAlign: "center",
-                }}
-            >
-                Créez un groupe pour retrouver plus facilement les scores
-                de&nbsp;vos&nbsp;ami·e·s !
-            </ThemedText>
-
-            <Pressable style={styles.button} onPress={createMyGroup}>
-                <ThemedText style={{ color: Colors.snow }}>
-                    Créer mon groupe
-                </ThemedText>
-            </Pressable>
+            <CreateGroupPrompt
+                onPress={handleCreate}
+                textColor={Colors.darkGreen}
+            />
             <Pressable onPress={() => setModalVisible(false)}>
                 <ThemedText
                     style={{
@@ -53,12 +53,5 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         padding: 20,
         gap: 16,
-    },
-    button: {
-        backgroundColor: Colors.green,
-        borderRadius: 50,
-        paddingVertical: 8,
-        paddingHorizontal: 24,
-        alignSelf: "center",
     },
 });

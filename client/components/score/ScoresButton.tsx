@@ -1,42 +1,13 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, ToastAndroid } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { NoGroupModal } from "@/components/group/NoGroupModal";
 import { Colors } from "@/constants/Colors";
-import { createGroup } from "@/services/group.service";
-import { logClient } from "@/services/log.service";
-import { useUser } from "@/contexts/UserContext";
 
 export const ScoresButton = () => {
-    const { userId, userUuid } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
-
-    const createMyGroup = async () => {
-        if (!userId) return;
-        let group;
-
-        try {
-            group = await createGroup(userId);
-        } catch (error) {
-            await logClient("Group creation failed", {
-                userUuid,
-                error: String(error),
-            });
-            setModalVisible(false);
-            ToastAndroid.show(
-                "Oops... Veuillez réessayer !",
-                ToastAndroid.LONG
-            );
-        }
-
-        if (group) {
-            await AsyncStorage.setItem("groupCreated", "true");
-            setModalVisible(false);
-            router.navigate("/scores/group");
-        }
-    };
 
     const goToMyGroup = async () => {
         const isGroupCreated = await AsyncStorage.getItem("groupCreated");
@@ -59,7 +30,6 @@ export const ScoresButton = () => {
                 <ThemedText style={styles.buttonText}>Mon groupe</ThemedText>
             </Pressable>
             <NoGroupModal
-                createMyGroup={createMyGroup}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
             />

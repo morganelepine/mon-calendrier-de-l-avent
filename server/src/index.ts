@@ -22,8 +22,10 @@ function registerRoutes(app: Application, routes: any[]) {
                         res,
                         next,
                     );
-                    if (result !== null && result !== undefined) {
-                        if (result.status) {
+                    // `null` is a legitimate value some controllers return on purpose
+                    // (e.g. GroupController.getGroup when the user has no group yet).
+                    if (result !== undefined) {
+                        if (result?.status) {
                             res.status(result.status).json(result);
                         } else {
                             res.json(result);
