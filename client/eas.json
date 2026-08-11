@@ -24,6 +24,10 @@
             "channel": "production",
             "android": {
                 "buildType": "app-bundle"
+            },
+            "env": {
+                "SENTRY_ORG": "mon-calendrier-de-lavent",
+                "SENTRY_PROJECT": "react-native"
             }
         }
     },

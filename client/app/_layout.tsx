@@ -14,6 +14,7 @@ import { ScoreProvider } from "@/contexts/ScoreContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
+import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
 import { initSentry, Sentry } from "@/services/sentry.service";
 
 initSentry();
@@ -44,25 +45,27 @@ function RootLayout() {
     }
 
     return (
-        <ThemeProvider
-            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-            <UserProvider>
-                <InitializationGate>
-                    <VersionGate>
-                        <ScoreProvider>
-                            <Stack>
-                                <Stack.Screen
-                                    name="(tabs)"
-                                    options={{ headerShown: false }}
-                                />
-                                <Stack.Screen name="+not-found" />
-                            </Stack>
-                        </ScoreProvider>
-                    </VersionGate>
-                </InitializationGate>
-            </UserProvider>
-        </ThemeProvider>
+        <ErrorBoundary>
+            <ThemeProvider
+                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            >
+                <UserProvider>
+                    <InitializationGate>
+                        <VersionGate>
+                            <ScoreProvider>
+                                <Stack>
+                                    <Stack.Screen
+                                        name="(tabs)"
+                                        options={{ headerShown: false }}
+                                    />
+                                    <Stack.Screen name="+not-found" />
+                                </Stack>
+                            </ScoreProvider>
+                        </VersionGate>
+                    </InitializationGate>
+                </UserProvider>
+            </ThemeProvider>
+        </ErrorBoundary>
     );
 }
 

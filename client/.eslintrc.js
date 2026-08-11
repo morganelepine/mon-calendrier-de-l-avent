@@ -11,7 +11,7 @@ module.exports = {
         project: ["./tsconfig.json"],
         tsconfigRootDir: __dirname,
     },
-    ignorePatterns: ["*/babel.config.js", "*.json", "*/.eslintrc.js"],
+    ignorePatterns: ["babel.config.js", "metro.config.js", "*.json", "*/.eslintrc.js"],
     plugins: ["@typescript-eslint"],
     rules: {
         "consistent-return": 2,

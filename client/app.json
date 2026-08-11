@@ -38,7 +38,14 @@
             "expo-audio",
             "expo-web-browser",
             "expo-asset",
-            "@sentry/react-native"
+            [
+                "@sentry/react-native/expo",
+                {
+                    "url": "https://sentry.io/",
+                    "organization": "mon-calendrier-de-lavent",
+                    "project": "react-native"
+                }
+            ]
         ],
         "experiments": {
             "typedRoutes": true
