@@ -1,9 +1,10 @@
 # Mon calendrier de l'avent
 
-Application de calendrier de l'avent composée de deux parties :
+Application de calendrier de l'avent composée de trois parties :
 
 - un client mobile et web en Expo / React Native
 - une API Express / TypeScript connectée à PostgreSQL via Prisma
+- une page web statique ([web/](./web)) : politique de confidentialité de l'application
 
 ## Fonctionnalités principales
 

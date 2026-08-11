@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Politique de confidentialité — Mon calendrier de l'avent</title>
+        <meta
+            name="description"
+            content="Politique de confidentialité de l'application Mon calendrier de l'avent : données collectées, finalités, hébergement et droits des personnes utilisatrices."
+        />
+        <link rel="icon" href="data:," />
+        <style>
+            :root {
+                --bg: #f7f5f6;
+                --surface: #ffffff;
+                --text: #1c1c1e;
+                --text-muted: #55555c;
+                --accent: #0b2956;
+                --border: #e4e0e2;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #0b0b0d;
+                    --surface: #17171a;
+                    --text: #f2f0f1;
+                    --text-muted: #b3b0b3;
+                    --accent: #8fb2e8;
+                    --border: #2a2a2e;
+                }
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+                line-height: 1.6;
+            }
+
+            main {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: 3rem 1.5rem 5rem;
+            }
+
+            header {
+                margin-bottom: 2.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+                margin: 0 0 0.5rem;
+                color: var(--text);
+            }
+
+            .subtitle {
+                color: var(--text-muted);
+                font-size: 0.95rem;
+                margin: 0;
+            }
+
+            h2 {
+                font-size: 1.15rem;
+                margin: 2.25rem 0 0.75rem;
+                color: var(--accent);
+            }
+
+            h3 {
+                font-size: 1rem;
+                margin: 1.5rem 0 0.5rem;
+                color: var(--text);
+            }
+
+            p,
+            li {
+                font-size: 0.98rem;
+                color: var(--text);
+            }
+
+            ul {
+                padding-left: 1.25rem;
+            }
+
+            li {
+                margin-bottom: 0.4rem;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1rem 0;
+                font-size: 0.92rem;
+            }
+
+            th,
+            td {
+                text-align: left;
+                padding: 0.6rem 0.75rem;
+                border: 1px solid var(--border);
+                vertical-align: top;
+            }
+
+            th {
+                background: var(--surface);
+                font-weight: 600;
+            }
+
+            a {
+                color: var(--accent);
+            }
+
+            code {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                padding: 0.1rem 0.35rem;
+                font-size: 0.85em;
+            }
+
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 1.25rem 1.5rem;
+            }
+
+            footer {
+                margin-top: 3rem;
+                color: var(--text-muted);
+                font-size: 0.85rem;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>Politique de confidentialité</h1>
+                <p class="subtitle">
+                    Application « Mon calendrier de l'avent » — dernière mise à
+                    jour : 11 août 2026
+                </p>
+            </header>
+
+            <div class="card">
+                <p>
+                    La présente politique décrit les données traitées par
+                    l'application mobile et web
+                    <strong>« Mon calendrier de l'avent »</strong>
+                    (identifiant Android :
+                    <code>com.merrymate.moncalendrierdelavent</code>), ci-après
+                    « l'application », éditée par
+                    <strong>Morgane Lépine Utter</strong>, ci-après « l'éditrice
+                    », personne physique.
+                </p>
+                <p style="margin-bottom: 0">
+                    Pour toute question relative à cette politique ou à vos
+                    données, contactez
+                    <a href="mailto:merrymerrymate@gmail.com"
+                        >merrymerrymate@gmail.com</a
+                    >.
+                </p>
+            </div>
+
+            <h2>1. Données collectées</h2>
+            <p>
+                L'application ne demande ni compte, ni email, ni nom réel. Son
+                utilisation suppose le traitement des données suivantes :
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Données</th>
+                        <th>Pourquoi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Identifiant</td>
+                        <td>
+                            Identifiant unique (UUID) généré et stocké
+                            localement sur votre appareil, dans l'espace privé
+                            de l'application, au premier lancement
+                        </td>
+                        <td>
+                            Reconnaître votre appareil auprès du serveur, sans
+                            lien avec une identité réelle
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pseudonyme</td>
+                        <td>
+                            Pseudonyme attribué automatiquement à partir d'une
+                            liste, non renseigné par vous et non modifiable dans
+                            l'application
+                        </td>
+                        <td>
+                            Vous afficher dans les classements et dans vos
+                            groupes
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Progression et scores</td>
+                        <td>
+                            Jours du calendrier ouverts, réponses aux jeux,
+                            scores obtenus, grilles de bingo cochées
+                        </td>
+                        <td>
+                            Calculer votre score, votre classement et suivre
+                            votre progression
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Groupes</td>
+                        <td>
+                            Nom du groupe créé et liste de ses membres (par
+                            pseudonyme)
+                        </td>
+                        <td>Comparer vos scores avec ceux de vos ami·e·s</td>
+                    </tr>
+                    <tr>
+                        <td>Diagnostic technique</td>
+                        <td>
+                            En cas de plantage ou d'erreur : modèle et version
+                            du système d'exploitation de votre appareil, version
+                            de l'application, trace technique de l'erreur et
+                            écrans consultés juste avant. Votre adresse IP n'est
+                            pas collectée.
+                        </td>
+                        <td>Détecter, comprendre et corriger les bugs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>2. Ce que nous ne collectons pas</h2>
+            <ul>
+                <li>
+                    Aucune inscription par email ni mot de passe : l'application
+                    ne demande pas de compte.
+                </li>
+                <li>
+                    Aucun accès au microphone pour enregistrer ou transmettre du
+                    son : la lecture audio (musiques du calendrier) ne nécessite
+                    aucun enregistrement.
+                </li>
+                <li>Aucune donnée de localisation ni accès à vos contacts.</li>
+                <li>
+                    Aucun outil de mesure d'audience ni SDK publicitaire tiers :
+                    nous utilisons uniquement un outil de diagnostic technique
+                    pour repérer les bugs, détaillé en section 4.
+                </li>
+                <li>
+                    Aucun moyen de paiement : l'application ne propose ni achat
+                    intégré ni abonnement.
+                </li>
+                <li>
+                    Aucune revente ni partage de vos données à des fins
+                    commerciales ou publicitaires.
+                </li>
+            </ul>
+
+            <h2>3. Finalités et base légale</h2>
+            <h3>3.1 Fourniture du service</h3>
+            <p>Base légale : exécution du service demandé.</p>
+            <ul>
+                <li>
+                    Reconnaître votre appareil pour retrouver votre progression,
+                    vos scores et vos groupes d'une session à l'autre
+                </li>
+                <li>
+                    Afficher les classements et le fonctionnement des groupes
+                </li>
+            </ul>
+            <h3>3.2 Sécurité et diagnostic technique</h3>
+            <p>
+                Base légale : intérêt légitime de l'éditrice à assurer la
+                fiabilité et la sécurité de l'application.
+            </p>
+            <ul>
+                <li>
+                    Détection et correction des bugs (voir section 1, «
+                    Diagnostic technique »)
+                </li>
+                <li>Prévention des usages abusifs de l'API</li>
+            </ul>
+
+            <h2>4. Hébergement et sous-traitants</h2>
+            <p>
+                Les données liées à votre identifiant, vos scores et vos groupes
+                sont hébergées et sécurisées par <strong>Neon</strong> (base de
+                données PostgreSQL managée).
+            </p>
+            <p>
+                Les mises à jour de l'application elles-mêmes sont distribuées
+                via l'infrastructure
+                <strong>Expo (EAS Update)</strong>, qui ne reçoit pas vos
+                données de progression, de scores ou de groupes.
+            </p>
+            <p>
+                En cas de plantage ou d'erreur, un rapport technique est envoyé
+                à <strong>Sentry</strong>
+                (voir le détail des données concernées en section 1) ; la
+                collecte de votre adresse IP y est désactivée.
+            </p>
+            <p>
+                Ces prestataires agissent en tant que sous-traitants de
+                l'éditrice et n'utilisent vos données à aucune autre fin. Les
+                échanges entre l'application et ces serveurs sont chiffrés en
+                transit (HTTPS/TLS) : aucune donnée n'est envoyée en clair sur
+                le réseau.
+            </p>
+
+            <h2>5. Conservation des données</h2>
+            <p>
+                Les données associées à votre identifiant (pseudonyme, scores,
+                groupes) sont conservées tant que l'application est utilisée
+                depuis cet appareil. Vous pouvez en demander la suppression à
+                tout moment (voir section 7).
+            </p>
+            <p>
+                Les rapports de diagnostic technique envoyés à Sentry (section
+                4) sont conservés selon la durée de rétention par défaut du
+                compte Sentry de l'éditrice, puis supprimés automatiquement.
+            </p>
+
+            <h2>6. Vos droits</h2>
+            <p>
+                Conformément au Règlement Général sur la Protection des Données
+                (RGPD), vous disposez d'un droit d'accès, de rectification,
+                d'effacement, de limitation, d'opposition et de portabilité sur
+                vos données. Vous pouvez exercer ces droits en écrivant à
+                <a href="mailto:merrymerrymate@gmail.com"
+                    >merrymerrymate@gmail.com</a
+                >, en précisant si possible votre pseudonyme dans l'application.
+                Nous répondons sous 30 jours.
+            </p>
+            <p>
+                Vous disposez également du droit d'introduire une réclamation
+                auprès de la CNIL (Commission Nationale de l'Informatique et des
+                Libertés) :
+                <a
+                    href="https://www.cnil.fr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >www.cnil.fr</a
+                >.
+            </p>
+
+            <h2>7. Suppression de vos données</h2>
+            <p>
+                L'application ne proposant pas de compte, il n'y a pas de bouton
+                de suppression de compte dans ses paramètres. Vous pouvez
+                demander la suppression de vos données (celles associées à votre
+                identifiant : pseudonyme, scores, groupes) à tout moment par
+                email, à
+                <a href="mailto:merrymerrymate@gmail.com"
+                    >merrymerrymate@gmail.com</a
+                >. Vos données sont alors supprimées sous 30 jours à compter de
+                la demande.
+            </p>
+
+            <h2>8. Sécurité</h2>
+            <ul>
+                <li>
+                    Chiffrement des communications entre l'application et le
+                    serveur (HTTPS/TLS)
+                </li>
+                <li>
+                    Identifiant stocké dans l'espace de stockage privé de
+                    l'application, non lisible par les autres applications de
+                    votre appareil
+                </li>
+                <li>
+                    Aucun mot de passe ni identifiant sensible n'est demandé ou
+                    stocké
+                </li>
+            </ul>
+
+            <h2>9. Mineurs</h2>
+            <p>
+                L'application n'est pas spécifiquement destinée aux enfants et
+                ne collecte aucune donnée permettant d'identifier une personne
+                réelle (pas de nom, pas d'email, pas de date de naissance).
+            </p>
+
+            <h2>10. Modifications de cette politique</h2>
+            <p>
+                Cette politique peut être mise à jour pour refléter des
+                évolutions de l'application ou de la réglementation. La date de
+                dernière mise à jour en haut de cette page est actualisée à
+                chaque changement.
+            </p>
+
+            <h2>11. Contact</h2>
+            <p>
+                Pour toute question sur cette politique ou sur vos données, vous
+                pouvez contacter Morgane Lépine Utter, développeuse et éditrice
+                de l'application, à l'adresse suivante :
+                <a href="mailto:merrymerrymate@gmail.com"
+                    >merrymerrymate@gmail.com</a
+                >.
+            </p>
+
+            <footer>© 2026 MerryMate — Mon calendrier de l'avent</footer>
+        </main>
+    </body>
+</html>
