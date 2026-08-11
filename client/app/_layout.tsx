@@ -58,6 +58,10 @@ function RootLayout() {
                                         name="(tabs)"
                                         options={{ headerShown: false }}
                                     />
+                                    <Stack.Screen
+                                        name="onboarding"
+                                        options={{ headerShown: false }}
+                                    />
                                     <Stack.Screen name="+not-found" />
                                 </Stack>
                             </ScoreProvider>

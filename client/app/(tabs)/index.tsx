@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
-import { FirstLaunchModal } from "@/components/calendar/FirstLaunchModal";
 import { NewsModal } from "@/components/calendar/NewsModal";
 
 const today = new Date();
@@ -28,7 +28,6 @@ async function resetDataIfNeeded() {
 }
 
 export default function HomeScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
     const [newsModalVisible, setNewsModalVisible] = useState(false);
 
     const initializeApp = async () => {
@@ -38,7 +37,7 @@ export default function HomeScreen() {
         const news = await AsyncStorage.getItem("isNew");
 
         if (!hasLaunched) {
-            setModalVisible(true);
+            router.replace("/onboarding");
         } else if (news !== "news-groups") {
             setNewsModalVisible(true);
         }
@@ -66,10 +65,6 @@ export default function HomeScreen() {
     return (
         <>
             <Home />
-            <FirstLaunchModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-            />
             <NewsModal
                 modalVisible={newsModalVisible}
                 setModalVisible={setNewsModalVisible}
