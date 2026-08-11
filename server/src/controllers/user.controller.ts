@@ -4,6 +4,35 @@ import { usernames } from "../data/usernames";
 
 const prisma = new PrismaClient();
 
+const FALLBACK_SEGMENTS = ["de_Noël", "du_Nord", "de_Minuit"];
+const MAX_FALLBACK_ATTEMPTS = 200;
+
+// Only used once the curated `usernames` pool is fully taken.
+// First tries completing an existing name with one of a few curated segments (e.g. "Ange_Doré_de_Noël").
+// If that tier is somehow exhausted too, falls back to a random numeric suffix
+// as an ultimate safety net so sign-ups never hard-fail.
+function generateFallbackUsername(usedUsernames: Set<string>): string {
+    for (let attempt = 0; attempt < MAX_FALLBACK_ATTEMPTS; attempt++) {
+        const base = usernames[Math.floor(Math.random() * usernames.length)];
+        const segment =
+            FALLBACK_SEGMENTS[
+                Math.floor(Math.random() * FALLBACK_SEGMENTS.length)
+            ];
+        const username = `${base}_${segment}`;
+        if (!usedUsernames.has(username)) return username;
+    }
+
+    // If we reach this point, the curated pool is completely exhausted.
+    // We fall back to a random numeric suffix.
+    let username: string;
+    do {
+        const base = usernames[Math.floor(Math.random() * usernames.length)];
+        const suffix = Math.floor(Math.random() * 900) + 100;
+        username = `${base}~${suffix}`;
+    } while (usedUsernames.has(username));
+    return username;
+}
+
 export class UserController {
     // GET /users
     async getUsers(request: Request, response: Response, next: NextFunction) {
@@ -58,8 +87,15 @@ export class UserController {
     }
 
     // POST /users
+    // Get-or-create: idempotent on `uuid`. If an account already exists
+    // for this uuid it's returned as-is (no error).
+    // A lost response followed by a client retry lands here too and simply gets
+    // the same account back rather than failing.
     async saveUser(request: Request, response: Response, next: NextFunction) {
         const { uuid, score } = request.body;
+
+        const existingUser = await prisma.user.findUnique({ where: { uuid } });
+        if (existingUser) return existingUser;
 
         const usedUsers = await prisma.user.findMany({
             select: { username: true },
@@ -67,23 +103,34 @@ export class UserController {
         const usedUsernames = new Set(usedUsers.map((u) => u.username));
 
         const availableUsernames = usernames.filter(
-            (name) => !usedUsernames.has(name)
+            (name) => !usedUsernames.has(name),
         );
 
-        if (availableUsernames.length === 0) {
-            return { status: 404, message: "No username available" };
+        // The curated pool is finite. Normally there's plenty of room,
+        // but if it ever runs dry we fall back to reusing a name with a random suffix
+        // instead of blocking sign-ups with a 404.
+        const username =
+            availableUsernames.length > 0
+                ? availableUsernames[
+                      Math.floor(Math.random() * availableUsernames.length)
+                  ]
+                : generateFallbackUsername(usedUsernames);
+
+        try {
+            return await prisma.user.create({
+                data: { uuid, username, score: score ?? 0 },
+            });
+        } catch (err: any) {
+            // Two near-simultaneous requests for the same brand-new uuid
+            // (e.g. a double tap) can both pass the findUnique check above
+            // before either has inserted. Whichever loses the race just
+            // falls back to reading the row the winner created.
+            if (err?.code === "P2002") {
+                const user = await prisma.user.findUnique({ where: { uuid } });
+                if (user) return user;
+            }
+            throw err;
         }
-
-        const randomIndex = Math.floor(
-            Math.random() * availableUsernames.length
-        );
-        const username = availableUsernames[randomIndex];
-
-        const user = await prisma.user.create({
-            data: { uuid, username, score },
-        });
-
-        return user;
     }
 
     // DELETE /users/:uuid

@@ -1,12 +1,4 @@
-import React, {
-    createContext,
-    useContext,
-    useState,
-    useEffect,
-    useMemo,
-} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getUser } from "@/services/user.service";
+import React, { createContext, useContext, useState, useMemo } from "react";
 
 interface UserContextType {
     username: string | null;
@@ -26,34 +18,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const [userUuid, setUserUuid] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
 
-    const loadUserData = async () => {
-        const storedUsername = await AsyncStorage.getItem("username");
-        const storedUuid = await AsyncStorage.getItem("userUuid");
-
-        if (storedUsername) setUsername(storedUsername);
-        if (storedUuid) setUserUuid(storedUuid);
-    };
-
-    useEffect(() => {
-        loadUserData();
-    }, []);
-
-    // Fetch userId from backend if we have a UUID
-    useEffect(() => {
-        const fetchUserId = async () => {
-            if (!userUuid) return;
-
-            try {
-                const user = await getUser(userUuid);
-                if (user) setUserId(user.id);
-            } catch (error) {
-                console.log("Error fetching userId:", error);
-            }
-        };
-
-        fetchUserId();
-    }, [userUuid]);
-
     const value = useMemo(
         () => ({
             username,
@@ -63,7 +27,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
             userId,
             setUserId,
         }),
-        [username, userUuid, userId]
+        [username, userUuid, userId],
     );
 
     return (

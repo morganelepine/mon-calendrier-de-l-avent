@@ -1,25 +1,13 @@
 import { User } from "@/types/types";
-import { apiFetch, ApiError } from "@/services/apiFetch";
+import { apiFetch } from "@/services/apiFetch";
 
-export const saveUser = async (
-    userUuid: string,
-    score: number,
-): Promise<string> => {
-    const user = await apiFetch<User>("/users", {
+// Idempotent: returns the existing account for this uuid if there is one,
+// otherwise creates it.
+export const getOrCreateUser = async (userUuid: string): Promise<User> => {
+    return apiFetch<User>("/users", {
         method: "POST",
-        body: { uuid: userUuid, score },
+        body: { uuid: userUuid, score: 0 },
     });
-
-    return user.username;
-};
-
-export const getUser = async (userUuid: string): Promise<User | null> => {
-    try {
-        return await apiFetch<User>(`/users/${userUuid}`);
-    } catch (err) {
-        if (err instanceof ApiError && err.status === 404) return null;
-        throw err;
-    }
 };
 
 export async function searchUsers(

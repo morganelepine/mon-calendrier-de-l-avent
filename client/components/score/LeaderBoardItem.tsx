@@ -3,12 +3,19 @@ import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 
 const ITEM_HEIGHT = 44;
+const MAX_USERNAME_LENGTH = 24;
 
 interface LeaderBoardItemProps {
     index: number;
     item: { id?: number; username: string; score: number };
     username: string | null;
     onPress?: (item: { id?: number; username: string; score: number }) => void;
+}
+
+function truncateUsername(name: string): string {
+    return name.length > MAX_USERNAME_LENGTH
+        ? `${name.slice(0, MAX_USERNAME_LENGTH)}...`
+        : name;
 }
 
 export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
@@ -45,9 +52,14 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                 >
                     {index + 1}
                 </ThemedText>
-                <Pressable onPress={() => onPress?.(item)}>
+                <Pressable
+                    style={styles.usernameContainer}
+                    onPress={() => onPress?.(item)}
+                >
                     <ThemedText
+                        numberOfLines={1}
                         style={{
+                            fontSize: 15,
                             color:
                                 item.username === username
                                     ? Colors.snow
@@ -58,7 +70,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                                     : "Poppins",
                         }}
                     >
-                        {item.username}
+                        {truncateUsername(item.username)}
                     </ThemedText>
                 </Pressable>
                 <ThemedText
@@ -95,6 +107,9 @@ const styles = StyleSheet.create({
     rank: {
         fontFamily: "PoppinsBold",
         color: Colors.blue,
+    },
+    usernameContainer: {
+        flexShrink: 1,
     },
     score: { fontFamily: "PoppinsBold", color: Colors.blue },
 });

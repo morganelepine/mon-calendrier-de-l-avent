@@ -183,9 +183,9 @@ export class ScoreController {
                 score: {
                     gt: 0, // greater than 0
                 },
-                updatedAt: {
-                    gte: fiveDaysAgo,
-                },
+                // updatedAt: {
+                //     gte: fiveDaysAgo,
+                // },
             },
             select: {
                 username: true,
