@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { getContentsByDay } from "@/services/content.service";
 import { Article } from "@/components/content/story/Article";
@@ -9,13 +10,21 @@ export default function StoryScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = Number.parseInt(id, 10);
 
-    const { story } = getContentsByDay(dayId) as { story: Content };
+    const [story, setStory] = useState<Content>();
+
+    useEffect(() => {
+        getContentsByDay(dayId).then((contents) => setStory(contents.story));
+    }, [dayId]);
+
+    if (!story) {
+        return null;
+    }
 
     return (
         <>
             {dayId === 1 ? <StoryIntro story={story} dayId={dayId} /> : null}
-            {story.content3 === "article" ? <Article story={story} /> : null}
-            {story.content3 === "story" ? (
+            {story.subType === "article" ? <Article story={story} /> : null}
+            {story.subType === "story" ? (
                 <Story story={story} dayId={dayId} />
             ) : null}
         </>

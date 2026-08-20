@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StyleSheet, View, ToastAndroid } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
@@ -8,13 +9,19 @@ import { OtherGames } from "@/components/content/games/others/OtherGames";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
 import { saveScore } from "@/services/score.service";
+import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { games } = getContentsByDay(dayId);
+    const [games, setGames] = useState<Content[]>([]);
+
+    useEffect(() => {
+        getContentsByDay(dayId).then((contents) => setGames(contents.games));
+    }, [dayId]);
+
     const { gamesByType, type } = classifyGames(games);
 
     const setScore = async (

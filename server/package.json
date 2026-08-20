@@ -14,6 +14,7 @@
         "typescript": "^5.9.2"
     },
     "dependencies": {
+        "@notionhq/client": "^5.24.0",
         "@prisma/client": "^6.15.0",
         "@sentry/node": "^10.69.0",
         "body-parser": "^1.19.1",
@@ -27,6 +28,8 @@
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate deploy",
         "prisma:seed:appconfig": "ts-node prisma/seeds/appconfig.seeds.ts",
+        "migrate:contents-to-postgres": "ts-node scripts/migrateContentsToPostgres.ts",
+        "admin:hash-password": "ts-node scripts/hashAdminPassword.ts",
         "db:setup": "npm run prisma:generate && npm run prisma:migrate && npm run prisma:seed:appconfig",
         "postinstall": "prisma generate",
         "start": "node dist/index.js",

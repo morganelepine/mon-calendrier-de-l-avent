@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
-import { horoscope } from "@/data/horoscope_data";
+import { horoscope } from "@/data/day-25-gifts/horoscope_data";
 import { ThemedText } from "@/components/ThemedText";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 import { Colors } from "@/constants/Colors";

@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ContentButton } from "@/components/content/ContentButton";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { getContentsByDay } from "@/services/content.service";
+import { Content } from "@/interfaces/contentInterface";
 import { ContentType } from "@/enums/enums";
 
 type DayContentProps = {
@@ -9,7 +11,18 @@ type DayContentProps = {
 };
 
 export const DayContent = ({ dayId }: DayContentProps) => {
-    const { anecdote, story, ideas, games } = getContentsByDay(dayId);
+    const [dayContents, setDayContents] = useState<{
+        anecdote?: Content;
+        story?: Content;
+        ideas: Content[];
+        games: Content[];
+    }>({ ideas: [], games: [] });
+
+    useEffect(() => {
+        getContentsByDay(dayId).then(setDayContents);
+    }, [dayId]);
+
+    const { anecdote, story, ideas, games } = dayContents;
 
     return (
         <View style={styles.contentsContainer}>

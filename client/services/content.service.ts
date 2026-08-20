@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
-import { anecdotesData } from "@/data/SheetToJSON.Anecdotes";
-import { ideasData } from "@/data/SheetToJSON.Ideas";
-import { gamesData } from "@/data/SheetToJSON.Games";
-import { storyData } from "@/data/SheetToJSON.Story";
+import { getAllContents } from "@/services/contents.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType, GameType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
@@ -22,21 +19,31 @@ interface DayContents {
     games: Content[];
 }
 
-export const getContentsByDay = (dayId: number): DayContents => {
-    const anecdote: Content | undefined = anecdotesData.find(
-        (anecdote) => anecdote.dayNumber === dayId
+// Fetched once per app session (all 120 rows are small), then reused
+// synchronously by every screen that asks for a given day's content.
+let contentsPromise: Promise<Content[]> | null = null;
+const getCachedContents = (): Promise<Content[]> => {
+    contentsPromise ??= getAllContents();
+    return contentsPromise;
+};
+
+export const getContentsByDay = async (dayId: number): Promise<DayContents> => {
+    const allContents = await getCachedContents();
+
+    const anecdote: Content | undefined = allContents.find(
+        (content) => content.type === ContentType.Anecdote && content.dayNumber === dayId,
     );
 
-    const story: Content | undefined = storyData.find(
-        (story) => story.dayNumber === dayId
+    const story: Content | undefined = allContents.find(
+        (content) => content.type === ContentType.Story && content.dayNumber === dayId,
     );
 
-    const ideas: Content[] = ideasData.filter(
-        (idea) => idea.dayNumber === dayId
+    const ideas: Content[] = allContents.filter(
+        (content) => content.type === ContentType.Idea && content.dayNumber === dayId,
     );
 
-    const games: Content[] = gamesData.filter(
-        (game) => game.dayNumber === dayId
+    const games: Content[] = allContents.filter(
+        (content) => content.type === ContentType.Game && content.dayNumber === dayId,
     );
 
     return {
@@ -62,9 +69,6 @@ export const getContentTitle = (
         case ContentType.Story:
             return "S'inspirer";
         case ContentType.Anecdote:
-        case ContentType.Word:
-        case ContentType.Song:
-        case ContentType.Drink:
             return "S'instruire";
         default:
             return "Contenu du jour";
@@ -88,7 +92,7 @@ export const classifyGames = (
     let type = "";
 
     games.forEach((game) => {
-        switch (game.content5) {
+        switch (game.subType) {
             case GameType.Pendu:
                 gamesByType.pendu = game;
                 type = ContentType.Game;

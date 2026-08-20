@@ -9,8 +9,8 @@ import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Horoscope } from "@/components/days/Day25/Horoscope";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { wallpapers } from "@/data/wallpapers_data";
-import { recipes } from "@/data/recipes_data";
+import { wallpapers } from "@/data/day-25-gifts/wallpapers_data";
+import { recipes } from "@/data/day-25-gifts/recipes_data";
 
 export default function Day25Screen() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -132,7 +132,7 @@ export default function Day25Screen() {
                                 <Image
                                     source={{
                                         uri: getCloudinaryImageUrl(
-                                            "defis_mimes_o5mj3a"
+                                            "defis_mimes_o5mj3a",
                                         ),
                                     }}
                                     style={styles.thumbnail}
@@ -170,7 +170,7 @@ export default function Day25Screen() {
                                 <Image
                                     source={{
                                         uri: getCloudinaryImageUrl(
-                                            "bingo_blanc_rvflsz"
+                                            "bingo_blanc_rvflsz",
                                         ),
                                     }}
                                     style={styles.thumbnail}
@@ -205,7 +205,7 @@ export default function Day25Screen() {
                         style={styles.button}
                         onPress={() =>
                             Linking.openURL(
-                                "https://forms.gle/8PwdwpqvP6aqpyap8"
+                                "https://forms.gle/8PwdwpqvP6aqpyap8",
                             )
                         }
                     >

@@ -35,14 +35,14 @@ export const Quiz: React.FC<QuizProps> = ({ games, setScore }) => {
 
     return (
         <>
-            {currentGame.content5 === GameType.QuizEmojis && (
+            {currentGame.subType === GameType.QuizEmojis && (
                 <ThemedText style={{ marginVertical: 10 }}>
                     Retrouvez dans quelle chanson se trouve ce refrain en
                     émojis&nbsp;:
                 </ThemedText>
             )}
 
-            {currentGame.content5 === GameType.QuizEmojis ? (
+            {currentGame.subType === GameType.QuizEmojis ? (
                 <CustomMarkdown
                     style={{
                         fontSize: 26,

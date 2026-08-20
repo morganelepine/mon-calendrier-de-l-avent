@@ -18,14 +18,18 @@ export default function IdeaScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { ideas } = getContentsByDay(dayId) as { ideas: Content[] };
+    const [ideas, setIdeas] = useState<Content[]>([]);
 
     const [imageDimensions, setImageDimensions] = useState<{
         [key: string]: { width: number; height: number };
     }>({});
 
+    useEffect(() => {
+        getContentsByDay(dayId).then((contents) => setIdeas(contents.ideas));
+    }, [dayId]);
+
     const getmodalImage = (idea: Content) => {
-        if (idea.content5 === IdeaType.Recipe) {
+        if (idea.subType === IdeaType.Recipe) {
             const imageSource = idea.media ? idea.media : "se-divertir_xvdksq";
 
             setModalBackground(imageSource);
@@ -53,24 +57,24 @@ export default function IdeaScreen() {
             }
             getmodalImage(idea);
         }
-    }, []);
+    }, [ideas]);
 
     return (
         <>
             {ideas.map((idea) => (
                 <ContentScreenWrapper
-                    contentType={idea.type}
+                    contentType={idea.subType}
                     backgroundImage={modalBackground}
                     key={idea.id}
                     dayId={dayId}
                 >
                     <CustomScrollView>
                         <View>
-                            {idea.content5 === IdeaType.Recipe && (
+                            {idea.subType === IdeaType.Recipe && (
                                 <Recipe content={idea} />
                             )}
 
-                            {idea.content5 === IdeaType.List && (
+                            {idea.subType === IdeaType.List && (
                                 <List
                                     idea={idea}
                                     imageWidth={
@@ -82,7 +86,7 @@ export default function IdeaScreen() {
                                 />
                             )}
 
-                            {idea.content5 === IdeaType.Idea && (
+                            {idea.subType === IdeaType.Idea && (
                                 <Reco idea={idea} />
                             )}
                         </View>

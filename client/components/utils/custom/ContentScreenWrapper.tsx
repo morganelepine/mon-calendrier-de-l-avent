@@ -4,7 +4,7 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
-import { ContentType } from "@/enums/enums";
+import { ContentType, IdeaType } from "@/enums/enums";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
@@ -39,6 +39,8 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                 return "La recette du\u00A0jour";
             case ContentType.Idea:
                 return "L'idée du jour";
+            case IdeaType.List:
+                return "Une petite sélection";
             default:
                 return "Contenu du jour";
         }

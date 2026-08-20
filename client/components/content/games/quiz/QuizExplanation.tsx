@@ -38,15 +38,15 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
                     </>
                 )}
 
-                {currentGame.content5 === GameType.QuizNoel ||
-                (currentGame.content5 === GameType.QuizEmojis &&
+                {currentGame.subType === GameType.QuizNoel ||
+                (currentGame.subType === GameType.QuizEmojis &&
                     currentGame.content4) ? (
                     <ThemedText style={styles.explanations}>
                         {currentGame.content4}
                     </ThemedText>
                 ) : null}
 
-                {currentGame.content5 === GameType.QuizCitation &&
+                {currentGame.subType === GameType.QuizCitation &&
                 currentGame.content4 ? (
                     <View style={styles.videoContainer}>
                         <Video videoId={currentGame.content4} />

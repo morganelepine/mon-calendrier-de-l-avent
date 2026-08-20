@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Href, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
@@ -12,11 +13,19 @@ export default function AnecdoteScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const { anecdote } = getContentsByDay(dayId) as { anecdote: Content };
+    const [anecdote, setAnecdote] = useState<Content>();
+
+    useEffect(() => {
+        getContentsByDay(dayId).then((contents) => setAnecdote(contents.anecdote));
+    }, [dayId]);
+
+    if (!anecdote) {
+        return null;
+    }
 
     return (
         <ContentScreenWrapper
-            contentType={anecdote.type}
+            contentType={anecdote.subType}
             backgroundImage={"kiwi1_r7kihz"}
             dayId={dayId}
         >

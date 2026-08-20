@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Gift25 } from "@/components/days/Day25/Gift25";
 import { Snowfall } from "@/components/utils/Snow";
 import { Colors } from "@/constants/Colors";
-import { gifts_day25 } from "@/data/gifts_day25_data";
+import { gifts_day25 } from "@/data/day-25-gifts/gifts_day25_data";
 
 interface Day25Props {
     totalScore: number;

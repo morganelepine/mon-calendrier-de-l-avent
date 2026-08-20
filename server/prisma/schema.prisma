@@ -65,3 +65,46 @@ model GroupMember {
   @@index([groupId])
   @@index([userId])
 }
+
+enum ContentFamily {
+  story
+  idea
+  anecdote
+  game
+}
+
+model Content {
+  id        Int               @id @default(autoincrement())
+  dayNumber Int // not unique - several rows can share a day (e.g. up to 3 games/day)
+  type      ContentFamily
+  subType   String            @default("") // fine-grained kind within type - see server/README.md
+  title     String
+  content1  String            @default("")
+  content2  String            @default("")
+  content3  String            @default("")
+  content4  String            @default("")
+  media     String            @default("")
+  published Boolean           @default(true)
+  isNew     Boolean           @default(false) @map("new")
+  listItems ContentListItem[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@index([dayNumber])
+  @@index([type, subType])
+}
+
+model ContentListItem {
+  id          Int     @id @default(autoincrement())
+  contentId   Int
+  content     Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  order       Int // 0-based position in the list - replaces the JSON array index
+  title       String
+  description String  @default("")
+  author      String  @default("")
+  image       String  @default("")
+  url         String  @default("")
+
+  @@unique([contentId, order])
+  @@index([contentId])
+}

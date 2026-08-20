@@ -66,7 +66,7 @@ Le client utilise deux variables Expo publiques pour choisir l'API selon l'envir
 Fichier conseillé : `client/.env`
 
 ```env
-EXPO_PUBLIC_API_URL_DEV=http://localhost:3000
+EXPO_PUBLIC_API_URL_DEV=http://localhost:3001
 EXPO_PUBLIC_API_URL_PROD=https://your-production-api.example.com
 EXPO_PUBLIC_SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
 ```
@@ -81,7 +81,7 @@ En production, elle lit `EXPO_PUBLIC_API_URL_PROD`.
 Le serveur attend au minimum :
 
 ```env
-PORT=3000
+PORT=3001
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
 SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
 ```
@@ -107,7 +107,7 @@ cd server
 npm run dev
 ```
 
-API disponible sur `http://localhost:3000`.
+API disponible sur `http://localhost:3001`.
 
 ### 3. Lancer le client
 

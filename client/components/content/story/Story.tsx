@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, Pressable, ToastAndroid } from "react-native";
+import { StyleSheet, Pressable, Platform, ToastAndroid } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
@@ -14,10 +14,15 @@ interface StoryProps {
 
 export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
     useEffect(() => {
-        if (story?.dayNumber === 13 || story?.dayNumber === 19) {
+        // ToastAndroid is Android-only — undefined on web/iOS, so it would
+        // throw there without this guard.
+        if (
+            Platform.OS === "android" &&
+            (story?.dayNumber === 13 || story?.dayNumber === 19)
+        ) {
             ToastAndroid.show(
                 "Une nouvelle histoire commence !",
-                ToastAndroid.LONG
+                ToastAndroid.LONG,
             );
         }
     }, [story.dayNumber]);
@@ -39,13 +44,13 @@ export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
             <CustomMarkdown>{story.content2}</CustomMarkdown>
 
             <ThemedText style={styles.end}>
-                {story.content5 == "end" ? "The end" : "La suite demain..."}
+                {story.content3 === "end" ? "The end" : "La suite demain..."}
             </ThemedText>
 
             <Pressable
                 onPress={() =>
                     router.push(
-                        `/calendar/day/${String(dayId)}/content/story/storygame`
+                        `/calendar/day/${String(dayId)}/content/story/storygame`,
                     )
                 }
                 style={styles.button}
