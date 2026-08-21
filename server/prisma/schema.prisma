@@ -11,7 +11,6 @@ model User {
   id           Int      @id @default(autoincrement())
   uuid         String   @unique
   username     String   @unique
-  score        Int      @default(0)
   scoreHistory Score[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -20,6 +19,13 @@ model User {
   memberships GroupMember[]
 }
 
+// No stored running total on purpose: a user's score for a given year is
+// always derived by summing Score.points where year = that year. That keeps
+// it impossible for a counter to drift from the rows that back it, and means
+// a new calendar season needs no reset step at all - it just has no rows yet
+// for that year. `year` is set explicitly at creation time (server's current
+// calendar year), not derived from `earnedAt`, so past years stay queryable
+// (e.g. a "last year's score" figure) without ever deleting anything.
 model Score {
   id             Int      @id @default(autoincrement())
   userId         Int
@@ -28,10 +34,11 @@ model Score {
   points         Int
   reason         String
   questionNumber Int?
+  year           Int
   earnedAt       DateTime @default(now())
 
-  @@index([userId, day])
-  @@index([userId, reason])
+  @@index([userId, year, day])
+  @@index([year])
 }
 
 model AppConfig {

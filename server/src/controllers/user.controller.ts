@@ -92,7 +92,7 @@ export class UserController {
     // A lost response followed by a client retry lands here too and simply gets
     // the same account back rather than failing.
     async saveUser(request: Request, response: Response, next: NextFunction) {
-        const { uuid, score } = request.body;
+        const { uuid } = request.body;
 
         const existingUser = await prisma.user.findUnique({ where: { uuid } });
         if (existingUser) return existingUser;
@@ -118,7 +118,7 @@ export class UserController {
 
         try {
             return await prisma.user.create({
-                data: { uuid, username, score: score ?? 0 },
+                data: { uuid, username },
             });
         } catch (err: any) {
             // Two near-simultaneous requests for the same brand-new uuid
