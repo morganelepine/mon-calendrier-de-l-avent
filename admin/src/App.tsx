@@ -7,7 +7,7 @@ import { ContentEditPage } from "./pages/ContentEditPage";
 
 function ProtectedRoute({ children }: Readonly<{ children: ReactNode }>) {
     const { authenticated } = useAuth();
-    if (authenticated === null) return <p>Chargement...</p>;
+    if (authenticated === null) return <p className="loading">Ho ho ho...</p>;
     if (!authenticated) return <Navigate to="/login" replace />;
     return <>{children}</>;
 }

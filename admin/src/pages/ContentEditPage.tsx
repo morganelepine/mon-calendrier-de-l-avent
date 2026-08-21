@@ -132,7 +132,7 @@ export function ContentEditPage() {
         });
     };
 
-    if (loading) return <p>Chargement...</p>;
+    if (loading) return <p className="loading">Ho ho ho...</p>;
 
     const labels = CONTENT_FIELD_LABELS[form.type];
     const showListEditor = form.type === "idea" && form.subType === "list";
@@ -369,7 +369,7 @@ export function ContentEditPage() {
                 {error && <p className="error">{error}</p>}
 
                 <div className="actions">
-                    <button type="submit" disabled={saving}>
+                    <button type="submit" className="primary" disabled={saving}>
                         {saving ? "Enregistrement..." : "Enregistrer"}
                     </button>
                     {!isNew && (
