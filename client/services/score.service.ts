@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GameState, Score } from "@/interfaces/scoreInterface";
 import { apiFetch } from "@/services/apiFetch";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export const saveScore = async (
     dayId: number | null,
@@ -8,7 +9,7 @@ export const saveScore = async (
     reason: string,
     questionNumber?: number
 ): Promise<void> => {
-    const userUuid = await AsyncStorage.getItem("userUuid");
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
 
     await apiFetch("/scores", {
         method: "POST",
@@ -17,7 +18,7 @@ export const saveScore = async (
 };
 
 export const getTotalScore = async (): Promise<number> => {
-    const userUuid = await AsyncStorage.getItem("userUuid");
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
     if (!userUuid) return 0;
 
     const data = await apiFetch<{ totalScore: number }>(
@@ -27,7 +28,7 @@ export const getTotalScore = async (): Promise<number> => {
 };
 
 export const getUserScoresByDay = async (): Promise<Score[]> => {
-    const userUuid = await AsyncStorage.getItem("userUuid");
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
     if (!userUuid) return [];
 
     return apiFetch<Score[]>(`/scores/user/${userUuid}`);
@@ -45,20 +46,20 @@ export const saveQuestionPlayed = async (
     day: number,
     questionNumber: number
 ): Promise<void> => {
-    const json = await AsyncStorage.getItem("gameState");
+    const json = await AsyncStorage.getItem(StorageKeys.gameState);
     const gameState: GameState = json ? JSON.parse(json) : {};
 
     if (!gameState[day]) gameState[day] = {};
     gameState[day][questionNumber] = true;
 
-    await AsyncStorage.setItem("gameState", JSON.stringify(gameState));
+    await AsyncStorage.setItem(StorageKeys.gameState, JSON.stringify(gameState));
 };
 
 export const isQuestionPlayed = async (
     day: number,
     questionNumber: number
 ): Promise<boolean> => {
-    const json = await AsyncStorage.getItem("gameState");
+    const json = await AsyncStorage.getItem(StorageKeys.gameState);
     const gameState: GameState = json ? JSON.parse(json) : {};
 
     return gameState[day]?.[questionNumber] ?? false;

@@ -1,47 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
-import { NewsModal } from "@/components/calendar/NewsModal";
-
-const today = new Date();
-const currentYear = today.getFullYear();
-
-async function resetDataIfNeeded() {
-    try {
-        const lastResetYear = await AsyncStorage.getItem("lastResetYear");
-        if (!lastResetYear || lastResetYear !== currentYear.toString()) {
-            await AsyncStorage.multiRemove([
-                "calendar",
-                "scoresData",
-                "gameState",
-                "storyGameAnswers",
-                "bingo_clicked_cells",
-                "bingo_grid",
-                "bingo_activities_clicked_cells",
-            ]);
-            await AsyncStorage.setItem("lastResetYear", currentYear.toString());
-        }
-    } catch (error) {
-        console.error("Error resetting data: ", error);
-    }
-}
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function HomeScreen() {
-    const [newsModalVisible, setNewsModalVisible] = useState(false);
-
     const initializeApp = async () => {
-        await resetDataIfNeeded();
-
-        const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-        const news = await AsyncStorage.getItem("isNew");
+        const hasLaunched = await AsyncStorage.getItem(StorageKeys.hasLaunched);
 
         if (!hasLaunched) {
             router.replace("/onboarding");
-        } else if (news !== "news-groups") {
-            setNewsModalVisible(true);
         }
 
+        // ------- For testing purposes
         // await AsyncStorage.multiRemove([
         //     "userUuid",
         //     "playMusic",
@@ -62,13 +33,5 @@ export default function HomeScreen() {
         initializeApp();
     }, []);
 
-    return (
-        <>
-            <Home />
-            <NewsModal
-                modalVisible={newsModalVisible}
-                setModalVisible={setNewsModalVisible}
-            />
-        </>
-    );
+    return <Home />;
 }

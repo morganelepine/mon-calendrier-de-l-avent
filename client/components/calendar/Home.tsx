@@ -137,5 +137,6 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontSize: 20,
         marginBottom: 30,
+        textAlign: "center",
     },
 });

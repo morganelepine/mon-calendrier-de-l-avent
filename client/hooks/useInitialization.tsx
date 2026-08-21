@@ -4,6 +4,7 @@ import uuid from "react-native-uuid";
 import { getOrCreateUser } from "@/services/user.service";
 import { logClient } from "@/services/log.service";
 import { useUser } from "@/contexts/UserContext";
+import { StorageKeys, YEARLY_RESET_KEYS } from "@/constants/storageKeys";
 
 const MAX_RETRY = 3;
 const USER_RETRY_DELAY = 1500;
@@ -40,20 +41,37 @@ async function withRetry<T>(
 
 // Reads the locally stored uuid, or generates and persists a new one.
 async function getOrCreateUUID(): Promise<string> {
-    const stored = await AsyncStorage.getItem("userUuid");
+    const stored = await AsyncStorage.getItem(StorageKeys.userUuid);
     if (stored) return ensureStringUUID(stored);
 
     const newUuid = ensureStringUUID(uuid.v4());
-    await AsyncStorage.setItem("userUuid", newUuid);
+    await AsyncStorage.setItem(StorageKeys.userUuid, newUuid);
     return newUuid;
 }
 
 async function cacheUser(uuid: string, username: string, userId: number) {
     await AsyncStorage.multiSet([
-        ["userUuid", uuid],
-        ["username", username],
-        ["userId", String(userId)],
+        [StorageKeys.userUuid, uuid],
+        [StorageKeys.username, username],
+        [StorageKeys.userId, String(userId)],
     ]);
+}
+
+// Wipes last year's calendar/game progress once per year,
+// before anything else reads it.
+async function resetDataIfNeeded() {
+    try {
+        const currentYear = new Date().getFullYear().toString();
+        const lastResetYear = await AsyncStorage.getItem(
+            StorageKeys.lastResetYear,
+        );
+        if (lastResetYear === currentYear) return;
+
+        await AsyncStorage.multiRemove([...YEARLY_RESET_KEYS]);
+        await AsyncStorage.setItem(StorageKeys.lastResetYear, currentYear);
+    } catch (error) {
+        await logClient("Yearly data reset failed", { error: String(error) });
+    }
 }
 
 // Initializes the user context by ensuring a uuid exists,
@@ -128,10 +146,12 @@ export function useInitialization() {
     async function init() {
         setStatus("loading");
 
+        await resetDataIfNeeded();
+
         const [cachedUuid, cachedUsername, cachedUserId] = await Promise.all([
-            AsyncStorage.getItem("userUuid"),
-            AsyncStorage.getItem("username"),
-            AsyncStorage.getItem("userId"),
+            AsyncStorage.getItem(StorageKeys.userUuid),
+            AsyncStorage.getItem(StorageKeys.username),
+            AsyncStorage.getItem(StorageKeys.userId),
         ]);
 
         // Fast path: we already know who this user is, so show the app right away

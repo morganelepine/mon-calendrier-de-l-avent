@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastAndroid } from "react-native";
 import { createGroup } from "@/services/group.service";
 import { logClient } from "@/services/log.service";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export function useCreateGroup(userId: number | null, userUuid: string | null) {
     return async function createMyGroup(): Promise<boolean> {
@@ -9,7 +10,7 @@ export function useCreateGroup(userId: number | null, userUuid: string | null) {
 
         try {
             await createGroup(userId);
-            await AsyncStorage.setItem("groupCreated", "true");
+            await AsyncStorage.setItem(StorageKeys.groupCreated, "true");
             return true;
         } catch (error) {
             await logClient("Group creation failed", {

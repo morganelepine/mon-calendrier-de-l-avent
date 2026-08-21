@@ -5,12 +5,15 @@ import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { NoGroupModal } from "@/components/group/NoGroupModal";
 import { Colors } from "@/constants/Colors";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export const ScoresButton = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const goToMyGroup = async () => {
-        const isGroupCreated = await AsyncStorage.getItem("groupCreated");
+        const isGroupCreated = await AsyncStorage.getItem(
+            StorageKeys.groupCreated
+        );
         if (isGroupCreated) {
             router.navigate("/scores/group");
         } else {

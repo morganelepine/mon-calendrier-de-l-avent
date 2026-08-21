@@ -5,6 +5,7 @@ import { useAudioPlayer } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
+import { StorageKeys } from "@/constants/storageKeys";
 
 interface AudioPlayerProps {
     music: string;
@@ -32,7 +33,9 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
     useEffect(() => {
         const getMusicPreference = async (): Promise<void> => {
             try {
-                const musicPref = await AsyncStorage.getItem("playMusic");
+                const musicPref = await AsyncStorage.getItem(
+                    StorageKeys.playMusic
+                );
                 setPlayMusic(musicPref as MusicPreference);
             } catch (error) {
                 console.error("Error fetching music preference", error);

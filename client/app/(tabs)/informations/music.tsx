@@ -5,13 +5,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function MusicScreen() {
     const [playMusic, setPlayMusic] = useState<MusicPreference>("no");
 
     useEffect(() => {
         const getMusicPreference = async (): Promise<void> => {
-            const musicPref = await AsyncStorage.getItem("playMusic");
+            const musicPref = await AsyncStorage.getItem(
+                StorageKeys.playMusic
+            );
             if (musicPref === "yes" || musicPref === "no") {
                 setPlayMusic(musicPref as MusicPreference);
             } else {
@@ -25,7 +28,10 @@ export default function MusicScreen() {
         preference: MusicPreference
     ): Promise<void> => {
         try {
-            await AsyncStorage.setItem("playMusic", preference ?? "no");
+            await AsyncStorage.setItem(
+                StorageKeys.playMusic,
+                preference ?? "no"
+            );
             setPlayMusic(preference);
         } catch (error) {
             console.error("Error setting music preference", error);

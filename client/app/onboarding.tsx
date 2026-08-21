@@ -8,13 +8,14 @@ import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
 import { ONBOARDING_SLIDES } from "@/components/onboarding/onboardingSlides";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function OnboardingScreen() {
     const [index, setIndex] = useState(0);
     const isLast = index === ONBOARDING_SLIDES.length - 1;
 
     const finish = async () => {
-        await AsyncStorage.setItem("hasLaunched", "true");
+        await AsyncStorage.setItem(StorageKeys.hasLaunched, "true");
         router.replace("/");
     };
 

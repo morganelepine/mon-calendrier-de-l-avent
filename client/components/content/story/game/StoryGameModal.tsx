@@ -5,6 +5,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { GameToAnswer } from "@/components/content/story/game/GameToAnswer";
 import { GameAnswered } from "@/components/content/story/game/GameAnswered";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
+import { StorageKeys } from "@/constants/storageKeys";
 
 interface StoryGameModalProps {
     answer: string;
@@ -28,7 +29,9 @@ export const StoryGameModal: React.FC<StoryGameModalProps> = ({
     const [win, setWin] = useState(false);
 
     const loadAnswer = async () => {
-        const stored = await AsyncStorage.getItem("storyGameAnswers");
+        const stored = await AsyncStorage.getItem(
+            StorageKeys.storyGameAnswers
+        );
         if (stored) {
             const answers = JSON.parse(stored) as Record<number, string>;
             if (answers[index]) {

@@ -5,6 +5,7 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 import { saveScore } from "@/services/score.service";
 import { ScoreType } from "@/enums/enums";
+import { StorageKeys } from "@/constants/storageKeys";
 
 interface GameToAnswerProps {
     answer: string;
@@ -37,7 +38,9 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
         setWin(isCorrect);
         setShowResult(true);
 
-        const stored = await AsyncStorage.getItem("storyGameAnswers");
+        const stored = await AsyncStorage.getItem(
+            StorageKeys.storyGameAnswers
+        );
         const answers = stored ? JSON.parse(stored) : {};
 
         if (!answers[index] && isCorrect) {
@@ -72,7 +75,10 @@ export const GameToAnswer: React.FC<GameToAnswerProps> = ({
 
         answers[index] = valueTrim;
 
-        await AsyncStorage.setItem("storyGameAnswers", JSON.stringify(answers));
+        await AsyncStorage.setItem(
+            StorageKeys.storyGameAnswers,
+            JSON.stringify(answers)
+        );
     };
 
     return (

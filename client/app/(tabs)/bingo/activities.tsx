@@ -1,10 +1,12 @@
 import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { bingo_activities } from "@/data/bingos/bingo_activities_data";
-
-const CLICKED_CELLS_KEY = "bingo_activities_clicked_cells";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function BingoActivitiesScreen() {
     return (
-        <BingoGrid clickedCellsKey={CLICKED_CELLS_KEY} grid={bingo_activities} />
+        <BingoGrid
+            clickedCellsKey={StorageKeys.bingoActivitiesClickedCells}
+            grid={bingo_activities}
+        />
     );
 }

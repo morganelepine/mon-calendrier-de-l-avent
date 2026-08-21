@@ -5,6 +5,7 @@ import { Days } from "@/components/days/Days";
 import { daysArray } from "@/data/days_data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Day } from "@/interfaces/dayInterface";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function CalendarScreen() {
     const [days, setDays] = useState<Day[]>([]);
@@ -12,7 +13,9 @@ export default function CalendarScreen() {
     useEffect(() => {
         const getCalendar = async () => {
             try {
-                const calendar = await AsyncStorage.getItem("calendar");
+                const calendar = await AsyncStorage.getItem(
+                    StorageKeys.calendar
+                );
                 if (calendar) {
                     setDays(JSON.parse(calendar));
                 } else {
@@ -28,7 +31,10 @@ export default function CalendarScreen() {
     useEffect(() => {
         const saveCalendar = async () => {
             try {
-                await AsyncStorage.setItem("calendar", JSON.stringify(days));
+                await AsyncStorage.setItem(
+                    StorageKeys.calendar,
+                    JSON.stringify(days)
+                );
             } catch (error) {
                 console.error("Errror saving calendar", error);
             }
