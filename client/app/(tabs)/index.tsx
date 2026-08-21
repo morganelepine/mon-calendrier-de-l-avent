@@ -23,7 +23,6 @@ export default function HomeScreen() {
         //     "bingo_clicked_cells",
         //     "bingo_activities_clicked_cells",
         //     "calendar",
-        //     "storyGameAnswers",
         //     "groupCreated",
         //     "isNew",
         // ]);
