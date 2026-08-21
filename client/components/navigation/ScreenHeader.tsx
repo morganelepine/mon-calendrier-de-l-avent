@@ -22,12 +22,13 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
 
     return (
         <SafeAreaView
+            edges={["top"]}
             style={{
                 backgroundColor,
                 flexDirection: "row",
                 alignItems: "center",
                 paddingHorizontal: 20,
-                paddingVertical: 4,
+                paddingVertical: 8,
             }}
         >
             <Pressable onPress={() => router.back()}>

@@ -30,26 +30,22 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         });
         setDays(updatedDays);
 
-        if (isDecember && dayNumber <= currentDay) {
-            if (dayNumber === currentDay) {
-                try {
-                    await saveScore(
-                        dayNumber,
-                        40,
-                        String(ScoreType.DayOpening),
-                    );
-                } catch (error) {
-                    console.log("Error saving score:", error);
-                    ToastAndroid.show(
-                        "Oops... les points n'ont pas pu être enregistrés.",
-                        ToastAndroid.LONG,
-                    );
-                }
+        // if (isDecember && dayNumber <= currentDay) {
+        if (dayNumber === currentDay) {
+            try {
+                await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
+            } catch (error) {
+                console.log("Error saving score:", error);
+                ToastAndroid.show(
+                    "Oops... les points n'ont pas pu être enregistrés.",
+                    ToastAndroid.LONG,
+                );
             }
-            setDayModal(dayNumber);
-        } else {
-            ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
         }
+        setDayModal(dayNumber);
+        // } else {
+        //     ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
+        // }
     };
 
     return (

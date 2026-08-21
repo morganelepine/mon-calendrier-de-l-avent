@@ -8,7 +8,7 @@ import { logClient } from "@/services/log.service";
 import { MyGroup } from "@/components/group/MyGroup";
 import { NoGroup } from "@/components/group/NoGroup";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 
 export default function GroupScreen() {
     const { username, userId, userUuid } = useUser();
@@ -45,7 +45,7 @@ export default function GroupScreen() {
     // (should be near-instant now, but stay defensive).
     if (loading || !userId) {
         return (
-            <BackgroundImage image="blue_background_darker_d10kn5">
+            <BlueBackground>
                 <View style={{ flex: 1 }}>
                     <ErrorLoading
                         loading={true}
@@ -55,14 +55,14 @@ export default function GroupScreen() {
                         }}
                     />
                 </View>
-            </BackgroundImage>
+            </BlueBackground>
         );
     }
 
     // The fetch actually failed — show the error + retry, not a spinner.
     if (error) {
         return (
-            <BackgroundImage image="blue_background_darker_d10kn5">
+            <BlueBackground>
                 <View style={{ flex: 1 }}>
                     <ErrorLoading
                         loading={false}
@@ -70,7 +70,7 @@ export default function GroupScreen() {
                         refreshScores={() => fetchMyGroup(userId)}
                     />
                 </View>
-            </BackgroundImage>
+            </BlueBackground>
         );
     }
 
@@ -78,13 +78,13 @@ export default function GroupScreen() {
     // instead of spinning forever.
     if (!myGroup) {
         return (
-            <BackgroundImage image="blue_background_darker_d10kn5">
+            <BlueBackground>
                 <NoGroup
                     userId={userId}
                     userUuid={userUuid}
                     onCreated={() => fetchMyGroup(userId)}
                 />
-            </BackgroundImage>
+            </BlueBackground>
         );
     }
 

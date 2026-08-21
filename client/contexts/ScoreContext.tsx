@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getUserScoresByDay, getTotalScore } from "@/services/score.service";
+import { getUserScoresByDay, getScoreSummary } from "@/services/score.service";
 import { Score } from "@/interfaces/scoreInterface";
 
 type ScoreContextType = {
     scoreTotal: number;
+    previousYearScore: number;
     scoreHistory: Score[];
     loading: boolean;
     error: string | null;
@@ -17,6 +18,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
     const [scoreHistory, setScoreHistory] = useState<Score[]>([]);
     const [scoreTotal, setScoreTotal] = useState<number>(0);
+    const [previousYearScore, setPreviousYearScore] = useState<number>(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -24,10 +26,13 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(true);
         setError(null);
         try {
-            const scores = await getUserScoresByDay();
-            const totalScore = await getTotalScore();
+            const [scores, summary] = await Promise.all([
+                getUserScoresByDay(),
+                getScoreSummary(),
+            ]);
             setScoreHistory(Array.isArray(scores) ? scores : []);
-            setScoreTotal(typeof totalScore === "number" ? totalScore : 0);
+            setScoreTotal(summary.totalScore ?? 0);
+            setPreviousYearScore(summary.previousYearScore ?? 0);
         } catch (err: any) {
             console.error("Erreur loading scores:", err);
             setError(
@@ -43,8 +48,22 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     }, [refreshScores]);
 
     const contextValue = React.useMemo(
-        () => ({ scoreTotal, scoreHistory, loading, error, refreshScores }),
-        [scoreTotal, scoreHistory, loading, error, refreshScores]
+        () => ({
+            scoreTotal,
+            previousYearScore,
+            scoreHistory,
+            loading,
+            error,
+            refreshScores,
+        }),
+        [
+            scoreTotal,
+            previousYearScore,
+            scoreHistory,
+            loading,
+            error,
+            refreshScores,
+        ]
     );
 
     return (

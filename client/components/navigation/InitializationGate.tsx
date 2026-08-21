@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ActivityIndicator, Pressable } from "react-native";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { useInitialization } from "@/hooks/useInitialization";
 import { ThemedText } from "@/components/ThemedText";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
@@ -14,11 +15,11 @@ export function InitializationGate({
 
     if (status === "loading") {
         return (
-            <BackgroundImage image="blue_background_darker_d10kn5">
+            <BlueBackground>
                 <View style={styles.container}>
                     <ActivityIndicator size="large" color={Colors.snow} />
                 </View>
-            </BackgroundImage>
+            </BlueBackground>
         );
     }
 

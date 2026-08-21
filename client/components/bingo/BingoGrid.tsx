@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { Bingo } from "@/interfaces/bingoInterface";
 
 interface BingoGridProps {
@@ -20,9 +20,8 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
     useEffect(() => {
         const loadData = async () => {
             try {
-                const savedClicked = await AsyncStorage.getItem(
-                    clickedCellsKey
-                );
+                const savedClicked =
+                    await AsyncStorage.getItem(clickedCellsKey);
 
                 if (savedClicked) {
                     const parsedClicked = JSON.parse(savedClicked);
@@ -44,7 +43,7 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
             try {
                 await AsyncStorage.setItem(
                     clickedCellsKey,
-                    JSON.stringify([...clickedCells])
+                    JSON.stringify([...clickedCells]),
                 );
             } catch (e) {
                 console.error("Error saving clicked:", e);
@@ -66,7 +65,7 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
     };
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
+        <BlueBackground>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.bingoContainer}>
                     {grid.map((cell) => (
@@ -79,7 +78,7 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
                     ))}
                 </View>
             </ScrollView>
-        </BackgroundImage>
+        </BlueBackground>
     );
 };
 

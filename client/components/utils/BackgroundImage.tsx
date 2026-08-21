@@ -1,7 +1,7 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { Image } from "expo-image";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { Colors } from "@/constants/Colors";
 
 interface Props {
     image?: string;
@@ -10,11 +10,11 @@ interface Props {
 
 export const BackgroundImage: React.FC<Props> = ({ image, children }) => {
     const backgroundImage = getCloudinaryImageUrl(
-        image || "blue_background_darker_d10kn5"
+        image || "blue_background_darker_d10kn5",
     );
 
     return (
-        <View style={{ flex: 1, backgroundColor: Colors.blue }}>
+        <BlueBackground>
             <Image
                 source={{ uri: backgroundImage }}
                 style={StyleSheet.absoluteFill}
@@ -23,6 +23,6 @@ export const BackgroundImage: React.FC<Props> = ({ image, children }) => {
                 cachePolicy="memory-disk"
             />
             {children}
-        </View>
+        </BlueBackground>
     );
 };

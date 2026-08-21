@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { View, FlatList, StyleSheet, Pressable } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { getLeaderboard } from "@/services/score.service";
 import { Colors } from "@/constants/Colors";
+import { isDecember } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
 
 const ITEM_HEIGHT = 60; // 44 + 16 marginBottom
@@ -91,7 +92,7 @@ export default function LeaderboardScreen() {
     };
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
+        <BlueBackground>
             <View style={{ flex: 1 }}>
                 <ErrorLoading
                     error={error}
@@ -99,7 +100,16 @@ export default function LeaderboardScreen() {
                     refreshScores={fetchLeaderboard}
                 />
 
-                {!error && !loading && (
+                {!error && !loading && !isDecember && (
+                    <View style={styles.offSeasonContainer}>
+                        <ThemedText style={styles.offSeasonText}>
+                            Rendez-vous le 1er décembre pour découvrir le
+                            classement !
+                        </ThemedText>
+                    </View>
+                )}
+
+                {!error && !loading && isDecember && (
                     <>
                         {showButton && (
                             <View style={styles.stickyContainer}>
@@ -135,11 +145,20 @@ export default function LeaderboardScreen() {
                     </>
                 )}
             </View>
-        </BackgroundImage>
+        </BlueBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    offSeasonContainer: {
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: 20,
+    },
+    offSeasonText: {
+        color: Colors.snow,
+        textAlign: "center",
+    },
     stickyContainer: {
         position: "absolute",
         bottom: 20,

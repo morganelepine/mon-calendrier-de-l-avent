@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { Colors } from "@/constants/Colors";
 import { Group } from "@/types/types";
@@ -44,7 +44,7 @@ export const MyGroup = ({
         } catch {
             ToastAndroid.show(
                 "Oops... Veuillez réessayer !",
-                ToastAndroid.LONG
+                ToastAndroid.LONG,
             );
         } finally {
             setLoading(false);
@@ -52,50 +52,48 @@ export const MyGroup = ({
     };
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
-            <View style={{ flex: 1 }}>
-                {loading ? (
-                    <View style={styles.container}>
-                        <ActivityIndicator size="large" color={Colors.snow} />
+        <BlueBackground>
+            {loading ? (
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color={Colors.snow} />
+                </View>
+            ) : (
+                <>
+                    <View style={styles.stickyContainer}>
+                        <Pressable
+                            style={styles.button}
+                            onPress={() =>
+                                router.push(
+                                    `/scores/addMembers?groupId=${myGroup.id}`,
+                                )
+                            }
+                        >
+                            <ThemedText style={{ color: Colors.snow }}>
+                                Ajouter des lutins
+                            </ThemedText>
+                        </Pressable>
                     </View>
-                ) : (
-                    <>
-                        <View style={styles.stickyContainer}>
-                            <Pressable
-                                style={styles.button}
-                                onPress={() =>
-                                    router.push(
-                                        `/scores/addMembers?groupId=${myGroup.id}`
-                                    )
-                                }
-                            >
-                                <ThemedText style={{ color: Colors.snow }}>
-                                    Ajouter des lutins
-                                </ThemedText>
-                            </Pressable>
-                        </View>
-                        <FlatList
-                            data={myGroup.members}
-                            extraData={myGroup.members}
-                            keyExtractor={(item) => item.user.id.toString()}
-                            contentContainerStyle={{ paddingBottom: 80 }}
-                            renderItem={({ item, index }) => (
-                                <LeaderBoardItem
-                                    index={index}
-                                    item={{
-                                        id: item.user.id,
-                                        username: item.user.username,
-                                        score: item.user.score,
-                                    }}
-                                    username={username}
-                                    onPress={removeMemberFromGroup}
-                                />
-                            )}
-                        />
-                    </>
-                )}
-            </View>
-        </BackgroundImage>
+                    <FlatList
+                        data={myGroup.members}
+                        extraData={myGroup.members}
+                        keyExtractor={(item) => item.user.id.toString()}
+                        contentContainerStyle={{ paddingBottom: 80 }}
+                        renderItem={({ item, index }) => (
+                            <LeaderBoardItem
+                                index={index}
+                                item={{
+                                    id: item.user.id,
+                                    username: item.user.username,
+                                    score: item.user.score,
+                                }}
+                                username={username}
+                                onPress={removeMemberFromGroup}
+                            />
+                        )}
+                    />
+                </>
+            )}
+        </BlueBackground>
     );
 };
 

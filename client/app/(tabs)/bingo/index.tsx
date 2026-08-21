@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import { router } from "expo-router";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
@@ -11,7 +11,7 @@ export default function BingoScreen() {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
+        <BlueBackground>
             <CustomSafeAreaView>
                 <Pressable
                     onPress={() => setModalVisible(true)}
@@ -82,7 +82,7 @@ export default function BingoScreen() {
                     setModalVisible={setModalVisible}
                 />
             </CustomSafeAreaView>
-        </BackgroundImage>
+        </BlueBackground>
     );
 }
 

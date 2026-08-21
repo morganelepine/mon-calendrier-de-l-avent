@@ -9,7 +9,7 @@ export default function CopyrightsScreen() {
             <SafeAreaView>
                 <View style={styles.section}>
                     <ThemedText type="sectionText">
-                        Cette application est un projet collaboratif : 6
+                        Cette application est un projet collaboratif : plusieurs
                         personnes ont accepté de mettre leurs talents
                         artistiques à disposition pour rendre cette application
                         encore plus magique.
@@ -30,27 +30,10 @@ export default function CopyrightsScreen() {
                 </View>
 
                 <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">Arthur</ThemedText>
-                    <ThemedText type="sectionText">
-                        ...qui a écrit la nouvelle de Noël "Les étoiles
-                        d'Enisor" et participé à la rédaction de certaines
-                        anecdotes de Noël.
-                    </ThemedText>
-                </View>
-
-                <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Francia</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a enregistré "Greensleeves" au piano, à écouter
                         les jours 3, 9, 15 et 21.
-                    </ThemedText>
-                </View>
-
-                <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">Marika</ThemedText>
-                    <ThemedText type="sectionText">
-                        ...qui a écrit la nouvelle de Noël "Les marges de
-                        décembre", à découvrir à partir du 13 décembre.
                     </ThemedText>
                 </View>
 
@@ -61,14 +44,6 @@ export default function CopyrightsScreen() {
                     <ThemedText type="sectionText">
                         ...qui a développé l'application et créé la plupart des
                         contenus, à votre service !
-                    </ThemedText>
-                </View>
-
-                <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">Victoria</ThemedText>
-                    <ThemedText type="sectionText">
-                        ...qui a écrit la nouvelle de Noël "La lettre de Noël",
-                        à découvrir à partir du 19 décembre.
                     </ThemedText>
                 </View>
 

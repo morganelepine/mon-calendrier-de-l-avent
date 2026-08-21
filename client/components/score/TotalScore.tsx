@@ -7,12 +7,17 @@ import Animated, {
 } from "react-native-reanimated";
 import { Colors } from "@/constants/Colors";
 import { isDecember } from "@/constants/Dates";
+import { OffSeasonMessage } from "@/components/score/OffSeasonMessage";
 
 interface TotalScoreProps {
     score: number;
+    previousYearScore?: number;
 }
 
-export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
+export const TotalScore: React.FC<TotalScoreProps> = ({
+    score,
+    previousYearScore = 0,
+}) => {
     const minScoreToWin = 2512;
     const progress = (score / minScoreToWin) * 100;
     const animatedStyle = useAnimatedStyle(() => ({
@@ -77,16 +82,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
             )}
 
             {!isDecember && (
-                <ThemedText
-                    style={{
-                        marginBottom: 20,
-                        marginTop: 10,
-                        color: Colors.snow,
-                    }}
-                >
-                    Rendez-vous le 1er décembre pour commencer à gagner des
-                    points !
-                </ThemedText>
+                <OffSeasonMessage previousYearScore={previousYearScore} />
             )}
         </View>
     );

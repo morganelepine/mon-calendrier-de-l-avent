@@ -17,14 +17,21 @@ export const saveScore = async (
     });
 };
 
-export const getTotalScore = async (): Promise<number> => {
-    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
-    if (!userUuid) return 0;
+export type ScoreSummary = {
+    totalScore: number;
+    previousYearScore: number;
+};
 
-    const data = await apiFetch<{ totalScore: number }>(
-        `/scores/total/user/${userUuid}`
-    );
-    return data.totalScore;
+export const getScoreSummary = async (): Promise<ScoreSummary> => {
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
+    if (!userUuid) return { totalScore: 0, previousYearScore: 0 };
+
+    return apiFetch<ScoreSummary>(`/scores/total/user/${userUuid}`);
+};
+
+export const getTotalScore = async (): Promise<number> => {
+    const { totalScore } = await getScoreSummary();
+    return totalScore;
 };
 
 export const getUserScoresByDay = async (): Promise<Score[]> => {

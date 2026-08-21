@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { router } from "expo-router";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -37,7 +37,7 @@ export default function InformationsScreen() {
     const { username } = useUser();
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
+        <BlueBackground>
             <CustomSafeAreaView>
                 <View style={styles.pageContainer}>
                     <ThemedText style={styles.username}>
@@ -93,7 +93,7 @@ export default function InformationsScreen() {
                     />
                 </View>
             </CustomSafeAreaView>
-        </BackgroundImage>
+        </BlueBackground>
     );
 }
 

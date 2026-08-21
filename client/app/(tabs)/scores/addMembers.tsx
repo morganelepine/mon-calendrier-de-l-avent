@@ -8,7 +8,7 @@ import {
     ToastAndroid,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { User } from "@/types/types";
@@ -69,7 +69,7 @@ export default function AddMembersScreen() {
     };
 
     return (
-        <BackgroundImage image="blue_background_darker_d10kn5">
+        <BlueBackground>
             <View style={styles.container}>
                 <TextInput
                     value={query}
@@ -128,7 +128,7 @@ export default function AddMembersScreen() {
                     </Pressable>
                 )}
             </View>
-        </BackgroundImage>
+        </BlueBackground>
     );
 }
 
