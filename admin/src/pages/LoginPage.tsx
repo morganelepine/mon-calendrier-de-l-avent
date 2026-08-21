@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
@@ -10,7 +10,7 @@ export function LoginPage() {
     const { setAuthenticated } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
@@ -29,17 +29,15 @@ export function LoginPage() {
         <div className="login-page">
             <form onSubmit={handleSubmit}>
                 <h1>Backoffice</h1>
-                <label>
-                    Mot de passe
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoFocus
-                    />
-                </label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoFocus
+                    placeholder="Entrez le mot de passe"
+                />
                 {error && <p className="error">{error}</p>}
-                <button type="submit" disabled={loading}>
+                <button type="submit" className="primary" disabled={loading}>
                     {loading ? "Connexion..." : "Se connecter"}
                 </button>
             </form>

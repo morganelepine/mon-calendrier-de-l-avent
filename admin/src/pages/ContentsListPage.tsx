@@ -47,14 +47,14 @@ export function ContentsListPage() {
         setAuthenticated(false);
     };
 
-    if (loading) return <p>Chargement...</p>;
+    if (loading) return <p className="loading">Ho ho ho...</p>;
 
     return (
         <div className="contents-page">
             <header>
                 <h1>Contenus</h1>
                 <div className="header-actions">
-                    <Link to="/contents/new" className="button">
+                    <Link to="/contents/new" className="button primary">
                         + Nouveau
                     </Link>
                     <button type="button" onClick={handleLogout}>
@@ -63,9 +63,10 @@ export function ContentsListPage() {
                 </div>
             </header>
 
-            <label className="type-filter">
-                Filtrer par type
+            <div className="type-filter">
+                <label htmlFor="type-filter">Filtrer par type</label>
                 <select
+                    id="type-filter"
                     value={typeFilter}
                     onChange={(e) =>
                         setTypeFilter(e.target.value as ContentFamily | "")
@@ -77,7 +78,7 @@ export function ContentsListPage() {
                     <option value="game">Jeu</option>
                     <option value="story">Histoire</option>
                 </select>
-            </label>
+            </div>
 
             {byDay.map(([day, items]) => (
                 <section key={day}>
@@ -86,10 +87,15 @@ export function ContentsListPage() {
                         {items.map((item) => (
                             <li key={item.id}>
                                 <Link to={`/contents/${item.id}`}>
-                                    [{TYPE_LABELS[item.type]}
-                                    {item.subType
-                                        ? ` · ${item.subType}`
-                                        : ""}] {item.title || "(sans titre)"}
+                                    <span
+                                        className={`type-tag type-tag-${item.type}`}
+                                    >
+                                        [{TYPE_LABELS[item.type]}]
+                                        {item.subType
+                                            ? ` [${item.subType}]`
+                                            : ""}
+                                    </span>{" "}
+                                    {item.title || "(sans titre)"}
                                 </Link>
                                 {!item.published && (
                                     <span className="badge">brouillon</span>
