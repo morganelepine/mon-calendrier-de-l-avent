@@ -9,6 +9,7 @@ import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
 import {
+    isHalloween,
     currentDay,
     isDecember,
     isChristmas,
@@ -16,6 +17,18 @@ import {
     daysToChristmas,
     daysToCalendar,
 } from "@/constants/Dates";
+
+// BACKGROUND IMAGES
+const WINTER_BACKGROUND = "3_thng7s";
+const HALLOWEEN_BACKGROUND = "halloween_txyg5n"; // october
+
+// MUSICS
+const DEFAULT_MUSIC =
+    "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3";
+const HALLOWEEN_MUSIC_EVEN_DAYS =
+    "https://res.cloudinary.com/deauthz29/video/upload/Dmitry-Taras-Halloween_gacrmx.mp3";
+const HALLOWEEN_MUSIC_ODD_DAYS =
+    "https://res.cloudinary.com/deauthz29/video/upload/Mikhail-Smusev-Halloween_jqgdtd.mp3";
 
 export const Home = () => {
     const insets = useSafeAreaInsets();
@@ -28,13 +41,23 @@ export const Home = () => {
         backgroundImage = day?.background;
     } else if (!day && isDecember) {
         backgroundImage = "11_pfqcwp";
+    } else if (isHalloween) {
+        backgroundImage = HALLOWEEN_BACKGROUND;
     } else {
-        backgroundImage = "3_thng7s";
+        backgroundImage = WINTER_BACKGROUND;
     }
 
-    const music = day
-        ? day?.music
-        : "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3";
+    let music;
+    if (day && isDecember) {
+        music = day.music;
+    } else if (isHalloween) {
+        music =
+            currentDay % 2 === 0
+                ? HALLOWEEN_MUSIC_EVEN_DAYS
+                : HALLOWEEN_MUSIC_ODD_DAYS;
+    } else {
+        music = DEFAULT_MUSIC;
+    }
 
     return (
         <>

@@ -2,7 +2,7 @@ import { StyleSheet, View, Linking, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 export default function ContactScreen() {
     const contactMe = () => {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         minHeight: 48,
         justifyContent: "center",
         alignSelf: "center",
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.tint,
     },
     buttonText: {
         color: Colors.snow,

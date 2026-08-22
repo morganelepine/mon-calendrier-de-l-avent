@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { NoGroupModal } from "@/components/group/NoGroupModal";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 
 export const ScoresButton = () => {
@@ -12,7 +12,7 @@ export const ScoresButton = () => {
 
     const goToMyGroup = async () => {
         const isGroupCreated = await AsyncStorage.getItem(
-            StorageKeys.groupCreated
+            StorageKeys.groupCreated,
         );
         if (isGroupCreated) {
             router.navigate("/scores/group");
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     buttonText: {
-        color: Colors.blue,
+        color: Theme.surface,
         textAlign: "center",
     },
 });

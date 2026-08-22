@@ -7,6 +7,7 @@ export default function BingoTelefilmsScreen() {
         <BingoGrid
             clickedCellsKey={StorageKeys.bingoFilmsClickedCells}
             grid={bingo}
+            columns={4}
         />
     );
 }

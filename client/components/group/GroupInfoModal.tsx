@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 
 export const GroupInfoModal = ({
     modalVisible,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 20,
         fontSize: 22,
-        color: Colors.blue,
+        color: Theme.surface,
     },
 });

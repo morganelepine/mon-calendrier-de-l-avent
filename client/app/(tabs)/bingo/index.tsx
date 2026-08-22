@@ -1,14 +1,55 @@
 import { useState } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import { router } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BlueBackground } from "@/components/utils/BlueBackground";
+import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
+import { bingo_halloween } from "@/data/bingos/bingo_halloween_data";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export default function BingoScreen() {
+    const insets = useSafeAreaInsets();
     const [modalVisible, setModalVisible] = useState(false);
+
+    // Octobre : un seul bingo automne/Halloween.
+    // Le reste de l'année (à partir du 1er novembre) : les 2 bingos de Noël.
+    if (isHalloween) {
+        return (
+            <BlueBackground>
+                <Pressable
+                    onPress={() => setModalVisible(true)}
+                    style={[styles.rulesButton, { marginTop: insets.top + 10 }]}
+                >
+                    <ThemedText
+                        type="italic14"
+                        style={{
+                            textDecorationLine: "underline",
+                            color: Colors.snow,
+                        }}
+                    >
+                        Comment ça marche ?
+                    </ThemedText>
+                </Pressable>
+
+                <BingoGrid
+                    clickedCellsKey={StorageKeys.bingoHalloweenClickedCells}
+                    grid={bingo_halloween}
+                    columns={3}
+                    scrollable={false}
+                />
+
+                <BingoRulesModal
+                    modalVisible={modalVisible}
+                    setModalVisible={setModalVisible}
+                />
+            </BlueBackground>
+        );
+    }
 
     return (
         <BlueBackground>
@@ -87,6 +128,10 @@ export default function BingoScreen() {
 }
 
 const styles = StyleSheet.create({
+    rulesButton: {
+        alignSelf: "flex-end",
+        paddingHorizontal: 10,
+    },
     bingoContainer: {
         flex: 1,
         flexDirection: "row",

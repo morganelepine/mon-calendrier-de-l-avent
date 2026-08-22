@@ -33,7 +33,7 @@ export default function CopyrightsScreen() {
                     <ThemedText type="sectionSubtitle">Francia</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a enregistré "Greensleeves" au piano, à écouter
-                        les jours 3, 9, 15 et 21.
+                        les 3, 9, 15 et 21 décembre.
                     </ThemedText>
                 </View>
 
@@ -51,7 +51,7 @@ export default function CopyrightsScreen() {
                     <ThemedText type="sectionSubtitle">William</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a enregistré "Petit papa Noël" au piano, à
-                        écouter les jours 5, 11, 17 et 23.
+                        écouter les 5, 11, 17 et 23 décembre.
                     </ThemedText>
                 </View>
 

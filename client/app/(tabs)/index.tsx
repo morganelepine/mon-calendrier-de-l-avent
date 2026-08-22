@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
+import { isHalloween } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 
 export default function HomeScreen() {
@@ -10,9 +11,20 @@ export default function HomeScreen() {
 
         if (!hasLaunched) {
             router.replace("/onboarding");
+            return;
         }
 
-        // ------- For testing purposes
+        if (isHalloween) {
+            const halloweenNoticeSeen = await AsyncStorage.getItem(
+                StorageKeys.halloweenNoticeSeen,
+            );
+            if (!halloweenNoticeSeen) {
+                router.replace("/halloween-notice");
+                return;
+            }
+        }
+
+        // // ------- For testing purposes
         // await AsyncStorage.multiRemove([
         //     "userUuid",
         //     "playMusic",
@@ -20,11 +32,13 @@ export default function HomeScreen() {
         //     "lastResetYear",
         //     "username",
         //     "gameState",
-        //     "bingo_clicked_cells",
+        //     "bingo_halloween_clicked_cells",
+        //     "bingo_films_clicked_cells",
         //     "bingo_activities_clicked_cells",
         //     "calendar",
         //     "groupCreated",
         //     "isNew",
+        //     "halloween_notice_seen",
         // ]);
     };
 

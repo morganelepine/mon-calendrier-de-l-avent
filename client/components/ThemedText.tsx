@@ -1,5 +1,5 @@
 import { Text, type TextProps, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 export type ThemedTextProps = TextProps & {
     type?:
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     sectionSubtitle: {
         fontFamily: "Poppins",
         color: Colors.snow,
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.tint,
         textAlign: "left",
         fontSize: 15,
         paddingTop: 4,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: "Poppins",
         textAlign: "left",
-        color: Colors.darkBlue,
+        color: Theme.deep,
         paddingHorizontal: 20,
     },
     contentTitle: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
     italicMarkdown: {
         fontFamily: "PoppinsItalic",
-        color: Colors.darkBlue,
+        color: Theme.deep,
         textAlign: "left",
         fontSize: 16,
     },
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
     },
     pallyBoldBlue: {
-        color: Colors.blue,
+        color: Theme.tint,
         fontFamily: "PallyBold",
         letterSpacing: 2,
     },

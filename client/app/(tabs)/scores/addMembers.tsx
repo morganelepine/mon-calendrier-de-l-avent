@@ -10,7 +10,7 @@ import {
 import { useLocalSearchParams } from "expo-router";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { User } from "@/types/types";
 import { searchUsers } from "@/services/user.service";
 import { addMember } from "@/services/group.service";
@@ -111,7 +111,7 @@ export default function AddMembersScreen() {
                                 style={{
                                     color: selected.includes(item.id)
                                         ? Colors.snow
-                                        : Colors.blue,
+                                        : Theme.tint,
                                 }}
                             >
                                 {item.username}

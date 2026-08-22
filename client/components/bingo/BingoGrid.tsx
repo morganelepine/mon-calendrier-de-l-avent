@@ -8,11 +8,15 @@ import { Bingo } from "@/interfaces/bingoInterface";
 interface BingoGridProps {
     clickedCellsKey: string;
     grid: Bingo[];
+    columns: number;
+    scrollable?: boolean;
 }
 
 export const BingoGrid: React.FC<BingoGridProps> = ({
     clickedCellsKey,
     grid,
+    columns,
+    scrollable = true,
 }) => {
     const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
     const [isReady, setIsReady] = useState(false);
@@ -64,31 +68,47 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
         });
     };
 
+    const cells = grid.map((cell) => (
+        <BingoCell
+            key={cell.id}
+            cell={cell}
+            isClicked={clickedCells.has(cell.id)}
+            onClick={handleCellClick}
+            columns={columns}
+        />
+    ));
+
     return (
         <BlueBackground>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={styles.bingoContainer}>
-                    {grid.map((cell) => (
-                        <BingoCell
-                            key={cell.id}
-                            cell={cell}
-                            isClicked={clickedCells.has(cell.id)}
-                            onClick={handleCellClick}
-                        />
-                    ))}
+            {scrollable ? (
+                <ScrollView
+                    style={{ flex: 1 }}
+                    contentContainerStyle={styles.scrollContent}
+                >
+                    <View style={styles.bingoContainer}>{cells}</View>
+                </ScrollView>
+            ) : (
+                <View style={styles.centeredContainer}>
+                    <View style={styles.bingoContainer}>{cells}</View>
                 </View>
-            </ScrollView>
+            )}
         </BlueBackground>
     );
 };
 
 const styles = StyleSheet.create({
-    bingoContainer: {
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: "center",
+    },
+    centeredContainer: {
         flex: 1,
-        alignContent: "center",
+        justifyContent: "center",
+    },
+    bingoContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: 8,
-        margin: 12,
+        justifyContent: "center",
+        margin: 4,
     },
 });

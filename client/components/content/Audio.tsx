@@ -3,7 +3,7 @@ import { StyleSheet, Pressable, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAudioPlayer } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
 import { StorageKeys } from "@/constants/storageKeys";
 
@@ -62,7 +62,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
             <Ionicons
                 name={isPlaying ? "pause" : "play"}
                 size={26}
-                color={Colors.blue}
+                color={Theme.tint}
             ></Ionicons>
         </Pressable>
     );

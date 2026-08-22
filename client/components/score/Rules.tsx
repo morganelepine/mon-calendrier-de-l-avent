@@ -6,8 +6,8 @@ export const Rules = () => {
         <View>
             <View style={styles.section}>
                 <ThemedText type="sectionText">
-                    Chaque jour, vous pouvez accumuler des points pour tenter
-                    d'accéder à une petite surprise le 25 décembre !
+                    Chaque jour de décembre, vous pouvez accumuler des points
+                    pour tenter d'accéder à une petite surprise le 25 décembre !
                 </ThemedText>
             </View>
 

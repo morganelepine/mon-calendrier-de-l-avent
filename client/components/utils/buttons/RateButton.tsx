@@ -1,7 +1,7 @@
 import { StyleSheet, TextStyle } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ExternalLink } from "@/components/utils/ExternalLink";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface RateButtonProps {
     children: React.ReactNode;
@@ -26,7 +26,7 @@ export const RateButton: React.FC<RateButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.tint,
         borderRadius: 50,
         paddingHorizontal: 24,
         height: 48,

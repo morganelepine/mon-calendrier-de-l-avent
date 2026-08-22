@@ -3,7 +3,9 @@ import { StyleSheet, View, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { HalloweenMusicsCredits } from "@/components/informations/HalloweenMusicsCredits";
+import { Colors, Theme } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
 import { MusicPreference } from "@/types/types";
 import { StorageKeys } from "@/constants/storageKeys";
 
@@ -12,9 +14,7 @@ export default function MusicScreen() {
 
     useEffect(() => {
         const getMusicPreference = async (): Promise<void> => {
-            const musicPref = await AsyncStorage.getItem(
-                StorageKeys.playMusic
-            );
+            const musicPref = await AsyncStorage.getItem(StorageKeys.playMusic);
             if (musicPref === "yes" || musicPref === "no") {
                 setPlayMusic(musicPref as MusicPreference);
             } else {
@@ -25,12 +25,12 @@ export default function MusicScreen() {
     }, []);
 
     const handleMusicPreference = async (
-        preference: MusicPreference
+        preference: MusicPreference,
     ): Promise<void> => {
         try {
             await AsyncStorage.setItem(
                 StorageKeys.playMusic,
-                preference ?? "no"
+                preference ?? "no",
             );
             setPlayMusic(preference);
         } catch (error) {
@@ -57,9 +57,12 @@ export default function MusicScreen() {
                     ? "La musique se déclenchera automatiquement lorsque vous ouvrez l'application mais vous pourrez la mettre en pause depuis l'onglet Décompte."
                     : "La musique ne se déclenchera pas lorsque vous ouvrez l'app mais vous pourrez tout de même lancer la musique depuis l'onglet Décompte."}
             </ThemedText>
+
+            {isHalloween && <HalloweenMusicsCredits />}
+
             <View style={styles.separator} />
             <View style={styles.row}>
-                <ThemedText type="sectionText" style={{ color: Colors.blue }}>
+                <ThemedText type="sectionText" style={{ color: Theme.tint }}>
                     {playMusic === "yes"
                         ? "Désactiver l'ambiance musicale"
                         : "Activer l'ambiance musicale"}
@@ -68,7 +71,7 @@ export default function MusicScreen() {
                 <Switch
                     value={playMusic === "yes"}
                     onValueChange={toggleSwitch}
-                    trackColor={{ false: "#ccc", true: Colors.blue }}
+                    trackColor={{ false: "#ccc", true: Theme.tint }}
                     thumbColor="#fff"
                     style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
                 />

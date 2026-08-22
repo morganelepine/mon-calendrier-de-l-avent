@@ -3,6 +3,8 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
+import { isHalloween } from "@/constants/Dates";
+
 const tintColorLight = "#165d4b";
 const tintColorDark = "#eee6d9";
 
@@ -21,6 +23,8 @@ export const Colors = {
     goldLight: "#f0e5d8",
     disabled: "#e5e5e5",
     disabledText: "#92959a",
+    black: "#232323",
+    orange: "#d95f1b",
 
     light: {
         text: "#11181C",
@@ -39,4 +43,18 @@ export const Colors = {
         tabIconDefault: "#f7f5f6",
         tabIconSelected: tintColorDark,
     },
+};
+
+/**
+ * Palette "de saison".
+ * - `tint` / `tintLight` : accents (icônes, tint de header, boutons, titres, bordures...) -> orange
+ * - `surface` : grands aplats (fond plein écran type BlueBackground) -> noir
+ * - `deep` : bleu foncé (texte de contenu, fonds sombres de header...) -> noir
+ */
+export const Theme = {
+    tint: isHalloween ? Colors.orange : Colors.blue,
+    tintLight: isHalloween ? Colors.orange : Colors.lightBlue,
+    surface: isHalloween ? Colors.black : Colors.blue,
+    deep: isHalloween ? Colors.black : Colors.darkBlue,
+    green: isHalloween ? Colors.orange : Colors.green,
 };

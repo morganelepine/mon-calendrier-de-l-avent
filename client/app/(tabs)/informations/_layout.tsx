@@ -1,5 +1,6 @@
 import { ScreenHeader } from "@/components/navigation/ScreenHeader";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
 import { Stack } from "expo-router";
 
 export default function InformationsLayout() {
@@ -7,7 +8,7 @@ export default function InformationsLayout() {
         <Stack
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Theme.tint,
                 },
             }}
         >
@@ -19,7 +20,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Contenu de l'application"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -33,7 +34,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Règles du jeu"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -46,8 +47,12 @@ export default function InformationsLayout() {
                     header: () => {
                         return (
                             <ScreenHeader
-                                title="Bingos de Noël"
-                                backgroundColor={Colors.blue}
+                                title={
+                                    isHalloween
+                                        ? "Le bingo automnal"
+                                        : "Les bingos de Noël"
+                                }
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -61,7 +66,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Gestion de la musique"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -75,7 +80,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Noter l'application"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -89,7 +94,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Remerciements"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );
@@ -103,7 +108,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Me contacter"
-                                backgroundColor={Colors.blue}
+                                backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
                         );

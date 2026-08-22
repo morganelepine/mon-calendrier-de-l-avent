@@ -1,6 +1,6 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 const ITEM_HEIGHT = 44;
 const MAX_USERNAME_LENGTH = 24;
@@ -34,7 +34,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                     {
                         backgroundColor:
                             item.username === username
-                                ? Colors.green
+                                ? Theme.green
                                 : Colors.snow,
                     },
                 ]}
@@ -46,7 +46,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Colors.blue,
+                                    : Theme.tint,
                         },
                     ]}
                 >
@@ -63,7 +63,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Colors.blue,
+                                    : Theme.tint,
                             fontFamily:
                                 item.username === username
                                     ? "PoppinsBold"
@@ -80,7 +80,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Colors.blue,
+                                    : Theme.tint,
                         },
                     ]}
                 >
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
     },
     rank: {
         fontFamily: "PoppinsBold",
-        color: Colors.blue,
+        color: Theme.tint,
     },
     usernameContainer: {
         flexShrink: 1,
     },
-    score: { fontFamily: "PoppinsBold", color: Colors.blue },
+    score: { fontFamily: "PoppinsBold", color: Theme.tint },
 });

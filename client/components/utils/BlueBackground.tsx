@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 
 interface Props {
     image?: string;
@@ -8,7 +8,12 @@ interface Props {
 
 export const BlueBackground: React.FC<Props> = ({ children }) => {
     return (
-        <View style={{ flex: 1, backgroundColor: Colors.blue }}>
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: Theme.surface,
+            }}
+        >
             {children}
         </View>
     );

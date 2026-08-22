@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { Group } from "@/types/types";
 import { removeMember } from "@/services/group.service";
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     button: {
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.green,
         borderWidth: 1,
         borderColor: Colors.snow,
         borderRadius: 50,

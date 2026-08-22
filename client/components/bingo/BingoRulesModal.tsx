@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { BingoRules } from "@/components/bingo/BingoRules";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 
 interface Props {
@@ -20,11 +21,15 @@ export const BingoRulesModal: React.FC<Props> = ({
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
             <ThemedText style={styles.modalTitle}>
-                Les&nbsp;bingos de&nbsp;Noël
+                {isHalloween ? "Le bingo automnal" : "Les bingos de Noël"}
             </ThemedText>
-            <CustomScrollView>
+            {isHalloween ? (
                 <BingoRules />
-            </CustomScrollView>
+            ) : (
+                <CustomScrollView>
+                    <BingoRules />
+                </CustomScrollView>
+            )}
         </ModalWithCloseButton>
     );
 };
@@ -35,6 +40,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 20,
         fontSize: 22,
-        color: Colors.blue,
+        color: Theme.tint,
     },
 });

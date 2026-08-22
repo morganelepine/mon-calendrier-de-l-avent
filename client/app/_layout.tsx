@@ -62,6 +62,10 @@ function RootLayout() {
                                         name="onboarding"
                                         options={{ headerShown: false }}
                                     />
+                                    <Stack.Screen
+                                        name="halloween-notice"
+                                        options={{ headerShown: false }}
+                                    />
                                     <Stack.Screen name="+not-found" />
                                 </Stack>
                             </ScoreProvider>

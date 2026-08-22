@@ -7,6 +7,7 @@ export default function BingoActivitiesScreen() {
         <BingoGrid
             clickedCellsKey={StorageKeys.bingoActivitiesClickedCells}
             grid={bingo_activities}
+            columns={4}
         />
     );
 }

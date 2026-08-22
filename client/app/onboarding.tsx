@@ -8,6 +8,7 @@ import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
 import { ONBOARDING_SLIDES } from "@/components/onboarding/onboardingSlides";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 
 export default function OnboardingScreen() {
@@ -15,7 +16,11 @@ export default function OnboardingScreen() {
     const isLast = index === ONBOARDING_SLIDES.length - 1;
 
     const finish = async () => {
-        await AsyncStorage.setItem(StorageKeys.hasLaunched, "true");
+        const toSet: [string, string][] = [[StorageKeys.hasLaunched, "true"]];
+        if (isHalloween) {
+            toSet.push([StorageKeys.halloweenNoticeSeen, "true"]);
+        }
+        await AsyncStorage.multiSet(toSet);
         router.replace("/");
     };
 

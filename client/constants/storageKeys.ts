@@ -9,11 +9,13 @@ export const StorageKeys = {
     hasLaunched: "hasLaunched",
     playMusic: "playMusic",
     groupCreated: "groupCreated",
+    halloweenNoticeSeen: "halloween_notice_seen",
 
     // This year's calendar/game progress.
     // Reset every year, see YEARLY_RESET_KEYS below.
     calendar: "calendar",
     gameState: "gameState",
+    bingoHalloweenClickedCells: "bingo_halloween_clicked_cells",
     bingoFilmsClickedCells: "bingo_films_clicked_cells",
     bingoActivitiesClickedCells: "bingo_activities_clicked_cells",
 
@@ -26,6 +28,7 @@ export const StorageKeys = {
 export const YEARLY_RESET_KEYS = [
     StorageKeys.calendar,
     StorageKeys.gameState,
+    StorageKeys.bingoHalloweenClickedCells,
     StorageKeys.bingoFilmsClickedCells,
     StorageKeys.bingoActivitiesClickedCells,
 ] as const;

@@ -1,12 +1,13 @@
 import { Tabs, router } from "expo-router";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
+import { isHalloween } from "@/constants/Dates";
 
 export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: Colors.blue,
+                tabBarActiveTintColor: Theme.tint,
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: Colors.snow,
@@ -20,7 +21,15 @@ export default function TabLayout() {
                     title: "Décompte",
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
-                            name={focused ? "sparkles" : "sparkles-outline"}
+                            name={
+                                isHalloween
+                                    ? focused
+                                        ? "ghost"
+                                        : "ghost-outline"
+                                    : focused
+                                      ? "sparkles"
+                                      : "sparkles-outline"
+                            }
                             color={color}
                         />
                     ),
@@ -32,7 +41,15 @@ export default function TabLayout() {
                     title: "Calendrier",
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
-                            name={focused ? "gift" : "gift-outline"}
+                            name={
+                                isHalloween
+                                    ? focused
+                                        ? "spider"
+                                        : "spider-outline"
+                                    : focused
+                                      ? "snow"
+                                      : "snow-outline"
+                            }
                             color={color}
                         />
                     ),
@@ -51,9 +68,11 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                focused
-                                    ? "heart-circle"
-                                    : "heart-circle-outline"
+                                isHalloween
+                                    ? "pumpkin"
+                                    : focused
+                                      ? "calendar"
+                                      : "calendar-outline"
                             }
                             color={color}
                         />
@@ -73,9 +92,13 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                focused
-                                    ? "game-controller"
-                                    : "game-controller-outline"
+                                isHalloween
+                                    ? focused
+                                        ? "skull"
+                                        : "skull-outline"
+                                    : focused
+                                      ? "game-controller"
+                                      : "game-controller-outline"
                             }
                             color={color}
                         />
@@ -94,7 +117,15 @@ export default function TabLayout() {
                     title: "Infos",
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
-                            name={focused ? "snow" : "snow-outline"}
+                            name={
+                                isHalloween
+                                    ? focused
+                                        ? "emoticon-devil"
+                                        : "emoticon-devil-outline"
+                                    : focused
+                                      ? "heart-circle"
+                                      : "heart-circle-outline"
+                            }
                             color={color}
                         />
                     ),
