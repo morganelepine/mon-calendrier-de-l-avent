@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { listContents } from "../services/contents.service";
 import { logout } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
-import { ContentFamily, ContentSummary } from "../types";
+import { ContentFamily, ContentSummary, Season } from "../types";
 
 const TYPE_LABELS: Record<ContentFamily, string> = {
     story: "Histoire",
@@ -12,9 +12,15 @@ const TYPE_LABELS: Record<ContentFamily, string> = {
     game: "Jeu",
 };
 
+const SEASON_LABELS: Record<Season, string> = {
+    christmas: "Noël",
+    halloween: "Halloween",
+};
+
 export function ContentsListPage() {
     const [contents, setContents] = useState<ContentSummary[]>([]);
     const [typeFilter, setTypeFilter] = useState<ContentFamily | "">("");
+    const [seasonFilter, setSeasonFilter] = useState<Season | "">("christmas");
     const [loading, setLoading] = useState(true);
     const { setAuthenticated } = useAuth();
 
@@ -26,10 +32,10 @@ export function ContentsListPage() {
 
     const filtered = useMemo(
         () =>
-            typeFilter
-                ? contents.filter((c) => c.type === typeFilter)
-                : contents,
-        [contents, typeFilter],
+            contents
+                .filter((c) => !typeFilter || c.type === typeFilter)
+                .filter((c) => !seasonFilter || c.season === seasonFilter),
+        [contents, typeFilter, seasonFilter],
     );
 
     const byDay = useMemo(() => {
@@ -64,6 +70,19 @@ export function ContentsListPage() {
             </header>
 
             <div className="type-filter">
+                <label htmlFor="season-filter">Filtrer par saison</label>
+                <select
+                    id="season-filter"
+                    value={seasonFilter}
+                    onChange={(e) =>
+                        setSeasonFilter(e.target.value as Season | "")
+                    }
+                >
+                    <option value="">Toutes</option>
+                    <option value="christmas">Noël</option>
+                    <option value="halloween">Halloween</option>
+                </select>
+
                 <label htmlFor="type-filter">Filtrer par type</label>
                 <select
                     id="type-filter"
@@ -90,7 +109,8 @@ export function ContentsListPage() {
                                     <span
                                         className={`type-tag type-tag-${item.type}`}
                                     >
-                                        [{TYPE_LABELS[item.type]}]
+                                        [{SEASON_LABELS[item.season]}] [
+                                        {TYPE_LABELS[item.type]}]
                                         {item.subType
                                             ? ` [${item.subType}]`
                                             : ""}

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 
 const HalloweenRules = () => (
     <View>
@@ -100,7 +100,7 @@ const ChristmasRules = () => (
 );
 
 export const BingoRules = () => {
-    return isHalloween ? <HalloweenRules /> : <ChristmasRules />;
+    return isOctober ? <HalloweenRules /> : <ChristmasRules />;
 };
 
 const styles = StyleSheet.create({

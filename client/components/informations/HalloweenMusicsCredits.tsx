@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     halloweenMusicCredits: {
         marginTop: 16,
         borderWidth: 1,
-        borderColor: Colors.orange,
-        backgroundColor: Colors.orange + "15",
+        borderColor: Colors.autumnRed,
+        backgroundColor: Colors.autumnRed + "15",
         borderRadius: 8,
         paddingVertical: 12,
         marginHorizontal: 20,

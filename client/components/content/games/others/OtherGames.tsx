@@ -4,6 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Input } from "@/components/content/games/others/Input";
 import { NextQuestion } from "@/components/content/games/util/NextQuestion";
 import { Content } from "@/interfaces/contentInterface";
+import { isOctober } from "@/constants/Dates";
 
 interface OtherGamesProps {
     game: Content;
@@ -35,9 +36,9 @@ export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
             </ThemedText>
 
             <ThemedText>
-                Ces 3 mots sur le thème de Noël ou de l'hiver ont bu un peu trop
-                de vin chaud... Tentez de replacer leurs lettres dans le bon
-                ordre !
+                {isOctober
+                    ? "Ces 3 mots sur le thème d'Halloween ou de l'automne ont fait des cauchemars cette nuit... Tentez de replacer leurs lettres dans le bon ordre !"
+                    : "Ces 3 mots sur le thème de Noël ou de l'hiver ont bu un peu trop de vin chaud... Tentez de replacer leurs lettres dans le bon ordre !"}
             </ThemedText>
 
             <View style={styles.inputContainer}>

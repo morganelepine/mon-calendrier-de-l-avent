@@ -4,7 +4,7 @@ import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useUser } from "@/contexts/UserContext";
 
@@ -47,53 +47,61 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Contenu de l'application"
                         iconName="gift-outline"
-                        iconColor={Theme.tint}
+                        iconColor={
+                            isOctober ? Colors.autumnGreenDark : Colors.blue
+                        }
                         onPress={() => router.push("/informations/content")}
                     />
 
                     <OptionItem
                         title="Règles pour gagner des points"
                         iconName="game-controller-outline"
-                        iconColor={Theme.tintLight}
+                        iconColor={
+                            isOctober ? Colors.autumnYellow : Colors.lightBlue
+                        }
                         onPress={() => router.push("/informations/rules")}
                     />
 
                     <OptionItem
                         title={
-                            isHalloween
+                            isOctober
                                 ? "Fonctionnement du bingo"
                                 : "Fonctionnement des bingos"
                         }
                         iconName="eye-outline"
-                        iconColor={isHalloween ? Colors.orange : Colors.green}
+                        iconColor={
+                            isOctober ? Colors.autumnGreen : Colors.green
+                        }
                         onPress={() => router.push("/informations/bingo")}
                     />
 
                     <OptionItem
                         title="Gestion de la musique"
                         iconName="musical-notes-outline"
-                        iconColor={isHalloween ? Colors.orange : Colors.pink}
+                        iconColor={isOctober ? Colors.autumnRed : Colors.pink}
                         onPress={() => router.push("/informations/music")}
                     />
 
                     <OptionItem
                         title="Noter l'application"
                         iconName="star-outline"
-                        iconColor={isHalloween ? Colors.orange : Colors.gold}
+                        iconColor={isOctober ? Colors.autumnGreen : Colors.gold}
                         onPress={() => router.push("/informations/rate")}
                     />
 
                     <OptionItem
                         title="Remerciements"
                         iconName="heart-outline"
-                        iconColor={isHalloween ? Colors.orange : Colors.red}
+                        iconColor={isOctober ? Colors.autumnYellow : Colors.red}
                         onPress={() => router.push("/informations/copyrights")}
                     />
 
                     <OptionItem
                         title="Me contacter"
                         iconName="flower-outline"
-                        iconColor={isHalloween ? Colors.orange : "#646681"}
+                        iconColor={
+                            isOctober ? Colors.autumnGreenDark : "#646681"
+                        }
                         onPress={() => router.push("/informations/contact")}
                     />
                 </View>

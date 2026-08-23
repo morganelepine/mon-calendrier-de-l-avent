@@ -1,8 +1,11 @@
 import { apiFetch } from "./apiFetch";
-import { ContentDetail, ContentInput, ContentSummary } from "../types";
+import { ContentDetail, ContentInput, ContentSummary, Season } from "../types";
 
-export const listContents = async (dayNumber?: number) => {
-    const query = dayNumber !== undefined ? "?dayNumber=" + dayNumber : "";
+export const listContents = async (dayNumber?: number, season?: Season) => {
+    const params = new URLSearchParams();
+    if (dayNumber !== undefined) params.set("dayNumber", String(dayNumber));
+    if (season !== undefined) params.set("season", season);
+    const query = params.toString() ? `?${params.toString()}` : "";
 
     const response = await apiFetch<{ contents: ContentSummary[] }>(
         "/admin/contents" + query,

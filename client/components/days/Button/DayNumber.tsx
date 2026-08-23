@@ -1,5 +1,6 @@
 import { StyleSheet, Text, Image } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
+import { isOctober } from "@/constants/Dates";
 import { Day } from "@/interfaces/dayInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
@@ -26,7 +27,7 @@ export const DayNumber: React.FC<DayNumberProps> = ({ day, dayIsOpen }) => {
                 style={[
                     styles.itemText,
                     {
-                        color: dayIsOpen ? Colors.green : day.textColor,
+                        color: dayIsOpen ? Theme.green : day.textColor,
                     },
                 ]}
             >
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         height: undefined,
     },
     itemText: {
-        fontSize: 30,
+        fontSize: isOctober ? 16 : 30,
         fontFamily: "Pally",
         paddingVertical: 2,
         paddingHorizontal: 5,

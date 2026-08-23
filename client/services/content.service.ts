@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
 import { getAllContents } from "@/services/contents.service";
 import { Content } from "@/interfaces/contentInterface";
-import { ContentType, GameType } from "@/enums/enums";
-import { Colors } from "@/constants/Colors";
+import { ContentType, GameType, Season } from "@/enums/enums";
+import { isOctober } from "@/constants/Dates";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface GamesByType {
     pendu?: Content;
@@ -10,6 +11,7 @@ interface GamesByType {
     quizCitation: Content[];
     quizNoel: Content[];
     quizEmojis: Content[];
+    quizHalloween: Content[];
 }
 
 interface DayContents {
@@ -18,6 +20,11 @@ interface DayContents {
     ideas: Content[];
     games: Content[];
 }
+
+const contentSeason = (content: Content): string =>
+    content.season ?? Season.Christmas;
+
+const CURRENT_SEASON: string = isOctober ? Season.Halloween : Season.Christmas;
 
 // Fetched once per app session (all 120 rows are small), then reused
 // synchronously by every screen that asks for a given day's content.
@@ -29,21 +36,29 @@ const getCachedContents = (): Promise<Content[]> => {
 
 export const getContentsByDay = async (dayId: number): Promise<DayContents> => {
     const allContents = await getCachedContents();
-
-    const anecdote: Content | undefined = allContents.find(
-        (content) => content.type === ContentType.Anecdote && content.dayNumber === dayId,
+    const contentsThisSeason = allContents.filter(
+        (content) => contentSeason(content) === CURRENT_SEASON,
     );
 
-    const story: Content | undefined = allContents.find(
-        (content) => content.type === ContentType.Story && content.dayNumber === dayId,
+    const anecdote: Content | undefined = contentsThisSeason.find(
+        (content) =>
+            content.type === ContentType.Anecdote &&
+            content.dayNumber === dayId,
     );
 
-    const ideas: Content[] = allContents.filter(
-        (content) => content.type === ContentType.Idea && content.dayNumber === dayId,
+    const story: Content | undefined = contentsThisSeason.find(
+        (content) =>
+            content.type === ContentType.Story && content.dayNumber === dayId,
     );
 
-    const games: Content[] = allContents.filter(
-        (content) => content.type === ContentType.Game && content.dayNumber === dayId,
+    const ideas: Content[] = contentsThisSeason.filter(
+        (content) =>
+            content.type === ContentType.Idea && content.dayNumber === dayId,
+    );
+
+    const games: Content[] = contentsThisSeason.filter(
+        (content) =>
+            content.type === ContentType.Game && content.dayNumber === dayId,
     );
 
     return {
@@ -57,7 +72,7 @@ export const getContentsByDay = async (dayId: number): Promise<DayContents> => {
 export const getContentTitle = (
     content: Content,
     ideas: Content[],
-    games: Content[]
+    games: Content[],
 ): string => {
     if (ideas.length > 0) {
         return "Se divertir";
@@ -76,18 +91,17 @@ export const getContentTitle = (
 };
 
 export const classifyGames = (
-    games: Content[]
+    games: Content[],
 ): {
     gamesByType: GamesByType;
     type: string;
 } => {
-    const gamesByType: {
-        pendu?: Content;
-        jeu?: Content;
-        quizCitation: Content[];
-        quizNoel: Content[];
-        quizEmojis: Content[];
-    } = { quizCitation: [], quizNoel: [], quizEmojis: [] };
+    const gamesByType: GamesByType = {
+        quizCitation: [],
+        quizNoel: [],
+        quizEmojis: [],
+        quizHalloween: [],
+    };
 
     let type = "";
 
@@ -113,6 +127,10 @@ export const classifyGames = (
                 gamesByType.quizEmojis.push(game);
                 type = ContentType.Quiz;
                 break;
+            case GameType.QuizHalloween:
+                gamesByType.quizHalloween.push(game);
+                type = ContentType.Quiz;
+                break;
         }
     });
 
@@ -131,7 +149,7 @@ type ButtonStyles = {
 export const getButtonStyles = (
     answer: string,
     selectedAnswer: string | null,
-    goodAnswer: string
+    goodAnswer: string,
 ): ButtonStyles => {
     const isCorrect = answer.trim() === goodAnswer.trim();
     const isSelected = selectedAnswer !== null;
@@ -140,7 +158,7 @@ export const getButtonStyles = (
     if (isCorrect) {
         color = Colors.snow;
     } else {
-        color = isSelected ? Colors.green : Colors.snow;
+        color = isSelected ? Theme.green : Colors.snow;
     }
 
     return {
@@ -158,7 +176,7 @@ export const getButtonStyles = (
 
 const styles = StyleSheet.create({
     answer: {
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.green,
         marginVertical: 5,
         borderRadius: 50,
         paddingHorizontal: 20,
@@ -169,9 +187,9 @@ const styles = StyleSheet.create({
     },
     isNotCorrect: {
         backgroundColor: Colors.snow,
-        color: Colors.green,
+        color: Theme.green,
         opacity: 0.4,
-        borderColor: Colors.green,
+        borderColor: Theme.green,
         borderWidth: 0.6,
     },
 });

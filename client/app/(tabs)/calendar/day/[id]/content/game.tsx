@@ -26,7 +26,7 @@ export default function GameScreen() {
 
     const setScore = async (
         questionNumber: number,
-        isCorrect: boolean
+        isCorrect: boolean,
     ): Promise<void> => {
         const today = new Date().getDate();
         const score = dayId === today && isCorrect ? 20 : isCorrect ? 10 : 0;
@@ -35,13 +35,13 @@ export default function GameScreen() {
                 dayId,
                 score,
                 String(ScoreType.GameAnswer),
-                questionNumber
+                questionNumber,
             );
         } catch (error) {
             console.log("Error saving score:", error);
             ToastAndroid.show(
                 "Oops... votre score n'a pas pu être enregistré.",
-                ToastAndroid.LONG
+                ToastAndroid.LONG,
             );
         }
     };
@@ -93,6 +93,19 @@ export default function GameScreen() {
                             </ThemedText>
                             <Quiz
                                 games={gamesByType.quizEmojis}
+                                setScore={setScore}
+                            />
+                        </>
+                    )}
+
+                    {gamesByType.quizHalloween.length > 0 && (
+                        <>
+                            <ThemedText type="contentSubtitle">
+                                Êtes-vous incollable sur l'automne et
+                                Halloween&nbsp;?
+                            </ThemedText>
+                            <Quiz
+                                games={gamesByType.quizHalloween}
                                 setScore={setScore}
                             />
                         </>

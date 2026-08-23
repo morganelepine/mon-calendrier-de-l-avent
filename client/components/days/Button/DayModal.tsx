@@ -1,7 +1,7 @@
 import { StyleSheet, View, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Day } from "@/interfaces/dayInterface";
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     quotationMark: {
         fontSize: 50,
         lineHeight: 50,
-        color: Colors.green,
+        color: Theme.green,
         textAlign: "center",
     },
     quote: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 50,
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.green,
         marginTop: 30,
         height: 48,
         width: 48,

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     buttonText: {
-        color: Theme.surface,
+        color: Theme.tint,
         textAlign: "center",
     },
 });

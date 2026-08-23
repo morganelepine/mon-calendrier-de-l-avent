@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 
 interface NextQuestionProps {
@@ -18,7 +18,7 @@ export const NextQuestion: React.FC<NextQuestionProps> = ({
         <>
             {currentQuestionIndex === games.length - 1 ? (
                 <ThemedText style={styles.finalText}>
-                    Ce jeu de Noël est terminé 🎅
+                    Ce jeu est terminé !
                 </ThemedText>
             ) : (
                 <Pressable
@@ -36,7 +36,7 @@ export const NextQuestion: React.FC<NextQuestionProps> = ({
 
 const styles = StyleSheet.create({
     nextQuestionButton: {
-        borderColor: Colors.red,
+        borderColor: Theme.red,
         borderWidth: 2,
         borderRadius: 50,
         paddingHorizontal: 20,
@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     },
     nextQuestionText: {
         fontFamily: "PoppinsBold",
-        color: Colors.red,
+        color: Theme.red,
     },
     finalText: {
         fontFamily: "PoppinsItalic",
         fontSize: 14,
         marginVertical: 20,
-        color: Colors.red,
+        color: Theme.red,
     },
 });

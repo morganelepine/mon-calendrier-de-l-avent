@@ -1,6 +1,6 @@
 import { StyleSheet, View, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface AlphabetProps {
     clickedLetters: string[];
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     letter: {
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.green,
         borderRadius: 50,
         height: 50,
         width: 50,

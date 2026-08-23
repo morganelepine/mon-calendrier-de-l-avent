@@ -1,12 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import { Colors } from "@/constants/Colors";
 
 export const AppContent = () => {
     return (
         <View>
-            {isHalloween && (
+            {isOctober && (
                 <View style={styles.halloweenDetails}>
                     <ThemedText
                         type="italic14"
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
     halloweenDetails: {
         marginBottom: 20,
         borderWidth: 1,
-        borderColor: Colors.orange,
-        backgroundColor: Colors.orange + "15",
+        borderColor: Colors.autumnRed,
+        backgroundColor: Colors.autumnRed + "15",
         borderRadius: 8,
         paddingVertical: 12,
         marginHorizontal: 20,

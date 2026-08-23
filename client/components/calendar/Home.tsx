@@ -9,7 +9,7 @@ import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
 import {
-    isHalloween,
+    isOctober,
     currentDay,
     isDecember,
     isChristmas,
@@ -41,7 +41,7 @@ export const Home = () => {
         backgroundImage = day?.background;
     } else if (!day && isDecember) {
         backgroundImage = "11_pfqcwp";
-    } else if (isHalloween) {
+    } else if (isOctober) {
         backgroundImage = HALLOWEEN_BACKGROUND;
     } else {
         backgroundImage = WINTER_BACKGROUND;
@@ -50,7 +50,7 @@ export const Home = () => {
     let music;
     if (day && isDecember) {
         music = day.music;
-    } else if (isHalloween) {
+    } else if (isOctober) {
         music =
             currentDay % 2 === 0
                 ? HALLOWEEN_MUSIC_EVEN_DAYS

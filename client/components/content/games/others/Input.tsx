@@ -1,6 +1,6 @@
 import { StyleSheet, View, TextInput } from "react-native";
 import { CustomButton } from "@/components/utils/buttons/Button";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface InputProps {
     inputValue: string;
@@ -52,7 +52,7 @@ export const Input: React.FC<InputProps> = ({
             <CustomButton
                 style={{
                     marginTop: 20,
-                    backgroundColor: Colors.green,
+                    backgroundColor: Theme.green,
                 }}
                 onPress={handleInputValidation}
                 disabled={showResult}
@@ -66,7 +66,7 @@ export const Input: React.FC<InputProps> = ({
 const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
-        borderColor: Colors.green,
+        borderColor: Theme.green,
         borderRadius: 20,
         paddingHorizontal: 16,
         paddingBottom: 8,

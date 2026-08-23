@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 
 interface RecipeProps {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         marginBottom: 10,
         fontSize: 20,
-        color: Colors.green,
+        color: Theme.green,
     },
     recipeTitle: { fontSize: 20, marginBottom: 20 },
     ingredients: {

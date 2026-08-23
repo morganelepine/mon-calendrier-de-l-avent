@@ -1,12 +1,5 @@
 import { prisma } from "../lib/prisma";
 
-// Replaces notion.service.ts for Contenus: content now lives in Postgres
-// (Content + ContentListItem), edited via the admin backoffice. No TTL
-// cache here — direct Postgres reads are fast, same as every other route
-// in this app; the client keeps its own fallback to the bundled
-// client/data/contents/*.js snapshot if this call fails (see
-// client/services/contents.service.ts).
-
 export interface ListOfContentsItem {
     id: number;
     title: string;
@@ -19,6 +12,7 @@ export interface ListOfContentsItem {
 export interface Content {
     id: number;
     dayNumber: number;
+    season: string;
     type: string;
     subType?: string;
     title: string;
@@ -40,6 +34,7 @@ export async function getContents(): Promise<Content[]> {
     return rows.map((row) => ({
         id: row.id,
         dayNumber: row.dayNumber,
+        season: row.season,
         type: row.type,
         subType: row.subType,
         title: row.title,

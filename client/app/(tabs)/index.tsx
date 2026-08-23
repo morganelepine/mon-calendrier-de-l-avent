@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Home } from "@/components/calendar/Home";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 
 export default function HomeScreen() {
@@ -14,7 +14,7 @@ export default function HomeScreen() {
             return;
         }
 
-        if (isHalloween) {
+        if (isOctober) {
             const halloweenNoticeSeen = await AsyncStorage.getItem(
                 StorageKeys.halloweenNoticeSeen,
             );

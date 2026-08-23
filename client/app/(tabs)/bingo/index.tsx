@@ -8,7 +8,7 @@ import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import { bingo_halloween } from "@/data/bingos/bingo_halloween_data";
 import { StorageKeys } from "@/constants/storageKeys";
 
@@ -18,7 +18,7 @@ export default function BingoScreen() {
 
     // Octobre : un seul bingo automne/Halloween.
     // Le reste de l'année (à partir du 1er novembre) : les 2 bingos de Noël.
-    if (isHalloween) {
+    if (isOctober) {
         return (
             <BlueBackground>
                 <Pressable

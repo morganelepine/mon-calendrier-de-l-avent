@@ -2,6 +2,7 @@
 // as returned by server/src/controllers/admin/contents.controller.ts.
 
 export type ContentFamily = "story" | "idea" | "anecdote" | "game";
+export type Season = "christmas" | "halloween";
 
 export interface ContentListItemInput {
     title: string;
@@ -20,6 +21,7 @@ export interface ContentListItem extends ContentListItemInput {
 export interface ContentSummary {
     id: number;
     dayNumber: number;
+    season: Season;
     type: ContentFamily;
     subType: string;
     title: string;
@@ -38,6 +40,7 @@ export interface ContentDetail extends ContentSummary {
 
 export interface ContentInput {
     dayNumber: number;
+    season: Season;
     type: ContentFamily;
     subType: string;
     title: string;

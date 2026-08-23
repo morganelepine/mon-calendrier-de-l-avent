@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 
 interface InfosProps {
     currentWordIndex: number;
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
         padding: 5,
         borderWidth: 1,
         borderRadius: 20,
-        borderColor: Colors.green,
+        borderColor: Theme.green,
     },
     info: {
         fontSize: 14,
-        color: Colors.green,
+        color: Theme.green,
         textAlign: "center",
     },
 });

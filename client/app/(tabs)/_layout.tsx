@@ -1,7 +1,7 @@
 import { Tabs, router } from "expo-router";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors, Theme } from "@/constants/Colors";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 
 export default function TabLayout() {
     return (
@@ -22,7 +22,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                isHalloween
+                                isOctober
                                     ? focused
                                         ? "ghost"
                                         : "ghost-outline"
@@ -42,7 +42,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                isHalloween
+                                isOctober
                                     ? focused
                                         ? "spider"
                                         : "spider-outline"
@@ -68,7 +68,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                isHalloween
+                                isOctober
                                     ? "pumpkin"
                                     : focused
                                       ? "calendar"
@@ -92,7 +92,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                isHalloween
+                                isOctober
                                     ? focused
                                         ? "skull"
                                         : "skull-outline"
@@ -118,7 +118,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
-                                isHalloween
+                                isOctober
                                     ? focused
                                         ? "emoticon-devil"
                                         : "emoticon-devil-outline"

@@ -3,10 +3,11 @@ import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { ContentType } from "@/enums/enums";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isOctober } from "@/constants/Dates";
 
 interface GameScreenWrapperProps {
     contentType: string;
@@ -22,6 +23,8 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
     const insets = useSafeAreaInsets();
 
     const getTitle = () => {
+        if (isOctober) return "Un jeu";
+
         switch (contentType) {
             case ContentType.Game:
                 return "Jeu du jour";
@@ -33,6 +36,10 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
     };
 
     const closeContent = async () => {
+        if (isOctober) {
+            router.navigate({ pathname: "/calendar" });
+            return;
+        }
         router.navigate({
             pathname: "/calendar/day/[id]",
             params: { id: String(dayId) },
@@ -46,7 +53,7 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
                 style={{
                     backgroundColor: Colors.snow,
                     borderWidth: 1,
-                    borderColor: Colors.green,
+                    borderColor: Theme.green,
                 }}
             >
                 <Ionicons
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         width: "100%",
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.header,
     },
     title: {
         paddingBottom: 2,

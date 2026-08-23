@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { HalloweenMusicsCredits } from "@/components/informations/HalloweenMusicsCredits";
 import { Colors, Theme } from "@/constants/Colors";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import { MusicPreference } from "@/types/types";
 import { StorageKeys } from "@/constants/storageKeys";
 
@@ -58,7 +58,7 @@ export default function MusicScreen() {
                     : "La musique ne se déclenchera pas lorsque vous ouvrez l'app mais vous pourrez tout de même lancer la musique depuis l'onglet Décompte."}
             </ThemedText>
 
-            {isHalloween && <HalloweenMusicsCredits />}
+            {isOctober && <HalloweenMusicsCredits />}
 
             <View style={styles.separator} />
             <View style={styles.row}>

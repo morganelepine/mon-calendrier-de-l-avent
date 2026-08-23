@@ -28,6 +28,12 @@ export enum GameType {
     QuizCitation = "quiz-citation",
     QuizNoel = "quiz-noel",
     QuizEmojis = "quiz-emojis",
+    QuizHalloween = "quiz-halloween",
+}
+
+export enum Season {
+    Christmas = "christmas",
+    Halloween = "halloween",
 }
 
 export enum ScoreType {

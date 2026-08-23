@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../lib/prisma";
-import { ContentFamily } from "@prisma/client";
+import { ContentFamily, Season } from "@prisma/client";
 
 interface ListItemInput {
     title?: string;
@@ -11,24 +11,31 @@ interface ListItemInput {
 }
 
 export class AdminContentsController {
-    // GET /admin/contents?dayNumber=3
+    // GET /admin/contents?dayNumber=3&season=halloween
     async list(request: Request, response: Response, next: NextFunction) {
         const dayNumberParam = request.query.dayNumber;
         const dayNumber =
             typeof dayNumberParam === "string" ? Number(dayNumberParam) : undefined;
+        const seasonParam = request.query.season;
+        const season =
+            typeof seasonParam === "string" ? (seasonParam as Season) : undefined;
 
         const contents = await prisma.content.findMany({
-            where: dayNumber !== undefined ? { dayNumber } : undefined,
+            where: {
+                ...(dayNumber !== undefined ? { dayNumber } : {}),
+                ...(season !== undefined ? { season } : {}),
+            },
             select: {
                 id: true,
                 dayNumber: true,
+                season: true,
                 type: true,
                 subType: true,
                 title: true,
                 published: true,
                 isNew: true,
             },
-            orderBy: [{ dayNumber: "asc" }, { id: "asc" }],
+            orderBy: [{ season: "asc" }, { dayNumber: "asc" }, { id: "asc" }],
         });
 
         return { status: 200, contents };
@@ -102,6 +109,7 @@ export class AdminContentsController {
 function toContentData(body: any) {
     return {
         dayNumber: Number(body.dayNumber ?? 0),
+        season: (body.season as Season) ?? "christmas",
         type: body.type as ContentFamily,
         subType: body.subType ?? "",
         title: body.title ?? "",

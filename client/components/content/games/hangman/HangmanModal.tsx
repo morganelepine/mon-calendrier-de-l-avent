@@ -1,7 +1,7 @@
 import { StyleSheet, Pressable, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface ModalProps {
     modalVisible: boolean;
@@ -45,7 +45,7 @@ export const HangmanModal: React.FC<ModalProps> = ({
                 </Pressable>
             ) : (
                 <ThemedText style={styles.modalFinalText}>
-                    Ce jeu de Noël est terminé !
+                    Ce jeu est terminé !
                 </ThemedText>
             )}
         </CenteredModal>
@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     modal: {
         marginHorizontal: 20,
         padding: 30,
-        backgroundColor: "white",
+        backgroundColor: Colors.snow,
         borderRadius: 30,
         elevation: 4,
         gap: 10,
     },
     nextQuestionButton: {
-        borderColor: Colors.red,
+        borderColor: Theme.red,
         borderWidth: 2,
         borderRadius: 50,
         paddingHorizontal: 20,
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     },
     nextQuestionText: {
         fontFamily: "PoppinsBold",
-        color: Colors.red,
+        color: Theme.red,
     },
     modalFinalText: {
         fontFamily: "PoppinsItalic",
         fontSize: 14,
-        color: Colors.red,
+        color: Theme.red,
     },
 });

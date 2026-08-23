@@ -1,6 +1,7 @@
 export interface Content {
     id: number;
     dayNumber: number;
+    season?: string;
     type: string;
     subType?: string;
     title: string;

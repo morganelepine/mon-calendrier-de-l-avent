@@ -10,10 +10,16 @@ import {
     CONTENT_FIELD_LABELS,
     SUBTYPES_BY_TYPE,
 } from "../constants/contentSubtypes";
-import { ContentFamily, ContentInput, ContentListItemInput } from "../types";
+import {
+    ContentFamily,
+    ContentInput,
+    ContentListItemInput,
+    Season,
+} from "../types";
 
 const EMPTY: ContentInput = {
     dayNumber: 1,
+    season: "christmas",
     type: "anecdote",
     subType: "anecdote",
     title: "",
@@ -43,6 +49,7 @@ export function ContentEditPage() {
             .then((content) =>
                 setForm({
                     dayNumber: content.dayNumber,
+                    season: content.season,
                     type: content.type,
                     subType: content.subType,
                     title: content.title,
@@ -148,7 +155,7 @@ export function ContentEditPage() {
                     <input
                         type="number"
                         min={1}
-                        max={25}
+                        max={31}
                         value={form.dayNumber}
                         onChange={(e) =>
                             setForm((f) => ({
@@ -157,6 +164,22 @@ export function ContentEditPage() {
                             }))
                         }
                     />
+                </label>
+
+                <label>
+                    Saison
+                    <select
+                        value={form.season}
+                        onChange={(e) =>
+                            setForm((f) => ({
+                                ...f,
+                                season: e.target.value as Season,
+                            }))
+                        }
+                    >
+                        <option value="christmas">Noël (décembre)</option>
+                        <option value="halloween">Halloween (octobre)</option>
+                    </select>
                 </label>
 
                 <label>

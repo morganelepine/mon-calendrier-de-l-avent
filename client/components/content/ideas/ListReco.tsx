@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 import { ListOfContents } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: "PoppinsBold",
         fontSize: 16,
-        color: Colors.green,
+        color: Theme.green,
     },
     where: {
         fontStyle: "italic",

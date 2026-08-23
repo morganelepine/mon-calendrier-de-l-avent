@@ -14,6 +14,7 @@ export const StorageKeys = {
     // This year's calendar/game progress.
     // Reset every year, see YEARLY_RESET_KEYS below.
     calendar: "calendar",
+    octoberCalendar: "october_calendar",
     gameState: "gameState",
     bingoHalloweenClickedCells: "bingo_halloween_clicked_cells",
     bingoFilmsClickedCells: "bingo_films_clicked_cells",
@@ -27,6 +28,7 @@ export const StorageKeys = {
 // and must be wiped when a new advent calendar season starts.
 export const YEARLY_RESET_KEYS = [
     StorageKeys.calendar,
+    StorageKeys.octoberCalendar,
     StorageKeys.gameState,
     StorageKeys.bingoHalloweenClickedCells,
     StorageKeys.bingoFilmsClickedCells,

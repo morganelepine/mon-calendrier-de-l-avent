@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ListVideo } from "@/components/content/ideas/ListVideo";
 import { ListReco } from "@/components/content/ideas/ListReco";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { Colors } from "@/constants/Colors";
+import { Theme } from "@/constants/Colors";
 import { IdeaType } from "@/enums/enums";
 import { Content } from "@/interfaces/contentInterface";
 
@@ -80,16 +80,16 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     switchButton: {
-        borderColor: Colors.green,
+        borderColor: Theme.green,
         borderWidth: 1,
         borderRadius: 50,
         paddingHorizontal: 12,
     },
     switchButtonActive: {
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.green,
     },
     switchButtonText: {
-        color: Colors.green,
+        color: Theme.green,
     },
     switchButtonTextActive: {
         color: "white",

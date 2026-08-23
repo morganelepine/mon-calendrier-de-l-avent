@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
+import { isOctober } from "@/constants/Dates";
 import { ContentType, IdeaType } from "@/enums/enums";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
+import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface ContentScreenWrapperProps {
@@ -23,12 +26,14 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     children,
     dayId,
 }) => {
+    const insets = useSafeAreaInsets();
+
     const getTitle = () => {
         switch (contentType) {
             case ContentType.Story:
                 return "L'histoire du\u00A0jour";
             case ContentType.Anecdote:
-                return "L'anecdote du\u00A0jour";
+                return isOctober ? "Une anecdote" : "L'anecdote du\u00A0jour";
             case ContentType.Word:
                 return "Le mot du jour";
             case ContentType.Song:
@@ -36,7 +41,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
             case ContentType.Drink:
                 return "La boisson du\u00A0jour";
             case ContentType.Recipe:
-                return "La recette du\u00A0jour";
+                return isOctober ? "Une recette" : "La recette du\u00A0jour";
             case ContentType.Idea:
                 return "L'idée du jour";
             case IdeaType.List:
@@ -47,11 +52,52 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     };
 
     const closeContent = async () => {
+        if (isOctober) {
+            router.navigate({ pathname: "/calendar" });
+            return;
+        }
         router.navigate({
             pathname: "/calendar/day/[id]",
             params: { id: String(dayId) },
         });
     };
+
+    // Octobre : même format "plat" que les jeux (voir GameScreenWrapper)
+    if (isOctober) {
+        return (
+            <>
+                <CloseContentButton
+                    onPress={closeContent}
+                    style={{
+                        backgroundColor: Colors.snow,
+                        borderWidth: 1,
+                        borderColor: Theme.green,
+                    }}
+                >
+                    <Ionicons
+                        name={"return-up-back-outline"}
+                        size={35}
+                        color={Colors.snow}
+                    />
+                </CloseContentButton>
+
+                <View style={styles.flatContainer}>
+                    <ThemedText
+                        type="contentTitle"
+                        style={[styles.flatTitle, { paddingTop: insets.top }]}
+                    >
+                        {getTitle()}
+                    </ThemedText>
+
+                    <CustomScrollView>
+                        <View style={styles.flatChildrenContainer}>
+                            {children}
+                        </View>
+                    </CustomScrollView>
+                </View>
+            </>
+        );
+    }
 
     return (
         <>
@@ -99,5 +145,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: "space-between",
         flex: 1,
+    },
+    flatContainer: {
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        width: "100%",
+        backgroundColor: Theme.header,
+    },
+    flatTitle: {
+        paddingBottom: 2,
+        paddingHorizontal: 20,
+        color: Colors.snow,
+    },
+    flatChildrenContainer: {
+        paddingHorizontal: 20,
+        marginTop: 20,
     },
 });

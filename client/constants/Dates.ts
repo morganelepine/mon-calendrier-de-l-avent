@@ -8,7 +8,7 @@ export const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
 
 export const isDecember = currentMonth === 11;
-export const isHalloween = currentMonth === 9; // octobre
+export const isOctober = currentMonth === 9;
 
 export const isChristmas =
     isDecember && today.getDate() === christmasDay.getDate();

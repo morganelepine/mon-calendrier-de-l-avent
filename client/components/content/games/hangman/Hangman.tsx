@@ -5,6 +5,7 @@ import { Infos } from "@/components/content/games/hangman/Infos";
 import { Alphabet } from "@/components/content/games/hangman/Alphabet";
 import { HangmanModal } from "@/components/content/games/hangman/HangmanModal";
 import { Content } from "@/interfaces/contentInterface";
+import { isOctober } from "@/constants/Dates";
 
 interface HangmanProps {
     game: Content;
@@ -36,7 +37,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
             await setScore(currentWordIndex, isCorrect);
         } else if (mistakes === maxTries) {
             setModalMessage(
-                "Dommage, vous avez atteint le nombre maximum d'essais 😟"
+                "Dommage, vous avez atteint le nombre maximum d'essais 😟",
             );
             setModalVisible(true);
             await setScore(currentWordIndex, isCorrect);
@@ -58,7 +59,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
             const updatedHiddenWord = currentWord
                 .split("")
                 .map((char, index) =>
-                    char === letter ? char : hiddenWord[index]
+                    char === letter ? char : hiddenWord[index],
                 );
             setHiddenWord(updatedHiddenWord);
         } else {
@@ -84,7 +85,9 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     return (
         <View key={game.id} style={{ alignItems: "center" }}>
             <ThemedText type={"contentSubtitle"}>
-                Trouvez 3 mots autour de l'hiver et&nbsp;de&nbsp;Noël
+                {isOctober
+                    ? "Trouvez 3 mots autour d'Halloween et de l'automne"
+                    : "Trouvez 3 mots autour de l'hiver et de Noël"}
             </ThemedText>
 
             <ThemedText style={{ fontSize: 35, paddingTop: 10 }}>

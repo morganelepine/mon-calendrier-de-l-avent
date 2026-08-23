@@ -1,6 +1,6 @@
 import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors, Theme } from "@/constants/Colors";
-import { isHalloween } from "@/constants/Dates";
+import { isOctober } from "@/constants/Dates";
 import { Stack } from "expo-router";
 
 export default function InformationsLayout() {
@@ -48,7 +48,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title={
-                                    isHalloween
+                                    isOctober
                                         ? "Le bingo automnal"
                                         : "Les bingos de Noël"
                                 }

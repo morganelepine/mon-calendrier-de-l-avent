@@ -34,7 +34,7 @@ export default function HalloweenNoticeScreen() {
 const styles = StyleSheet.create({
     button: {
         alignSelf: "center",
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.autumnRed,
         borderRadius: 50,
         paddingHorizontal: 28,
         minHeight: 48,

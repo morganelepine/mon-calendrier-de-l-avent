@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     contentTitle: {
-        color: Colors.green,
+        color: Theme.green,
         fontSize: 32,
         fontFamily: "PallyBold",
         textAlign: "center",
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
     },
     contentSubtitle: {
-        color: Colors.green,
+        color: Theme.header,
         fontSize: 16,
         fontFamily: "PoppinsBold",
     },
