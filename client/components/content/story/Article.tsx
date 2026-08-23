@@ -1,4 +1,5 @@
-import { StyleSheet, Image, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+import { Image } from "expo-image";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
@@ -36,7 +37,8 @@ export const Article: React.FC<ArticleProps> = ({ story }) => {
                                 uri: getCloudinaryImageUrl(story.content4),
                             }}
                             style={styles.articleImage}
-                            resizeMode="cover"
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
                         />
                     )}
 

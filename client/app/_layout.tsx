@@ -12,6 +12,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
+import { prefetchContents } from "@/services/content.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
@@ -37,7 +38,13 @@ function RootLayout() {
             "se-regaler_mnonwh", // se divertir
             "kiwi1_r7kihz", // s'instruire
             "christmas_a5bsoi", // s'amuser
-        ].forEach((id) => Image.prefetch(getCloudinaryImageUrl(id)));
+        ].forEach((id) =>
+            Image.prefetch(getCloudinaryImageUrl(id), "memory-disk"),
+        );
+
+        // Warm the contents cache now so opening the first day
+        // doesn't block on the network round-trip.
+        prefetchContents();
     }, []);
 
     if (!loaded) {

@@ -34,6 +34,10 @@ const getCachedContents = (): Promise<Content[]> => {
     return contentsPromise;
 };
 
+export const prefetchContents = (): void => {
+    getCachedContents();
+};
+
 export const getContentsByDay = async (dayId: number): Promise<DayContents> => {
     const allContents = await getCachedContents();
     const contentsThisSeason = allContents.filter(

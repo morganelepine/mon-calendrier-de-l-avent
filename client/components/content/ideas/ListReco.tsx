@@ -1,4 +1,5 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
@@ -63,7 +64,8 @@ export const ListReco: React.FC<ListRecoProps> = ({
                                           height: imageHeight || 150,
                                       },
                             ]}
-                            resizeMode="cover"
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
                         />
                         {content.url && (
                             <ExternalLink

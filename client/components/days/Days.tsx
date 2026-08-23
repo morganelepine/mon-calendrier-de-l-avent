@@ -19,7 +19,21 @@ interface DaysProps {
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const [dayModal, setDayModal] = useState<number | null>(null);
 
-    const handleDayOpening = async (dayNumber: number) => {
+    const registerDayOpening = async (dayNumber: number) => {
+        if (isDecember && dayNumber === currentDay) {
+            try {
+                await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
+            } catch (error) {
+                console.log("Error saving score:", error);
+                ToastAndroid.show(
+                    "Oops... les points n'ont pas pu être enregistrés.",
+                    ToastAndroid.LONG,
+                );
+            }
+        }
+    };
+
+    const handleDayOpening = (dayNumber: number) => {
         const updatedDays = days.map((day) => {
             return (isDecember || isOctober) &&
                 day.dayNumber === dayNumber &&
@@ -31,22 +45,8 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         setDays(updatedDays);
 
         if ((isDecember || isOctober) && dayNumber <= currentDay) {
-            if (isDecember && dayNumber === currentDay) {
-                try {
-                    await saveScore(
-                        dayNumber,
-                        40,
-                        String(ScoreType.DayOpening),
-                    );
-                } catch (error) {
-                    console.log("Error saving score:", error);
-                    ToastAndroid.show(
-                        "Oops... les points n'ont pas pu être enregistrés.",
-                        ToastAndroid.LONG,
-                    );
-                }
-            }
             setDayModal(dayNumber);
+            registerDayOpening(dayNumber);
         } else {
             ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
         }

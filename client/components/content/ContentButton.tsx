@@ -1,9 +1,5 @@
-import {
-    StyleSheet,
-    Pressable,
-    ImageBackground,
-    ToastAndroid,
-} from "react-native";
+import { StyleSheet, Pressable, ToastAndroid } from "react-native";
+import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import {
@@ -44,7 +40,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     contentType,
     contentNumber,
 }) => {
-    const handleContentOpening = async () => {
+    const registerContentOpening = async () => {
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
 
@@ -68,17 +64,22 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
             }
             await saveQuestionPlayed(dayId, contentNumber);
         }
+    };
 
+    const handleContentOpening = () => {
         router.navigate({
             pathname: `/calendar/day/[id]/content/${contentType}`,
             params: { id: String(dayId) },
         });
+
+        registerContentOpening();
     };
 
     return (
         <ImageBackground
             source={{ uri: backgroundImage }}
-            resizeMode="cover"
+            contentFit="cover"
+            cachePolicy="memory-disk"
             style={styles.backgroundImage}
         >
             <Pressable style={styles.button} onPress={handleContentOpening}>

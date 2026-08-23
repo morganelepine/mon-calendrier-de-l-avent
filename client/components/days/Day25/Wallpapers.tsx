@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Pressable, View, Dimensions, Image } from "react-native";
+import { StyleSheet, Pressable, View, Dimensions } from "react-native";
+import { Image } from "expo-image";
 import { CustomModal } from "@/components/utils/custom/CustomModal";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { ThemedText } from "@/components/ThemedText";
@@ -28,7 +29,8 @@ export const Wallpapers = ({ datas, type }: WallpapersProps) => {
                                 source={{
                                     uri: getCloudinaryImageUrl(data.image),
                                 }}
-                                resizeMode="cover"
+                                contentFit="cover"
+                                cachePolicy="memory-disk"
                                 style={styles.thumbnail}
                             />
                         </Pressable>
@@ -59,7 +61,8 @@ export const Wallpapers = ({ datas, type }: WallpapersProps) => {
                                 source={{
                                     uri: getCloudinaryImageUrl(selectedImage),
                                 }}
-                                resizeMode="contain"
+                                contentFit="contain"
+                                cachePolicy="memory-disk"
                                 style={{
                                     height: height,
                                     width: width,

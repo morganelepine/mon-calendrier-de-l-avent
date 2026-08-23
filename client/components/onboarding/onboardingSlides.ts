@@ -1,4 +1,4 @@
-import { Colors, Theme } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 
 export type OnboardingSlideContent = {
@@ -10,8 +10,8 @@ export type OnboardingSlideContent = {
 };
 
 export const HALLOWEEN_NOTICE_SLIDE: OnboardingSlideContent = {
-    imageId: "362x390_1_qpivg3",
-    backgroundColor: Theme.surface,
+    imageId: "27_dhdnjt",
+    backgroundColor: Colors.autumnRed,
     title: "This is Halloween",
     body: "C'est nouveau !\n\nTout au long du mois d'octobre, l'application se met aux couleurs de l'automne et d'Halloween !\n\nAu programme : un bingo spécial et un calendrier rempli de petites surprises automnales.\n\nPas d'inquiétude : l'ambiance de Noël reviendra le 1er novembre et le calendrier de l'avent démarrera le 1er décembre.",
 };

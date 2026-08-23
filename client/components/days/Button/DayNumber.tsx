@@ -1,4 +1,5 @@
-import { StyleSheet, Text, Image } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { Image } from "expo-image";
 import { Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { Day } from "@/interfaces/dayInterface";
@@ -20,7 +21,8 @@ export const DayNumber: React.FC<DayNumberProps> = ({ day, dayIsOpen }) => {
                         aspectRatio: day.aspectRatio,
                     },
                 ]}
-                resizeMode="contain"
+                contentFit="contain"
+                cachePolicy="memory-disk"
             />
 
             <Text

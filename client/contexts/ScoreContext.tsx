@@ -22,8 +22,15 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // The scores screen re-triggers refreshScores() on every focus.
+    // Only the very first fetch should show the full-screen loader.
+    // Later ones refresh quietly in the background.
+    const loadedOnceRef = React.useRef(false);
+
     const refreshScores = React.useCallback(async () => {
-        setLoading(true);
+        if (!loadedOnceRef.current) {
+            setLoading(true);
+        }
         setError(null);
         try {
             const [scores, summary] = await Promise.all([
@@ -33,10 +40,11 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
             setScoreHistory(Array.isArray(scores) ? scores : []);
             setScoreTotal(summary.totalScore ?? 0);
             setPreviousYearScore(summary.previousYearScore ?? 0);
-        } catch (err: any) {
-            console.error("Erreur loading scores:", err);
+            loadedOnceRef.current = true;
+        } catch (error) {
+            console.error("Erreur loading scores:", error);
             setError(
-                "Impossible de charger les scores... Vérifiez votre connexion Internet."
+                "Impossible de charger les scores... Vérifiez votre connexion Internet.",
             );
         } finally {
             setLoading(false);
@@ -63,7 +71,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
             loading,
             error,
             refreshScores,
-        ]
+        ],
     );
 
     return (

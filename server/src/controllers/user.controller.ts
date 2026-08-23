@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
 import { usernames } from "../data/usernames";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 const FALLBACK_SEGMENTS = ["de_Noël", "du_Nord", "de_Minuit"];
 const MAX_FALLBACK_ATTEMPTS = 200;

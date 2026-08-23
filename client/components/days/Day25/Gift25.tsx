@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { router } from "expo-router";
-import { Pressable, StyleSheet, Image, ToastAndroid } from "react-native";
+import { Pressable, StyleSheet, ToastAndroid } from "react-native";
+import { Image } from "expo-image";
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -50,7 +51,8 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
                     <Image
                         source={{ uri: getCloudinaryImageUrl(gift.image) }}
                         style={styles.itemBackground}
-                        resizeMode="contain"
+                        contentFit="contain"
+                        cachePolicy="memory-disk"
                     />
                 </Animated.View>
             </Pressable>

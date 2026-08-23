@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Image } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import { Image } from "expo-image";
 import { Bingo } from "@/interfaces/bingoInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
@@ -30,7 +31,8 @@ export const BingoCell: React.FC<BingoCellProps> = ({
             <Image
                 source={{ uri: getCloudinaryImageUrl(cell.image) }}
                 style={styles.itemBackground}
-                resizeMode="contain"
+                contentFit="contain"
+                cachePolicy="memory-disk"
             />
         </Pressable>
     );

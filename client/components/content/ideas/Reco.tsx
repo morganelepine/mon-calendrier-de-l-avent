@@ -1,4 +1,5 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
@@ -32,7 +33,8 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
                                 uri: getCloudinaryImageUrl(idea.media ?? ""),
                             }}
                             style={[{ width: 350 }, { height: 280 }]}
-                            resizeMode="cover"
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
                         />
                     </View>
                 ) : (
