@@ -7,8 +7,7 @@ import {
 import "react-native-reanimated";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
-import { Stack, router } from "expo-router";
-import * as Notifications from "expo-notifications";
+import { Stack } from "expo-router";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
@@ -26,8 +25,6 @@ configureNotificationHandler();
 
 function RootLayout() {
     const colorScheme = useColorScheme();
-    const lastNotificationResponse =
-        Notifications.useLastNotificationResponse();
 
     const [loaded] = useFonts({
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
@@ -52,17 +49,6 @@ function RootLayout() {
         // doesn't block on the network round-trip.
         prefetchContents();
     }, []);
-
-    // Covers both a tap while the app is running and a cold start from a
-    // tap on the notification (app was killed) - the hook resolves either way.
-    useEffect(() => {
-        if (
-            lastNotificationResponse?.notification.request.content.data
-                ?.screen === "calendar"
-        ) {
-            router.push("/calendar");
-        }
-    }, [lastNotificationResponse]);
 
     if (!loaded) {
         return null;

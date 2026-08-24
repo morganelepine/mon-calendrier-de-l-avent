@@ -19,7 +19,7 @@ function isWithinCalendarWindow(parisNow: Date): boolean {
 function buildReminderTitle(parisNow: Date): string {
     const daysLeft = 25 - parisNow.getDate();
     if (daysLeft === 0) return "Joyeux Noël ✨";
-    return `🎄 J-${daysLeft} avant Noël`;
+    return `✨ J-${daysLeft} avant Noël`;
 }
 
 export class NotificationController {
@@ -63,8 +63,7 @@ export class NotificationController {
             users.map((user) => ({
                 to: user.pushToken as string,
                 title,
-                body: "Ouvre la case du calendrier avant que les lutins ne s'impatientent 🎁",
-                data: { screen: "calendar" },
+                body: "Ouvre la case du calendrier avant que les lutins ne s'impatientent 🎄",
             })),
         );
 
