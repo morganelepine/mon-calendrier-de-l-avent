@@ -11,6 +11,10 @@ model User {
   id           Int      @id @default(autoincrement())
   uuid         String   @unique
   username     String   @unique
+  // Expo push token for this user's device (Android only).
+  // Null until the user accepts the notifications prompt;
+  // cleared again if Expo reports the token as no longer registered.
+  pushToken    String?
   scoreHistory Score[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

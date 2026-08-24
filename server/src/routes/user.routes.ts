@@ -31,4 +31,10 @@ export const UserRoutes = [
         controller: UserController,
         action: "removeUser",
     },
+    {
+        method: "post",
+        route: "/users/:uuid/push-token",
+        controller: UserController,
+        action: "savePushToken",
+    },
 ];

@@ -131,6 +131,28 @@ export class UserController {
         }
     }
 
+    // POST /users/:uuid/push-token
+    // Registers (or clears, if pushToken is falsy) this user's Expo push token.
+    // Called after the user accepts the notifications prompt.
+    async savePushToken(
+        request: Request,
+        response: Response,
+        next: NextFunction,
+    ) {
+        const uuid = request.params.uuid;
+        const { pushToken } = request.body;
+
+        const user = await prisma.user.findUnique({ where: { uuid } });
+        if (!user) {
+            return { status: 404, message: "Unregistered user" };
+        }
+
+        return await prisma.user.update({
+            where: { uuid },
+            data: { pushToken: pushToken || null },
+        });
+    }
+
     // DELETE /users/:uuid
     async removeUser(request: Request, response: Response, next: NextFunction) {
         const uuid = request.params.uuid;

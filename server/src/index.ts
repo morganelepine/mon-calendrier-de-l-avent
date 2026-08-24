@@ -12,6 +12,7 @@ import { UserRoutes } from "./routes/user.routes";
 import { ScoreRoutes } from "./routes/score.routes";
 import { AppConfigRoutes } from "./routes/appconfig.routes";
 import { GroupRoutes } from "./routes/group.routes";
+import { NotificationRoutes } from "./routes/notification.routes";
 import { ContentRoutes } from "./routes/content.routes";
 import { AdminAuthRoutes } from "./routes/admin/auth.routes";
 import { AdminContentsRoutes } from "./routes/admin/contents.routes";
@@ -84,6 +85,7 @@ registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
 registerRoutes(app, AppConfigRoutes);
 registerRoutes(app, GroupRoutes);
+registerRoutes(app, NotificationRoutes);
 registerRoutes(app, ContentRoutes);
 
 app.get("/", (req: Request, res: Response) => {

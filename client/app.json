@@ -18,6 +18,7 @@
         },
         "android": {
             "package": "com.merrymate.moncalendrierdelavent",
+            "googleServicesFile": "./google-services.json",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#0b2956"
@@ -38,6 +39,13 @@
             "expo-audio",
             "expo-web-browser",
             "expo-asset",
+            [
+                "expo-notifications",
+                {
+                    "icon": "./assets/images/icon.png",
+                    "color": "#0b2956"
+                }
+            ],
             [
                 "@sentry/react-native/expo",
                 {

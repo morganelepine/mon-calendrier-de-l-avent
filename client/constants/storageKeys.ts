@@ -10,6 +10,7 @@ export const StorageKeys = {
     playMusic: "playMusic",
     groupCreated: "groupCreated",
     halloweenNoticeSeen: "halloween_notice_seen",
+    notificationsNoticeSeen: "notifications_notice_seen",
 
     // This year's calendar/game progress.
     // Reset every year, see YEARLY_RESET_KEYS below.

@@ -47,8 +47,8 @@ export default function TabLayout() {
                                         ? "spider"
                                         : "spider-outline"
                                     : focused
-                                      ? "snow"
-                                      : "snow-outline"
+                                      ? "gift"
+                                      : "gift-outline"
                             }
                             color={color}
                         />
@@ -71,8 +71,8 @@ export default function TabLayout() {
                                 isOctober
                                     ? "pumpkin"
                                     : focused
-                                      ? "calendar"
-                                      : "calendar-outline"
+                                      ? "snow"
+                                      : "snow-outline"
                             }
                             color={color}
                         />

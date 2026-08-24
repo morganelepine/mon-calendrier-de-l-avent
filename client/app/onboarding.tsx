@@ -10,17 +10,27 @@ import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
+import { useUser } from "@/contexts/UserContext";
+import { requestAndRegisterPushToken } from "@/services/notifications.service";
 
 export default function OnboardingScreen() {
     const [index, setIndex] = useState(0);
+    const { userUuid } = useUser();
     const isLast = index === ONBOARDING_SLIDES.length - 1;
 
     const finish = async () => {
-        const toSet: [string, string][] = [[StorageKeys.hasLaunched, "true"]];
+        const toSet: [string, string][] = [
+            [StorageKeys.hasLaunched, "true"],
+            [StorageKeys.notificationsNoticeSeen, "true"],
+        ];
         if (isOctober) {
             toSet.push([StorageKeys.halloweenNoticeSeen, "true"]);
         }
         await AsyncStorage.multiSet(toSet);
+        if (userUuid) {
+            // Fire-and-forget: never delay leaving onboarding on this.
+            requestAndRegisterPushToken(userUuid);
+        }
         router.replace("/");
     };
 

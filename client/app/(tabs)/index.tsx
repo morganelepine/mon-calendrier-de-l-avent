@@ -24,6 +24,14 @@ export default function HomeScreen() {
             }
         }
 
+        const notificationsNoticeSeen = await AsyncStorage.getItem(
+            StorageKeys.notificationsNoticeSeen,
+        );
+        if (!notificationsNoticeSeen) {
+            router.replace("/notifications-notice");
+            return;
+        }
+
         // // ------- For testing purposes
         // await AsyncStorage.multiRemove([
         //     "userUuid",

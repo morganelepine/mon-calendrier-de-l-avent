@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "945732674033",
+    "project_id": "moncalendrierdelavent",
+    "storage_bucket": "moncalendrierdelavent.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945732674033:android:75a39c706bff8064c2e450",
+        "android_client_info": {
+          "package_name": "com.merrymate.moncalendrierdelavent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMz1Buj1q6lalrAzoLRXlCZea3yynzph0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945732674033:android:3fabab8273ec5803c2e450",
+        "android_client_info": {
+          "package_name": "com.merrymate.moncalendrierdelavent.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMz1Buj1q6lalrAzoLRXlCZea3yynzph0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,12 +7,14 @@ import {
 import "react-native-reanimated";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
+import * as Notifications from "expo-notifications";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { prefetchContents } from "@/services/content.service";
+import { configureNotificationHandler } from "@/services/notifications.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
@@ -20,8 +22,12 @@ import { initSentry, Sentry } from "@/services/sentry.service";
 
 initSentry();
 
+configureNotificationHandler();
+
 function RootLayout() {
     const colorScheme = useColorScheme();
+    const lastNotificationResponse =
+        Notifications.useLastNotificationResponse();
 
     const [loaded] = useFonts({
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
@@ -47,6 +53,17 @@ function RootLayout() {
         prefetchContents();
     }, []);
 
+    // Covers both a tap while the app is running and a cold start from a
+    // tap on the notification (app was killed) - the hook resolves either way.
+    useEffect(() => {
+        if (
+            lastNotificationResponse?.notification.request.content.data
+                ?.screen === "calendar"
+        ) {
+            router.push("/calendar");
+        }
+    }, [lastNotificationResponse]);
+
     if (!loaded) {
         return null;
     }
@@ -71,6 +88,10 @@ function RootLayout() {
                                     />
                                     <Stack.Screen
                                         name="halloween-notice"
+                                        options={{ headerShown: false }}
+                                    />
+                                    <Stack.Screen
+                                        name="notifications-notice"
                                         options={{ headerShown: false }}
                                     />
                                     <Stack.Screen name="+not-found" />
