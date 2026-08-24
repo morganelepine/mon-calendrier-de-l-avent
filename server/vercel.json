@@ -16,6 +16,10 @@
         {
             "path": "/notifications/send-daily-reminder",
             "schedule": "0 7 1-25 12 *"
+        },
+        {
+            "path": "/notifications/send-daily-reminder",
+            "schedule": "0 7 * 10 *"
         }
     ]
 }
