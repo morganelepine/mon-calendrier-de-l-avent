@@ -1,7 +1,9 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { Bingo } from "@/interfaces/bingoInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
+import { Colors } from "@/constants/Colors";
+import { ThemedText } from "@/components/ThemedText";
 
 interface BingoCellProps {
     cell: Bingo;
@@ -24,12 +26,18 @@ export const BingoCell: React.FC<BingoCellProps> = ({
             ]}
             onPress={() => onClick(cell.id)}
         >
-            <Image
-                source={{ uri: getCloudinaryImageUrl(cell.image) }}
-                style={styles.itemBackground}
-                contentFit="contain"
-                cachePolicy="memory-disk"
-            />
+            {cell.image ? (
+                <Image
+                    source={{ uri: getCloudinaryImageUrl(cell.image) }}
+                    style={styles.itemBackground}
+                    contentFit="contain"
+                    cachePolicy="memory-disk"
+                />
+            ) : (
+                <View style={styles.textCard}>
+                    <ThemedText style={styles.itemText}>{cell.text}</ThemedText>
+                </View>
+            )}
         </Pressable>
     );
 };
@@ -41,5 +49,18 @@ const styles = StyleSheet.create({
     itemBackground: {
         width: "100%",
         height: "100%",
+    },
+    textCard: {
+        flex: 1,
+        width: "100%",
+        backgroundColor: Colors.snow,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 4,
+    },
+    itemText: {
+        textAlign: "center",
+        color: Colors.blue,
+        fontSize: 12,
     },
 });

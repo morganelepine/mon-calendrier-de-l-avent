@@ -26,7 +26,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
 
     return (
         <View style={styles.container}>
-            {score > 0 && isDecember && (
+            {isDecember && (
                 <>
                     <ThemedText style={styles.score}>
                         <ThemedText

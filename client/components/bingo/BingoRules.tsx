@@ -96,6 +96,21 @@ const ChristmasRules = () => (
                 même réussir à compléter toute la grille avant Noël !
             </ThemedText>
         </View>
+
+        <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
+            Bingo des films de Noël
+        </ThemedText>
+
+        <View style={styles.section}>
+            <ThemedText type="sectionText">
+                Une sélection de films de Noël pour tous les genres pour se
+                mettre immédiatement dans l'ambiance !
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Chaque fois que vous regardez l’un de ces films, il vous suffit
+                de cliquer sur la case correspondante pour la valider.
+            </ThemedText>
+        </View>
     </View>
 );
 

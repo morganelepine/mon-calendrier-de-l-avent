@@ -22,7 +22,8 @@ export const StorageKeys = {
     octoberCalendar: "october_calendar",
     gameState: "gameState",
     bingoHalloweenClickedCells: "bingo_halloween_clicked_cells",
-    bingoFilmsClickedCells: "bingo_films_clicked_cells",
+    bingoMoviesClickedCells: "bingo_movies_clicked_cells",
+    bingoTelefilmsClickedCells: "bingo_telefilms_clicked_cells",
     bingoActivitiesClickedCells: "bingo_activities_clicked_cells",
 
     // Reset bookkeeping.
@@ -36,6 +37,7 @@ export const YEARLY_RESET_KEYS = [
     StorageKeys.octoberCalendar,
     StorageKeys.gameState,
     StorageKeys.bingoHalloweenClickedCells,
-    StorageKeys.bingoFilmsClickedCells,
+    StorageKeys.bingoMoviesClickedCells,
+    StorageKeys.bingoTelefilmsClickedCells,
     StorageKeys.bingoActivitiesClickedCells,
 ] as const;

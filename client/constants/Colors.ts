@@ -13,7 +13,7 @@ export const Colors = {
     lightBlue: "#A1C6EA",
     blue: "#0b2956",
     darkBlue: "#010f23",
-    lightGreen: "#3f8f29",
+    lightGreen: "#87A330",
     green: "#116459", // 136F63
     darkGreen: "#0b2e25",
     red: "#a0222d", // b52936

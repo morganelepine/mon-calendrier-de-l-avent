@@ -14,6 +14,20 @@ export default function BingoLayout() {
         >
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
+                name="movies"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="Bingo des films de Noël"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
                 name="activities"
                 options={{
                     header: () => {
