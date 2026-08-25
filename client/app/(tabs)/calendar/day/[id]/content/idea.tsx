@@ -25,7 +25,9 @@ export default function IdeaScreen() {
     }>({});
 
     useEffect(() => {
-        getContentsByDay(dayId).then((contents) => setIdeas(contents.ideas));
+        getContentsByDay(dayId)
+            .then((contents) => setIdeas(contents.ideas))
+            .catch(() => {});
     }, [dayId]);
 
     const getmodalImage = (idea: Content) => {

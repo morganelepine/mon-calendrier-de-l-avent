@@ -45,7 +45,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
             case ContentType.Idea:
                 return "L'idée du jour";
             case IdeaType.List:
-                return "Une petite sélection";
+                return isOctober ? "Des recos" : "Une petite sélection";
             default:
                 return "Contenu du jour";
         }

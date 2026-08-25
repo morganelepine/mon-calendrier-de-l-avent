@@ -13,7 +13,9 @@ export default function StoryScreen() {
     const [story, setStory] = useState<Content>();
 
     useEffect(() => {
-        getContentsByDay(dayId).then((contents) => setStory(contents.story));
+        getContentsByDay(dayId)
+            .then((contents) => setStory(contents.story))
+            .catch(() => {});
     }, [dayId]);
 
     if (!story) {

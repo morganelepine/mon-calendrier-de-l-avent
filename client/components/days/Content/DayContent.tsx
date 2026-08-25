@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { NoContent } from "@/components/days/Content/NoContent";
 import { ContentButton } from "@/components/content/ContentButton";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { getContentsByDay } from "@/services/content.service";
@@ -18,11 +19,24 @@ export const DayContent = ({ dayId }: DayContentProps) => {
         games: Content[];
     }>({ ideas: [], games: [] });
 
-    useEffect(() => {
-        getContentsByDay(dayId).then(setDayContents);
+    const [hasError, setHasError] = useState(false);
+
+    const loadContents = useCallback(() => {
+        setHasError(false);
+        getContentsByDay(dayId)
+            .then(setDayContents)
+            .catch(() => setHasError(true));
     }, [dayId]);
 
+    useEffect(() => {
+        loadContents();
+    }, [loadContents]);
+
     const { anecdote, story, ideas, games } = dayContents;
+
+    if (hasError) {
+        return <NoContent loadContents={loadContents} />;
+    }
 
     return (
         <View style={styles.contentsContainer}>
@@ -32,7 +46,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         content={story}
                         dayId={dayId}
                         backgroundImage={getCloudinaryImageUrl(
-                            "s-instruire_xybqas"
+                            "s-instruire_xybqas",
                         )}
                         contentType={ContentType.Story}
                         contentNumber={11}
@@ -46,7 +60,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         ideas={ideas}
                         dayId={dayId}
                         backgroundImage={getCloudinaryImageUrl(
-                            "se-regaler_mnonwh"
+                            "se-regaler_mnonwh",
                         )}
                         contentType={ContentType.Idea}
                         contentNumber={22}
@@ -72,7 +86,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         games={games}
                         dayId={dayId}
                         backgroundImage={getCloudinaryImageUrl(
-                            "christmas_a5bsoi"
+                            "christmas_a5bsoi",
                         )}
                         contentType={ContentType.Game}
                         contentNumber={44}

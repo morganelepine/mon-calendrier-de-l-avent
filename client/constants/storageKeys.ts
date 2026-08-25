@@ -12,6 +12,10 @@ export const StorageKeys = {
     halloweenNoticeSeen: "halloween_notice_seen",
     notificationsNoticeSeen: "notifications_notice_seen",
 
+    // Last contents successfully fetched from the backoffice API, used as an
+    // offline/outage fallback so a down API doesn't blank out day content.
+    contentsCache: "contents_cache",
+
     // This year's calendar/game progress.
     // Reset every year, see YEARLY_RESET_KEYS below.
     calendar: "calendar",

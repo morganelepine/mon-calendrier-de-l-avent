@@ -19,7 +19,9 @@ export default function GameScreen() {
     const [games, setGames] = useState<Content[]>([]);
 
     useEffect(() => {
-        getContentsByDay(dayId).then((contents) => setGames(contents.games));
+        getContentsByDay(dayId)
+            .then((contents) => setGames(contents.games))
+            .catch(() => {});
     }, [dayId]);
 
     const { gamesByType, type } = classifyGames(games);

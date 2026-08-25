@@ -6,6 +6,7 @@ import { daysArray } from "@/data/days_data";
 import { octoberDaysArray } from "@/data/days_data_october";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Day } from "@/interfaces/dayInterface";
+import { Content } from "@/interfaces/contentInterface";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 import { getContentsByDay } from "@/services/content.service";
@@ -65,10 +66,20 @@ export default function CalendarScreen() {
             return;
         }
 
-        const { anecdote, ideas, games } = await getContentsByDay(
-            day.dayNumber,
-        );
         const params = { id: String(day.dayNumber) };
+
+        let anecdote: Content | undefined;
+        let ideas: Content[] = [];
+        let games: Content[] = [];
+        try {
+            ({ anecdote, ideas, games } = await getContentsByDay(
+                day.dayNumber,
+            ));
+        } catch {
+            // Let the generic day screen handle/display the error itself.
+            router.navigate({ pathname: "/calendar/day/[id]", params });
+            return;
+        }
 
         if (anecdote) {
             router.navigate({

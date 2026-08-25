@@ -16,7 +16,9 @@ export default function AnecdoteScreen() {
     const [anecdote, setAnecdote] = useState<Content>();
 
     useEffect(() => {
-        getContentsByDay(dayId).then((contents) => setAnecdote(contents.anecdote));
+        getContentsByDay(dayId)
+            .then((contents) => setAnecdote(contents.anecdote))
+            .catch(() => {});
     }, [dayId]);
 
     if (!anecdote) {

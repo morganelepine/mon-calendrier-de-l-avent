@@ -28,14 +28,21 @@ const CURRENT_SEASON: string = isOctober ? Season.Halloween : Season.Christmas;
 
 // Fetched once per app session (all 120 rows are small), then reused
 // synchronously by every screen that asks for a given day's content.
+// On failure the promise is cleared so the next call retries instead of
+// being stuck on a rejection (or an empty result) for the whole session.
 let contentsPromise: Promise<Content[]> | null = null;
 const getCachedContents = (): Promise<Content[]> => {
-    contentsPromise ??= getAllContents();
+    contentsPromise ??= getAllContents().catch((error) => {
+        contentsPromise = null;
+        throw error;
+    });
     return contentsPromise;
 };
 
 export const prefetchContents = (): void => {
-    getCachedContents();
+    // Fire-and-forget: this is just a warm-up, the actual consumers
+    // (getContentsByDay callers) handle success/failure themselves.
+    getCachedContents().catch(() => {});
 };
 
 export const getContentsByDay = async (dayId: number): Promise<DayContents> => {

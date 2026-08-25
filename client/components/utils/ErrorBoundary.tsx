@@ -63,16 +63,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 24,
         gap: 12,
-        backgroundColor: Colors.snow,
+        backgroundColor: Colors.blue,
     },
     title: {
         fontSize: 18,
         fontWeight: "bold",
         textAlign: "center",
+        color: Colors.snow,
     },
     message: {
         fontSize: 14,
         textAlign: "center",
-        marginBottom: 8,
+        color: Colors.snow,
     },
 });
