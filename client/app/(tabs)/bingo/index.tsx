@@ -40,7 +40,6 @@ export default function BingoScreen() {
                     clickedCellsKey={StorageKeys.bingoHalloweenClickedCells}
                     grid={bingo_halloween}
                     columns={3}
-                    scrollable={false}
                 />
 
                 <BingoRulesModal

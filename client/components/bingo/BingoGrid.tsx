@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BlueBackground } from "@/components/utils/BlueBackground";
@@ -9,17 +9,19 @@ interface BingoGridProps {
     clickedCellsKey: string;
     grid: Bingo[];
     columns: number;
-    scrollable?: boolean;
 }
 
 export const BingoGrid: React.FC<BingoGridProps> = ({
     clickedCellsKey,
     grid,
     columns,
-    scrollable = true,
 }) => {
     const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
     const [isReady, setIsReady] = useState(false);
+    const [containerSize, setContainerSize] = useState<{
+        width: number;
+        height: number;
+    } | null>(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -68,47 +70,63 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
         });
     };
 
-    const cells = grid.map((cell) => (
-        <BingoCell
-            key={cell.id}
-            cell={cell}
-            isClicked={clickedCells.has(cell.id)}
-            onClick={handleCellClick}
-            columns={columns}
-        />
-    ));
+    // The grid must fit entirely within the available space:
+    // compute a fixed cell size from the measured container
+    // so all rows fit both horizontally and vertically without scrolling.
+    const rows = Math.ceil(grid.length / columns);
+    const cellSize = containerSize
+        ? Math.floor(
+              Math.min(
+                  containerSize.width / columns,
+                  containerSize.height / rows,
+              ),
+          )
+        : undefined;
+
+    const handleLayout = (event: LayoutChangeEvent) => {
+        const { width, height } = event.nativeEvent.layout;
+        setContainerSize({ width, height });
+    };
 
     return (
         <BlueBackground>
-            {scrollable ? (
-                <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={styles.scrollContent}
-                >
-                    <View style={styles.bingoContainer}>{cells}</View>
-                </ScrollView>
-            ) : (
-                <View style={styles.centeredContainer}>
-                    <View style={styles.bingoContainer}>{cells}</View>
-                </View>
-            )}
+            <View style={styles.centeredContainer} onLayout={handleLayout}>
+                {cellSize !== undefined && (
+                    <View
+                        style={[
+                            styles.bingoContainer,
+                            {
+                                width: cellSize * columns,
+                                height: cellSize * rows,
+                            },
+                        ]}
+                    >
+                        {grid.map((cell) => (
+                            <BingoCell
+                                key={cell.id}
+                                cell={cell}
+                                isClicked={clickedCells.has(cell.id)}
+                                onClick={handleCellClick}
+                                size={cellSize}
+                            />
+                        ))}
+                    </View>
+                )}
+            </View>
         </BlueBackground>
     );
 };
 
 const styles = StyleSheet.create({
-    scrollContent: {
-        flexGrow: 1,
-        justifyContent: "center",
-    },
     centeredContainer: {
         flex: 1,
         justifyContent: "center",
+        alignItems: "center",
+        margin: 3,
     },
     bingoContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
-        margin: 4,
     },
 });

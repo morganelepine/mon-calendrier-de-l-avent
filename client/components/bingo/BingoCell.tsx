@@ -7,24 +7,20 @@ interface BingoCellProps {
     cell: Bingo;
     isClicked: boolean;
     onClick: (id: number) => void;
-    columns: number;
+    size: number;
 }
 
 export const BingoCell: React.FC<BingoCellProps> = ({
     cell,
     isClicked,
     onClick,
-    columns,
+    size,
 }) => {
     return (
         <Pressable
             style={[
-                {
-                    opacity: isClicked ? 0.5 : 1,
-                    flexBasis: `${100 / columns}%`,
-                    flexGrow: 1,
-                    padding: 4,
-                },
+                styles.cell,
+                { opacity: isClicked ? 0.5 : 1, width: size, height: size },
             ]}
             onPress={() => onClick(cell.id)}
         >
@@ -39,9 +35,11 @@ export const BingoCell: React.FC<BingoCellProps> = ({
 };
 
 const styles = StyleSheet.create({
+    cell: {
+        padding: 3,
+    },
     itemBackground: {
         width: "100%",
-        height: undefined,
-        aspectRatio: 1,
+        height: "100%",
     },
 });
