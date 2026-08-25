@@ -60,20 +60,6 @@ export default function InformationsLayout() {
                 }}
             />
             <Stack.Screen
-                name="music"
-                options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Gestion de la musique"
-                                backgroundColor={Theme.surface}
-                                color={Colors.snow}
-                            />
-                        );
-                    },
-                }}
-            />
-            <Stack.Screen
                 name="rate"
                 options={{
                     header: () => {
@@ -94,6 +80,20 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Remerciements"
+                                backgroundColor={Theme.surface}
+                                color={Colors.snow}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
+                name="settings"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="Paramètres"
                                 backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />

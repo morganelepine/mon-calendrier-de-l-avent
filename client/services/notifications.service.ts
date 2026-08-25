@@ -44,3 +44,17 @@ export const requestAndRegisterPushToken = async (
         });
     }
 };
+
+// Un-registers this device from push reminders
+export const clearPushToken = async (uuid: string): Promise<void> => {
+    try {
+        await apiFetch(`/users/${uuid}/push-token`, {
+            method: "POST",
+            body: { pushToken: null },
+        });
+    } catch (error) {
+        Sentry.captureException(error, {
+            extra: { context: "clearPushToken" },
+        });
+    }
+};

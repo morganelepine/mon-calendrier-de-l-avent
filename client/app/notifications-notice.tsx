@@ -52,7 +52,7 @@ export default function NotificationsNoticeScreen() {
 const styles = StyleSheet.create({
     button: {
         alignSelf: "center",
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.snow,
         borderRadius: 50,
         paddingHorizontal: 28,
         minHeight: 48,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: "center",
-        color: Colors.snow,
+        color: Colors.red,
     },
     skip: {
         textAlign: "center",

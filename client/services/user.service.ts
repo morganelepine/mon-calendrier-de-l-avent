@@ -10,6 +10,10 @@ export const getOrCreateUser = async (userUuid: string): Promise<User> => {
     });
 };
 
+export const getUser = async (userUuid: string): Promise<User> => {
+    return apiFetch<User>(`/users/${userUuid}`);
+};
+
 export async function searchUsers(
     query: string,
     groupId: string,

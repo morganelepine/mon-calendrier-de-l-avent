@@ -5,7 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
-import { ONBOARDING_SLIDES } from "@/components/onboarding/onboardingSlides";
+import {
+    NOTIFICATIONS_NOTICE_SLIDE,
+    ONBOARDING_SLIDES,
+} from "@/components/onboarding/onboardingSlides";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
@@ -17,6 +20,13 @@ export default function OnboardingScreen() {
     const [index, setIndex] = useState(0);
     const { userUuid } = useUser();
     const isLast = index === ONBOARDING_SLIDES.length - 1;
+    const isNotificationsSlide =
+        ONBOARDING_SLIDES[index] === NOTIFICATIONS_NOTICE_SLIDE;
+    const nextButtonLabel = isNotificationsSlide
+        ? "Activer les rappels"
+        : isLast
+          ? "C'est parti !"
+          : "Suivant";
 
     const finish = async () => {
         const toSet: [string, string][] = [
@@ -35,6 +45,9 @@ export default function OnboardingScreen() {
     };
 
     const handleNext = () => {
+        if (isNotificationsSlide && userUuid) {
+            requestAndRegisterPushToken(userUuid);
+        }
         if (isLast) {
             finish();
             return;
@@ -105,7 +118,7 @@ export default function OnboardingScreen() {
                             { color: ONBOARDING_SLIDES[index].backgroundColor },
                         ]}
                     >
-                        {isLast ? "C'est parti !" : "Suivant"}
+                        {nextButtonLabel}
                     </ThemedText>
                 </Pressable>
             </View>

@@ -5,6 +5,7 @@ export type User = {
     uuid: string;
     username: string;
     score: number;
+    pushToken?: string | null;
 };
 
 export type GroupMember = {

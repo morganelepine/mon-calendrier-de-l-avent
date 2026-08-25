@@ -44,9 +44,11 @@ export default function HomeScreen() {
         //     "bingo_films_clicked_cells",
         //     "bingo_activities_clicked_cells",
         //     "calendar",
+        //     "october_calendar",
         //     "groupCreated",
         //     "isNew",
         //     "halloween_notice_seen",
+        //     "notifications_notice_seen",
         // ]);
     };
 

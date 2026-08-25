@@ -71,16 +71,16 @@ export const HalloweenMusicsCredits = () => {
 };
 
 const styles = StyleSheet.create({
-    musicCredits: {
-        paddingHorizontal: 20,
-    },
     halloweenMusicCredits: {
-        marginTop: 16,
+        marginBottom: 16,
         borderWidth: 1,
         borderColor: Colors.autumnRed,
         backgroundColor: Colors.autumnRed + "15",
         borderRadius: 8,
         paddingVertical: 12,
         marginHorizontal: 20,
+    },
+    musicCredits: {
+        paddingHorizontal: 20,
     },
 });

@@ -145,7 +145,7 @@
                 <h1>Politique de confidentialité</h1>
                 <p class="subtitle">
                     Application « Mon calendrier de l'avent » — dernière mise à
-                    jour : 11 août 2026
+                    jour : 24 août 2026
                 </p>
             </header>
 
@@ -227,6 +227,18 @@
                         <td>Comparer vos scores avec ceux de vos ami·e·s</td>
                     </tr>
                     <tr>
+                        <td>Notifications</td>
+                        <td>
+                            Si vous activez les rappels (optionnel, désactivable
+                            à tout moment) : jeton de notification push (Expo
+                            Push Token) associé à votre identifiant
+                        </td>
+                        <td>
+                            Vous envoyer un rappel quotidien vous invitant à
+                            ouvrir la case du jour
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Diagnostic technique</td>
                         <td>
                             En cas de plantage ou d'erreur : modèle et version
@@ -291,6 +303,18 @@
                 </li>
                 <li>Prévention des usages abusifs de l'API</li>
             </ul>
+            <h3>3.3 Notifications</h3>
+            <p>
+                Base légale : consentement. Les rappels ne sont activés que si
+                vous le demandez explicitement dans l'application (bouton
+                d'activation lors de la première utilisation ou dans Infos >
+                Paramètres > Gestion des notifications). Désactiver ce réglage
+                dans l'application supprime immédiatement le jeton associé de
+                nos serveurs ; désactiver les notifications depuis les réglages
+                de votre téléphone arrête leur affichage sans nécessairement
+                supprimer le jeton côté serveur tant que vous ne l'avez pas
+                aussi désactivé dans l'application.
+            </p>
 
             <h2>4. Hébergement et sous-traitants</h2>
             <p>
@@ -303,6 +327,14 @@
                 via l'infrastructure
                 <strong>Expo (EAS Update)</strong>, qui ne reçoit pas vos
                 données de progression, de scores ou de groupes.
+            </p>
+            <p>
+                Si vous activez les rappels (voir section 3.3), votre jeton de
+                notification est transmis au service
+                <strong>Expo Push Notifications</strong>, qui le relaie via
+                <strong>Firebase Cloud Messaging (Google)</strong> pour la
+                distribution effective de la notification sur votre appareil
+                Android.
             </p>
             <p>
                 En cas de plantage ou d'erreur, un rapport technique est envoyé
