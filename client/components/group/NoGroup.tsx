@@ -1,8 +1,8 @@
-import { View, StyleSheet } from "react-native";
-import { CreateGroupPrompt } from "@/components/group/CreateGroupPrompt";
+import { View, StyleSheet, Pressable } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
 import { useCreateGroup } from "@/hooks/useCreateGroup";
 
-// Shown on the "Mon groupe" screen itself when the user doesn't own a group yet.
 export const NoGroup = ({
     userId,
     userUuid,
@@ -20,7 +20,15 @@ export const NoGroup = ({
 
     return (
         <View style={styles.container}>
-            <CreateGroupPrompt onPress={handleCreate} />
+            <ThemedText style={styles.text}>
+                Vous n'avez pas encore de groupe. Créez-en un pour retrouver
+                plus facilement les scores de vos ami·e·s&nbsp;!
+            </ThemedText>
+            <Pressable style={styles.button} onPress={handleCreate}>
+                <ThemedText style={{ color: Colors.snow }}>
+                    Créer mon groupe
+                </ThemedText>
+            </Pressable>
         </View>
     );
 };
@@ -32,5 +40,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 20,
         gap: 16,
+    },
+    text: {
+        textAlign: "center",
+        color: Colors.snow,
+    },
+    button: {
+        backgroundColor: Colors.autumnGreen,
+        borderRadius: 50,
+        paddingVertical: 8,
+        paddingHorizontal: 24,
+        alignSelf: "center",
     },
 });

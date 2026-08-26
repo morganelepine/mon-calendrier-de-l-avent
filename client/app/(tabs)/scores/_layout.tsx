@@ -1,4 +1,3 @@
-import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { GroupHeader } from "@/components/navigation/GroupHeader";
 import { Colors, Theme } from "@/constants/Colors";
 import { Stack } from "expo-router";
@@ -13,35 +12,8 @@ export default function ScoresLayout() {
                 headerTintColor: Theme.tint,
             }}
         >
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-                name="leaderboard"
-                options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Classement"
-                                backgroundColor={Colors.snow}
-                                color={Theme.tint}
-                            />
-                        );
-                    },
-                }}
-            />
-            <Stack.Screen
-                name="group"
-                options={{
-                    header: () => {
-                        return (
-                            <GroupHeader
-                                title="Mon groupe"
-                                backgroundColor={Colors.snow}
-                                color={Theme.tint}
-                            />
-                        );
-                    },
-                }}
-            />
+            {/* Mes scores / Mon groupe / Top / Mon classement */}
+            <Stack.Screen name="(hub)" options={{ headerShown: false }} />
             <Stack.Screen
                 name="addMembers"
                 options={{

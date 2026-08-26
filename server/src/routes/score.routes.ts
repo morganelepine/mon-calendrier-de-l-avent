@@ -25,4 +25,10 @@ export const ScoreRoutes = [
         controller: ScoreController,
         action: "getLeaderboard",
     },
+    {
+        method: "get",
+        route: "/scores/leaderboard/around/:uuid",
+        controller: ScoreController,
+        action: "getLeaderboardAround",
+    },
 ];

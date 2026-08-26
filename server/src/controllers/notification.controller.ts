@@ -26,8 +26,8 @@ function buildReminderContent(
             title:
                 parisNow.getDate() === 31
                     ? "🎃 Happy Halloween"
-                    : "🍂 Ton calendrier t'attend",
-            body: "Ouvre la case du jour avant que les fantômes ne s'impatientent 👻",
+                    : "🍂 Le calendrier vous attend",
+            body: "Ouvrez la case du jour avant que les fantômes ne s'impatientent 👻",
         };
     }
 
@@ -35,7 +35,7 @@ function buildReminderContent(
     return {
         title:
             daysLeft === 0 ? "Joyeux Noël ✨" : `✨ J-${daysLeft} avant Noël`,
-        body: "Ouvre la case du calendrier avant que les lutins ne s'impatientent 🎄",
+        body: "Ouvrez la case du calendrier avant que les lutins ne s'impatientent 🎄",
     };
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { daysArray } from "@/data/days_data";
 import { ThemedText } from "@/components/ThemedText";
@@ -61,11 +62,7 @@ export const Home = () => {
 
     return (
         <>
-            <StatusBar
-                barStyle="light-content"
-                translucent
-                backgroundColor="transparent"
-            />
+            <StatusBar style="light" />
             <BackgroundImage image={backgroundImage}>
                 {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
 

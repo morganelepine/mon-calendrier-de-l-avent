@@ -43,10 +43,40 @@ export const getUserScoresByDay = async (): Promise<Score[]> => {
 
 type LeaderboardEntry = { username: string; score: number };
 
-export const getLeaderboard = async (): Promise<
-    LeaderboardEntry[] | { data: LeaderboardEntry[]; total: number; hasMore: boolean }
-> => {
-    return apiFetch("/scores/leaderboard");
+export type LeaderboardPage = {
+    data: LeaderboardEntry[];
+    total: number;
+    hasMore: boolean;
+};
+
+export const getLeaderboard = async (
+    page: number,
+    limit: number
+): Promise<LeaderboardPage> => {
+    return apiFetch(`/scores/leaderboard?page=${page}&limit=${limit}`);
+};
+
+export type LeaderboardAroundResponse =
+    | { userHasScore: false }
+    | {
+          userHasScore: true;
+          userRank: number;
+          total: number;
+          hasMoreAbove: boolean;
+          hasMoreBelow: boolean;
+          data: (LeaderboardEntry & { rank: number })[];
+      };
+
+export const getLeaderboardAround = async (
+    before: number,
+    after: number
+): Promise<LeaderboardAroundResponse> => {
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
+    if (!userUuid) return { userHasScore: false };
+
+    return apiFetch(
+        `/scores/leaderboard/around/${userUuid}?before=${before}&after=${after}`
+    );
 };
 
 export const saveQuestionPlayed = async (

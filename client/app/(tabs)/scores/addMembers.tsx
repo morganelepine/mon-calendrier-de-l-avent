@@ -8,6 +8,7 @@ import {
     ToastAndroid,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
@@ -55,7 +56,10 @@ export default function AddMembersScreen() {
             for (const id of selected) {
                 await addMember(Number(groupId), id);
             }
-            ToastAndroid.show("Ajouté·e·s !", ToastAndroid.SHORT);
+            ToastAndroid.show(
+                selected.length > 1 ? "Ajouté·e·s !" : "Ajouté·e !",
+                ToastAndroid.SHORT,
+            );
             setQuery("");
             setResults([]);
             setSelected([]);
@@ -121,11 +125,10 @@ export default function AddMembersScreen() {
                 />
 
                 {selected.length > 0 && (
-                    <Pressable style={styles.button} onPress={handleAdd}>
-                        <ThemedText style={{ color: Colors.snow }}>
-                            Ajouter au groupe
-                        </ThemedText>
-                    </Pressable>
+                    <LeaderBoardButton
+                        onPress={handleAdd}
+                        text="Ajouter au groupe"
+                    />
                 )}
             </View>
         </BlueBackground>
@@ -133,7 +136,7 @@ export default function AddMembersScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { paddingHorizontal: 20, gap: 20, flex: 1 },
+    container: { paddingHorizontal: 20, marginBottom: 20, gap: 20, flex: 1 },
     search: {
         borderWidth: 1,
         borderColor: Colors.disabledText,
@@ -149,13 +152,5 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 50,
         alignSelf: "center",
-    },
-    button: {
-        backgroundColor: Colors.red,
-        borderRadius: 50,
-        paddingVertical: 4,
-        paddingHorizontal: 28,
-        alignSelf: "center",
-        marginBottom: 20,
     },
 });

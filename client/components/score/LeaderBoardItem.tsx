@@ -10,6 +10,7 @@ interface LeaderBoardItemProps {
     item: { id?: number; username: string; score: number };
     username: string | null;
     onPress?: (item: { id?: number; username: string; score: number }) => void;
+    rank?: number;
 }
 
 function truncateUsername(name: string): string {
@@ -23,6 +24,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
     item,
     username,
     onPress,
+    rank,
 }) => {
     return (
         <View
@@ -50,7 +52,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                         },
                     ]}
                 >
-                    {index + 1}
+                    {rank ?? index + 1}
                 </ThemedText>
                 <Pressable
                     style={styles.usernameContainer}

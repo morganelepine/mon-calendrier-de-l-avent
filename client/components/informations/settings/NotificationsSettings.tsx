@@ -39,7 +39,7 @@ export const NotificationsSettings = () => {
         if (status !== "granted" && !canAskAgain) {
             Alert.alert(
                 "Notifications désactivées",
-                "Active les notifications pour cette application depuis les réglages de ton téléphone.",
+                "Activez les notifications pour cette application depuis les réglages de votre téléphone.",
                 [
                     { text: "Annuler", style: "cancel" },
                     {

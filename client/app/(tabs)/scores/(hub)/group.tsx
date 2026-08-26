@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { Group } from "@/types/types";
 import { useUser } from "@/contexts/UserContext";
@@ -41,59 +40,47 @@ export default function GroupScreen() {
         }, [userId]),
     );
 
-    // Still loading, or userId hasn't resolved yet
-    // (should be near-instant now, but stay defensive).
-    if (loading || !userId) {
-        return (
-            <BlueBackground>
-                <View style={{ flex: 1 }}>
-                    <ErrorLoading
-                        loading={true}
-                        error={null}
-                        refreshScores={() => {
-                            if (userId) fetchMyGroup(userId);
-                        }}
-                    />
-                </View>
-            </BlueBackground>
-        );
-    }
+    return (
+        <BlueBackground>
+            {(loading || !userId) && (
+                // Still loading, or userId hasn't resolved yet
+                // (should be near-instant now, but stay defensive).
+                <ErrorLoading
+                    loading={true}
+                    error={null}
+                    refreshScores={() => {
+                        if (userId) fetchMyGroup(userId);
+                    }}
+                />
+            )}
 
-    // The fetch actually failed — show the error + retry, not a spinner.
-    if (error) {
-        return (
-            <BlueBackground>
-                <View style={{ flex: 1 }}>
-                    <ErrorLoading
-                        loading={false}
-                        error={error}
-                        refreshScores={() => fetchMyGroup(userId)}
-                    />
-                </View>
-            </BlueBackground>
-        );
-    }
+            {!loading && userId && error && (
+                // The fetch actually failed — show the error + retry, not a spinner.
+                <ErrorLoading
+                    loading={false}
+                    error={error}
+                    refreshScores={() => fetchMyGroup(userId)}
+                />
+            )}
 
-    // Fetch succeeded, there's just no group yet — offer to create one
-    // instead of spinning forever.
-    if (!myGroup) {
-        return (
-            <BlueBackground>
+            {!loading && userId && !error && !myGroup && (
+                // Fetch succeeded, there's just no group yet — offer to
+                // create one instead of spinning forever.
                 <NoGroup
                     userId={userId}
                     userUuid={userUuid}
                     onCreated={() => fetchMyGroup(userId)}
                 />
-            </BlueBackground>
-        );
-    }
+            )}
 
-    return (
-        <MyGroup
-            myGroup={myGroup}
-            userId={userId}
-            username={username}
-            fetchMyGroup={fetchMyGroup}
-        />
+            {!loading && userId && !error && myGroup && (
+                <MyGroup
+                    myGroup={myGroup}
+                    userId={userId}
+                    username={username}
+                    fetchMyGroup={fetchMyGroup}
+                />
+            )}
+        </BlueBackground>
     );
 }

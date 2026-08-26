@@ -1,17 +1,16 @@
 import { useState } from "react";
 import {
     FlatList,
-    Pressable,
     StyleSheet,
     View,
     ToastAndroid,
     ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ThemedText } from "@/components/ThemedText";
+import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
-import { Colors, Theme } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { Group } from "@/types/types";
 import { removeMember } from "@/services/group.service";
 
@@ -60,18 +59,14 @@ export const MyGroup = ({
             ) : (
                 <>
                     <View style={styles.stickyContainer}>
-                        <Pressable
-                            style={styles.button}
+                        <LeaderBoardButton
                             onPress={() =>
                                 router.push(
                                     `/scores/addMembers?groupId=${myGroup.id}`,
                                 )
                             }
-                        >
-                            <ThemedText style={{ color: Colors.snow }}>
-                                Ajouter des lutins
-                            </ThemedText>
-                        </Pressable>
+                            text="Ajouter des lutins"
+                        />
                     </View>
                     <FlatList
                         data={myGroup.members}
@@ -98,6 +93,11 @@ export const MyGroup = ({
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignContent: "center",
+        justifyContent: "center",
+    },
     stickyContainer: {
         position: "absolute",
         bottom: 20,
@@ -105,18 +105,5 @@ const styles = StyleSheet.create({
         right: 0,
         alignItems: "center",
         zIndex: 10,
-    },
-    button: {
-        backgroundColor: Theme.green,
-        borderWidth: 1,
-        borderColor: Colors.snow,
-        borderRadius: 50,
-        paddingVertical: 6,
-        paddingHorizontal: 28,
-    },
-    container: {
-        flex: 1,
-        alignContent: "center",
-        justifyContent: "center",
     },
 });
