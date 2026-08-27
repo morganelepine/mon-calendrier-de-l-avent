@@ -64,15 +64,15 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="bingo"
                 options={{
-                    title: "Bingo",
+                    title: "Jeux",
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={
                                 isOctober
                                     ? "pumpkin"
                                     : focused
-                                      ? "snow"
-                                      : "snow-outline"
+                                      ? "game-controller"
+                                      : "game-controller-outline"
                             }
                             color={color}
                         />
@@ -97,8 +97,8 @@ export default function TabLayout() {
                                         ? "skull"
                                         : "skull-outline"
                                     : focused
-                                      ? "game-controller"
-                                      : "game-controller-outline"
+                                      ? "snow"
+                                      : "snow-outline"
                             }
                             color={color}
                         />

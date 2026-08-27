@@ -2,7 +2,6 @@ import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import { getIconForTier, getGame2048IconUrl } from "@/constants/game2048Icons";
-import { Colors } from "@/constants/Colors";
 
 interface Game2048TileProps {
     tier: number; // 0 = empty cell
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     filled: {
-        backgroundColor: Colors.snow,
+        backgroundColor: "white",
         borderRadius: 8,
     },
     icon: {

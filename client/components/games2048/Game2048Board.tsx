@@ -7,7 +7,6 @@ import {
 } from "react-native-gesture-handler";
 import { scheduleOnRN } from "react-native-worklets";
 import { Game2048Tile } from "@/components/games2048/Game2048Tile";
-import { BlueBackground } from "@/components/utils/BlueBackground";
 import { Board, Direction, GRID_SIZE } from "@/utils/games2048/engine";
 
 interface Game2048BoardProps {
@@ -67,46 +66,44 @@ export const Game2048Board: React.FC<Game2048BoardProps> = ({
     );
 
     return (
-        <BlueBackground>
-            <GestureDetector gesture={swipe}>
-                <View style={styles.centeredContainer} onLayout={handleLayout}>
-                    {cellSize !== undefined && board.length > 0 && (
-                        <View
-                            style={[
-                                styles.grid,
-                                {
-                                    width:
-                                        cellSize * GRID_SIZE +
-                                        GAP * (GRID_SIZE - 1),
-                                    height:
-                                        cellSize * GRID_SIZE +
-                                        GAP * (GRID_SIZE - 1),
-                                },
-                            ]}
-                        >
-                            {board.map((row, rowIndex) =>
-                                row.map((tier, colIndex) => (
-                                    <Game2048Tile
-                                        key={`${rowIndex}-${colIndex}`}
-                                        tier={tier}
-                                        size={cellSize}
-                                    />
-                                )),
-                            )}
-                        </View>
-                    )}
-                </View>
-            </GestureDetector>
-        </BlueBackground>
+        <View style={styles.centeredContainer} onLayout={handleLayout}>
+            {cellSize !== undefined && board.length > 0 && (
+                <GestureDetector gesture={swipe}>
+                    <View
+                        style={[
+                            styles.grid,
+                            {
+                                width:
+                                    cellSize * GRID_SIZE +
+                                    GAP * (GRID_SIZE - 1),
+                                height:
+                                    cellSize * GRID_SIZE +
+                                    GAP * (GRID_SIZE - 1),
+                            },
+                        ]}
+                    >
+                        {board.map((row, rowIndex) =>
+                            row.map((tier, colIndex) => (
+                                <Game2048Tile
+                                    key={`${rowIndex}-${colIndex}`}
+                                    tier={tier}
+                                    size={cellSize}
+                                />
+                            )),
+                        )}
+                    </View>
+                </GestureDetector>
+            )}
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     centeredContainer: {
-        flex: 1,
+        flexGrow: 1,
         justifyContent: "center",
         alignItems: "center",
-        margin: 8,
+        marginHorizontal: 8,
     },
     grid: {
         flexDirection: "row",

@@ -13,6 +13,8 @@ export default function BingoLayout() {
             }}
         >
             <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="bingos" options={{ headerShown: false }} />
+            <Stack.Screen name="halloween" options={{ headerShown: false }} />
             <Stack.Screen
                 name="movies"
                 options={{

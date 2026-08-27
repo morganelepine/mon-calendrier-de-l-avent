@@ -29,7 +29,7 @@ export const OnboardingSlide: React.FC<Props> = ({ slide }) => {
 
             <ThemedText type="pallyBoldSnow" style={styles.title}>
                 {slide.showUsername && username
-                    ? `Tu es désormais ${username}`
+                    ? `Vous êtes désormais ${username}`
                     : slide.title}
             </ThemedText>
 

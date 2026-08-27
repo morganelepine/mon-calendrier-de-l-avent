@@ -1,69 +1,56 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BlueBackground } from "@/components/utils/BlueBackground";
-import { BingoHalloween } from "@/components/bingo/BingoHalloween";
-import { BingoCard } from "@/components/bingo/BingoCard";
+import { HubCard } from "@/components/navigation/HubCard";
+import { Game2048RulesModal } from "@/components/games2048/Game2048RulesModal";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
-import { Game2048Card } from "@/components/games2048/Game2048Card";
-import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 
-export default function BingoScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
+export default function GamesHubScreen() {
+    const [game2048RulesVisible, setGame2048RulesVisible] = useState(false);
+    const [bingoRulesVisible, setBingoRulesVisible] = useState(false);
 
-    if (isOctober) {
-        return (
-            <BingoHalloween
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-            />
-        );
-    }
+    const goal = isOctober ? "chaudron magique !" : "Père Noël 🎅";
 
     return (
         <BlueBackground>
             <CustomSafeAreaView>
-                <Pressable
-                    onPress={() => setModalVisible(true)}
-                    style={styles.button}
-                >
-                    <ThemedText type="italic14" style={styles.buttonText}>
-                        Comment ça marche ?
-                    </ThemedText>
-                </Pressable>
+                <View style={styles.cardsContainer}>
+                    <HubCard
+                        title={`Le 2048 ${isOctober ? "d'automne" : "de Noël"}`}
+                        description={`Faites glisser les cases dans tous les\u00A0sens pour tenter d'atteindre le\u00A0${goal}`}
+                        color={isOctober ? Colors.autumnGreenDark : Colors.red}
+                        route="game2048"
+                        onRulesPress={() => setGame2048RulesVisible(true)}
+                    />
 
-                <ScrollView>
-                    <View style={styles.bingosContainer}>
-                        <BingoCard
-                            type="films"
-                            description="Regardez un maximum de films cultes de Noël durant le mois de décembre"
-                            color={Colors.green}
-                            route="movies"
-                        />
+                    <HubCard
+                        title={
+                            isOctober
+                                ? "Le bingo d'automne"
+                                : "Les bingos de Noël"
+                        }
+                        description={
+                            isOctober
+                                ? "Réalisez un maximum d'activités typiquement automnales tout au long du mois d'octobre"
+                                : "Trois bingos à réaliser tout au long du mois de décembre pour se plonger dans l'ambiance de Noël"
+                        }
+                        color={Theme.green}
+                        route={isOctober ? "halloween" : "bingos"}
+                        onRulesPress={() => setBingoRulesVisible(true)}
+                    />
+                </View>
 
-                        <BingoCard
-                            type="activités"
-                            description="Profitez au maximum de la&nbsp;magie de&nbsp;Noël tout au long du mois"
-                            color={Colors.autumnGreen}
-                            route="activities"
-                        />
-
-                        <BingoCard
-                            type="téléfilms"
-                            description="Repérez le plus de clichés possible devant un téléfilm de&nbsp;Noël"
-                            color={Colors.red}
-                            route="telefilms"
-                        />
-
-                        <Game2048Card />
-                    </View>
-                </ScrollView>
+                <Game2048RulesModal
+                    modalVisible={game2048RulesVisible}
+                    setModalVisible={setGame2048RulesVisible}
+                />
 
                 <BingoRulesModal
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
+                    modalVisible={bingoRulesVisible}
+                    setModalVisible={setBingoRulesVisible}
                 />
             </CustomSafeAreaView>
         </BlueBackground>
@@ -71,20 +58,13 @@ export default function BingoScreen() {
 }
 
 const styles = StyleSheet.create({
-    bingosContainer: {
-        flex: 1,
-        justifyContent: "center",
-        gap: 20,
-        margin: 20,
+    title: {
+        fontSize: 32,
+        marginBottom: 20,
     },
-    button: {
-        paddingVertical: 4,
-        paddingHorizontal: 24,
-        borderRadius: 20,
-        alignSelf: "flex-end",
-    },
-    buttonText: {
-        textDecorationLine: "underline",
-        color: Colors.snow,
+    cardsContainer: {
+        width: "100%",
+        gap: 24,
+        paddingHorizontal: 20,
     },
 });

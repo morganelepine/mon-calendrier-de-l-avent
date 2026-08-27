@@ -22,14 +22,14 @@ const GAME_2048_ICONS_AUTUMN: { image: string; label: string }[] = [
     { image: "1_scuuxx", label: "Fantôme" },
     { image: "2_wtrbh7", label: "Pomme de pin" },
     { image: "3_bg7js0", label: "Citrouille" },
-    { image: "4_xpndqo", label: "Hibou" },
     { image: "5_v3codg", label: "Chapeau de sorcière" },
     { image: "6_hmj7b1", label: "Champignon" },
-    { image: "7_ycfic1", label: "Potin magique" },
+    { image: "7_ycfic1", label: "Potion magique" },
     { image: "8_vqqszo", label: "Feuille d'automne" },
     { image: "9_i56uwb", label: "Courge" },
     { image: "10_iwhlfc", label: "Oeil" },
-    { image: "11_tl5yrl", label: "Marmitte magique" },
+    { image: "4_xpndqo", label: "Hibou" },
+    { image: "11_tl5yrl", label: "Chaudron magique" },
 ];
 
 export const GAME_2048_ICONS = isOctober

@@ -10,16 +10,16 @@ const HalloweenRules = () => (
 
         <View style={styles.section}>
             <ThemedText type="sectionText">
-                Une bucket list d'activités typiquement automnales et
-                d'Halloween pour profiter à fond du mois d'octobre !
+                Ce bingo contient une bucket list d'activités typiquement
+                automnales et d'Halloween.
             </ThemedText>
             <ThemedText type="sectionText">
                 Chaque fois que vous réalisez l'une de ces activités, cliquez
                 sur la case correspondante pour la valider.
             </ThemedText>
             <ThemedText type="sectionText">
-                Il vous suffit de recliquer sur les cases pour recommencer le
-                bingo de zéro.
+                Rien à gagner ici, juste le plaisir de profiter de l'automne à
+                fond.
             </ThemedText>
         </View>
     </View>
@@ -27,10 +27,25 @@ const HalloweenRules = () => (
 
 const ChristmasRules = () => (
     <View>
+        {/* MOVIES */}
+        <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
+            Bingo des films de Noël
+        </ThemedText>
+        <View style={styles.section}>
+            <ThemedText type="sectionText">
+                Une sélection de films de Noël pour tous les goûts pour se
+                mettre immédiatement dans l'ambiance !
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Chaque fois que vous regardez l’un de ces films, il vous suffit
+                de cliquer sur la case correspondante pour la valider.
+            </ThemedText>
+        </View>
+
+        {/* TELEFILMS */}
         <ThemedText type="sectionSubtitle">
             Bingo des téléfilms de Noël
         </ThemedText>
-
         <View style={styles.section}>
             <ThemedText type="sectionText">
                 Vous adorez les téléfilms de Noël avec leurs histoires
@@ -43,7 +58,6 @@ const ChristmasRules = () => (
                 des téléfilms de Noël !
             </ThemedText>
         </View>
-
         <View style={styles.section}>
             <ThemedText type="sectionText">Le principe est simple :</ThemedText>
             <ThemedText type="sectionText">
@@ -63,14 +77,12 @@ const ChristmasRules = () => (
                 correspondante.
             </ThemedText>
         </View>
-
         <View style={styles.section}>
             <ThemedText type="sectionText">
                 Évidemment, plus vous cochez de cases, plus le téléfilm a de
                 chance d’atteindre le sommet du chef-d'oeuvre de Noël !
             </ThemedText>
         </View>
-
         <View style={styles.section}>
             <ThemedText type="sectionText">
                 Il vous suffit de recliquer sur les cases pour recommencer le
@@ -78,10 +90,10 @@ const ChristmasRules = () => (
             </ThemedText>
         </View>
 
+        {/* ACTIVITIES */}
         <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
             Bingo des activités de Noël
         </ThemedText>
-
         <View style={styles.section}>
             <ThemedText type="sectionText">
                 Une bucket list d'activités typiquement hivernales pour profiter
@@ -94,21 +106,6 @@ const ChristmasRules = () => (
             <ThemedText type="sectionText">
                 L’objectif ? S’amuser, se créer de beaux souvenirs et peut-être
                 même réussir à compléter toute la grille avant Noël !
-            </ThemedText>
-        </View>
-
-        <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
-            Bingo des films de Noël
-        </ThemedText>
-
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Une sélection de films de Noël pour tous les genres pour se
-                mettre immédiatement dans l'ambiance !
-            </ThemedText>
-            <ThemedText type="sectionText">
-                Chaque fois que vous regardez l’un de ces films, il vous suffit
-                de cliquer sur la case correspondante pour la valider.
             </ThemedText>
         </View>
     </View>

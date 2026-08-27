@@ -59,7 +59,11 @@ function collapseRow(row: number[]): { row: number[]; scoreGained: number } {
     let scoreGained = 0;
 
     for (let i = 0; i < tiles.length; i++) {
-        if (tiles[i] !== 0 && tiles[i] === tiles[i + 1]) {
+        if (
+            tiles[i] !== 0 &&
+            tiles[i] === tiles[i + 1] &&
+            tiles[i] < MAX_TIER
+        ) {
             const mergedTier = tiles[i] + 1;
             result.push(mergedTier);
             scoreGained += 2 ** mergedTier;
@@ -105,6 +109,7 @@ export function hasMovesLeft(board: Board): boolean {
     for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = 0; col < GRID_SIZE; col++) {
             const tier = board[row][col];
+            if (tier >= MAX_TIER) continue; // can no longer merge further
             if (col < GRID_SIZE - 1 && board[row][col + 1] === tier)
                 return true;
             if (row < GRID_SIZE - 1 && board[row + 1][col] === tier)

@@ -50,6 +50,7 @@ export default function HomeScreen() {
         //     "isNew",
         //     "halloween_notice_seen",
         //     "notifications_notice_seen",
+        //     "game2048_in_progress",
         // ]);
     };
 
