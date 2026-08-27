@@ -12,8 +12,7 @@ export type ThemedTextProps = TextProps & {
         | "italic14"
         | "boldMarkdown"
         | "italicMarkdown"
-        | "pallyBoldSnow"
-        | "pallyBoldBlue";
+        | "pallyBoldSnow";
 };
 
 export function ThemedText({
@@ -34,7 +33,6 @@ export function ThemedText({
                 type === "boldMarkdown" ? styles.boldMarkdown : undefined,
                 type === "italicMarkdown" ? styles.italicMarkdown : undefined,
                 type === "pallyBoldSnow" ? styles.pallyBoldSnow : undefined,
-                type === "pallyBoldBlue" ? styles.pallyBoldBlue : undefined,
                 style,
             ]}
             {...rest}
@@ -110,11 +108,6 @@ const styles = StyleSheet.create({
     },
     pallyBoldSnow: {
         color: Colors.snow,
-        fontFamily: "PallyBold",
-        letterSpacing: 2,
-    },
-    pallyBoldBlue: {
-        color: Theme.tint,
         fontFamily: "PallyBold",
         letterSpacing: 2,
     },

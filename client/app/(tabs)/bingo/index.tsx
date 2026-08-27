@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, ScrollView } from "react-native";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { BingoHalloween } from "@/components/bingo/BingoHalloween";
 import { BingoCard } from "@/components/bingo/BingoCard";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
+import { Game2048Card } from "@/components/games2048/Game2048Card";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
@@ -33,28 +34,32 @@ export default function BingoScreen() {
                     </ThemedText>
                 </Pressable>
 
-                <View style={styles.bingosContainer}>
-                    <BingoCard
-                        type="films"
-                        description="Regardez un maximum de films cultes de Noël durant le mois de décembre"
-                        color={Colors.green}
-                        route="movies"
-                    />
+                <ScrollView>
+                    <View style={styles.bingosContainer}>
+                        <BingoCard
+                            type="films"
+                            description="Regardez un maximum de films cultes de Noël durant le mois de décembre"
+                            color={Colors.green}
+                            route="movies"
+                        />
 
-                    <BingoCard
-                        type="activités"
-                        description="Profitez au maximum de la&nbsp;magie de&nbsp;Noël tout au long du mois"
-                        color={Colors.autumnGreen}
-                        route="activities"
-                    />
+                        <BingoCard
+                            type="activités"
+                            description="Profitez au maximum de la&nbsp;magie de&nbsp;Noël tout au long du mois"
+                            color={Colors.autumnGreen}
+                            route="activities"
+                        />
 
-                    <BingoCard
-                        type="téléfilms"
-                        description="Repérez le plus de clichés possible devant un téléfilm de&nbsp;Noël"
-                        color={Colors.red}
-                        route="telefilms"
-                    />
-                </View>
+                        <BingoCard
+                            type="téléfilms"
+                            description="Repérez le plus de clichés possible devant un téléfilm de&nbsp;Noël"
+                            color={Colors.red}
+                            route="telefilms"
+                        />
+
+                        <Game2048Card />
+                    </View>
+                </ScrollView>
 
                 <BingoRulesModal
                     modalVisible={modalVisible}

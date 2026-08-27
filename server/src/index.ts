@@ -14,6 +14,7 @@ import { AppConfigRoutes } from "./routes/appconfig.routes";
 import { GroupRoutes } from "./routes/group.routes";
 import { NotificationRoutes } from "./routes/notification.routes";
 import { ContentRoutes } from "./routes/content.routes";
+import { Games2048Routes } from "./routes/games2048.routes";
 import { AdminAuthRoutes } from "./routes/admin/auth.routes";
 import { AdminContentsRoutes } from "./routes/admin/contents.routes";
 import { requireAdminAuth } from "./middleware/adminAuth.middleware";
@@ -87,6 +88,7 @@ registerRoutes(app, AppConfigRoutes);
 registerRoutes(app, GroupRoutes);
 registerRoutes(app, NotificationRoutes);
 registerRoutes(app, ContentRoutes);
+registerRoutes(app, Games2048Routes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Calendar API working ✅");

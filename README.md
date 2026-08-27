@@ -175,6 +175,13 @@ npm run db:setup
 - `POST /groups/:groupId/members`
 - `DELETE /groups/:groupId/members`
 
+### Jeu quotidien (2048)
+
+- `POST /games/2048/score`
+- `GET /games/2048/leaderboard`
+- `GET /games/2048/leaderboard/around/:uuid`
+- `GET /games/2048/stats/:uuid`
+
 ### Version applicative
 
 - `GET /version` : retourne `min_required_version`

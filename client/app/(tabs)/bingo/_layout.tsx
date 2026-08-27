@@ -55,6 +55,12 @@ export default function BingoLayout() {
                     },
                 }}
             />
+            <Stack.Screen
+                name="game2048"
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack>
     );
 }

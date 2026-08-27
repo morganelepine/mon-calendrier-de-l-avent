@@ -25,6 +25,7 @@ export const StorageKeys = {
     bingoMoviesClickedCells: "bingo_movies_clicked_cells",
     bingoTelefilmsClickedCells: "bingo_telefilms_clicked_cells",
     bingoActivitiesClickedCells: "bingo_activities_clicked_cells",
+    game2048InProgress: "game2048_in_progress",
 
     // Reset bookkeeping.
     lastResetYear: "lastResetYear",
@@ -40,4 +41,5 @@ export const YEARLY_RESET_KEYS = [
     StorageKeys.bingoMoviesClickedCells,
     StorageKeys.bingoTelefilmsClickedCells,
     StorageKeys.bingoActivitiesClickedCells,
+    StorageKeys.game2048InProgress,
 ] as const;
