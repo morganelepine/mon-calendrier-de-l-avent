@@ -39,9 +39,13 @@ const styles = StyleSheet.create({
         gap: 16,
         marginVertical: 20,
         paddingBottom: 10,
+        width: "100%",
     },
     infos: {
         flex: 1,
+        // On web, flex items default to min-width: auto and refuse to
+        // shrink below their content's width.
+        minWidth: 0,
         padding: 5,
         borderWidth: 1,
         borderRadius: 20,

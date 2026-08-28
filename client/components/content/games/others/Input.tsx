@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Platform } from "react-native";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 
@@ -67,12 +67,13 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: Theme.green,
-        borderRadius: 20,
+        borderRadius: 50,
         paddingHorizontal: 16,
-        paddingBottom: 8,
+        paddingBottom: Platform.OS === "web" ? 0 : 6,
         fontFamily: "Poppins",
         // iOS Safari auto-zooms on focus for any input under 16px.
         fontSize: 16,
+        height: 48,
     },
     disabledInput: {
         borderColor: Colors.disabledText,

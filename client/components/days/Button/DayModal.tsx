@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, Platform } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
 import { Colors, Theme } from "@/constants/Colors";
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     quotationMark: {
-        fontSize: 50,
+        fontSize: Platform.OS === "web" ? 42 : 50,
         lineHeight: 50,
         color: Theme.green,
         textAlign: "center",

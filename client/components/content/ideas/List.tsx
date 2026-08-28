@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, Platform } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ListVideo } from "@/components/content/ideas/ListVideo";
 import { ListReco } from "@/components/content/ideas/ListReco";
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 50,
         paddingHorizontal: 12,
+        paddingBottom: Platform.OS === "web" ? 2 : 0,
     },
     switchButtonActive: {
         backgroundColor: Theme.green,

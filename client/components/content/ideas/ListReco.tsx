@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     where: {
         fontStyle: "italic",
         fontSize: 14,
-        marginTop: -12,
+        marginTop: -4,
         marginBottom: 10,
     },
     description: { textAlign: "left", fontSize: 15 },
