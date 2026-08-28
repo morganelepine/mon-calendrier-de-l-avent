@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { apiFetch } from "@/services/apiFetch";
@@ -17,6 +18,8 @@ export function configureNotificationHandler(): void {
 export const requestAndRegisterPushToken = async (
     uuid: string,
 ): Promise<void> => {
+    if (Platform.OS === "web") return;
+
     try {
         const { status: existingStatus } =
             await Notifications.getPermissionsAsync();

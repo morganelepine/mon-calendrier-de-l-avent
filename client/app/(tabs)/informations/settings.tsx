@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import Constants from "expo-constants";
@@ -15,9 +15,12 @@ export default function SettingsScreen() {
     return (
         <CustomScrollView>
             <SafeAreaView edges={NO_TOP_EDGES} style={styles.container}>
-                <NotificationsSettings />
-
-                <View style={styles.separator} />
+                {Platform.OS !== "web" && (
+                    <>
+                        <NotificationsSettings />
+                        <View style={styles.separator} />
+                    </>
+                )}
 
                 <MusicSettings />
 

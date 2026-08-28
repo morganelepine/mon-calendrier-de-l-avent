@@ -15,7 +15,7 @@ const calendarDay = new Date(today.getFullYear(), 11, 1);
 export const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
 
-export const isDecember = currentMonth === 7;
+export const isDecember = currentMonth === 11;
 export const isOctober = currentMonth === 9;
 
 export const isChristmas =

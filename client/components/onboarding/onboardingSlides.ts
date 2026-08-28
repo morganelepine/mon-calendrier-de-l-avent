@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 
@@ -37,5 +38,5 @@ export const ONBOARDING_SLIDES: OnboardingSlideContent[] = [
         showUsername: true,
     },
     ...(isOctober ? [HALLOWEEN_NOTICE_SLIDE] : []),
-    NOTIFICATIONS_NOTICE_SLIDE,
+    ...(Platform.OS !== "web" ? [NOTIFICATIONS_NOTICE_SLIDE] : []),
 ];
