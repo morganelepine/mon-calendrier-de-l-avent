@@ -33,6 +33,7 @@ export const ScoresTabBar = () => {
                                 focused && styles.pillActive,
                                 Platform.OS === "web" && {
                                     paddingVertical: 8,
+                                    marginTop: 6,
                                 },
                             ]}
                         >
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.snow,
         opacity: 0.8,
         borderRadius: 50,
-        paddingHorizontal: 12,
+        paddingHorizontal: Platform.OS === "web" ? 16 : 12,
     },
     pillActive: {
         backgroundColor: Theme.green,

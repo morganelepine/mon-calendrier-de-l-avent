@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, ToastAndroid } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DayButton } from "@/components/days/Button/DayButton";
 import { Colors } from "@/constants/Colors";
 import { saveScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
 import { currentDay, isDecember, isOctober } from "@/constants/Dates";
+import { showToast } from "@/components/utils/Toast";
 
 interface DaysProps {
     days: Day[];
@@ -25,9 +26,9 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
                 await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
             } catch (error) {
                 console.log("Error saving score:", error);
-                ToastAndroid.show(
+                showToast(
                     "Oops... les points n'ont pas pu être enregistrés.",
-                    ToastAndroid.LONG,
+                    "long",
                 );
             }
         }
@@ -48,7 +49,8 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
             setDayModal(dayNumber);
             registerDayOpening(dayNumber);
         } else {
-            ToastAndroid.show("Un peu de patience...", ToastAndroid.SHORT);
+            const emoji = isOctober ? "👻" : "🎅";
+            showToast(`Un peu de patience ${emoji}`);
         }
     };
 

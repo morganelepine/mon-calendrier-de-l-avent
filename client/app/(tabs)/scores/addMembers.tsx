@@ -5,13 +5,13 @@ import {
     TextInput,
     FlatList,
     Pressable,
-    ToastAndroid,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
+import { showToast } from "@/components/utils/Toast";
 import { User } from "@/types/types";
 import { searchUsers } from "@/services/user.service";
 import { addMember } from "@/services/group.service";
@@ -34,9 +34,9 @@ export default function AddMembersScreen() {
             setResults(users);
         } catch (error) {
             console.error("Error searching users:", error);
-            ToastAndroid.show(
+            showToast(
                 "Oops... la recherche a échoué. Veuillez réessayer.",
-                ToastAndroid.LONG,
+                "long",
             );
         }
     };
@@ -56,18 +56,15 @@ export default function AddMembersScreen() {
             for (const id of selected) {
                 await addMember(Number(groupId), id);
             }
-            ToastAndroid.show(
-                selected.length > 1 ? "Ajouté·e·s !" : "Ajouté·e !",
-                ToastAndroid.SHORT,
-            );
+            showToast(selected.length > 1 ? "Ajouté·e·s !" : "Ajouté·e !");
             setQuery("");
             setResults([]);
             setSelected([]);
         } catch (error) {
             console.error("Error adding members:", error);
-            ToastAndroid.show(
+            showToast(
                 "Oops... Ces lutin·e·s n'ont pas pu être ajouté·e·s. Veuillez réessayer.",
-                ToastAndroid.LONG,
+                "long",
             );
         }
     };

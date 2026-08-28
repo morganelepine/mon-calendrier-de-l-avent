@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { StyleSheet, Platform, ToastAndroid } from "react-native";
+import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
+import { showToast } from "@/components/utils/Toast";
 
 interface StoryProps {
     story: Content;
@@ -13,16 +14,8 @@ interface StoryProps {
 
 export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
     useEffect(() => {
-        // ToastAndroid is Android-only — undefined on web/iOS, so it would
-        // throw there without this guard.
-        if (
-            Platform.OS === "android" &&
-            (story?.dayNumber === 13 || story?.dayNumber === 19)
-        ) {
-            ToastAndroid.show(
-                "Une nouvelle histoire commence !",
-                ToastAndroid.LONG,
-            );
+        if (story?.dayNumber === 13 || story?.dayNumber === 19) {
+            showToast("Une nouvelle histoire commence !", "long");
         }
     }, [story.dayNumber]);
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { router } from "expo-router";
-import { Pressable, StyleSheet, ToastAndroid } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import Animated, {
     useSharedValue,
@@ -10,6 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Gift } from "@/interfaces/giftInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
+import { showToast } from "@/components/utils/Toast";
 
 interface GiftProps {
     gift: Gift;
@@ -40,7 +41,7 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
                 pathname: "/calendar/day25",
             });
         } else {
-            ToastAndroid.show("Ouvrez un autre cadeau !", ToastAndroid.SHORT);
+            showToast("Ouvrez un autre cadeau !");
         }
     };
 

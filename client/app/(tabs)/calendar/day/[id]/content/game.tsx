@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, ToastAndroid } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
@@ -11,6 +11,7 @@ import { classifyGames, getContentsByDay } from "@/services/content.service";
 import { saveScore } from "@/services/score.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
+import { showToast } from "@/components/utils/Toast";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -41,10 +42,7 @@ export default function GameScreen() {
             );
         } catch (error) {
             console.log("Error saving score:", error);
-            ToastAndroid.show(
-                "Oops... votre score n'a pas pu être enregistré.",
-                ToastAndroid.LONG,
-            );
+            showToast("Oops... votre score n'a pas pu être enregistré.", "long");
         }
     };
 

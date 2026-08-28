@@ -14,6 +14,7 @@ import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";
 import { AccessGate } from "@/components/navigation/AccessGate";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
+import { ToastHost } from "@/components/utils/Toast";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
 import { initSentry, Sentry } from "@/services/sentry.service";
@@ -60,6 +61,7 @@ function RootLayout() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider>
+                <ToastHost />
                 <ErrorBoundary>
                     <UserProvider>
                         <AccessGate>

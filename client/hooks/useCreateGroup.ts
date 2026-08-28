@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ToastAndroid } from "react-native";
 import { createGroup } from "@/services/group.service";
 import { logClient } from "@/services/log.service";
 import { StorageKeys } from "@/constants/storageKeys";
+import { showToast } from "@/components/utils/Toast";
 
 export function useCreateGroup(userId: number | null, userUuid: string | null) {
     return async function createMyGroup(): Promise<boolean> {
@@ -17,10 +17,7 @@ export function useCreateGroup(userId: number | null, userUuid: string | null) {
                 userUuid,
                 error: String(error),
             });
-            ToastAndroid.show(
-                "Oops... Veuillez réessayer !",
-                ToastAndroid.LONG,
-            );
+            showToast("Oops... Veuillez réessayer !", "long");
             return false;
         }
     };

@@ -3,7 +3,6 @@ import {
     FlatList,
     StyleSheet,
     View,
-    ToastAndroid,
     ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
@@ -13,6 +12,7 @@ import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { Colors } from "@/constants/Colors";
 import { Group } from "@/types/types";
 import { removeMember } from "@/services/group.service";
+import { showToast } from "@/components/utils/Toast";
 
 export const MyGroup = ({
     myGroup,
@@ -41,10 +41,7 @@ export const MyGroup = ({
             await removeMember(myGroup.id, item.id);
             fetchMyGroup(userId);
         } catch {
-            ToastAndroid.show(
-                "Oops... Veuillez réessayer !",
-                ToastAndroid.LONG,
-            );
+            showToast("Oops... Veuillez réessayer !", "long");
         } finally {
             setLoading(false);
         }

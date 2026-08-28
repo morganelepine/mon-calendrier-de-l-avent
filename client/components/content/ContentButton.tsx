@@ -1,7 +1,8 @@
-import { StyleSheet, Pressable, ToastAndroid } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
+import { showToast } from "@/components/utils/Toast";
 import {
     saveScore,
     isQuestionPlayed,
@@ -57,9 +58,9 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
                 );
             } catch (error) {
                 console.log("Error saving score:", error);
-                ToastAndroid.show(
+                showToast(
                     "Oops... les points n'ont pas pu être enregistrés.",
-                    ToastAndroid.LONG,
+                    "long",
                 );
             }
             await saveQuestionPlayed(dayId, contentNumber);
