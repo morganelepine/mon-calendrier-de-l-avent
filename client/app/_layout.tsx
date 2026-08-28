@@ -17,6 +17,7 @@ import { prefetchContents } from "@/services/content.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";
+import { syncAppIcon } from "@/services/appIcon.service";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
@@ -57,6 +58,8 @@ function RootLayout() {
         // Warm the contents cache now so opening the first day
         // doesn't block on the network round-trip.
         prefetchContents();
+
+        void syncAppIcon();
     }, []);
 
     if (!loaded) {

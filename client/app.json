@@ -53,6 +53,17 @@
                     "organization": "mon-calendrier-de-lavent",
                     "project": "react-native"
                 }
+            ],
+            [
+                "expo-dynamic-app-icon",
+                {
+                    "christmas": {
+                        "image": "./assets/images/icon.png"
+                    },
+                    "halloween": {
+                        "image": "./assets/images/icon_autumn.png"
+                    }
+                }
             ]
         ],
         "experiments": {
