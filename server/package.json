@@ -30,6 +30,7 @@
         "prisma:seed:appconfig": "ts-node prisma/seeds/appconfig.seeds.ts",
         "migrate:contents-to-postgres": "ts-node scripts/migrateContentsToPostgres.ts",
         "admin:hash-password": "ts-node scripts/hashAdminPassword.ts",
+        "pwa:hash-code": "ts-node scripts/hashPwaAccessCode.ts",
         "db:setup": "npm run prisma:generate && npm run prisma:migrate && npm run prisma:seed:appconfig",
         "postinstall": "prisma generate",
         "start": "node dist/index.js",

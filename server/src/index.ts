@@ -8,6 +8,7 @@ import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import { AccessRoutes } from "./routes/access.routes";
 import { UserRoutes } from "./routes/user.routes";
 import { ScoreRoutes } from "./routes/score.routes";
 import { AppConfigRoutes } from "./routes/appconfig.routes";
@@ -82,6 +83,7 @@ registerRoutes(app, AdminContentsRoutes);
 
 // Public routes
 app.use(cors());
+registerRoutes(app, AccessRoutes);
 registerRoutes(app, UserRoutes);
 registerRoutes(app, ScoreRoutes);
 registerRoutes(app, AppConfigRoutes);

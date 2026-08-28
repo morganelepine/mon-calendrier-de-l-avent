@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         backgroundColor: Colors.snow,
         borderTopLeftRadius: 8,
-        borderStartEndRadius: 8,
+        borderBottomLeftRadius: 8,
     },
     iconContainer: {
         width: 32,

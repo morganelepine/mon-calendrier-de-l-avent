@@ -12,6 +12,7 @@ import { prefetchContents } from "@/services/content.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";
+import { AccessGate } from "@/components/navigation/AccessGate";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
@@ -61,31 +62,41 @@ function RootLayout() {
             <SafeAreaProvider>
                 <ErrorBoundary>
                     <UserProvider>
-                        <InitializationGate>
-                            <VersionGate>
-                                <ScoreProvider>
-                                    <Stack>
-                                        <Stack.Screen
-                                            name="(tabs)"
-                                            options={{ headerShown: false }}
-                                        />
-                                        <Stack.Screen
-                                            name="onboarding"
-                                            options={{ headerShown: false }}
-                                        />
-                                        <Stack.Screen
-                                            name="halloween-notice"
-                                            options={{ headerShown: false }}
-                                        />
-                                        <Stack.Screen
-                                            name="notifications-notice"
-                                            options={{ headerShown: false }}
-                                        />
-                                        <Stack.Screen name="+not-found" />
-                                    </Stack>
-                                </ScoreProvider>
-                            </VersionGate>
-                        </InitializationGate>
+                        <AccessGate>
+                            <InitializationGate>
+                                <VersionGate>
+                                    <ScoreProvider>
+                                        <Stack>
+                                            <Stack.Screen
+                                                name="(tabs)"
+                                                options={{
+                                                    headerShown: false,
+                                                }}
+                                            />
+                                            <Stack.Screen
+                                                name="onboarding"
+                                                options={{
+                                                    headerShown: false,
+                                                }}
+                                            />
+                                            <Stack.Screen
+                                                name="halloween-notice"
+                                                options={{
+                                                    headerShown: false,
+                                                }}
+                                            />
+                                            <Stack.Screen
+                                                name="notifications-notice"
+                                                options={{
+                                                    headerShown: false,
+                                                }}
+                                            />
+                                            <Stack.Screen name="+not-found" />
+                                        </Stack>
+                                    </ScoreProvider>
+                                </VersionGate>
+                            </InitializationGate>
+                        </AccessGate>
                     </UserProvider>
                 </ErrorBoundary>
             </SafeAreaProvider>

@@ -11,6 +11,8 @@ export const StorageKeys = {
     groupCreated: "groupCreated",
     halloweenNoticeSeen: "halloween_notice_seen",
     notificationsNoticeSeen: "notifications_notice_seen",
+    // Web/PWA only — see components/navigation/AccessGate.tsx.
+    webAccessGranted: "web_access_granted",
 
     // Last contents successfully fetched from the backoffice API, used as an
     // offline/outage fallback so a down API doesn't blank out day content.
