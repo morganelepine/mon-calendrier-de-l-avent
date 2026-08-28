@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         borderRadius: 50,
         paddingHorizontal: 12,
+        paddingVertical: 4,
     },
     pillActive: {
         backgroundColor: Theme.green,

@@ -1,15 +1,10 @@
 import { useEffect } from "react";
-import {
-    DarkTheme,
-    DefaultTheme,
-    ThemeProvider,
-} from "@react-navigation/native";
 import "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
 import { Stack } from "expo-router";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
@@ -27,8 +22,6 @@ initSentry();
 configureNotificationHandler();
 
 function RootLayout() {
-    const colorScheme = useColorScheme();
-
     const [loaded] = useFonts({
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
         PoppinsBold: require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
@@ -65,10 +58,8 @@ function RootLayout() {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <ErrorBoundary>
-                <ThemeProvider
-                    value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-                >
+            <SafeAreaProvider>
+                <ErrorBoundary>
                     <UserProvider>
                         <InitializationGate>
                             <VersionGate>
@@ -96,8 +87,8 @@ function RootLayout() {
                             </VersionGate>
                         </InitializationGate>
                     </UserProvider>
-                </ThemeProvider>
-            </ErrorBoundary>
+                </ErrorBoundary>
+            </SafeAreaProvider>
         </GestureHandlerRootView>
     );
 }
