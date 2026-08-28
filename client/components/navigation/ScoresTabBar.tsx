@@ -28,14 +28,7 @@ export const ScoresTabBar = () => {
                         <Pressable
                             key={tab.href}
                             onPress={() => router.navigate(tab.href)}
-                            style={[
-                                styles.pill,
-                                focused && styles.pillActive,
-                                Platform.OS === "web" && {
-                                    paddingVertical: 8,
-                                    marginTop: 6,
-                                },
-                            ]}
+                            style={[styles.pill, focused && styles.pillActive]}
                         >
                             <ThemedText
                                 style={[
@@ -71,6 +64,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.snow,
         opacity: 0.8,
         borderRadius: 50,
+        marginTop: Platform.OS === "web" ? 6 : 0,
+        paddingVertical: Platform.OS === "web" ? 8 : 4,
         paddingHorizontal: Platform.OS === "web" ? 16 : 12,
     },
     pillActive: {

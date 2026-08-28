@@ -71,6 +71,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingBottom: 8,
         fontFamily: "Poppins",
+        // iOS Safari auto-zooms on focus for any input under 16px.
+        fontSize: 16,
     },
     disabledInput: {
         borderColor: Colors.disabledText,

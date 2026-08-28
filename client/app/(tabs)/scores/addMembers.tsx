@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         height: 56,
         marginTop: 20,
+        // iOS Safari auto-zooms on focus for any input under 16px.
+        fontSize: 16,
     },
     user: {
         paddingHorizontal: 28,

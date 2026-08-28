@@ -218,6 +218,8 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontFamily: "Poppins",
         textAlign: "center",
+        // iOS Safari auto-zooms on focus for any input under 16px.
+        fontSize: 16,
     },
     error: {
         color: Colors.pink,
