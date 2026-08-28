@@ -10,8 +10,6 @@ export type ThemedTextProps = TextProps & {
         | "contentTitle"
         | "contentSubtitle"
         | "italic14"
-        | "boldMarkdown"
-        | "italicMarkdown"
         | "pallyBoldSnow";
 };
 
@@ -30,8 +28,6 @@ export function ThemedText({
                 type === "contentTitle" ? styles.contentTitle : undefined,
                 type === "contentSubtitle" ? styles.contentSubtitle : undefined,
                 type === "italic14" ? styles.italic14 : undefined,
-                type === "boldMarkdown" ? styles.boldMarkdown : undefined,
-                type === "italicMarkdown" ? styles.italicMarkdown : undefined,
                 type === "pallyBoldSnow" ? styles.pallyBoldSnow : undefined,
                 style,
             ]}
@@ -93,18 +89,6 @@ const styles = StyleSheet.create({
     italic14: {
         fontSize: 14,
         fontFamily: "PoppinsItalic",
-    },
-    boldMarkdown: {
-        fontFamily: "PoppinsBold",
-        color: Colors.darkGreen,
-        textAlign: "left",
-        fontSize: 16,
-    },
-    italicMarkdown: {
-        fontFamily: "PoppinsItalic",
-        color: Theme.deep,
-        textAlign: "left",
-        fontSize: 16,
     },
     pallyBoldSnow: {
         color: Colors.snow,
