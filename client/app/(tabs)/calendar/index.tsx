@@ -9,6 +9,7 @@ import { Day } from "@/interfaces/dayInterface";
 import { Content } from "@/interfaces/contentInterface";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
+import { TOP_EDGES } from "@/constants/safeAreaEdges";
 import { getContentsByDay } from "@/services/content.service";
 
 const defaultDays = isOctober ? octoberDaysArray : daysArray;
@@ -103,7 +104,7 @@ export default function CalendarScreen() {
 
     return (
         <SafeAreaView
-            edges={["top"]}
+            edges={TOP_EDGES}
             style={{
                 flex: 1,
             }}

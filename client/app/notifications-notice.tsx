@@ -7,6 +7,7 @@ import { NOTIFICATIONS_NOTICE_SLIDE } from "@/components/onboarding/onboardingSl
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
+import { TOP_BOTTOM_EDGES } from "@/constants/safeAreaEdges";
 import { useUser } from "@/contexts/UserContext";
 import { requestAndRegisterPushToken } from "@/services/notifications.service";
 
@@ -27,7 +28,7 @@ export default function NotificationsNoticeScreen() {
                 flex: 1,
                 backgroundColor: NOTIFICATIONS_NOTICE_SLIDE.backgroundColor,
             }}
-            edges={["top", "bottom"]}
+            edges={TOP_BOTTOM_EDGES}
         >
             <OnboardingSlide slide={NOTIFICATIONS_NOTICE_SLIDE} />
 

@@ -7,6 +7,7 @@ import { HALLOWEEN_NOTICE_SLIDE } from "@/components/onboarding/onboardingSlides
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
+import { TOP_BOTTOM_EDGES } from "@/constants/safeAreaEdges";
 
 export default function HalloweenNoticeScreen() {
     const dismiss = async () => {
@@ -20,7 +21,7 @@ export default function HalloweenNoticeScreen() {
                 flex: 1,
                 backgroundColor: HALLOWEEN_NOTICE_SLIDE.backgroundColor,
             }}
-            edges={["top", "bottom"]}
+            edges={TOP_BOTTOM_EDGES}
         >
             <OnboardingSlide slide={HALLOWEEN_NOTICE_SLIDE} />
 

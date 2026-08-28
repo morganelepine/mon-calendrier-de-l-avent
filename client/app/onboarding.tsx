@@ -13,6 +13,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
+import { TOP_BOTTOM_EDGES } from "@/constants/safeAreaEdges";
 import { useUser } from "@/contexts/UserContext";
 import { requestAndRegisterPushToken } from "@/services/notifications.service";
 
@@ -65,7 +66,7 @@ export default function OnboardingScreen() {
                 flex: 1,
                 backgroundColor: ONBOARDING_SLIDES[index].backgroundColor,
             }}
-            edges={["top", "bottom"]}
+            edges={TOP_BOTTOM_EDGES}
         >
             <View style={styles.topBar}>
                 {index > 0 ? (

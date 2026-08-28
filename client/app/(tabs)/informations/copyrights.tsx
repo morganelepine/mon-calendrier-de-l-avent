@@ -2,11 +2,12 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
+import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function CopyrightsScreen() {
     return (
         <CustomScrollView>
-            <SafeAreaView>
+            <SafeAreaView edges={NO_TOP_EDGES} style={{ paddingTop: 20 }}>
                 <View style={styles.section}>
                     <ThemedText type="sectionText">
                         Cette application est un projet collaboratif : plusieurs

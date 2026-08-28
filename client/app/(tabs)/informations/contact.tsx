@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
+import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function ContactScreen() {
     const contactMe = () => {
@@ -12,7 +13,7 @@ export default function ContactScreen() {
 
     return (
         <CustomScrollView>
-            <SafeAreaView>
+            <SafeAreaView edges={NO_TOP_EDGES} style={{ paddingTop: 20 }}>
                 <View style={styles.section}>
                     <ThemedText
                         type="sectionText"

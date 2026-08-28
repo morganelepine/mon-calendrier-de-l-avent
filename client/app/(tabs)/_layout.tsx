@@ -12,7 +12,14 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: Colors.snow,
                 },
-                tabBarLabelStyle: { fontFamily: "Poppins", fontSize: 10 },
+                // Explicit lineHeight: the "Poppins" webfont's own line
+                // metrics are taller than react-navigation's fixed-height
+                // tab bar row assumes, which was clipping the label text.
+                tabBarLabelStyle: {
+                    fontFamily: "Poppins",
+                    fontSize: 10,
+                    lineHeight: 13,
+                },
             }}
         >
             <Tabs.Screen

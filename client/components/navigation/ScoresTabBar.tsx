@@ -1,8 +1,9 @@
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, usePathname } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
+import { TOP_EDGES } from "@/constants/safeAreaEdges";
 
 const TABS = [
     { label: "Mes scores", href: "/scores" },
@@ -15,7 +16,7 @@ export const ScoresTabBar = () => {
     const pathname = usePathname();
 
     return (
-        <SafeAreaView edges={["top"]} style={styles.safeArea}>
+        <SafeAreaView edges={TOP_EDGES} style={styles.safeArea}>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -27,7 +28,13 @@ export const ScoresTabBar = () => {
                         <Pressable
                             key={tab.href}
                             onPress={() => router.navigate(tab.href)}
-                            style={[styles.pill, focused && styles.pillActive]}
+                            style={[
+                                styles.pill,
+                                focused && styles.pillActive,
+                                Platform.OS === "web" && {
+                                    paddingVertical: 8,
+                                },
+                            ]}
                         >
                             <ThemedText
                                 style={[
@@ -64,7 +71,6 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         borderRadius: 50,
         paddingHorizontal: 12,
-        paddingVertical: 4,
     },
     pillActive: {
         backgroundColor: Theme.green,

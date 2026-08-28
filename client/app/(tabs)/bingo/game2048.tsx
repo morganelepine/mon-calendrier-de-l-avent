@@ -5,6 +5,7 @@ import { Game2048Board } from "@/components/games2048/Game2048Board";
 import { Game2048Footer } from "@/components/games2048/Game2048Footer";
 import { useGame2048 } from "@/hooks/useGame2048";
 import { Theme } from "@/constants/Colors";
+import { TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function Game2048Screen() {
     const {
@@ -19,7 +20,7 @@ export default function Game2048Screen() {
     } = useGame2048();
 
     return (
-        <SafeAreaView edges={["top"]} style={styles.container}>
+        <SafeAreaView edges={TOP_EDGES} style={styles.container}>
             <Game2048Header
                 score={score}
                 bestScore={bestScore}

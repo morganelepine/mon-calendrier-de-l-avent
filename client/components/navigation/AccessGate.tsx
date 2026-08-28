@@ -175,18 +175,6 @@ export function AccessGate({
                         {"\n\n"}
                         4. Ouvre l'app depuis la nouvelle icône
                     </ThemedText>
-
-                    <Pressable
-                        onPress={checkStatus}
-                        style={({ pressed }) => [
-                            styles.button,
-                            pressed && { backgroundColor: Colors.goldLight },
-                        ]}
-                    >
-                        <ThemedText style={styles.buttonText}>
-                            C'est fait, réessayer
-                        </ThemedText>
-                    </Pressable>
                 </View>
             </SafeAreaView>
         </BlueBackground>

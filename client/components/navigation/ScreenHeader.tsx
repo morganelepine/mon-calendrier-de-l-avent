@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
+import { TOP_EDGES } from "@/constants/safeAreaEdges";
 
 interface ScreenHeaderProps {
     title: string;
@@ -22,7 +23,7 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
 
     return (
         <SafeAreaView
-            edges={["top"]}
+            edges={TOP_EDGES}
             style={{
                 backgroundColor,
                 flexDirection: "row",

@@ -1,12 +1,21 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { RateButton } from "@/components/utils/buttons/RateButton";
 import { Colors } from "@/constants/Colors";
+import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function RateScreen() {
     return (
-        <SafeAreaView style={{ backgroundColor: Colors.snow, flex: 1, gap: 8 }}>
+        <SafeAreaView
+            edges={NO_TOP_EDGES}
+            style={{
+                backgroundColor: Colors.snow,
+                flex: 1,
+                gap: 8,
+                paddingTop: 20,
+            }}
+        >
             <ThemedText type="sectionText">
                 Votre avis compte beaucoup pour moi. Alors si vous appréciez
                 cette application, prenez un moment pour laisser un avis !

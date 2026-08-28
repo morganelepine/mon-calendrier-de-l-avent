@@ -7,13 +7,14 @@ import { NotificationsSettings } from "@/components/informations/settings/Notifi
 import { PrivacyPolicySettings } from "@/components/informations/settings/PrivacyPolicySettings";
 import { MusicSettings } from "@/components/informations/settings/MusicSettings";
 import { Colors } from "@/constants/Colors";
+import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function SettingsScreen() {
     const appVersion = Constants.expoConfig?.version ?? "0.0.0";
 
     return (
         <CustomScrollView>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView edges={NO_TOP_EDGES} style={styles.container}>
                 <NotificationsSettings />
 
                 <View style={styles.separator} />
@@ -35,7 +36,7 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { backgroundColor: Colors.snow, flex: 1 },
+    container: { backgroundColor: Colors.snow, flex: 1, paddingTop: 20 },
     separator: {
         height: 1,
         backgroundColor: "#ccc",
