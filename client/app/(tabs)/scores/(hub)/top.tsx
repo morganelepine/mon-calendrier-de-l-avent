@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { OffSeason } from "@/components/score/OffSeason";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
@@ -64,37 +64,50 @@ export default function TopScreen() {
 
             {!error && !loading && !isDecember && <OffSeason />}
 
-            {!error && !loading && isDecember && (
-                <FlatList
-                    data={leaderboard}
-                    keyExtractor={(item, index) => `${item.username}-${index}`}
-                    renderItem={({ item, index }) => (
-                        <LeaderBoardItem
-                            index={index}
-                            item={item}
-                            username={username}
-                        />
-                    )}
-                    onRefresh={() => fetchPage(1, true)}
-                    refreshing={false}
-                    contentContainerStyle={{ paddingBottom: 40 }}
-                    ListHeaderComponent={
-                        <ThemedText style={styles.title}>
-                            Classement des{"\n"}
-                            {PAGE_SIZE} meilleur·e·s joueur·euse·s
+            {!error &&
+                !loading &&
+                isDecember &&
+                (leaderboard.length === 0 ? (
+                    <View style={styles.centerContainer}>
+                        <ThemedText style={styles.centerText}>
+                            Lorsque les joueur·euse·s commenceront à ouvrir le
+                            calendrier, les 25 meilleurs scores apparaîtront
+                            ici.
                         </ThemedText>
-                    }
-                    ListFooterComponent={
-                        hasMore ? (
-                            <LeaderBoardButton
-                                onPress={() => fetchPage(page + 1, false)}
-                                text="Voir plus"
-                                loadingMore={loadingMore}
+                    </View>
+                ) : (
+                    <FlatList
+                        data={leaderboard}
+                        keyExtractor={(item, index) =>
+                            `${item.username}-${index}`
+                        }
+                        renderItem={({ item, index }) => (
+                            <LeaderBoardItem
+                                index={index}
+                                item={item}
+                                username={username}
                             />
-                        ) : null
-                    }
-                />
-            )}
+                        )}
+                        onRefresh={() => fetchPage(1, true)}
+                        refreshing={false}
+                        contentContainerStyle={{ paddingBottom: 40 }}
+                        ListHeaderComponent={
+                            <ThemedText style={styles.title}>
+                                Classement des{"\n"}
+                                {PAGE_SIZE} meilleur·e·s joueur·euse·s
+                            </ThemedText>
+                        }
+                        ListFooterComponent={
+                            hasMore ? (
+                                <LeaderBoardButton
+                                    onPress={() => fetchPage(page + 1, false)}
+                                    text="Voir plus"
+                                    loadingMore={loadingMore}
+                                />
+                            ) : null
+                        }
+                    />
+                ))}
         </BlueBackground>
     );
 }
@@ -105,5 +118,14 @@ const styles = StyleSheet.create({
         textAlign: "center",
         paddingHorizontal: 20,
         marginTop: 16,
+    },
+    centerContainer: {
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: 20,
+    },
+    centerText: {
+        color: Colors.snow,
+        textAlign: "center",
     },
 });

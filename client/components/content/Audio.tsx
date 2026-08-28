@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Pressable, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAudioPlayer } from "expo-audio";
+import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors, Theme } from "@/constants/Colors";
 import { MusicPreference } from "@/types/types";
@@ -14,8 +14,9 @@ interface AudioPlayerProps {
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
     const audioSource = music ? { uri: music } : null;
     const player = useAudioPlayer(audioSource);
+    const status = useAudioPlayerStatus(player);
 
-    const [isPlaying, setIsPlaying] = useState(false);
+    const isPlaying = status.playing;
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
 
     const togglePlayPause = () => {
@@ -23,10 +24,12 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
 
         if (isPlaying) {
             player.pause();
-            setIsPlaying(false);
         } else {
+            // If the track already reached the end, rewind before replaying
+            if (status.didJustFinish || status.currentTime >= status.duration) {
+                player.seekTo(0);
+            }
             player.play();
-            setIsPlaying(true);
         }
     };
 
@@ -47,13 +50,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
     useEffect(() => {
         if (playMusic === "yes" && player) {
             player.play();
-            setIsPlaying(true);
         }
-        return () => {
-            // if (player) {
-            //     player.remove();
-            // }
-        };
     }, [playMusic, player]);
 
     return (
