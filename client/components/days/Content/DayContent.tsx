@@ -49,7 +49,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                             "s-instruire_xybqas",
                         )}
                         contentType={ContentType.Story}
-                        contentNumber={11}
+                        contentNumber={1}
                     />
                 )}
             </View>
@@ -63,7 +63,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                             "se-regaler_mnonwh",
                         )}
                         contentType={ContentType.Idea}
-                        contentNumber={22}
+                        contentNumber={2}
                     />
                 )}
             </View>
@@ -75,7 +75,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                         dayId={dayId}
                         backgroundImage={getCloudinaryImageUrl("kiwi1_r7kihz")}
                         contentType={ContentType.Anecdote}
-                        contentNumber={33}
+                        contentNumber={3}
                     />
                 )}
             </View>
@@ -89,7 +89,7 @@ export const DayContent = ({ dayId }: DayContentProps) => {
                             "christmas_a5bsoi",
                         )}
                         contentType={ContentType.Game}
-                        contentNumber={44}
+                        contentNumber={4}
                     />
                 )}
             </View>

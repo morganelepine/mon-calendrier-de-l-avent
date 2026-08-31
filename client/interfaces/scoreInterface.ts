@@ -12,6 +12,8 @@ export interface ScoreDetail {
 
 export interface GameState {
     [dayNumber: number]: {
-        [questionNumber: number]: boolean; // true = already played
+        [reason: string]: {
+            [itemNumber: number]: boolean; // true = already scored
+        };
     };
 }

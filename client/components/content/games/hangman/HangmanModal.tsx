@@ -29,7 +29,9 @@ export const HangmanModal: React.FC<ModalProps> = ({
             dismissOnBackdropPress
             contentStyle={styles.modal}
         >
-            <ThemedText>{modalMessage}</ThemedText>
+            <ThemedText style={{ textAlign: "center" }}>
+                {modalMessage}
+            </ThemedText>
             <ThemedText style={{ textAlign: "center" }}>
                 Le mot à trouver était{" "}
                 <Text style={{ fontFamily: "PoppinsBold" }}>{currentWord}</Text>

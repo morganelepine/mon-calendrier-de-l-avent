@@ -32,15 +32,15 @@ model User {
 // calendar year), not derived from `earnedAt`, so past years stay queryable
 // (e.g. a "last year's score" figure) without ever deleting anything.
 model Score {
-  id             Int      @id @default(autoincrement())
-  userId         Int
-  user           User     @relation(fields: [userId], references: [id])
-  day            Int
-  points         Int
-  reason         String
-  questionNumber Int?
-  year           Int
-  earnedAt       DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  day        Int
+  points     Int
+  reason     String
+  itemNumber Int?
+  year       Int
+  earnedAt   DateTime @default(now())
 
   @@index([userId, year, day])
   @@index([year])

@@ -33,8 +33,7 @@ export class ScoreController {
     }
 
     async saveScore(request: Request) {
-        const { userUuid, dayId, points, reason, questionNumber } =
-            request.body;
+        const { userUuid, dayId, points, reason, itemNumber } = request.body;
         const year = new Date().getFullYear();
 
         const user = await this.getUser(userUuid);
@@ -60,14 +59,36 @@ export class ScoreController {
             };
         }
 
-        if (reason === ScoreType.ContentOpening && scoreOfTheDay.length >= 4) {
-            return {
-                status: 200,
-                message:
-                    "All points for content openings have already been awarded",
-                alreadyAwarded: true,
-                totalScore,
-            };
+        if (reason === ScoreType.ContentOpening) {
+            const contentAlreadyOpened = await prisma.score.findFirst({
+                where: {
+                    userId: user.id,
+                    year,
+                    day: dayId,
+                    reason: ScoreType.ContentOpening,
+                    itemNumber: itemNumber,
+                },
+            });
+
+            if (contentAlreadyOpened) {
+                return {
+                    status: 200,
+                    message:
+                        "Points for this content have already been awarded",
+                    alreadyAwarded: true,
+                    totalScore,
+                };
+            }
+
+            if (scoreOfTheDay.length >= 4) {
+                return {
+                    status: 200,
+                    message:
+                        "All points for content openings have already been awarded",
+                    alreadyAwarded: true,
+                    totalScore,
+                };
+            }
         }
 
         if (reason === ScoreType.GameAnswer) {
@@ -77,7 +98,7 @@ export class ScoreController {
                     year,
                     day: dayId,
                     reason: ScoreType.GameAnswer,
-                    questionNumber: questionNumber,
+                    itemNumber: itemNumber,
                 },
             });
 
@@ -109,7 +130,7 @@ export class ScoreController {
                 day: dayId,
                 points,
                 reason,
-                questionNumber,
+                itemNumber,
                 year,
             },
         });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DayButton } from "@/components/days/Button/DayButton";
 import { Colors } from "@/constants/Colors";
-import { saveScore } from "@/services/score.service";
+import { queueScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
 import { currentDay, isDecember, isOctober } from "@/constants/Dates";
@@ -20,17 +20,9 @@ interface DaysProps {
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const [dayModal, setDayModal] = useState<number | null>(null);
 
-    const registerDayOpening = async (dayNumber: number) => {
+    const registerDayOpening = (dayNumber: number) => {
         if (isDecember && dayNumber === currentDay) {
-            try {
-                await saveScore(dayNumber, 40, String(ScoreType.DayOpening));
-            } catch (error) {
-                console.log("Error saving score:", error);
-                showToast(
-                    "Oops... les points n'ont pas pu être enregistrés.",
-                    "long",
-                );
-            }
+            void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
         }
     };
 

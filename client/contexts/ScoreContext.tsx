@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getUserScoresByDay, getScoreSummary } from "@/services/score.service";
+import {
+    getUserScoresByDay,
+    getScoreSummary,
+    flushPendingScores,
+} from "@/services/score.service";
 import { Score } from "@/interfaces/scoreInterface";
+import useAppState from "@/hooks/useAppState";
 
 type ScoreContextType = {
     scoreTotal: number;
@@ -54,6 +59,21 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     useEffect(() => {
         refreshScores();
     }, [refreshScores]);
+
+    // Retries any score that couldn't reach the server yet,
+    // on app launch and every time the app comes back to the foreground.
+    // Only refreshes the displayed total when something was actually confirmed.
+    const appState = useAppState();
+    useEffect(() => {
+        if (appState !== "active") return;
+        flushPendingScores()
+            .then((hasConfirmed) => {
+                if (hasConfirmed) refreshScores();
+            })
+            .catch(() => {
+                // Best-effort - it'll retry again on the next foreground.
+            });
+    }, [appState, refreshScores]);
 
     const contextValue = React.useMemo(
         () => ({

@@ -2,11 +2,10 @@ import { StyleSheet, Pressable } from "react-native";
 import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { showToast } from "@/components/utils/Toast";
 import {
-    saveScore,
-    isQuestionPlayed,
-    saveQuestionPlayed,
+    queueScore,
+    isItemScored,
+    saveItemScored,
 } from "@/services/score.service";
 import { getContentTitle } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
@@ -45,26 +44,20 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
         const today = new Date().getDate();
         const score = dayId === today ? 20 : 10;
 
-        const alreadyPlayed = await isQuestionPlayed(dayId, contentNumber);
-        if (alreadyPlayed) {
-            await saveQuestionPlayed(dayId, contentNumber);
-        } else {
-            try {
-                await saveScore(
-                    dayId,
-                    score,
-                    String(ScoreType.ContentOpening),
-                    contentNumber,
-                );
-            } catch (error) {
-                console.log("Error saving score:", error);
-                showToast(
-                    "Oops... les points n'ont pas pu être enregistrés.",
-                    "long",
-                );
-            }
-            await saveQuestionPlayed(dayId, contentNumber);
-        }
+        const alreadyPlayed = await isItemScored(
+            dayId,
+            ScoreType.ContentOpening,
+            contentNumber,
+        );
+        if (alreadyPlayed) return;
+
+        await saveItemScored(dayId, ScoreType.ContentOpening, contentNumber);
+        void queueScore(
+            dayId,
+            score,
+            String(ScoreType.ContentOpening),
+            contentNumber,
+        );
     };
 
     const handleContentOpening = () => {

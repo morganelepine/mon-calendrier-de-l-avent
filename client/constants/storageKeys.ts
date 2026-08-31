@@ -23,6 +23,8 @@ export const StorageKeys = {
     calendar: "calendar",
     octoberCalendar: "october_calendar",
     gameState: "gameState",
+    // Scores recorded locally but not yet confirmed by the server.
+    pendingScores: "pending_scores",
     bingoHalloweenClickedCells: "bingo_halloween_clicked_cells",
     bingoMoviesClickedCells: "bingo_movies_clicked_cells",
     bingoTelefilmsClickedCells: "bingo_telefilms_clicked_cells",
@@ -39,6 +41,7 @@ export const YEARLY_RESET_KEYS = [
     StorageKeys.calendar,
     StorageKeys.octoberCalendar,
     StorageKeys.gameState,
+    StorageKeys.pendingScores,
     StorageKeys.bingoHalloweenClickedCells,
     StorageKeys.bingoMoviesClickedCells,
     StorageKeys.bingoTelefilmsClickedCells,
