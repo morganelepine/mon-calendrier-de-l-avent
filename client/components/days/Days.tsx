@@ -21,8 +21,12 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const [dayModal, setDayModal] = useState<number | null>(null);
 
     const registerDayOpening = (dayNumber: number) => {
-        if (isDecember && dayNumber === currentDay) {
+        if (dayNumber !== currentDay) return;
+
+        if (isDecember) {
             void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
+        } else if (isOctober) {
+            void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
         }
     };
 

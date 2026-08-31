@@ -17,6 +17,7 @@ export enum ScoreType {
     ContentOpening = "ContentOpening",
     GameAnswer = "GameAnswer",
     DayOpening = "DayOpening",
+    OctoberOpening = "OctoberOpening", // Just a record that the day was opened
 }
 
 export class ScoreController {
@@ -54,6 +55,15 @@ export class ScoreController {
             return {
                 status: 200,
                 message: "All points for day opening have already been awarded",
+                alreadyAwarded: true,
+                totalScore,
+            };
+        }
+
+        if (reason === ScoreType.OctoberOpening && scoreOfTheDay.length >= 1) {
+            return {
+                status: 200,
+                message: "October day opening has already been recorded",
                 alreadyAwarded: true,
                 totalScore,
             };

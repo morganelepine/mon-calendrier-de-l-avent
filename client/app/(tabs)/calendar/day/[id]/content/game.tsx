@@ -17,6 +17,7 @@ import {
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
+import { isOctober } from "@/constants/Dates";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -62,6 +63,8 @@ export default function GameScreen() {
         questionNumber: number,
         isCorrect: boolean,
     ): Promise<void> => {
+        if (isOctober) return;
+
         const alreadyScored = await isItemScored(
             dayId,
             ScoreType.GameAnswer,
