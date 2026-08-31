@@ -19,9 +19,9 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  ownedGroups      Group[]           @relation("OwnedGroups")
-  memberships      GroupMember[]
-  dailyGameResults DailyGameResult[]
+  ownedGroups    Group[]         @relation("OwnedGroups")
+  memberships    GroupMember[]
+  gameHighScores GameHighScore[]
 }
 
 // No stored running total on purpose: a user's score for a given year is
@@ -78,21 +78,16 @@ model GroupMember {
   @@index([userId])
 }
 
-// One row per user per calendar day per game.
-model DailyGameResult {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  game      String   // e.g. "2048" - lets this table serve future daily games too
-  playDate  String
-  score     Int
-  won       Boolean  @default(false)
-  attempts  Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model GameHighScore {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  game       String   // e.g. "2048" - lets this table serve future games too
+  score      Int
+  achievedAt DateTime @default(now())
 
-  @@unique([userId, game, playDate])
-  @@index([game, playDate])
+  @@unique([userId, game])
+  @@index([game])
 }
 
 enum ContentFamily {

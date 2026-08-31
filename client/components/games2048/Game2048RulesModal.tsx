@@ -33,10 +33,8 @@ export const Game2048RulesModal: React.FC<Props> = ({
                 Le but ? Enchaîner les fusions jusqu'à faire apparaître {goal}
             </ThemedText>
             <ThemedText type="sectionText">
-                Un plateau différent est généré chaque jour, le même pour tout
-                le monde. Vous pouvez retenter votre chance autant de fois que
-                vous voulez dans la journée : seul votre meilleur score du jour
-                compte pour le classement.
+                Rejouez autant de fois que vous voulez, quand vous voulez :
+                seul votre meilleur score compte pour le classement.
             </ThemedText>
         </ModalWithCloseButton>
     );

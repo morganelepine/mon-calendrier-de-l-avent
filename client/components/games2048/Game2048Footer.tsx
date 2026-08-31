@@ -16,7 +16,7 @@ export const Game2048Footer = ({
             <ThemedText style={styles.gameOverText}>Partie terminée</ThemedText>
             {isNewBest && (
                 <ThemedText style={styles.gameOverSubText}>
-                    Nouveau record du jour ! Félicitations !
+                    Nouveau record personnel ! Félicitations !
                 </ThemedText>
             )}
             <Pressable style={styles.replayButton} onPress={startNewGame}>

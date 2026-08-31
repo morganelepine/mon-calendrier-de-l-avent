@@ -59,16 +59,16 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Remerciements"
                         iconName="heart-outline"
-                        iconColor={isOctober ? Colors.autumnYellow : Colors.red}
+                        iconColor={
+                            isOctober ? Colors.autumnGreenDark : Colors.red
+                        }
                         onPress={() => router.push("/informations/copyrights")}
                     />
 
                     <OptionItem
                         title="Me contacter"
                         iconName="flower-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnGreenDark : "#646681"
-                        }
+                        iconColor={isOctober ? Colors.autumnYellow : "#646681"}
                         onPress={() => router.push("/informations/contact")}
                     />
 
@@ -76,7 +76,7 @@ export default function InformationsScreen() {
                         title="Paramètres"
                         iconName="settings-outline"
                         iconColor={
-                            isOctober ? Colors.autumnGold : Colors.darkBlue
+                            isOctober ? Colors.autumnGreen : Colors.darkBlue
                         }
                         onPress={() => router.push("/informations/settings")}
                     />

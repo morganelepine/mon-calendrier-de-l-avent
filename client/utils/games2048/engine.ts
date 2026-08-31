@@ -1,4 +1,7 @@
-import { Rng } from "@/utils/games2048/rng";
+// A source of randomness to draw from when spawning tiles - injected rather
+// than called directly so the engine stays a pure, easily testable function
+// of its inputs. In practice this is just Math.random (see useGame2048).
+export type Rng = () => number;
 
 export const GRID_SIZE = 4;
 // Top tile a player can reach (2^11 = 2048).

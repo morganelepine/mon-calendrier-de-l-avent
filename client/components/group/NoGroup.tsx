@@ -1,6 +1,6 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { useCreateGroup } from "@/hooks/useCreateGroup";
 
 export const NoGroup = ({
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         color: Colors.snow,
     },
     button: {
-        backgroundColor: Colors.autumnGreen,
+        backgroundColor: Theme.autumnGreen,
         borderRadius: 50,
         paddingVertical: 8,
         paddingHorizontal: 24,

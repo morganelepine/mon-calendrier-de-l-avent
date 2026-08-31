@@ -24,7 +24,11 @@ export const ModalWithCloseButton: React.FC<CustomModalProps> = ({
         >
             {children}
             <Pressable onPress={onRequestClose} style={styles.closeButton}>
-                <Ionicons name={"close-outline"} size={35} color={Colors.blue} />
+                <Ionicons
+                    name={"close-outline"}
+                    size={35}
+                    color={Colors.blue}
+                />
             </Pressable>
         </CenteredModal>
     );
@@ -33,6 +37,7 @@ export const ModalWithCloseButton: React.FC<CustomModalProps> = ({
 const styles = StyleSheet.create({
     modalView: {
         maxHeight: "75%",
+        minWidth: "90%",
         margin: 30,
         gap: 16,
     },

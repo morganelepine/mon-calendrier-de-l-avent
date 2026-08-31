@@ -1,4 +1,5 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import { router } from "expo-router";
 import { Game2048TierProgress } from "@/components/games2048/Game2048TierProgress";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
@@ -20,14 +21,29 @@ export const Game2048Header = ({
     const goal = isOctober ? "chaudron magique !" : "Père Noël 🎅";
     return (
         <View style={styles.header}>
-            <View style={styles.scoresContainer}>
+            <Pressable
+                onPress={() =>
+                    router.push("/bingo/game2048-leaderboard/general")
+                }
+                style={styles.leaderboardButton}
+            >
+                <ThemedText style={styles.leaderboardText}>
+                    Classement
+                </ThemedText>
+            </Pressable>
+
+            {status !== "gameover" && <Game2048TierProgress />}
+
+            <View style={styles.scoresRow}>
                 <View
                     style={[
                         styles.scoreContainer,
                         { backgroundColor: Colors.snow },
                     ]}
                 >
-                    <ThemedText style={[styles.score, { color: Theme.tint }]}>
+                    <ThemedText
+                        style={[styles.score, { color: Theme.surface }]}
+                    >
                         Score : {score}
                     </ThemedText>
                 </View>
@@ -37,8 +53,6 @@ export const Game2048Header = ({
                     </ThemedText>
                 </View>
             </View>
-
-            {status !== "gameover" && <Game2048TierProgress />}
 
             {hasWon && (
                 <ThemedText style={styles.won}>
@@ -54,26 +68,44 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         gap: 16,
     },
-    scoresContainer: {
+    scoresRow: {
         paddingHorizontal: 20,
         flexDirection: "row",
-        justifyContent: "space-between",
+        gap: 8,
+        justifyContent: "center",
+        marginTop: 16,
     },
     scoreContainer: {
         borderRadius: 50,
-        borderWidth: 1,
-        borderColor: Colors.snow,
         paddingHorizontal: 12,
         paddingVertical: 4,
+        borderWidth: 1,
+        borderColor: Colors.snow,
     },
     score: {
-        fontSize: 16,
+        fontSize: 14,
         color: Colors.snow,
+        textAlign: "center",
     },
     won: {
         paddingHorizontal: 20,
         fontSize: 14,
         color: Colors.snow,
         textAlign: "center",
+    },
+    leaderboardButton: {
+        borderRadius: 50,
+        paddingHorizontal: 20,
+        paddingVertical: 4,
+        backgroundColor: Theme.autumnGreen,
+        marginHorizontal: 20,
+        borderWidth: 1,
+        borderColor: Colors.snow,
+        alignSelf: "flex-start",
+    },
+    leaderboardText: {
+        color: Colors.snow,
+        textAlign: "center",
+        fontSize: 14,
     },
 });

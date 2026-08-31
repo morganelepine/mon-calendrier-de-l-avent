@@ -63,6 +63,20 @@ export default function BingoLayout() {
                     headerShown: false,
                 }}
             />
+            <Stack.Screen
+                name="game2048-leaderboard"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="Classement au 2048"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
+                    },
+                }}
+            />
         </Stack>
     );
 }

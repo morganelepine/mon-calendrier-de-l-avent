@@ -58,4 +58,5 @@ export const Theme = {
     green: isOctober ? Colors.autumnRed : Colors.green,
     red: isOctober ? Colors.autumnRed : Colors.red,
     header: isOctober ? Colors.autumnGreenDark : Colors.green,
+    autumnGreen: isOctober ? Colors.autumnGreenDark : Colors.autumnGreen,
 };

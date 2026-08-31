@@ -1,15 +1,15 @@
-import { Pressable, ScrollView, StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, usePathname } from "expo-router";
-import { ThemedText } from "@/components/ThemedText";
-import { Colors, Theme } from "@/constants/Colors";
+import { PillTabBar } from "@/components/navigation/PillTabBar";
+import { Theme } from "@/constants/Colors";
 import { TOP_EDGES } from "@/constants/safeAreaEdges";
 
 const TABS = [
-    { label: "Mes scores", href: "/scores" },
-    { label: "Mon groupe", href: "/scores/group" },
-    { label: "Top", href: "/scores/top" },
-    { label: "Mon classement", href: "/scores/mine" },
+    { key: "/scores", label: "Mes scores" },
+    { key: "/scores/group", label: "Mon groupe" },
+    { key: "/scores/top", label: "Top" },
+    { key: "/scores/mine", label: "Mon classement" },
 ] as const;
 
 export const ScoresTabBar = () => {
@@ -17,31 +17,11 @@ export const ScoresTabBar = () => {
 
     return (
         <SafeAreaView edges={TOP_EDGES} style={styles.safeArea}>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.container}
-            >
-                {TABS.map((tab) => {
-                    const focused = pathname === tab.href;
-                    return (
-                        <Pressable
-                            key={tab.href}
-                            onPress={() => router.navigate(tab.href)}
-                            style={[styles.pill, focused && styles.pillActive]}
-                        >
-                            <ThemedText
-                                style={[
-                                    styles.label,
-                                    focused && styles.labelActive,
-                                ]}
-                            >
-                                {tab.label}
-                            </ThemedText>
-                        </Pressable>
-                    );
-                })}
-            </ScrollView>
+            <PillTabBar
+                items={TABS}
+                activeKey={pathname}
+                onSelect={(key) => router.navigate(key as never)}
+            />
         </SafeAreaView>
     );
 };
@@ -49,36 +29,5 @@ export const ScoresTabBar = () => {
 const styles = StyleSheet.create({
     safeArea: {
         backgroundColor: Theme.surface,
-    },
-    container: {
-        flexDirection: "row",
-        paddingHorizontal: 20,
-        paddingVertical: 8,
-        gap: 8,
-    },
-    pill: {
-        justifyContent: "center",
-        alignItems: "center",
-        borderWidth: 1,
-        borderColor: Colors.snow,
-        backgroundColor: Colors.snow,
-        opacity: 0.8,
-        borderRadius: 50,
-        marginTop: Platform.OS === "web" ? 6 : 0,
-        paddingVertical: Platform.OS === "web" ? 8 : 4,
-        paddingHorizontal: Platform.OS === "web" ? 16 : 12,
-    },
-    pillActive: {
-        backgroundColor: Theme.green,
-        opacity: 1,
-    },
-    label: {
-        color: Theme.tint,
-        textAlign: "center",
-        fontSize: 13,
-    },
-    labelActive: {
-        color: Colors.snow,
-        fontFamily: "PoppinsBold",
     },
 });

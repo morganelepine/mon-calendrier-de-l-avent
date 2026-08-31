@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 import { verifyWebAccessCode } from "@/services/access.service";
 import { BlueBackground } from "@/components/utils/BlueBackground";
@@ -236,6 +236,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttonText: {
-        color: Colors.blue,
+        color: Theme.surface,
     },
 });

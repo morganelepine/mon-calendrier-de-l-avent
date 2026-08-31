@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface LeaderBoardButtonProps {
     onPress: () => void;
@@ -30,7 +30,7 @@ export const LeaderBoardButton = ({
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: Colors.autumnGreen,
+        backgroundColor: Theme.autumnGreen,
         borderWidth: 1,
         borderColor: Colors.snow,
         borderRadius: 50,
