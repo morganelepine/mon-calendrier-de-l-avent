@@ -50,7 +50,7 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
-                        title="Noter l'application"
+                        title="Soutenir l'application"
                         iconName="star-outline"
                         iconColor={isOctober ? Colors.autumnRed : Colors.gold}
                         onPress={() => router.push("/informations/rate")}

@@ -65,7 +65,7 @@ export default function InformationsLayout() {
                     header: () => {
                         return (
                             <ScreenHeader
-                                title="Noter l'application"
+                                title="Soutenir l'application"
                                 backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />
