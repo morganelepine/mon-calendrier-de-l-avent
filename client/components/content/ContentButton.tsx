@@ -2,6 +2,7 @@ import { StyleSheet, Pressable } from "react-native";
 import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
+import { showPointsToast } from "@/components/utils/Toast";
 import {
     queueScore,
     isItemScored,
@@ -61,6 +62,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
             String(ScoreType.ContentOpening),
             contentNumber,
         );
+        showPointsToast(score);
     };
 
     const handleContentOpening = () => {

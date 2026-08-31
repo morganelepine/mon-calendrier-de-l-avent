@@ -7,6 +7,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
 import { OtherGames } from "@/components/content/games/others/OtherGames";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
+import { showPointsToast } from "@/components/utils/Toast";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
 import {
     getAnsweredQuestionsCount,
@@ -83,6 +84,8 @@ export default function GameScreen() {
             String(ScoreType.GameAnswer),
             questionNumber,
         );
+
+        if (score > 0) showPointsToast(score);
     };
 
     return (

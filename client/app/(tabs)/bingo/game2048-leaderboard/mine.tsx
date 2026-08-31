@@ -66,8 +66,8 @@ export default function Game2048LeaderboardMineScreen() {
             {!error && !loading && result && !result.userHasScore && (
                 <View style={styles.centerContainer}>
                     <ThemedText style={styles.centerText}>
-                        Vous n&apos;avez pas encore de score enregistré.
-                        Lancez une partie pour apparaître dans le classement !
+                        Vous n&apos;avez pas encore de score enregistré. Lancez
+                        une partie pour apparaître dans le classement !
                     </ThemedText>
                 </View>
             )}
@@ -81,8 +81,7 @@ export default function Game2048LeaderboardMineScreen() {
                     ListHeaderComponent={
                         <>
                             <ThemedText style={styles.rankSummary}>
-                                Vous êtes {result.userRank}e sur{" "}
-                                {result.total}
+                                Vous êtes {result.userRank}e sur {result.total}
                             </ThemedText>
                             {result.hasMoreAbove && (
                                 <LeaderBoardButton

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
@@ -75,9 +75,11 @@ export const Game2048LeaderboardList: React.FC<Props> = ({ groupId }) => {
             {!error &&
                 !loading &&
                 (leaderboard.length === 0 ? (
-                    <ThemedText type="sectionText" style={styles.emptyText}>
-                        {emptyMessage}
-                    </ThemedText>
+                    <View style={styles.centerContainer}>
+                        <ThemedText style={styles.centerText}>
+                            {emptyMessage}
+                        </ThemedText>
+                    </View>
                 ) : (
                     <FlatList
                         data={leaderboard}
@@ -97,8 +99,7 @@ export const Game2048LeaderboardList: React.FC<Props> = ({ groupId }) => {
                         ListHeaderComponent={
                             !groupId ? (
                                 <ThemedText style={styles.title}>
-                                    Classement des {PAGE_SIZE} meilleurs
-                                    scores
+                                    Classement des {PAGE_SIZE} meilleurs scores
                                 </ThemedText>
                             ) : null
                         }
@@ -124,10 +125,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginTop: 16,
     },
-    emptyText: {
-        textAlign: "center",
-        marginTop: 40,
+    centerContainer: {
+        flex: 1,
+        justifyContent: "center",
         paddingHorizontal: 20,
+    },
+    centerText: {
+        color: Colors.snow,
+        textAlign: "center",
     },
     listContent: {
         paddingBottom: 40,

@@ -6,7 +6,7 @@ import { queueScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
 import { currentDay, isDecember, isOctober } from "@/constants/Dates";
-import { showToast } from "@/components/utils/Toast";
+import { showToast, showPointsToast } from "@/components/utils/Toast";
 
 interface DaysProps {
     days: Day[];
@@ -25,8 +25,10 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
 
         if (isDecember) {
             void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
+            showPointsToast(40);
         } else if (isOctober) {
             void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
+            // showPointsToast(10);
         }
     };
 
