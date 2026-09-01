@@ -1,10 +1,10 @@
-import { StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
 import { NOTIFICATIONS_NOTICE_SLIDE } from "@/components/onboarding/onboardingSlides";
-import { ThemedText } from "@/components/ThemedText";
+import { TextButton } from "@/components/utils/buttons/TextButton";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 import { TOP_BOTTOM_EDGES } from "@/constants/safeAreaEdges";
@@ -27,47 +27,27 @@ export default function NotificationsNoticeScreen() {
             style={{
                 flex: 1,
                 backgroundColor: NOTIFICATIONS_NOTICE_SLIDE.backgroundColor,
+                paddingBottom: 20,
+                gap: 8,
             }}
             edges={TOP_BOTTOM_EDGES}
         >
             <OnboardingSlide slide={NOTIFICATIONS_NOTICE_SLIDE} />
 
-            <Pressable onPress={dismiss} style={styles.button}>
-                <ThemedText style={styles.buttonText}>
-                    Activer les rappels
-                </ThemedText>
-            </Pressable>
-            <TouchableOpacity
+            <CustomButton
                 onPress={dismiss}
-                accessibilityRole="button"
-                accessibilityLabel="Peut-être plus tard"
+                color={Colors.snow}
+                textColor={Colors.red}
             >
-                <ThemedText type="italic14" style={styles.skip}>
-                    Peut-être plus tard
-                </ThemedText>
-            </TouchableOpacity>
+                Activer les rappels
+            </CustomButton>
+            <TextButton
+                onPress={dismiss}
+                accessibilityLabel="Peut-être plus tard"
+                textColor={Colors.snow}
+            >
+                Peut-être plus tard
+            </TextButton>
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    button: {
-        alignSelf: "center",
-        backgroundColor: Colors.snow,
-        borderRadius: 50,
-        paddingHorizontal: 28,
-        minHeight: 48,
-        justifyContent: "center",
-        marginBottom: 12,
-    },
-    buttonText: {
-        textAlign: "center",
-        color: Colors.red,
-    },
-    skip: {
-        textAlign: "center",
-        color: Colors.snow,
-        marginBottom: 20,
-        textDecorationLine: "underline",
-    },
-});

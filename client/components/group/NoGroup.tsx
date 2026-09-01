@@ -1,6 +1,7 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors, Theme } from "@/constants/Colors";
+import { CustomButton } from "@/components/utils/buttons/Button";
+import { Colors } from "@/constants/Colors";
 import { useCreateGroup } from "@/hooks/useCreateGroup";
 
 export const NoGroup = ({
@@ -24,11 +25,7 @@ export const NoGroup = ({
                 Vous n'avez pas encore de groupe. Créez-en un pour retrouver
                 plus facilement les scores de vos ami·e·s&nbsp;!
             </ThemedText>
-            <Pressable style={styles.button} onPress={handleCreate}>
-                <ThemedText style={{ color: Colors.snow }}>
-                    Créer mon groupe
-                </ThemedText>
-            </Pressable>
+            <CustomButton onPress={handleCreate}>Créer mon groupe</CustomButton>
         </View>
     );
 };
@@ -44,12 +41,5 @@ const styles = StyleSheet.create({
     text: {
         textAlign: "center",
         color: Colors.snow,
-    },
-    button: {
-        backgroundColor: Theme.autumnGreen,
-        borderRadius: 50,
-        paddingVertical: 8,
-        paddingHorizontal: 24,
-        alignSelf: "center",
     },
 });

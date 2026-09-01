@@ -49,14 +49,7 @@ export const Input: React.FC<InputProps> = ({
                 placeholder="Votre réponse"
                 editable={!showResult}
             />
-            <CustomButton
-                style={{
-                    marginTop: 20,
-                    backgroundColor: Theme.green,
-                }}
-                onPress={handleInputValidation}
-                disabled={showResult}
-            >
+            <CustomButton onPress={handleInputValidation} disabled={showResult}>
                 Valider
             </CustomButton>
         </View>
@@ -74,6 +67,7 @@ const styles = StyleSheet.create({
         // iOS Safari auto-zooms on focus for any input under 16px.
         fontSize: 16,
         height: 48,
+        marginBottom: 20,
     },
     disabledInput: {
         borderColor: Colors.disabledText,

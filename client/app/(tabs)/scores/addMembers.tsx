@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    StyleSheet,
-    View,
-    TextInput,
-    FlatList,
-    Pressable,
-} from "react-native";
+import { StyleSheet, View, TextInput, FlatList, Pressable } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { BlueBackground } from "@/components/utils/BlueBackground";
@@ -103,7 +97,7 @@ export default function AddMembersScreen() {
                                 styles.user,
                                 {
                                     backgroundColor: selected.includes(item.id)
-                                        ? Colors.green
+                                        ? Theme.green
                                         : Colors.snow,
                                 },
                             ]}

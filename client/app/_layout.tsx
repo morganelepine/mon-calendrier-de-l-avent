@@ -28,8 +28,8 @@ function RootLayout() {
         Poppins: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
         PoppinsBold: require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
         PoppinsItalic: require("../assets/fonts/Poppins/Poppins-Italic.ttf"),
-        Pally: require("../assets/fonts/Pally_Complete/Fonts/OTF/Pally-Regular.otf"),
-        PallyBold: require("../assets/fonts/Pally_Complete/Fonts/OTF/Pally-Bold.otf"),
+        FreightNeo: require("../assets/fonts/FreightNeo/Fonts/FreightNeo W03 Semi.ttf"),
+        FreightNeoBold: require("../assets/fonts/FreightNeo/Fonts/FreightNeo W03 Bold.ttf"),
     });
 
     useEffect(() => {

@@ -1,7 +1,8 @@
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { CustomButton } from "@/components/utils/buttons/Button";
 
 interface BingoCardProps {
     type: string;
@@ -22,12 +23,12 @@ export const BingoCard = ({
                 Bingo des {type} de&nbsp;Noël
             </ThemedText>
             <ThemedText style={styles.cardSubtitle}>{description}</ThemedText>
-            <Pressable
-                style={[styles.button, { backgroundColor: color }]}
+            <CustomButton
                 onPress={() => router.push(`/bingo/${route}` as never)}
+                color={color}
             >
-                <ThemedText style={styles.buttonText}>Jouer</ThemedText>
-            </Pressable>
+                Jouer
+            </CustomButton>
         </View>
     );
 };
@@ -44,19 +45,10 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: 20,
         textAlign: "center",
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
     },
     cardSubtitle: {
         fontSize: 14,
         textAlign: "center",
-    },
-    button: {
-        paddingVertical: 4,
-        paddingHorizontal: 24,
-        borderRadius: 20,
-        alignSelf: "center",
-    },
-    buttonText: {
-        color: Colors.snow,
     },
 });

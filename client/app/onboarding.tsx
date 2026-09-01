@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Pressable } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -9,7 +9,8 @@ import {
     NOTIFICATIONS_NOTICE_SLIDE,
     ONBOARDING_SLIDES,
 } from "@/components/onboarding/onboardingSlides";
-import { ThemedText } from "@/components/ThemedText";
+import { TextButton } from "@/components/utils/buttons/TextButton";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
@@ -87,13 +88,13 @@ export default function OnboardingScreen() {
                 )}
 
                 {!isLast && (
-                    <TouchableOpacity
+                    <TextButton
                         onPress={finish}
-                        accessibilityRole="button"
                         accessibilityLabel="Passer l'introduction"
+                        textColor={Colors.snow}
                     >
-                        <ThemedText style={styles.skip}>Passer</ThemedText>
-                    </TouchableOpacity>
+                        Passer
+                    </TextButton>
                 )}
             </View>
 
@@ -112,16 +113,22 @@ export default function OnboardingScreen() {
                     ))}
                 </View>
 
-                <Pressable onPress={handleNext} style={styles.nextButton}>
-                    <ThemedText
-                        style={[
-                            styles.nextButtonText,
-                            { color: ONBOARDING_SLIDES[index].backgroundColor },
-                        ]}
+                <CustomButton
+                    onPress={handleNext}
+                    color={Colors.snow}
+                    textColor={ONBOARDING_SLIDES[index].backgroundColor}
+                >
+                    {nextButtonLabel}
+                </CustomButton>
+                {isNotificationsSlide && (
+                    <TextButton
+                        onPress={finish}
+                        accessibilityLabel="Peut-être plus tard"
+                        textColor={Colors.snow}
                     >
-                        {nextButtonLabel}
-                    </ThemedText>
-                </Pressable>
+                        Peut-être plus tard
+                    </TextButton>
+                )}
             </View>
         </SafeAreaView>
     );
@@ -136,20 +143,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 16,
     },
-    skip: {
-        color: Colors.snow,
-        fontSize: 14,
-    },
     footer: {
         width: "100%",
         alignItems: "center",
         paddingHorizontal: 28,
         paddingBottom: 20,
-        gap: 20,
+        gap: 8,
     },
     dots: {
         flexDirection: "row",
         gap: 8,
+        paddingBottom: 16,
     },
     dot: {
         width: 8,
@@ -160,16 +164,5 @@ const styles = StyleSheet.create({
     dotActive: {
         backgroundColor: Colors.snow,
         width: 20,
-    },
-    nextButton: {
-        alignSelf: "center",
-        backgroundColor: Colors.snow,
-        borderRadius: 50,
-        paddingHorizontal: 28,
-        minHeight: 48,
-        justifyContent: "center",
-    },
-    nextButtonText: {
-        textAlign: "center",
     },
 });

@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Game2048TierProgress } from "@/components/games2048/Game2048TierProgress";
 import { ThemedText } from "@/components/ThemedText";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 
@@ -21,16 +22,15 @@ export const Game2048Header = ({
     const goal = isOctober ? "chaudron magique !" : "Père Noël 🎅";
     return (
         <View style={styles.header}>
-            <Pressable
+            <CustomButton
                 onPress={() =>
                     router.push("/bingo/game2048-leaderboard/general")
                 }
-                style={styles.leaderboardButton}
+                color={Theme.autumnGreen}
+                style={{ alignSelf: "flex-start" }}
             >
-                <ThemedText style={styles.leaderboardText}>
-                    Classement
-                </ThemedText>
-            </Pressable>
+                Classement
+            </CustomButton>
 
             {status !== "gameover" && <Game2048TierProgress />}
 
@@ -92,20 +92,5 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.snow,
         textAlign: "center",
-    },
-    leaderboardButton: {
-        borderRadius: 50,
-        paddingHorizontal: 20,
-        paddingVertical: 4,
-        backgroundColor: Theme.autumnGreen,
-        marginHorizontal: 20,
-        borderWidth: 1,
-        borderColor: Colors.snow,
-        alignSelf: "flex-start",
-    },
-    leaderboardText: {
-        color: Colors.snow,
-        textAlign: "center",
-        fontSize: 14,
     },
 });

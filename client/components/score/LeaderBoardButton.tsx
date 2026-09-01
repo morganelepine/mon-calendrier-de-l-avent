@@ -1,6 +1,5 @@
-import { StyleSheet, Pressable, ActivityIndicator } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { Colors, Theme } from "@/constants/Colors";
+import { StyleSheet } from "react-native";
+import { CustomButton } from "@/components/utils/buttons/Button";
 
 interface LeaderBoardButtonProps {
     onPress: () => void;
@@ -14,33 +13,19 @@ export const LeaderBoardButton = ({
     loadingMore,
 }: LeaderBoardButtonProps) => {
     return (
-        <Pressable
+        <CustomButton
             style={styles.button}
             onPress={onPress}
             disabled={loadingMore}
+            loading={loadingMore}
         >
-            {loadingMore ? (
-                <ActivityIndicator color={Colors.snow} />
-            ) : (
-                <ThemedText style={styles.buttonText}>{text}</ThemedText>
-            )}
-        </Pressable>
+            {text}
+        </CustomButton>
     );
 };
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: Theme.autumnGreen,
-        borderWidth: 1,
-        borderColor: Colors.snow,
-        borderRadius: 50,
-        alignSelf: "center",
-        paddingVertical: 6,
-        paddingHorizontal: 24,
         marginTop: 20,
-    },
-    buttonText: {
-        color: Colors.snow,
-        fontSize: 14,
     },
 });

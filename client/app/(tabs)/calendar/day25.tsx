@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, Linking } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { ThemedText } from "@/components/ThemedText";
 import { Wallpapers } from "@/components/days/Day25/Wallpapers";
-import { RateButton } from "@/components/utils/buttons/RateButton";
+import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Horoscope } from "@/components/days/Day25/Horoscope";
@@ -53,9 +54,12 @@ export default function Day25Screen() {
                         Mais avant ça, cela me toucherait énormément si vous
                         preniez le temps de laisser un avis sur le Play Store :
                     </ThemedText>
-                    <RateButton style={styles.rateButton}>
+                    <ExternalLinkButton
+                        style={styles.button}
+                        url="https://play.google.com/store/apps/details?id=com.mlepi.adventcalendar"
+                    >
                         J'y vais !
-                    </RateButton>
+                    </ExternalLinkButton>
 
                     <ThemedText style={styles.text}>
                         Et maintenant, place aux cadeaux ! 🎁
@@ -86,11 +90,12 @@ export default function Day25Screen() {
                         Que vous réserve cette journée de Noël ? Cliquez sur le
                         bouton ci-dessous pour le découvrir !
                     </ThemedText>
-                    <Pressable style={styles.button} onPress={openStoryModal}>
-                        <ThemedText style={{ color: Colors.red }}>
-                            Lire l'horoscope
-                        </ThemedText>
-                    </Pressable>
+                    <CustomButton
+                        style={styles.button}
+                        onPress={openStoryModal}
+                    >
+                        Lire l'horoscope
+                    </CustomButton>
                     <Horoscope
                         modalVisible={modalVisible}
                         setModalVisible={setModalVisible}
@@ -201,18 +206,12 @@ export default function Day25Screen() {
                         avance à celles et ceux qui prendront le temps d'y
                         répondre 🙏
                     </ThemedText>
-                    <Pressable
+                    <ExternalLinkButton
                         style={styles.button}
-                        onPress={() =>
-                            Linking.openURL(
-                                "https://forms.gle/8PwdwpqvP6aqpyap8",
-                            )
-                        }
+                        url="https://forms.gle/8PwdwpqvP6aqpyap8"
                     >
-                        <ThemedText style={{ color: Colors.red }}>
-                            Répondre au questionnaire
-                        </ThemedText>
-                    </Pressable>
+                        Répondre au questionnaire
+                    </ExternalLinkButton>
                 </View>
             </View>
         </ParallaxScrollView>
@@ -228,7 +227,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         letterSpacing: 2,
         color: Colors.blue,
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
         textAlign: "center",
         marginVertical: 20,
         lineHeight: 34,
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingHorizontal: 20,
     },
-    rateButton: { marginTop: 10, marginBottom: 20, alignSelf: "center" },
     imageContainer: {
         flexDirection: "row",
         paddingVertical: 10,
@@ -263,11 +261,5 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 8,
         marginBottom: 15,
-        borderRadius: 50,
-        paddingVertical: 2,
-        paddingHorizontal: 28,
-        borderWidth: 1,
-        borderColor: Colors.red,
-        alignSelf: "center",
     },
 });

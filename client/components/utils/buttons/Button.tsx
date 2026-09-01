@@ -1,12 +1,20 @@
-import { StyleSheet, ViewStyle, Pressable } from "react-native";
+import {
+    StyleSheet,
+    ViewStyle,
+    Pressable,
+    ActivityIndicator,
+} from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Colors, Theme } from "@/constants/Colors";
 
 interface CustomButtonProps {
     children?: React.ReactNode;
     style?: ViewStyle;
     disabled?: boolean;
     onPress: () => void;
+    color?: string;
+    textColor?: string;
+    loading?: boolean;
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
@@ -14,6 +22,9 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
     style = {},
     disabled,
     onPress,
+    color = Theme.autumnGreen,
+    textColor = Colors.snow,
+    loading = false,
 }) => {
     return (
         <Pressable
@@ -22,18 +33,24 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
             style={({ pressed }) => [
                 styles.button,
                 style,
-                disabled && styles.disabledButton,
-                pressed && !disabled && styles.pressedButton,
+                { backgroundColor: color },
+                disabled && !loading && styles.disabledButton,
+                pressed && !disabled && !loading && styles.pressedButton,
             ]}
         >
-            <ThemedText
-                style={[
-                    styles.buttonText,
-                    disabled && { color: Colors.disabledText },
-                ]}
-            >
-                {children}
-            </ThemedText>
+            {loading ? (
+                <ActivityIndicator color={Colors.snow} />
+            ) : (
+                <ThemedText
+                    style={[
+                        styles.buttonText,
+                        { color: textColor },
+                        disabled && { color: Colors.disabledText },
+                    ]}
+                >
+                    {children}
+                </ThemedText>
+            )}
         </Pressable>
     );
 };
@@ -42,13 +59,16 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 50,
         paddingHorizontal: 28,
-        minHeight: 48,
+        marginHorizontal: 20,
+        height: 42,
+        alignSelf: "center",
         justifyContent: "center",
-        backgroundColor: Colors.green,
     },
     buttonText: {
-        color: Colors.snow,
+        fontFamily: "FreightNeo",
+        fontSize: 18,
         textAlign: "center",
+        paddingBottom: 5,
     },
     disabledButton: {
         backgroundColor: Colors.disabled,

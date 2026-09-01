@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, View, ActivityIndicator, Pressable } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { useInitialization } from "@/hooks/useInitialization";
 import { ThemedText } from "@/components/ThemedText";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 
 export function InitializationGate({
@@ -34,17 +35,7 @@ export function InitializationGate({
                     <ThemedText style={styles.text}>
                         Vérifiez votre connexion internet puis réessayez.
                     </ThemedText>
-                    <Pressable
-                        onPress={retry}
-                        style={({ pressed }) => [
-                            styles.button,
-                            pressed && { backgroundColor: Colors.goldLight },
-                        ]}
-                    >
-                        <ThemedText style={styles.buttonText}>
-                            Réessayer
-                        </ThemedText>
-                    </Pressable>
+                    <CustomButton onPress={retry}>Réessayer</CustomButton>
                 </View>
             </BackgroundImage>
         );
@@ -62,15 +53,4 @@ const styles = StyleSheet.create({
         gap: 16,
     },
     text: { color: Colors.snow, textAlign: "center" },
-    button: {
-        height: 48,
-        paddingHorizontal: 28,
-        borderRadius: 50,
-        alignSelf: "center",
-        backgroundColor: Colors.snow,
-        justifyContent: "center",
-    },
-    buttonText: {
-        color: Colors.green,
-    },
 });

@@ -1,6 +1,7 @@
-import { StyleSheet, Pressable, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 
 interface ModalProps {
@@ -37,14 +38,12 @@ export const HangmanModal: React.FC<ModalProps> = ({
                 <Text style={{ fontFamily: "PoppinsBold" }}>{currentWord}</Text>
             </ThemedText>
             {currentWordIndex < words.length - 1 ? (
-                <Pressable
+                <CustomButton
                     onPress={handleNextQuestion}
-                    style={styles.nextQuestionButton}
+                    style={styles.button}
                 >
-                    <ThemedText style={styles.nextQuestionText}>
-                        Partie suivante
-                    </ThemedText>
-                </Pressable>
+                    Partie suivante
+                </CustomButton>
             ) : (
                 <ThemedText style={styles.modalFinalText}>
                     Ce jeu est terminé !
@@ -63,18 +62,8 @@ const styles = StyleSheet.create({
         elevation: 4,
         gap: 10,
     },
-    nextQuestionButton: {
-        borderColor: Theme.red,
-        borderWidth: 2,
-        borderRadius: 50,
-        paddingHorizontal: 20,
-        minHeight: 48,
-        justifyContent: "center",
+    button: {
         marginTop: 10,
-    },
-    nextQuestionText: {
-        fontFamily: "PoppinsBold",
-        color: Theme.red,
     },
     modalFinalText: {
         fontFamily: "PoppinsItalic",

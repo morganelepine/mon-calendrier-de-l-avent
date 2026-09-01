@@ -1,5 +1,6 @@
-import { StyleSheet, Linking, View, Pressable } from "react-native";
+import { StyleSheet, Linking, View } from "react-native";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 
@@ -15,14 +16,13 @@ export default function ForceUpdateScreen() {
                     ces derniers jours, veuillez mettre l’application à jour ✨
                 </ThemedText>
 
-                <Pressable
+                <CustomButton
                     onPress={() => Linking.openURL(storeUrl)}
-                    style={styles.button}
+                    color={Colors.snow}
+                    textColor={Colors.blue}
                 >
-                    <ThemedText style={styles.buttonText}>
-                        Mettre à jour
-                    </ThemedText>
-                </Pressable>
+                    Mettre à jour
+                </CustomButton>
             </View>
         </BackgroundImage>
     );
@@ -33,23 +33,10 @@ const styles = StyleSheet.create({
         margin: 20,
         gap: 16,
         position: "absolute",
-        top: "18%",
+        top: "22%",
     },
     text: {
         color: Colors.snow,
         textAlign: "center",
-        fontSize: 20,
-    },
-    button: {
-        height: 48,
-        paddingHorizontal: 28,
-        borderRadius: 50,
-        alignSelf: "center",
-        backgroundColor: Colors.snow,
-        justifyContent: "center",
-    },
-    buttonText: {
-        fontSize: 20,
-        color: Colors.blue,
     },
 });

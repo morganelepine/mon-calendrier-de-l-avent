@@ -1,6 +1,6 @@
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/Colors";
+import { Theme, Colors } from "@/constants/Colors";
 import { CustomButton } from "@/components/utils/buttons/Button";
 
 interface ErrorLoadingProps {
@@ -18,7 +18,7 @@ export const ErrorLoading = ({
         return (
             <View style={styles.container}>
                 <ThemedText style={styles.text}>{error}</ThemedText>
-                <CustomButton onPress={refreshScores} style={styles.button}>
+                <CustomButton onPress={refreshScores} color={Theme.autumnGreen}>
                     Réessayer
                 </CustomButton>
             </View>
@@ -51,10 +51,5 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontFamily: "PoppinsItalic",
         textAlign: "center",
-    },
-    button: {
-        backgroundColor: Colors.green,
-        alignSelf: "center",
-        marginTop: 12,
     },
 });

@@ -1,9 +1,8 @@
-import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
-import { RateButton } from "@/components/utils/buttons/RateButton";
-import { KofiButton } from "@/components/utils/buttons/KofiButton";
-import { Colors } from "@/constants/Colors";
+import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
+import { Separator } from "@/components/utils/Separator";
+import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function RateScreen() {
@@ -28,9 +27,11 @@ export default function RateScreen() {
             <ThemedText type="sectionText">
                 Merci pour votre soutien !
             </ThemedText>
-            <RateButton style={styles.button}>Laisser un avis</RateButton>
+            <ExternalLinkButton url="https://play.google.com/store/apps/details?id=com.merrymate.moncalendrierdelavent">
+                Laisser un avis
+            </ExternalLinkButton>
 
-            <View style={styles.separator} />
+            <Separator />
 
             <ThemedText type="sectionText">
                 Mon calendrier de l'avent est fait avec amour, et j'aimerais
@@ -41,19 +42,12 @@ export default function RateScreen() {
                 revanche, et si elle réussit à vous apporter un peu de magie
                 chaque jour, votre soutien m'aiderait à la garder en vie ☕️
             </ThemedText>
-            <KofiButton style={styles.button}>Me soutenir</KofiButton>
+            <ExternalLinkButton
+                color={Theme.tint}
+                url="https://ko-fi.com/merrymate"
+            >
+                Me soutenir
+            </ExternalLinkButton>
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    button: {
-        marginVertical: 10,
-        marginHorizontal: 20,
-    },
-    separator: {
-        borderTopWidth: 1,
-        borderTopColor: Colors.disabled,
-        marginVertical: 10,
-    },
-});

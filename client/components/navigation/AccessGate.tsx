@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-    ActivityIndicator,
-    Platform,
-    Pressable,
-    StyleSheet,
-    TextInput,
-    View,
-} from "react-native";
+import { Platform, StyleSheet, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 import { verifyWebAccessCode } from "@/services/access.service";
@@ -120,24 +114,15 @@ export function AccessGate({
                             </ThemedText>
                         )}
 
-                        <Pressable
+                        <CustomButton
                             onPress={submit}
                             disabled={submitting}
-                            style={({ pressed }) => [
-                                styles.button,
-                                pressed && {
-                                    backgroundColor: Colors.goldLight,
-                                },
-                            ]}
+                            loading={submitting}
+                            color={Colors.snow}
+                            textColor={Theme.surface}
                         >
-                            {submitting ? (
-                                <ActivityIndicator color={Colors.green} />
-                            ) : (
-                                <ThemedText style={styles.buttonText}>
-                                    Continuer
-                                </ThemedText>
-                            )}
-                        </Pressable>
+                            Continuer
+                        </CustomButton>
                     </View>
                 </SafeAreaView>
             </BlueBackground>
@@ -193,7 +178,7 @@ const styles = StyleSheet.create({
         gap: 20,
     },
     title: {
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
         fontSize: 28,
         color: Colors.snow,
         textAlign: "center",
@@ -222,20 +207,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     error: {
-        color: Colors.pink,
+        color: Colors.red,
         textAlign: "center",
-    },
-    button: {
-        height: 48,
-        minWidth: 140,
-        paddingHorizontal: 28,
-        borderRadius: 50,
-        alignSelf: "center",
-        backgroundColor: Colors.snow,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    buttonText: {
-        color: Theme.surface,
     },
 });

@@ -1,6 +1,8 @@
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
+import { TextButton } from "@/components/utils/buttons/TextButton";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors } from "@/constants/Colors";
 
 interface HubCardProps {
@@ -24,21 +26,20 @@ export const HubCard: React.FC<HubCardProps> = ({
                 {title}
             </ThemedText>
             <ThemedText style={styles.cardSubtitle}>{description}</ThemedText>
-            <Pressable
-                style={[styles.button, { backgroundColor: color }]}
+            <CustomButton
                 onPress={() => router.push(`/bingo/${route}` as never)}
+                color={color}
             >
-                <ThemedText style={styles.buttonText}>Jouer</ThemedText>
-            </Pressable>
+                Jouer
+            </CustomButton>
             {onRulesPress ? (
-                <Pressable onPress={onRulesPress} style={styles.rulesButton}>
-                    <ThemedText
-                        type="italic14"
-                        style={[styles.rulesButtonText, { color }]}
-                    >
-                        Règles du jeu
-                    </ThemedText>
-                </Pressable>
+                <TextButton
+                    onPress={onRulesPress}
+                    textColor={color}
+                    accessibilityLabel={`${title} : règles du jeu`}
+                >
+                    Règles du jeu
+                </TextButton>
             ) : null}
         </View>
     );
@@ -56,26 +57,10 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: 20,
         textAlign: "center",
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
     },
     cardSubtitle: {
-        fontSize: 14,
+        fontSize: 15,
         textAlign: "center",
-    },
-    button: {
-        paddingVertical: 4,
-        paddingHorizontal: 24,
-        borderRadius: 20,
-        alignSelf: "center",
-    },
-    buttonText: {
-        color: Colors.snow,
-    },
-    rulesButton: {
-        alignSelf: "center",
-    },
-    rulesButtonText: {
-        textDecorationLine: "underline",
-        fontSize: 12,
     },
 });

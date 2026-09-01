@@ -1,8 +1,8 @@
-import { StyleSheet, View, Linking, Pressable } from "react-native";
+import { StyleSheet, View, Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { ThemedText } from "@/components/ThemedText";
-import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function ContactScreen() {
@@ -56,11 +56,7 @@ export default function ContactScreen() {
                     </ThemedText>
                 </View>
 
-                <Pressable onPress={contactMe} style={styles.button}>
-                    <ThemedText style={styles.buttonText}>
-                        Me contacter
-                    </ThemedText>
-                </Pressable>
+                <CustomButton onPress={contactMe}>Me contacter</CustomButton>
             </SafeAreaView>
         </CustomScrollView>
     );
@@ -69,17 +65,5 @@ export default function ContactScreen() {
 const styles = StyleSheet.create({
     section: {
         marginBottom: 20,
-    },
-    button: {
-        borderRadius: 50,
-        paddingHorizontal: 28,
-        minHeight: 48,
-        justifyContent: "center",
-        alignSelf: "center",
-        backgroundColor: Theme.tint,
-    },
-    buttonText: {
-        color: Colors.snow,
-        textAlign: "center",
     },
 });
