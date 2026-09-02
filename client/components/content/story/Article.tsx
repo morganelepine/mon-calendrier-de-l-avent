@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
     },
     headline: {
-        fontFamily: "PallyBold",
-        fontSize: 38,
+        fontFamily: "FreightNeoBold",
+        fontSize: 35,
         textAlign: "center",
         letterSpacing: 2,
         textTransform: "uppercase",

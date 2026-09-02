@@ -1,17 +1,17 @@
 import { useState, useCallback } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { OffSeason } from "@/components/score/OffSeason";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
+import { EmptyState } from "@/components/score/EmptyState";
+import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { BlueBackground } from "@/components/utils/BlueBackground";
-import { ThemedText } from "@/components/ThemedText";
 import {
     getLeaderboardAround,
     type LeaderboardAroundResponse,
 } from "@/services/score.service";
-import { Colors } from "@/constants/Colors";
 import { isDecember } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
 
@@ -67,13 +67,10 @@ export default function MineScreen() {
                 isDecember &&
                 result &&
                 !result.userHasScore && (
-                    <View style={styles.centerContainer}>
-                        <ThemedText style={styles.centerText}>
-                            Vous n'avez pas encore de points. Ouvrez la case du
-                            jour pour en gagner et apparaître dans le classement
-                            !
-                        </ThemedText>
-                    </View>
+                    <EmptyState>
+                        Vous n'avez pas encore de points. Ouvrez la case du
+                        jour pour en gagner et apparaître dans le classement !
+                    </EmptyState>
                 )}
 
             {!error && !loading && isDecember && result?.userHasScore && (
@@ -84,9 +81,9 @@ export default function MineScreen() {
                     refreshing={false}
                     ListHeaderComponent={
                         <>
-                            <ThemedText style={styles.rankSummary}>
+                            <LeaderboardHeaderText>
                                 Vous êtes {result.userRank}e sur {result.total}
-                            </ThemedText>
+                            </LeaderboardHeaderText>
                             {result.hasMoreAbove && (
                                 <LeaderBoardButton
                                     onPress={() =>
@@ -121,21 +118,3 @@ export default function MineScreen() {
         </BlueBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    centerContainer: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    centerText: {
-        color: Colors.snow,
-        textAlign: "center",
-    },
-    rankSummary: {
-        color: Colors.snow,
-        textAlign: "center",
-        paddingHorizontal: 20,
-        marginTop: 16,
-    },
-});

@@ -1,8 +1,6 @@
-import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { BingoRules } from "@/components/bingo/BingoRules";
-import { Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 
@@ -20,7 +18,7 @@ export const BingoRulesModal: React.FC<Props> = ({
     };
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
-            <ThemedText style={styles.modalTitle}>
+            <ThemedText type="modalTitle">
                 {isOctober ? "Le bingo automnal" : "Les bingos de Noël"}
             </ThemedText>
             {isOctober ? (
@@ -33,13 +31,3 @@ export const BingoRulesModal: React.FC<Props> = ({
         </ModalWithCloseButton>
     );
 };
-
-const styles = StyleSheet.create({
-    modalTitle: {
-        fontFamily: "PoppinsBold",
-        textAlign: "center",
-        marginTop: 20,
-        fontSize: 22,
-        color: Theme.tint,
-    },
-});

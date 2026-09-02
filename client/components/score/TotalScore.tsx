@@ -28,11 +28,8 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
         <View style={styles.container}>
             {isDecember && (
                 <>
-                    <ThemedText style={styles.score}>
-                        <ThemedText
-                            type="pallyBoldSnow"
-                            style={{ textAlign: "center" }}
-                        >
+                    <ThemedText type="freightNeoBoldSnow" style={styles.score}>
+                        <ThemedText type="freightNeoBoldSnow">
                             {score}
                         </ThemedText>{" "}
                         {score > 1 ? "points" : "point"}
@@ -95,7 +92,8 @@ const styles = StyleSheet.create({
     },
     score: {
         fontSize: 50,
-        color: Colors.snow,
+        fontFamily: "FreightNeo",
+        paddingBottom: 10,
     },
     barContainer: {
         position: "relative",

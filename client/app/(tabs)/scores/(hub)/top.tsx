@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { OffSeason } from "@/components/score/OffSeason";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
+import { EmptyState } from "@/components/score/EmptyState";
+import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { BlueBackground } from "@/components/utils/BlueBackground";
-import { ThemedText } from "@/components/ThemedText";
 import { getLeaderboard } from "@/services/score.service";
-import { Colors } from "@/constants/Colors";
 import { isDecember } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
 
@@ -68,13 +68,10 @@ export default function TopScreen() {
                 !loading &&
                 isDecember &&
                 (leaderboard.length === 0 ? (
-                    <View style={styles.centerContainer}>
-                        <ThemedText style={styles.centerText}>
-                            Lorsque les joueur·euse·s commenceront à ouvrir le
-                            calendrier, les 25 meilleurs scores apparaîtront
-                            ici.
-                        </ThemedText>
-                    </View>
+                    <EmptyState>
+                        Lorsque les joueur·euse·s commenceront à ouvrir le
+                        calendrier, les 25 meilleurs scores apparaîtront ici.
+                    </EmptyState>
                 ) : (
                     <FlatList
                         data={leaderboard}
@@ -92,10 +89,10 @@ export default function TopScreen() {
                         refreshing={false}
                         contentContainerStyle={{ paddingBottom: 40 }}
                         ListHeaderComponent={
-                            <ThemedText style={styles.title}>
+                            <LeaderboardHeaderText>
                                 Classement des{"\n"}
                                 {PAGE_SIZE} meilleur·e·s joueur·euse·s
-                            </ThemedText>
+                            </LeaderboardHeaderText>
                         }
                         ListFooterComponent={
                             hasMore ? (
@@ -111,21 +108,3 @@ export default function TopScreen() {
         </BlueBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    title: {
-        color: Colors.snow,
-        textAlign: "center",
-        paddingHorizontal: 20,
-        marginTop: 16,
-    },
-    centerContainer: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    centerText: {
-        color: Colors.snow,
-        textAlign: "center",
-    },
-});

@@ -82,7 +82,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
             style={styles.backgroundImage}
         >
             <Pressable style={styles.button} onPress={handleContentOpening}>
-                <ThemedText type="pallyBoldSnow" style={styles.title}>
+                <ThemedText type="freightNeoBoldSnow" style={styles.title}>
                     {getContentTitle(content, ideas, games)}
                 </ThemedText>
             </Pressable>
@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     title: {
-        fontSize: 24,
-        textAlign: "center",
+        fontSize: 26,
     },
 });

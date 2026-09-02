@@ -1,5 +1,6 @@
 import { type PropsWithChildren } from "react";
 import { ScrollViewStyleReset } from "expo-router/html";
+import { Colors } from "@/constants/Colors";
 
 /**
  * This file is web-only and used to configure the root HTML for every web page during static rendering.
@@ -30,7 +31,7 @@ export default function Root({ children }: PropsWithChildren) {
                     content="black-translucent"
                 />
                 <meta name="apple-mobile-web-app-title" content="Avent" />
-                <meta name="theme-color" content="#0b2956" />
+                <meta name="theme-color" content={Colors.blue} />
 
                 {/*
                 Disable body scrolling on web. This makes ScrollView components work closer to how they do on native.

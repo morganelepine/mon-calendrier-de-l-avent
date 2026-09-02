@@ -3,6 +3,10 @@ import type { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Theme, Colors } from "@/constants/Colors";
+import {
+    pillButtonBase,
+    pillButtonTextBase,
+} from "@/components/utils/buttons/pillButtonStyles";
 
 interface ExternalLinkButtonProps {
     children: React.ReactNode;
@@ -29,19 +33,12 @@ export const ExternalLinkButton: React.FC<ExternalLinkButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 50,
-        paddingHorizontal: 28,
-        height: 42,
-        textAlign: "center",
+        ...pillButtonBase,
         marginVertical: 10,
-        marginHorizontal: 20,
-        alignSelf: "center",
     },
     buttonText: {
+        ...pillButtonTextBase,
         color: Colors.snow,
-        fontFamily: "FreightNeo",
-        fontSize: 18,
-        textAlign: "center",
         lineHeight: 42,
     },
 });

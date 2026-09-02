@@ -1,9 +1,8 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { horoscope } from "@/data/day-25-gifts/horoscope_data";
 import { ThemedText } from "@/components/ThemedText";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
-import { Colors } from "@/constants/Colors";
 
 interface HoroscopeProps {
     modalVisible: boolean;
@@ -19,7 +18,10 @@ export const Horoscope: React.FC<HoroscopeProps> = ({
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
         >
-            <ThemedText style={styles.modalTitle}>
+            <ThemedText
+                type="modalTitleSmall"
+                style={{ paddingHorizontal: 8 }}
+            >
                 Votre horoscope de Noël
             </ThemedText>
 
@@ -39,14 +41,3 @@ export const Horoscope: React.FC<HoroscopeProps> = ({
         </ModalWithCloseButton>
     );
 };
-
-const styles = StyleSheet.create({
-    modalTitle: {
-        fontFamily: "PoppinsBold",
-        textAlign: "center",
-        marginTop: 20,
-        paddingHorizontal: 8,
-        fontSize: 22,
-        color: Colors.blue,
-    },
-});

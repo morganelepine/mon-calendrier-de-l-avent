@@ -18,7 +18,7 @@ export const NextQuestion: React.FC<NextQuestionProps> = ({
     return (
         <>
             {currentQuestionIndex === games.length - 1 ? (
-                <ThemedText style={styles.finalText}>
+                <ThemedText type="italic14" style={styles.finalText}>
                     Ce jeu est terminé !
                 </ThemedText>
             ) : (
@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     finalText: {
-        fontFamily: "PoppinsItalic",
-        fontSize: 14,
         marginVertical: 20,
         color: Theme.red,
     },

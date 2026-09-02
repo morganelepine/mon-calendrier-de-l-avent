@@ -38,13 +38,13 @@ export const Recipe: React.FC<RecipeProps> = ({ content }) => {
 
 const styles = StyleSheet.create({
     contentTitle: {
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
         textAlign: "left",
         marginBottom: 10,
         fontSize: 20,
-        color: Theme.green,
+        color: Theme.autumnGreen,
     },
-    recipeTitle: { fontSize: 20, marginBottom: 20 },
+    recipeTitle: { textAlign: "center", marginBottom: 20 },
     ingredients: {
         marginBottom: 5,
         fontSize: 16,

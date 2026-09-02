@@ -89,8 +89,10 @@ export default function InformationsScreen() {
 const styles = StyleSheet.create({
     username: {
         color: Colors.snow,
-        fontSize: 20,
-        fontFamily: "PoppinsBold",
+        fontSize: 26,
+        fontFamily: "FreightNeoBold",
+        paddingRight: 8,
+        marginBottom: 16,
     },
     pageContainer: {
         flex: 1,

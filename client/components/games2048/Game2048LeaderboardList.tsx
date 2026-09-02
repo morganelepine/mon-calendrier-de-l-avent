@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
+import { EmptyState } from "@/components/score/EmptyState";
+import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
-import { ThemedText } from "@/components/ThemedText";
 import { useUser } from "@/contexts/UserContext";
 import { getGames2048Leaderboard } from "@/services/games2048.service";
 import { Games2048LeaderboardEntry } from "@/interfaces/games2048Interface";
-import { Colors } from "@/constants/Colors";
 
 const PAGE_SIZE = 20;
 
@@ -75,11 +75,7 @@ export const Game2048LeaderboardList: React.FC<Props> = ({ groupId }) => {
             {!error &&
                 !loading &&
                 (leaderboard.length === 0 ? (
-                    <View style={styles.centerContainer}>
-                        <ThemedText style={styles.centerText}>
-                            {emptyMessage}
-                        </ThemedText>
-                    </View>
+                    <EmptyState>{emptyMessage}</EmptyState>
                 ) : (
                     <FlatList
                         data={leaderboard}
@@ -98,9 +94,9 @@ export const Game2048LeaderboardList: React.FC<Props> = ({ groupId }) => {
                         contentContainerStyle={styles.listContent}
                         ListHeaderComponent={
                             !groupId ? (
-                                <ThemedText style={styles.title}>
+                                <LeaderboardHeaderText>
                                     Classement des {PAGE_SIZE} meilleurs scores
-                                </ThemedText>
+                                </LeaderboardHeaderText>
                             ) : null
                         }
                         ListFooterComponent={
@@ -119,21 +115,6 @@ export const Game2048LeaderboardList: React.FC<Props> = ({ groupId }) => {
 };
 
 const styles = StyleSheet.create({
-    title: {
-        color: Colors.snow,
-        textAlign: "center",
-        paddingHorizontal: 20,
-        marginTop: 16,
-    },
-    centerContainer: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    centerText: {
-        color: Colors.snow,
-        textAlign: "center",
-    },
     listContent: {
         paddingBottom: 40,
     },

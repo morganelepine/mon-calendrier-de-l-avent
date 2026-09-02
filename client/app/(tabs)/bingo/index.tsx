@@ -58,10 +58,6 @@ export default function GamesHubScreen() {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 32,
-        marginBottom: 20,
-    },
     cardsContainer: {
         width: "100%",
         gap: 24,

@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
     },
     octoberContainer: {
         flex: 1,
-        flexDirection: "column",
         backgroundColor: Colors.snow,
     },
     octoberRow: {

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Switch } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { HalloweenMusicsCredits } from "@/components/informations/settings/HalloweenMusicsCredits";
-import { Theme } from "@/constants/Colors";
+import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 import { MusicPreference } from "@/types/types";
@@ -47,35 +46,17 @@ export const MusicSettings = () => {
                     : "La musique ne se déclenchera pas lorsque vous ouvrez l'app mais vous pourrez tout de même lancer la musique depuis l'onglet Décompte."}
             </ThemedText>
 
-            <View style={styles.row}>
-                <ThemedText type="sectionText" style={{ color: Theme.tint }}>
-                    {playMusic === "yes"
+            <SettingsToggleRow
+                label={
+                    playMusic === "yes"
                         ? "Désactiver l'ambiance musicale"
-                        : "Activer l'ambiance musicale"}
-                </ThemedText>
-
-                <Switch
-                    value={playMusic === "yes"}
-                    onValueChange={toggleMusic}
-                    trackColor={{ false: "#ccc", true: Theme.tint }}
-                    thumbColor="#fff"
-                    style={styles.switch}
-                />
-            </View>
+                        : "Activer l'ambiance musicale"
+                }
+                value={playMusic === "yes"}
+                onValueChange={toggleMusic}
+            />
 
             {isOctober && <HalloweenMusicsCredits />}
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingRight: 20,
-    },
-    switch: {
-        transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
-    },
-});

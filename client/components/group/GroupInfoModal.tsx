@@ -1,7 +1,6 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
-import { Theme } from "@/constants/Colors";
 
 export const GroupInfoModal = ({
     modalVisible,
@@ -15,7 +14,7 @@ export const GroupInfoModal = ({
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
         >
-            <ThemedText style={styles.modalTitle}>Gestion du groupe</ThemedText>
+            <ThemedText type="modalTitleSmall">Gestion du groupe</ThemedText>
 
             <View>
                 <ThemedText type="sectionSubtitle">
@@ -41,13 +40,3 @@ export const GroupInfoModal = ({
         </ModalWithCloseButton>
     );
 };
-
-const styles = StyleSheet.create({
-    modalTitle: {
-        fontFamily: "PoppinsBold",
-        textAlign: "center",
-        marginTop: 20,
-        fontSize: 22,
-        color: Theme.tint,
-    },
-});

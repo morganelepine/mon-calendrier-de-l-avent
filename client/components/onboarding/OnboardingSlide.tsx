@@ -27,7 +27,7 @@ export const OnboardingSlide: React.FC<Props> = ({ slide }) => {
                 />
             </View>
 
-            <ThemedText type="pallyBoldSnow" style={styles.title}>
+            <ThemedText type="freightNeoBoldSnow" style={styles.title}>
                 {slide.showUsername && username
                     ? `Vous êtes désormais ${username}`
                     : slide.title}
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        textAlign: "center",
     },
     body: {
         textAlign: "center",

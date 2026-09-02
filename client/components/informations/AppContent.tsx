@@ -84,10 +84,7 @@ export const AppContent = () => {
                 </ThemedText>
             </View>
 
-            <ThemedText
-                type="sectionText"
-                style={{ fontFamily: "PoppinsItalic" }}
-            >
+            <ThemedText type="sectionTextItalic">
                 J'ai mis tout mon amour de Noël dans ce calendrier et j'espère
                 qu'il saura vous transporter dans cette magie des fêtes que
                 j'aime tant.

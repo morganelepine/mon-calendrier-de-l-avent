@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Switch, Alert, Linking } from "react-native";
+import { Alert, Linking } from "react-native";
 import * as Notifications from "expo-notifications";
 import { ThemedText } from "@/components/ThemedText";
-import { Theme } from "@/constants/Colors";
+import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { useUser } from "@/contexts/UserContext";
 import { getUser } from "@/services/user.service";
 import {
@@ -72,33 +72,15 @@ export const NotificationsSettings = () => {
                     : "Activez les notifications pour recevoir un rappel chaque matin vous invitant à ouvrir la case du jour."}
             </ThemedText>
 
-            <View style={styles.row}>
-                <ThemedText type="sectionText" style={{ color: Theme.tint }}>
-                    {notificationsEnabled
+            <SettingsToggleRow
+                label={
+                    notificationsEnabled
                         ? "Désactiver les notifications"
-                        : "Activer les notifications"}
-                </ThemedText>
-
-                <Switch
-                    value={notificationsEnabled}
-                    onValueChange={toggleNotifications}
-                    trackColor={{ false: "#ccc", true: Theme.tint }}
-                    thumbColor="#fff"
-                    style={styles.switch}
-                />
-            </View>
+                        : "Activer les notifications"
+                }
+                value={notificationsEnabled}
+                onValueChange={toggleNotifications}
+            />
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingRight: 20,
-    },
-    switch: {
-        transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
-    },
-});

@@ -77,52 +77,53 @@ export const Home = () => {
                         <AudioPlayer music={music} />
                     </View>
 
-                    <View style={styles.textContainer}>
-                        {/* {isChristmas && (
-                            <ThemedText
-                                type="homeTitle"
-                                style={styles.isChristmas}
-                            >
-                                Joyeux Noël
-                            </ThemedText>
-                        )} */}
+                    {/* Before calendar departure */}
 
-                        {!isChristmas && !isAfterChristmas && isDecember && (
+                    {!isDecember && (
+                        <>
+                            <ThemedText
+                                style={[styles.title, styles.countdown]}
+                            >
+                                {daysToCalendar}{" "}
+                                {daysToCalendar > 1 ? "jours" : "jour"}
+                            </ThemedText>
+                            <ThemedText
+                                style={[styles.title, styles.beforeCalendar]}
+                            >
+                                avant le départ du calendrier
+                            </ThemedText>
+                        </>
+                    )}
+
+                    {/* During calendar period */}
+
+                    <View style={styles.textContainer}>
+                        {isDecember && !isChristmas && !isAfterChristmas && (
                             <>
                                 <ThemedText
-                                    type="homeTitle"
-                                    style={styles.text1}
+                                    style={[styles.title, styles.countdown]}
                                 >
                                     {daysToChristmas}{" "}
                                     {daysToChristmas > 1 ? "nuits" : "nuit"}
                                 </ThemedText>
-                                <ThemedText type="homeTitle">
+                                <ThemedText
+                                    style={[
+                                        styles.title,
+                                        styles.beforeChristmas,
+                                    ]}
+                                >
                                     avant Noël
                                 </ThemedText>
                             </>
                         )}
 
-                        {!isDecember && (
-                            <>
-                                <ThemedText
-                                    type="homeTitle"
-                                    style={styles.text1}
-                                >
-                                    {daysToCalendar}{" "}
-                                    {daysToCalendar > 1 ? "jours" : "jour"}
-                                </ThemedText>
-                                <ThemedText style={styles.beforeCalendar}>
-                                    avant le départ du calendrier
-                                </ThemedText>
-                            </>
-                        )}
+                        {/* After calendar period, in december only */}
 
                         {isAfterChristmas && (
                             <ThemedText
-                                type="homeTitle"
-                                style={styles.afterChristmas}
+                                style={[styles.title, styles.afterChristmas]}
                             >
-                                Rendez-vous l'année prochaine !
+                                Rendez-vous l'année prochaine&nbsp;!
                             </ThemedText>
                         )}
                     </View>
@@ -135,28 +136,29 @@ export const Home = () => {
 const styles = StyleSheet.create({
     textContainer: {
         marginBottom: 250,
-        flexDirection: "column",
+        paddingHorizontal: 15,
     },
-    text1: {
-        letterSpacing: 9,
+    title: {
+        fontFamily: "FreightNeoBold",
+        letterSpacing: 0.4,
+        textAlign: "center",
+        color: Colors.snow,
     },
-    isChristmas: {
-        marginTop: 100,
-        fontSize: 75,
-        lineHeight: 80,
-        color: Colors.blue,
-        textShadowColor: Colors.snow,
-        textShadowOffset: { width: 3, height: 3 },
-        textShadowRadius: 1,
+    countdown: {
+        fontSize: 55,
+        letterSpacing: 6,
+    },
+    beforeCalendar: {
+        fontSize: 20,
+        fontFamily: "FreightNeo",
+        marginBottom: 30,
+    },
+    beforeChristmas: {
+        fontSize: 28,
+        fontFamily: "FreightNeo",
     },
     afterChristmas: {
         fontSize: 40,
-        letterSpacing: 3,
-    },
-    beforeCalendar: {
-        color: Colors.snow,
-        fontSize: 20,
-        marginBottom: 30,
-        textAlign: "center",
+        letterSpacing: 1,
     },
 });

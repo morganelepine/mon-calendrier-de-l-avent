@@ -3,7 +3,10 @@ import { Animated, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
-import { ConfettiBurst, CONFETTI_DURATION } from "@/components/utils/ConfettiBurst";
+import {
+    ConfettiBurst,
+    CONFETTI_DURATION,
+} from "@/components/utils/ConfettiBurst";
 
 export type ToastDuration = "short" | "long";
 type ToastVariant = "default" | "points";
@@ -112,7 +115,7 @@ export function ToastHost() {
                     {isPoints && (
                         <Ionicons
                             name="star"
-                            size={14}
+                            size={12}
                             color={Colors.snow}
                             style={styles.pointsIcon}
                         />
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     },
     pointsText: {
         color: Colors.snow,
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
         letterSpacing: 2,
     },
 });

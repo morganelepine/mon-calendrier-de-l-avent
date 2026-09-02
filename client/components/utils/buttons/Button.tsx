@@ -6,6 +6,10 @@ import {
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
+import {
+    pillButtonBase,
+    pillButtonTextBase,
+} from "@/components/utils/buttons/pillButtonStyles";
 
 interface CustomButtonProps {
     children?: React.ReactNode;
@@ -57,17 +61,10 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 50,
-        paddingHorizontal: 28,
-        marginHorizontal: 20,
-        height: 42,
-        alignSelf: "center",
-        justifyContent: "center",
+        ...pillButtonBase,
     },
     buttonText: {
-        fontFamily: "FreightNeo",
-        fontSize: 18,
-        textAlign: "center",
+        ...pillButtonTextBase,
         paddingBottom: 5,
     },
     disabledButton: {

@@ -5,6 +5,7 @@ import { Input } from "@/components/content/games/others/Input";
 import { NextQuestion } from "@/components/content/games/util/NextQuestion";
 import { Content } from "@/interfaces/contentInterface";
 import { isOctober } from "@/constants/Dates";
+import { Theme } from "@/constants/Colors";
 
 interface OtherGamesProps {
     game: Content;
@@ -83,7 +84,8 @@ const styles = StyleSheet.create({
     },
     word: {
         textAlign: "center",
-        fontFamily: "PallyBold",
+        fontFamily: "FreightNeoBold",
+        color: Theme.autumnGreen,
         fontSize: 32,
         letterSpacing: 8,
     },

@@ -22,9 +22,10 @@ export const Alphabet: React.FC<AlphabetProps> = ({
                 isClicked ? styles.clickedLetter : null,
             ],
             textStyle: {
-                color: !isClicked ? "white" : Colors.red,
+                color: !isClicked ? "white" : Colors.autumnGreen,
                 fontSize: 28,
-                fontFamily: "PallyBold",
+                paddingBottom: 4,
+                fontFamily: "FreightNeoBold",
             },
         };
     };
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     letter: {
-        backgroundColor: Theme.green,
+        backgroundColor: Theme.autumnGreen,
         borderRadius: 50,
         height: 50,
         width: 50,
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     clickedLetter: {
         backgroundColor: "white",
         opacity: 0.4,
-        borderColor: Colors.red,
+        borderColor: Colors.autumnGreen,
         borderWidth: 0.5,
     },
 });

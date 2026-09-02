@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { LeaderBoardItem } from "@/components/score/LeaderBoardItem";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
+import { EmptyState } from "@/components/score/EmptyState";
+import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { BlueBackground } from "@/components/utils/BlueBackground";
-import { ThemedText } from "@/components/ThemedText";
 import { getGames2048LeaderboardAround } from "@/services/games2048.service";
 import { Games2048LeaderboardAroundResponse } from "@/interfaces/games2048Interface";
-import { Colors } from "@/constants/Colors";
 import { useUser } from "@/contexts/UserContext";
 
 const INITIAL_WINDOW = 5;
@@ -64,12 +64,10 @@ export default function Game2048LeaderboardMineScreen() {
             />
 
             {!error && !loading && result && !result.userHasScore && (
-                <View style={styles.centerContainer}>
-                    <ThemedText style={styles.centerText}>
-                        Vous n&apos;avez pas encore de score enregistré. Lancez
-                        une partie pour apparaître dans le classement !
-                    </ThemedText>
-                </View>
+                <EmptyState>
+                    Vous n&apos;avez pas encore de score enregistré. Lancez une
+                    partie pour apparaître dans le classement !
+                </EmptyState>
             )}
 
             {!error && !loading && result?.userHasScore && (
@@ -80,9 +78,9 @@ export default function Game2048LeaderboardMineScreen() {
                     refreshing={false}
                     ListHeaderComponent={
                         <>
-                            <ThemedText style={styles.rankSummary}>
+                            <LeaderboardHeaderText>
                                 Vous êtes {result.userRank}e sur {result.total}
-                            </ThemedText>
+                            </LeaderboardHeaderText>
                             {result.hasMoreAbove && (
                                 <LeaderBoardButton
                                     onPress={() =>
@@ -117,21 +115,3 @@ export default function Game2048LeaderboardMineScreen() {
         </BlueBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    centerContainer: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    centerText: {
-        color: Colors.snow,
-        textAlign: "center",
-    },
-    rankSummary: {
-        color: Colors.snow,
-        textAlign: "center",
-        paddingHorizontal: 20,
-        marginTop: 16,
-    },
-});

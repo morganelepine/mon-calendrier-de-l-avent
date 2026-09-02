@@ -1,6 +1,6 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet } from "react-native";
-
+import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     link: {
-        backgroundColor: "#FBF5F3",
+        backgroundColor: Colors.snow,
         marginTop: 40,
         padding: 10,
         borderRadius: 50,

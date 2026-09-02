@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Pressable, View, Dimensions } from "react-native";
 import { Image } from "expo-image";
-import { CustomModal } from "@/components/utils/custom/CustomModal";
+import { CenteredModal } from "@/components/utils/custom/CenteredModal";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
@@ -50,38 +50,37 @@ export const Wallpapers = ({ datas, type }: WallpapersProps) => {
                 )}
             </View>
 
-            <CustomModal
+            <CenteredModal
                 visible={!!selectedImage}
                 onRequestClose={() => setSelectedImage(null)}
+                overlayOpacity={0.8}
+                contentStyle={styles.imageModalContent}
             >
-                <View style={styles.modalContainer}>
-                    <Pressable onPress={() => setSelectedImage(null)}>
-                        {selectedImage && (
-                            <Image
-                                source={{
-                                    uri: getCloudinaryImageUrl(selectedImage),
-                                }}
-                                contentFit="contain"
-                                cachePolicy="memory-disk"
-                                style={{
-                                    height: height,
-                                    width: width,
-                                }}
-                            />
-                        )}
-                    </Pressable>
-                </View>
-            </CustomModal>
+                <Pressable onPress={() => setSelectedImage(null)}>
+                    {selectedImage && (
+                        <Image
+                            source={{
+                                uri: getCloudinaryImageUrl(selectedImage),
+                            }}
+                            contentFit="contain"
+                            cachePolicy="memory-disk"
+                            style={{
+                                height: height,
+                                width: width,
+                            }}
+                        />
+                    )}
+                </Pressable>
+            </CenteredModal>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+    imageModalContent: {
+        margin: 0,
+        backgroundColor: "transparent",
+        borderRadius: 0,
     },
     gallery: {
         flexDirection: "row",

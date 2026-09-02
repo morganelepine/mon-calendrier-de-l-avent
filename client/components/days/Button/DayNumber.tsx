@@ -45,9 +45,8 @@ const styles = StyleSheet.create({
         height: undefined,
     },
     itemText: {
-        fontSize: isOctober ? 16 : 30,
-        fontFamily: "Pally",
-        paddingVertical: 2,
+        fontSize: isOctober ? 18 : 26,
+        fontFamily: "FreightNeo",
         paddingHorizontal: 5,
         position: "absolute",
         top: 0,

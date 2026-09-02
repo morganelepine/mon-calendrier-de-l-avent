@@ -19,10 +19,10 @@ export const Day25Win: React.FC<Day25Props> = ({ totalScore }) => {
 
             <View style={{ marginTop: insets.top * 2, paddingHorizontal: 20 }}>
                 <View>
-                    <ThemedText type="pallyBoldSnow" style={styles.title}>
-                        🎅 Joyeux Noël
+                    <ThemedText type="freightNeoBoldSnow" style={styles.title}>
+                        Joyeux Noël
                     </ThemedText>
-                    <ThemedText type="pallyBoldSnow" style={styles.title}>
+                    <ThemedText type="freightNeoBoldSnow" style={styles.title}>
                         et BRAVO !
                     </ThemedText>
                 </View>
@@ -49,9 +49,8 @@ export const Day25Win: React.FC<Day25Props> = ({ totalScore }) => {
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
-        textAlign: "center",
     },
-    text: { color: Colors.snow },
+    text: { color: Colors.snow, textAlign: "center" },
     giftsContainer: {
         flex: 1,
         flexDirection: "row",

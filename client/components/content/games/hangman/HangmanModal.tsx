@@ -45,7 +45,7 @@ export const HangmanModal: React.FC<ModalProps> = ({
                     Partie suivante
                 </CustomButton>
             ) : (
-                <ThemedText style={styles.modalFinalText}>
+                <ThemedText type="italic14" style={{ color: Theme.red }}>
                     Ce jeu est terminé !
                 </ThemedText>
             )}
@@ -64,10 +64,5 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 10,
-    },
-    modalFinalText: {
-        fontFamily: "PoppinsItalic",
-        fontSize: 14,
-        color: Theme.red,
     },
 });

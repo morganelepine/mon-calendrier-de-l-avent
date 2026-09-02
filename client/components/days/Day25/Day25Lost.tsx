@@ -8,7 +8,7 @@ export const Day25Lost = () => {
         <>
             <Snowfall count={100} />
             <View style={{ paddingHorizontal: 20 }}>
-                <ThemedText type="pallyBoldSnow" style={styles.title}>
+                <ThemedText type="freightNeoBoldSnow" style={styles.title}>
                     Vous y étiez presque&nbsp;!
                 </ThemedText>
                 <ThemedText style={styles.text}>
@@ -28,14 +28,12 @@ export const Day25Lost = () => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 30,
+        fontSize: 28,
         paddingBottom: 20,
-        textAlign: "center",
     },
     text: {
         color: Colors.snow,
         paddingVertical: 5,
         textAlign: "center",
-        fontSize: 18,
     },
 });

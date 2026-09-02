@@ -56,10 +56,7 @@ export default function CopyrightsScreen() {
                     </ThemedText>
                 </View>
 
-                <ThemedText
-                    type="sectionText"
-                    style={{ fontFamily: "PoppinsItalic" }}
-                >
+                <ThemedText type="sectionTextItalic">
                     Merci également aux personnes qui ont testé mon application
                     et qui m'ont donné des idées pour l'améliorer encore !
                 </ThemedText>
