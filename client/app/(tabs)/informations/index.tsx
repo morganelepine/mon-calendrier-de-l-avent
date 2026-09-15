@@ -28,10 +28,19 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
+                        title="Version premium"
+                        iconName="sparkles-outline"
+                        iconColor={
+                            isOctober ? Colors.autumnRed : Colors.autumnGreen
+                        }
+                        onPress={() => router.push("/informations/premium")}
+                    />
+
+                    <OptionItem
                         title="Règles pour gagner des points"
                         iconName="game-controller-outline"
                         iconColor={
-                            isOctober ? Colors.autumnYellow : Colors.lightBlue
+                            isOctober ? Colors.autumnGreen : Colors.green
                         }
                         onPress={() => router.push("/informations/rules")}
                     />
@@ -44,24 +53,24 @@ export default function InformationsScreen() {
                         }
                         iconName="eye-outline"
                         iconColor={
-                            isOctober ? Colors.autumnGreen : Colors.green
+                            isOctober ? Colors.autumnYellow : Colors.lightBlue
                         }
                         onPress={() => router.push("/informations/bingo")}
                     />
 
                     <OptionItem
-                        title="Soutenir l'application"
+                        title="Noter l'application"
                         iconName="star-outline"
-                        iconColor={isOctober ? Colors.autumnRed : Colors.gold}
+                        iconColor={
+                            isOctober ? Colors.autumnGreenDark : Colors.gold
+                        }
                         onPress={() => router.push("/informations/rate")}
                     />
 
                     <OptionItem
                         title="Remerciements"
                         iconName="heart-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnGreenDark : Colors.red
-                        }
+                        iconColor={isOctober ? Colors.autumnRed : Colors.red}
                         onPress={() => router.push("/informations/copyrights")}
                     />
 
@@ -79,13 +88,6 @@ export default function InformationsScreen() {
                             isOctober ? Colors.autumnGreen : Colors.darkBlue
                         }
                         onPress={() => router.push("/informations/settings")}
-                    />
-
-                    <OptionItem
-                        title="Version premium"
-                        iconName="sparkles-outline"
-                        iconColor={isOctober ? Colors.autumnGold : Colors.gold}
-                        onPress={() => router.push("/informations/premium")}
                     />
                 </View>
             </CustomSafeAreaView>

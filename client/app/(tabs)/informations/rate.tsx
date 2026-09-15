@@ -31,9 +31,9 @@ export default function RateScreen() {
                 Laisser un avis
             </ExternalLinkButton>
 
-            <Separator />
+            {/* <Separator /> */}
 
-            <ThemedText type="sectionText">
+            {/* <ThemedText type="sectionText">
                 Mon calendrier de l'avent est fait avec amour, et j'aimerais
                 qu'il reste accessible à tout le monde (et surtout, sans pub).
             </ThemedText>
@@ -47,7 +47,7 @@ export default function RateScreen() {
                 url="https://ko-fi.com/merrymate"
             >
                 Me soutenir
-            </ExternalLinkButton>
+            </ExternalLinkButton> */}
         </SafeAreaView>
     );
 }

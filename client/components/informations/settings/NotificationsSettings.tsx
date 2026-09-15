@@ -73,11 +73,7 @@ export const NotificationsSettings = () => {
             </ThemedText>
 
             <SettingsToggleRow
-                label={
-                    notificationsEnabled
-                        ? "Désactiver les notifications"
-                        : "Activer les notifications"
-                }
+                label={"Activer les notifications"}
                 value={notificationsEnabled}
                 onValueChange={toggleNotifications}
             />

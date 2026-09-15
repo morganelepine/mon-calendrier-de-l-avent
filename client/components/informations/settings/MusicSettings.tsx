@@ -47,11 +47,7 @@ export const MusicSettings = () => {
             </ThemedText>
 
             <SettingsToggleRow
-                label={
-                    playMusic === "yes"
-                        ? "Désactiver l'ambiance musicale"
-                        : "Activer l'ambiance musicale"
-                }
+                label={"Activer l'ambiance musicale"}
                 value={playMusic === "yes"}
                 onValueChange={toggleMusic}
             />
