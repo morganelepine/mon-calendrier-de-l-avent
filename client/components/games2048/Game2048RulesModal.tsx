@@ -1,6 +1,7 @@
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 import { ThemedText } from "@/components/ThemedText";
 import { isOctober } from "@/constants/Dates";
+import { useGoalForCurrentSeason } from "@/hooks/useGame2048";
 
 interface Props {
     modalVisible: boolean;
@@ -15,7 +16,7 @@ export const Game2048RulesModal: React.FC<Props> = ({
         setModalVisible(false);
     };
 
-    const goal = isOctober ? "le chaudron magique !" : "le Père Noël !";
+    const goal = useGoalForCurrentSeason();
 
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>

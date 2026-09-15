@@ -3,6 +3,7 @@ import {
     Board,
     Direction,
     createInitialBoard,
+    getMaxTier,
     hasMovesLeft,
     hasReachedMaxTier,
     move as applyMove,
@@ -15,6 +16,8 @@ import {
     submitGames2048Score,
 } from "@/services/games2048.service";
 import useAppState from "@/hooks/useAppState";
+import { usePremium } from "@/contexts/PremiumContext";
+import { isOctober } from "@/constants/Dates";
 
 type Status = "loading" | "playing" | "gameover";
 
@@ -33,11 +36,14 @@ interface UseGame2048Result {
     status: Status;
     hasWon: boolean;
     isNewBest: boolean | null;
+    maxTier: number;
     play: (direction: Direction) => void;
     startNewGame: () => void;
 }
 
 export function useGame2048(): UseGame2048Result {
+    const { isPremium } = usePremium();
+    const maxTier = getMaxTier(isPremium);
     const [, forceRender] = useReducer((c) => c + 1, 0);
     const [isNewBest, setIsNewBest] = useState<boolean | null>(null);
     const [bestScore, setBestScore] = useState(0);
@@ -168,13 +174,14 @@ export function useGame2048(): UseGame2048Result {
             const game = gameRef.current;
             if (game.status !== "playing") return;
 
-            const result = applyMove(game.board, direction);
+            const result = applyMove(game.board, direction, maxTier);
             if (!result.moved) return; // blocked edge, nothing to do
 
             const boardWithNewTile = spawnTile(result.board, Math.random);
             const nextScore = game.score + result.scoreGained;
-            const hasWon = game.hasWon || hasReachedMaxTier(boardWithNewTile);
-            const isOver = !hasMovesLeft(boardWithNewTile);
+            const hasWon =
+                game.hasWon || hasReachedMaxTier(boardWithNewTile, maxTier);
+            const isOver = !hasMovesLeft(boardWithNewTile, maxTier);
 
             gameRef.current = {
                 board: boardWithNewTile,
@@ -193,7 +200,7 @@ export function useGame2048(): UseGame2048Result {
                 attemptSubmit(nextScore);
             }
         },
-        [persist, attemptSubmit, updateBestScore],
+        [persist, attemptSubmit, updateBestScore, maxTier],
     );
 
     const game = gameRef.current;
@@ -204,7 +211,17 @@ export function useGame2048(): UseGame2048Result {
         status: game.status,
         hasWon: game.hasWon,
         isNewBest,
+        maxTier,
         play,
         startNewGame,
     };
 }
+
+export const useGoalForCurrentSeason = (): string => {
+    const { isPremium } = usePremium();
+    const octoberGoal = isPremium ? "le chaudron magique !" : "la courge 🎃";
+    const decemberGoal = isPremium
+        ? "le Père Noël 🎅"
+        : "la couronne de Noël !";
+    return isOctober ? octoberGoal : decemberGoal;
+};

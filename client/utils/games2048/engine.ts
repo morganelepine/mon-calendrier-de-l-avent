@@ -4,8 +4,13 @@
 export type Rng = () => number;
 
 export const GRID_SIZE = 4;
-// Top tile a player can reach (2^11 = 2048).
+// Top tile a premium player can reach (2^11 = 2048).
 export const MAX_TIER = 11;
+// Free-tier players can't merge past this.
+export const FREE_MAX_TIER = 8;
+
+export const getMaxTier = (isPremium: boolean): number =>
+    isPremium ? MAX_TIER : FREE_MAX_TIER;
 
 export type Direction = "up" | "down" | "left" | "right";
 // 0 = empty cell, otherwise a tier from 1 to MAX_TIER.
@@ -56,17 +61,16 @@ function transpose(board: Board): Board {
 // Slides a row's tiles towards index 0 and merges equal neighbours,
 // classic 2048 rules: a tile merges at most once per move,
 // and a tile born from a merge doesn't merge again in the same move.
-function collapseRow(row: number[]): { row: number[]; scoreGained: number } {
+function collapseRow(
+    row: number[],
+    maxTier: number,
+): { row: number[]; scoreGained: number } {
     const tiles = row.filter((tier) => tier !== 0);
     const result: number[] = [];
     let scoreGained = 0;
 
     for (let i = 0; i < tiles.length; i++) {
-        if (
-            tiles[i] !== 0 &&
-            tiles[i] === tiles[i + 1] &&
-            tiles[i] < MAX_TIER
-        ) {
+        if (tiles[i] !== 0 && tiles[i] === tiles[i + 1] && tiles[i] < maxTier) {
             const mergedTier = tiles[i] + 1;
             result.push(mergedTier);
             scoreGained += 2 ** mergedTier;
@@ -83,7 +87,11 @@ function collapseRow(row: number[]): { row: number[]; scoreGained: number } {
 // Every direction reduces to "collapse each row towards index 0": up/down
 // transpose the board first (columns become rows), and right/down reverse
 // each row first (so "towards the end" becomes "towards index 0").
-export function move(board: Board, direction: Direction): MoveResult {
+export function move(
+    board: Board,
+    direction: Direction,
+    maxTier: number = MAX_TIER,
+): MoveResult {
     const transposed = direction === "up" || direction === "down";
     const reversed = direction === "right" || direction === "down";
 
@@ -92,7 +100,7 @@ export function move(board: Board, direction: Direction): MoveResult {
 
     let scoreGained = 0;
     let collapsed = working.map((row) => {
-        const result = collapseRow(row);
+        const result = collapseRow(row, maxTier);
         scoreGained += result.scoreGained;
         return result.row;
     });
@@ -106,13 +114,16 @@ export function move(board: Board, direction: Direction): MoveResult {
     return { board: finalBoard, scoreGained, moved };
 }
 
-export function hasMovesLeft(board: Board): boolean {
+export function hasMovesLeft(
+    board: Board,
+    maxTier: number = MAX_TIER,
+): boolean {
     if (emptyCells(board).length > 0) return true;
 
     for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = 0; col < GRID_SIZE; col++) {
             const tier = board[row][col];
-            if (tier >= MAX_TIER) continue; // can no longer merge further
+            if (tier >= maxTier) continue; // can no longer merge further
             if (col < GRID_SIZE - 1 && board[row][col + 1] === tier)
                 return true;
             if (row < GRID_SIZE - 1 && board[row + 1][col] === tier)
@@ -122,6 +133,9 @@ export function hasMovesLeft(board: Board): boolean {
     return false;
 }
 
-export function hasReachedMaxTier(board: Board): boolean {
-    return board.some((row) => row.some((tier) => tier >= MAX_TIER));
+export function hasReachedMaxTier(
+    board: Board,
+    maxTier: number = MAX_TIER,
+): boolean {
+    return board.some((row) => row.some((tier) => tier >= maxTier));
 }

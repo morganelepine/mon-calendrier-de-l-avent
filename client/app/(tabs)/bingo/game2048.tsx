@@ -8,8 +8,16 @@ import { Theme } from "@/constants/Colors";
 import { TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function Game2048Screen() {
-    const { board, score, bestScore, status, hasWon, play, startNewGame } =
-        useGame2048();
+    const {
+        board,
+        score,
+        bestScore,
+        status,
+        hasWon,
+        maxTier,
+        play,
+        startNewGame,
+    } = useGame2048();
 
     return (
         <SafeAreaView edges={TOP_EDGES} style={styles.container}>
@@ -18,6 +26,7 @@ export default function Game2048Screen() {
                 bestScore={bestScore}
                 hasWon={hasWon}
                 status={status}
+                maxTier={maxTier}
             />
 
             <Game2048Board board={board} onPlay={play} />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useGoalForCurrentSeason } from "@/hooks/useGame2048";
 import { StyleSheet, View } from "react-native";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BlueBackground } from "@/components/utils/BlueBackground";
@@ -12,7 +13,7 @@ export default function GamesHubScreen() {
     const [game2048RulesVisible, setGame2048RulesVisible] = useState(false);
     const [bingoRulesVisible, setBingoRulesVisible] = useState(false);
 
-    const goal = isOctober ? "chaudron magique !" : "Père Noël 🎅";
+    const goal = useGoalForCurrentSeason();
 
     return (
         <BlueBackground>
@@ -20,7 +21,7 @@ export default function GamesHubScreen() {
                 <View style={styles.cardsContainer}>
                     <HubCard
                         title={`Le 2048 ${isOctober ? "d'automne" : "de Noël"}`}
-                        description={`Faites glisser les cases dans tous les\u00A0sens pour tenter d'atteindre le\u00A0${goal}`}
+                        description={`Faites glisser les cases dans tous les\u00A0sens pour tenter d'atteindre ${goal}`}
                         color={isOctober ? Colors.autumnGreenDark : Colors.red}
                         route="game2048"
                         onRulesPress={() => setGame2048RulesVisible(true)}

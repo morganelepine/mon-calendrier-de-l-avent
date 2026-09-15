@@ -14,7 +14,7 @@ const GAME_2048_ICONS_CHRISTMAS: { image: string; label: string }[] = [
     { image: "7_dyt9mu", label: "Bonhomme de neige" },
     { image: "8_dts07a", label: "Couronne de Noël" },
     { image: "9_s3yxkq", label: "Pull de Noël" },
-    { image: "10_jnklib", label: "Clochette" },
+    { image: "10_jnklib", label: "Cloches" },
     { image: "11_xarana", label: "Père Noël" },
 ];
 

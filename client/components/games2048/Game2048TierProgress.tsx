@@ -1,13 +1,19 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
-import { MAX_TIER } from "@/utils/games2048/engine";
 import { getIconForTier, getGame2048IconUrl } from "@/constants/game2048Icons";
 import { Colors } from "@/constants/Colors";
 
-const TIERS = Array.from({ length: MAX_TIER }, (_, i) => i + 1);
+interface Game2048TierProgressProps {
+    // The highest tier this player can currently reach (see getMaxTier) -
+    // only tiers up to this are shown, since anything past it can't happen.
+    maxTier: number;
+}
 
-export const Game2048TierProgress = () => {
+export const Game2048TierProgress = ({
+    maxTier,
+}: Game2048TierProgressProps) => {
+    const TIERS = Array.from({ length: maxTier }, (_, i) => i + 1);
     return (
         <ScrollView
             horizontal

@@ -1,16 +1,17 @@
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
+import { useGoalForCurrentSeason } from "@/hooks/useGame2048";
 import { Game2048TierProgress } from "@/components/games2048/Game2048TierProgress";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
-import { isOctober } from "@/constants/Dates";
 
 interface Game2048HeaderProps {
     score: number;
     bestScore: number;
     hasWon: boolean;
     status: string;
+    maxTier: number;
 }
 
 export const Game2048Header = ({
@@ -18,8 +19,10 @@ export const Game2048Header = ({
     bestScore,
     hasWon,
     status,
+    maxTier,
 }: Game2048HeaderProps) => {
-    const goal = isOctober ? "chaudron magique !" : "Père Noël 🎅";
+    const goal = useGoalForCurrentSeason();
+
     return (
         <View style={styles.header}>
             <CustomButton
@@ -32,7 +35,9 @@ export const Game2048Header = ({
                 Classement
             </CustomButton>
 
-            {status !== "gameover" && <Game2048TierProgress />}
+            {status !== "gameover" && (
+                <Game2048TierProgress maxTier={maxTier} />
+            )}
 
             <View style={styles.scoresRow}>
                 <View
@@ -56,7 +61,8 @@ export const Game2048Header = ({
 
             {hasWon && (
                 <ThemedText style={styles.won}>
-                    Bravo ! Vous avez réussi à atteindre le&nbsp;{goal}
+                    Bravo, vous avez réussi à atteindre {goal} Vous pouvez
+                    continuer à jouer pour améliorer votre score.
                 </ThemedText>
             )}
         </View>
