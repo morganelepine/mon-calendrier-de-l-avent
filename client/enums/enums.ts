@@ -42,3 +42,13 @@ export enum ScoreType {
     DayOpening = "DayOpening",
     OctoberOpening = "OctoberOpening", // Just a record that the day was opened
 }
+
+export enum CountdownVariant {
+    Nights = "nights", // "x nuits avant Noël" - default
+    Columns = "columns", // days/hours/minutes/seconds side by side, big number above small label
+}
+
+export enum ChristmasTargetDay {
+    Eve = 24, // 24 décembre - réveillon
+    Day = 25, // 25 décembre - default
+}

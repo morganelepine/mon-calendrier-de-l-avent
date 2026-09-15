@@ -102,6 +102,20 @@ export default function InformationsLayout() {
                 }}
             />
             <Stack.Screen
+                name="premium"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="Version premium"
+                                backgroundColor={Theme.surface}
+                                color={Colors.snow}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
                 name="contact"
                 options={{
                     header: () => {

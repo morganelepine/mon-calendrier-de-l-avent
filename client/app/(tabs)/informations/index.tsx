@@ -80,6 +80,13 @@ export default function InformationsScreen() {
                         }
                         onPress={() => router.push("/informations/settings")}
                     />
+
+                    <OptionItem
+                        title="Version premium"
+                        iconName="sparkles-outline"
+                        iconColor={isOctober ? Colors.autumnGold : Colors.gold}
+                        onPress={() => router.push("/informations/premium")}
+                    />
                 </View>
             </CustomSafeAreaView>
         </BlueBackground>

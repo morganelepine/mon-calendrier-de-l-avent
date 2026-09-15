@@ -1,15 +1,25 @@
 const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
 // DEBUG: force a fake "today" to test the app as if it were a specific date
-// const DEBUG_FAKE_TODAY: Date | null = new Date(
-//     new Date().getFullYear(),
-//     11,
-//     11,
-// );
-const DEBUG_FAKE_TODAY: Date | null = null;
+const DEBUG_FAKE_TODAY: Date | null = new Date(
+    new Date().getFullYear(),
+    11,
+    22,
+);
+// const DEBUG_FAKE_TODAY: Date | null = null;
 
 const today = DEBUG_FAKE_TODAY ?? new Date();
-const christmasDay = new Date(today.getFullYear(), 11, 25);
+
+// Real-to-fake time offset: a live, ticking display (see useCountdown) needs
+// a "now" that keeps advancing second by second, not the single frozen
+// snapshot above. Without this it would silently fall back to the real
+// Date.now() and ignore DEBUG_FAKE_TODAY entirely.
+const REAL_LOAD_TIME = Date.now();
+export const getNow = (): number =>
+    DEBUG_FAKE_TODAY
+        ? DEBUG_FAKE_TODAY.getTime() + (Date.now() - REAL_LOAD_TIME)
+        : Date.now();
+export const christmasDay = new Date(today.getFullYear(), 11, 25);
 const calendarDay = new Date(today.getFullYear(), 11, 1);
 
 export const currentDay = today.getDate();
@@ -24,10 +34,12 @@ export const isChristmas =
 export const isAfterChristmas =
     isDecember && !isChristmas && today.getDate() > christmasDay.getDate();
 
-export const daysToChristmas = Math.ceil(
-    (christmasDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY,
-);
+// Exported so the countdown can be recomputed against a user-chosen target
+// (e.g. the 24th instead of the 25th) while staying on the same "today"
+// (including DEBUG_FAKE_TODAY) as the rest of this file.
+export const getDaysUntil = (target: Date): number =>
+    Math.ceil((target.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY);
 
-export const daysToCalendar = Math.ceil(
-    (calendarDay.getTime() - today.getTime()) / MILLISECONDS_IN_A_DAY,
-);
+export const daysToChristmas = getDaysUntil(christmasDay);
+
+export const daysToCalendar = getDaysUntil(calendarDay);

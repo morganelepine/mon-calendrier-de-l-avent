@@ -7,6 +7,7 @@ import { Image } from "expo-image";
 import { Stack } from "expo-router";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
+import { CountdownVariantProvider } from "@/contexts/CountdownVariantContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { prefetchContents } from "@/services/content.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
@@ -68,33 +69,35 @@ function RootLayout() {
                             <InitializationGate>
                                 <VersionGate>
                                     <ScoreProvider>
-                                        <Stack>
-                                            <Stack.Screen
-                                                name="(tabs)"
-                                                options={{
-                                                    headerShown: false,
-                                                }}
-                                            />
-                                            <Stack.Screen
-                                                name="onboarding"
-                                                options={{
-                                                    headerShown: false,
-                                                }}
-                                            />
-                                            <Stack.Screen
-                                                name="halloween-notice"
-                                                options={{
-                                                    headerShown: false,
-                                                }}
-                                            />
-                                            <Stack.Screen
-                                                name="notifications-notice"
-                                                options={{
-                                                    headerShown: false,
-                                                }}
-                                            />
-                                            <Stack.Screen name="+not-found" />
-                                        </Stack>
+                                        <CountdownVariantProvider>
+                                            <Stack>
+                                                <Stack.Screen
+                                                    name="(tabs)"
+                                                    options={{
+                                                        headerShown: false,
+                                                    }}
+                                                />
+                                                <Stack.Screen
+                                                    name="onboarding"
+                                                    options={{
+                                                        headerShown: false,
+                                                    }}
+                                                />
+                                                <Stack.Screen
+                                                    name="halloween-notice"
+                                                    options={{
+                                                        headerShown: false,
+                                                    }}
+                                                />
+                                                <Stack.Screen
+                                                    name="notifications-notice"
+                                                    options={{
+                                                        headerShown: false,
+                                                    }}
+                                                />
+                                                <Stack.Screen name="+not-found" />
+                                            </Stack>
+                                        </CountdownVariantProvider>
                                     </ScoreProvider>
                                 </VersionGate>
                             </InitializationGate>

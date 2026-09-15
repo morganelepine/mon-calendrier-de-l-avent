@@ -13,11 +13,18 @@ import {
     isOctober,
     currentDay,
     isDecember,
-    isChristmas,
     isAfterChristmas,
-    daysToChristmas,
     daysToCalendar,
+    christmasDay,
+    getDaysUntil,
 } from "@/constants/Dates";
+import { ChristmasTargetDay } from "@/enums/enums";
+import { CountdownDisplay } from "@/components/calendar/Countdown/CountdownDisplay";
+import {
+    useCountdownVariant,
+    useCountdownShowSeconds,
+    useChristmasTargetDay,
+} from "@/contexts/CountdownVariantContext";
 
 // BACKGROUND IMAGES
 const WINTER_BACKGROUND = "3_thng7s";
@@ -33,6 +40,24 @@ const HALLOWEEN_MUSIC_ODD_DAYS =
 
 export const Home = () => {
     const insets = useSafeAreaInsets();
+    const [countdownVariant] = useCountdownVariant();
+    const [showSeconds] = useCountdownShowSeconds();
+    const [targetDay] = useChristmasTargetDay(); // 24 or 25
+
+    const countdownTargetDate = new Date(
+        christmasDay.getFullYear(),
+        11,
+        targetDay,
+    );
+    const nightsToTarget = getDaysUntil(countdownTargetDate);
+
+    const showCountdown = isDecember && currentDay < targetDay;
+    const showChristmasGreeting =
+        isDecember && currentDay >= targetDay && !isAfterChristmas;
+    const christmasGreeting =
+        targetDay === ChristmasTargetDay.Eve && currentDay === 24
+            ? "Joyeux réveillon de Noël !"
+            : "Joyeux Noël !";
 
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
     const day = daysMap.get(currentDay);
@@ -64,7 +89,9 @@ export const Home = () => {
         <>
             <StatusBar style="light" />
             <BackgroundImage image={backgroundImage}>
-                {isDecember && <Snowfall count={isChristmas ? 500 : 100} />}
+                {isDecember && (
+                    <Snowfall count={showChristmasGreeting ? 500 : 100} />
+                )}
 
                 <CustomSafeAreaView>
                     <View
@@ -98,23 +125,23 @@ export const Home = () => {
                     {/* During calendar period */}
 
                     <View style={styles.textContainer}>
-                        {isDecember && !isChristmas && !isAfterChristmas && (
-                            <>
-                                <ThemedText
-                                    style={[styles.title, styles.countdown]}
-                                >
-                                    {daysToChristmas}{" "}
-                                    {daysToChristmas > 1 ? "nuits" : "nuit"}
-                                </ThemedText>
-                                <ThemedText
-                                    style={[
-                                        styles.title,
-                                        styles.beforeChristmas,
-                                    ]}
-                                >
-                                    avant Noël
-                                </ThemedText>
-                            </>
+                        {showCountdown && (
+                            <CountdownDisplay
+                                variant={countdownVariant}
+                                nights={nightsToTarget}
+                                targetDate={countdownTargetDate}
+                                showSeconds={showSeconds}
+                            />
+                        )}
+
+                        {/* Target day(s) reached, until the 26th */}
+
+                        {showChristmasGreeting && (
+                            <ThemedText
+                                style={[styles.title, styles.christmasGreeting]}
+                            >
+                                {christmasGreeting}
+                            </ThemedText>
                         )}
 
                         {/* After calendar period, in december only */}
@@ -136,7 +163,7 @@ export const Home = () => {
 const styles = StyleSheet.create({
     textContainer: {
         marginBottom: 250,
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
     },
     title: {
         fontFamily: "FreightNeoBold",
@@ -153,9 +180,9 @@ const styles = StyleSheet.create({
         fontFamily: "FreightNeo",
         marginBottom: 30,
     },
-    beforeChristmas: {
-        fontSize: 28,
-        fontFamily: "FreightNeo",
+    christmasGreeting: {
+        fontSize: 40,
+        letterSpacing: 1,
     },
     afterChristmas: {
         fontSize: 40,
