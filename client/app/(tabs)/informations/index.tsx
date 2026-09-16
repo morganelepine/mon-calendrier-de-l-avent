@@ -28,7 +28,7 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
-                        title="Version premium"
+                        title="La Hotte Magique"
                         iconName="sparkles-outline"
                         iconColor={
                             isOctober ? Colors.autumnRed : Colors.autumnGreen

@@ -8,6 +8,7 @@ import Animated, {
 import { Colors } from "@/constants/Colors";
 import { isDecember } from "@/constants/Dates";
 import { OffSeasonMessage } from "@/components/score/OffSeasonMessage";
+import { usePremium } from "@/contexts/PremiumContext";
 
 interface TotalScoreProps {
     score: number;
@@ -18,8 +19,14 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
     score,
     previousYearScore = 0,
 }) => {
+    const { isPremium } = usePremium();
     const minScoreToWin = 2512;
-    const progress = (score / minScoreToWin) * 100;
+    const maxScoreWinnable = 4320;
+    const hasReachedObjective = isPremium
+        ? score >= maxScoreWinnable
+        : score >= minScoreToWin;
+    const progress =
+        (score / (isPremium ? maxScoreWinnable : minScoreToWin)) * 100;
     const animatedStyle = useAnimatedStyle(() => ({
         width: withTiming(`${progress}%`, { duration: 1000 }),
     }));
@@ -35,7 +42,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                         {score > 1 ? "points" : "point"}
                     </ThemedText>
 
-                    {score >= minScoreToWin ? (
+                    {hasReachedObjective ? (
                         <>
                             <ThemedText
                                 style={{
@@ -71,7 +78,9 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                                     fontSize: 14,
                                 }}
                             >
-                                {Math.round(progress)}% de l'objectif atteint
+                                {isPremium
+                                    ? `${Math.round(progress)}% des points de l'Avent récoltés`
+                                    : `${Math.round(progress)}% de l'objectif atteint`}
                             </ThemedText>
                         </>
                     )}

@@ -63,7 +63,7 @@ export const Gift25: React.FC<GiftProps> = ({ gift }) => {
 
 const styles = StyleSheet.create({
     cell: {
-        height: "25%",
+        width: "27%",
         aspectRatio: 1,
         justifyContent: "center",
         alignItems: "center",

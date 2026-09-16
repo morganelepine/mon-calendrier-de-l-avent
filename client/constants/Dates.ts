@@ -1,12 +1,12 @@
 const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
 // DEBUG: force a fake "today" to test the app as if it were a specific date
-const DEBUG_FAKE_TODAY: Date | null = new Date(
-    new Date().getFullYear(),
-    11,
-    22,
-);
-// const DEBUG_FAKE_TODAY: Date | null = null;
+// const DEBUG_FAKE_TODAY: Date | null = new Date(
+//     new Date().getFullYear(),
+//     11,
+//     25,
+// );
+const DEBUG_FAKE_TODAY: Date | null = null;
 
 const today = DEBUG_FAKE_TODAY ?? new Date();
 
@@ -14,11 +14,11 @@ const today = DEBUG_FAKE_TODAY ?? new Date();
 // a "now" that keeps advancing second by second, not the single frozen
 // snapshot above. Without this it would silently fall back to the real
 // Date.now() and ignore DEBUG_FAKE_TODAY entirely.
+const isFakeToday = DEBUG_FAKE_TODAY !== null;
 const REAL_LOAD_TIME = Date.now();
 export const getNow = (): number =>
-    DEBUG_FAKE_TODAY
-        ? DEBUG_FAKE_TODAY.getTime() + (Date.now() - REAL_LOAD_TIME)
-        : Date.now();
+    isFakeToday ? today.getTime() + (Date.now() - REAL_LOAD_TIME) : Date.now();
+
 export const christmasDay = new Date(today.getFullYear(), 11, 25);
 const calendarDay = new Date(today.getFullYear(), 11, 1);
 

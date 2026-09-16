@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { Gift25 } from "@/components/days/Day25/Gift25";
@@ -8,40 +8,64 @@ import { gifts_day25 } from "@/data/day-25-gifts/gifts_day25_data";
 
 interface Day25Props {
     totalScore: number;
+    isPremium: boolean;
 }
 
-export const Day25Win: React.FC<Day25Props> = ({ totalScore }) => {
+export const Day25Win: React.FC<Day25Props> = ({ totalScore, isPremium }) => {
     const insets = useSafeAreaInsets();
 
     return (
         <>
             <Snowfall count={200} />
 
-            <View style={{ marginTop: insets.top * 2, paddingHorizontal: 20 }}>
-                <View>
-                    <ThemedText type="freightNeoBoldSnow" style={styles.title}>
-                        Joyeux Noël
-                    </ThemedText>
-                    <ThemedText type="freightNeoBoldSnow" style={styles.title}>
-                        et BRAVO !
-                    </ThemedText>
+            <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+            >
+                <View
+                    style={{
+                        marginTop: insets.top * 2,
+                        paddingHorizontal: 20,
+                    }}
+                >
+                    <View>
+                        <ThemedText
+                            type="freightNeoBoldSnow"
+                            style={styles.title}
+                        >
+                            Joyeux Noël ✨
+                        </ThemedText>
+                        {!isPremium && (
+                            <ThemedText
+                                type="freightNeoBoldSnow"
+                                style={styles.title}
+                            >
+                                et BRAVO !
+                            </ThemedText>
+                        )}
+                    </View>
+                    <View style={{ marginVertical: 20 }}>
+                        {!isPremium && (
+                            <ThemedText style={styles.text}>
+                                Vous avez gagné {totalScore} points et pouvez
+                                donc accéder à la surprise !
+                            </ThemedText>
+                        )}
+                        <ThemedText style={styles.text}>
+                            {isPremium
+                                ? "La petite surprise du jour "
+                                : "Elle "}
+                            se cache derrière l'un de ces cadeaux...
+                            Choisirez-vous le&nbsp;bon&nbsp;?
+                        </ThemedText>
+                    </View>
                 </View>
-                <View style={{ marginVertical: 20 }}>
-                    <ThemedText style={styles.text}>
-                        Vous avez gagné {totalScore} points et pouvez donc
-                        accéder à la surprise !
-                    </ThemedText>
-                    <ThemedText style={styles.text}>
-                        Elle se cache derrière l'un de ces cadeaux...
-                        Choisirez-vous le bon ?
-                    </ThemedText>
+                <View style={styles.giftsContainer}>
+                    {gifts_day25.map((gift) => (
+                        <Gift25 key={gift.id} gift={gift} />
+                    ))}
                 </View>
-            </View>
-            <View style={styles.giftsContainer}>
-                {gifts_day25.map((gift) => (
-                    <Gift25 key={gift.id} gift={gift} />
-                ))}
-            </View>
+            </ScrollView>
         </>
     );
 };
@@ -51,13 +75,20 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     text: { color: Colors.snow, textAlign: "center" },
-    giftsContainer: {
+    scroll: {
         flex: 1,
+        width: "100%",
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: "center",
+    },
+    giftsContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between",
-        alignContent: "space-between",
+        justifyContent: "center",
+        gap: 16,
         paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingVertical: 20,
     },
 });

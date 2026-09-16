@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: "row",
         alignItems: "center",
-        paddingVertical: 10,
+        paddingVertical: 8,
         paddingHorizontal: 16,
         backgroundColor: Colors.snow,
         borderTopLeftRadius: 8,

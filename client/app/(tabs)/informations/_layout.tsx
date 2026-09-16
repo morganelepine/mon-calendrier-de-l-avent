@@ -107,7 +107,7 @@ export default function InformationsLayout() {
                     header: () => {
                         return (
                             <ScreenHeader
-                                title="Version premium"
+                                title="La Hotte Magique"
                                 backgroundColor={Theme.surface}
                                 color={Colors.snow}
                             />

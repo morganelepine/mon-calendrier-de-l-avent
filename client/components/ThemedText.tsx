@@ -6,6 +6,7 @@ export type ThemedTextProps = TextProps & {
         | "default"
         | "sectionSubtitle"
         | "sectionText"
+        | "sectionTextBold"
         | "sectionTextItalic"
         | "contentTitle"
         | "contentSubtitle"
@@ -26,6 +27,7 @@ export function ThemedText({
                 type === "default" ? styles.default : undefined,
                 type === "sectionSubtitle" ? styles.sectionSubtitle : undefined,
                 type === "sectionText" ? styles.sectionText : undefined,
+                type === "sectionTextBold" ? styles.sectionTextBold : undefined,
                 type === "sectionTextItalic"
                     ? styles.sectionTextItalic
                     : undefined,
@@ -69,6 +71,13 @@ const styles = StyleSheet.create({
     sectionText: {
         fontSize: 15,
         fontFamily: "Poppins",
+        textAlign: "left",
+        color: Theme.deep,
+        paddingHorizontal: 20,
+    },
+    sectionTextBold: {
+        fontSize: 15,
+        fontFamily: "PoppinsBold",
         textAlign: "left",
         color: Theme.deep,
         paddingHorizontal: 20,
