@@ -6,6 +6,8 @@ export type User = {
     username: string;
     score: number;
     pushToken?: string | null;
+    isPremium?: boolean;
+    premiumSince?: string | null;
 };
 
 export type GroupMember = {

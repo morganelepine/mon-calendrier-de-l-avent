@@ -69,12 +69,15 @@ Fichier conseillé : `client/.env`
 EXPO_PUBLIC_API_URL_DEV=http://localhost:3001
 EXPO_PUBLIC_API_URL_PROD=https://your-production-api.example.com
 EXPO_PUBLIC_SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
+EXPO_PUBLIC_REVENUECAT_ANDROID_KEY=xxxx
 ```
 
 En développement, l'application lit `EXPO_PUBLIC_API_URL_DEV`.
 En production, elle lit `EXPO_PUBLIC_API_URL_PROD`.
 
 `EXPO_PUBLIC_SENTRY_DSN` active le reporting d'erreurs Sentry. Laissé vide, Sentry est simplement désactivé.
+
+`EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` est la clé publique RevenueCat du projet Google Play, utilisée pour l'achat premium ("La Hotte Magique").
 
 ### Serveur
 
@@ -84,9 +87,13 @@ Le serveur attend au minimum :
 PORT=3001
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
 SENTRY_DSN=https://xxxx@xxxx.ingest.sentry.io/xxxx
+REVENUECAT_WEBHOOK_SECRET=xxxx
+REVENUECAT_SECRET_API_KEY=xxxx
 ```
 
 `SENTRY_DSN` active le reporting d'erreurs Sentry côté serveur. Laissé vide, Sentry est simplement désactivé.
+
+`REVENUECAT_WEBHOOK_SECRET` et `REVENUECAT_SECRET_API_KEY` synchronisent le statut premium ("La Hotte Magique") depuis RevenueCat. Voir `POST /webhooks/revenuecat` ci-dessous.
 
 ## Démarrage local
 
@@ -181,6 +188,10 @@ npm run db:setup
 - `GET /games/2048/leaderboard`
 - `GET /games/2048/leaderboard/around/:uuid`
 - `GET /games/2048/stats/:uuid`
+
+### Premium (RevenueCat)
+
+- `POST /webhooks/revenuecat` : synchronise `User.isPremium`/`premiumSince` depuis les events RevenueCat (achat, remboursement, transfert après réinstallation). Protégé par `REVENUECAT_WEBHOOK_SECRET`.
 
 ### Version applicative
 

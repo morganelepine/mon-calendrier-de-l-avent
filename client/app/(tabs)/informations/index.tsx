@@ -7,9 +7,11 @@ import { OptionItem } from "@/components/informations/OptionItem";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
+import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
 
 export default function InformationsScreen() {
     const { username } = useUser();
+    const { premiumPackage } = usePremium();
 
     return (
         <BlueBackground>
@@ -27,14 +29,18 @@ export default function InformationsScreen() {
                         onPress={() => router.push("/informations/content")}
                     />
 
-                    <OptionItem
-                        title="La Hotte Magique"
-                        iconName="sparkles-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnRed : Colors.autumnGreen
-                        }
-                        onPress={() => router.push("/informations/premium")}
-                    />
+                    {premiumPackage && PURCHASES_SUPPORTED && (
+                        <OptionItem
+                            title="La Hotte Magique"
+                            iconName="sparkles-outline"
+                            iconColor={
+                                isOctober
+                                    ? Colors.autumnRed
+                                    : Colors.autumnGreen
+                            }
+                            onPress={() => router.push("/informations/premium")}
+                        />
+                    )}
 
                     <OptionItem
                         title="Règles pour gagner des points"
@@ -59,19 +65,19 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
+                        title="Remerciements"
+                        iconName="heart-outline"
+                        iconColor={isOctober ? Colors.autumnRed : Colors.red}
+                        onPress={() => router.push("/informations/copyrights")}
+                    />
+
+                    <OptionItem
                         title="Noter l'application"
                         iconName="star-outline"
                         iconColor={
                             isOctober ? Colors.autumnGreenDark : Colors.gold
                         }
                         onPress={() => router.push("/informations/rate")}
-                    />
-
-                    <OptionItem
-                        title="Remerciements"
-                        iconName="heart-outline"
-                        iconColor={isOctober ? Colors.autumnRed : Colors.red}
-                        onPress={() => router.push("/informations/copyrights")}
                     />
 
                     <OptionItem
