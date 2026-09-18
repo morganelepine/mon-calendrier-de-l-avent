@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { listContents } from "../services/contents.service";
 import { logout } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
@@ -19,10 +19,35 @@ const SEASON_LABELS: Record<Season, string> = {
 
 export function ContentsListPage() {
     const [contents, setContents] = useState<ContentSummary[]>([]);
-    const [typeFilter, setTypeFilter] = useState<ContentFamily | "">("");
-    const [seasonFilter, setSeasonFilter] = useState<Season | "">("christmas");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const typeFilter = (searchParams.get("type") ?? "") as ContentFamily | "";
+    const seasonFilter = (searchParams.get("season") ?? "christmas") as
+        | Season
+        | "";
     const [loading, setLoading] = useState(true);
     const { setAuthenticated } = useAuth();
+
+    const setTypeFilter = (value: ContentFamily | "") => {
+        setSearchParams(
+            (params) => {
+                if (value) params.set("type", value);
+                else params.delete("type");
+                return params;
+            },
+            { replace: true },
+        );
+    };
+
+    const setSeasonFilter = (value: Season | "") => {
+        setSearchParams(
+            (params) => {
+                if (value) params.set("season", value);
+                else params.delete("season");
+                return params;
+            },
+            { replace: true },
+        );
+    };
 
     useEffect(() => {
         listContents()
@@ -60,7 +85,10 @@ export function ContentsListPage() {
             <header>
                 <h1>Contenus</h1>
                 <div className="header-actions">
-                    <Link to="/contents/new" className="button primary">
+                    <Link
+                        to={`/contents/new?${searchParams.toString()}`}
+                        className="button primary"
+                    >
                         + Nouveau
                     </Link>
                     <button type="button" onClick={handleLogout}>
@@ -105,7 +133,9 @@ export function ContentsListPage() {
                     <ul>
                         {items.map((item) => (
                             <li key={item.id}>
-                                <Link to={`/contents/${item.id}`}>
+                                <Link
+                                    to={`/contents/${item.id}?${searchParams.toString()}`}
+                                >
                                     <span
                                         className={`type-tag type-tag-${item.type}`}
                                     >

@@ -1,5 +1,5 @@
 import { useEffect, useState, SubmitEvent } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams, Link } from "react-router-dom";
 import {
     createContent,
     deleteContent,
@@ -37,6 +37,8 @@ export function ContentEditPage() {
     const { id } = useParams<{ id: string }>();
     const isNew = id === "new";
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const backToList = `/?${searchParams.toString()}`;
 
     const [form, setForm] = useState<ContentInput>(EMPTY);
     const [loading, setLoading] = useState(!isNew);
@@ -82,11 +84,11 @@ export function ContentEditPage() {
         setSaving(true);
         try {
             if (isNew) {
-                const created = await createContent(form);
-                navigate(`/contents/${created.id}`, { replace: true });
+                await createContent(form);
             } else {
                 await updateContent(Number(id), form);
             }
+            navigate(backToList, { replace: true });
         } catch {
             setError("Échec de l'enregistrement.");
         } finally {
@@ -97,7 +99,7 @@ export function ContentEditPage() {
     const handleDelete = async () => {
         if (!confirm("Supprimer ce contenu ?")) return;
         await deleteContent(Number(id));
-        navigate("/", { replace: true });
+        navigate(backToList, { replace: true });
     };
 
     const updateListItem = (
@@ -146,7 +148,7 @@ export function ContentEditPage() {
 
     return (
         <div className="content-edit-page">
-            <Link to="/">&larr; Retour à la liste</Link>
+            <Link to={backToList}>&larr; Retour à la liste</Link>
             <h1>{isNew ? "Nouveau contenu" : `Contenu #${id}`}</h1>
 
             <form onSubmit={handleSubmit}>
