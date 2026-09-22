@@ -11,7 +11,7 @@ interface StoryIntroProps {
 export const StoryIntro: React.FC<StoryIntroProps> = ({ story, dayId }) => {
     return (
         <ContentScreenWrapper
-            contentType={story.type}
+            typeTitle={story.typeTitle}
             backgroundImage={"s-instruire_xybqas"}
             dayId={dayId}
         >

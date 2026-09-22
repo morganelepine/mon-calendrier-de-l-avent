@@ -4,6 +4,7 @@ export interface Content {
     season?: string;
     type: string;
     subType?: string;
+    typeTitle?: string;
     title: string;
     content1: string;
     content2?: string;

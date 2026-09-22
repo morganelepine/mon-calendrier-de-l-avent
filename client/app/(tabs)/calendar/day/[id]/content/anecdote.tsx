@@ -27,7 +27,7 @@ export default function AnecdoteScreen() {
 
     return (
         <ContentScreenWrapper
-            contentType={anecdote.subType}
+            typeTitle={anecdote.typeTitle}
             backgroundImage={"kiwi1_r7kihz"}
             dayId={dayId}
         >

@@ -15,6 +15,7 @@ export interface Content {
     season: string;
     type: string;
     subType?: string;
+    typeTitle?: string;
     title: string;
     content1: string;
     content2?: string;
@@ -37,6 +38,7 @@ export async function getContents(): Promise<Content[]> {
         season: row.season,
         type: row.type,
         subType: row.subType,
+        typeTitle: row.typeTitle,
         title: row.title,
         content1: row.content1,
         content2: row.content2,

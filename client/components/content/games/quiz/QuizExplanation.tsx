@@ -39,6 +39,7 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
                 )}
 
                 {currentGame.subType === GameType.QuizNoel ||
+                currentGame.subType === GameType.QuizHalloween ||
                 (currentGame.subType === GameType.QuizEmojis &&
                     currentGame.content4) ? (
                     <ThemedText style={styles.explanations}>

@@ -21,7 +21,7 @@ export const Story: React.FC<StoryProps> = ({ story, dayId }) => {
 
     return (
         <ContentScreenWrapper
-            contentType={story.type}
+            typeTitle={story.typeTitle}
             backgroundImage={"s-instruire_xybqas"}
             dayId={dayId}
         >

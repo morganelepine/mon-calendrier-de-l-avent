@@ -39,7 +39,7 @@ export default function GameScreen() {
             .catch(() => {});
     }, [dayId]);
 
-    const { gamesByType, type } = classifyGames(games);
+    const { gamesByType } = classifyGames(games);
 
     // There's only ever one game (or one quiz set) per day, so summing
     // across every bucket is equivalent to picking whichever one is
@@ -89,7 +89,7 @@ export default function GameScreen() {
     };
 
     return (
-        <GameScreenWrapper contentType={type} dayId={dayId}>
+        <GameScreenWrapper typeTitle={games[0]?.typeTitle} dayId={dayId}>
             <CustomScrollView>
                 {answeredCount > 0 && (
                     <ThemedText style={styles.progress}>

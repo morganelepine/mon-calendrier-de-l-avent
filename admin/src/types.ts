@@ -24,6 +24,7 @@ export interface ContentSummary {
     season: Season;
     type: ContentFamily;
     subType: string;
+    typeTitle: string;
     title: string;
     published: boolean;
     isNew: boolean;
@@ -43,6 +44,7 @@ export interface ContentInput {
     season: Season;
     type: ContentFamily;
     subType: string;
+    typeTitle: string;
     title: string;
     content1: string;
     content2: string;

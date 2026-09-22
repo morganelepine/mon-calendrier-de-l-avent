@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
         color: Colors.snow,
         fontFamily: "PoppinsItalic",
         textAlign: "center",
+        marginBottom: 16,
     },
 });

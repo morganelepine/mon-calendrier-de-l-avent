@@ -65,7 +65,7 @@ export default function IdeaScreen() {
         <>
             {ideas.map((idea) => (
                 <ContentScreenWrapper
-                    contentType={idea.subType}
+                    typeTitle={idea.typeTitle}
                     backgroundImage={modalBackground}
                     key={idea.id}
                     dayId={dayId}

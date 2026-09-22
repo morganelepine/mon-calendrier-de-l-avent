@@ -4,36 +4,24 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
-import { ContentType } from "@/enums/enums";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { isOctober } from "@/constants/Dates";
 
 interface GameScreenWrapperProps {
-    contentType: string;
+    typeTitle: string | undefined;
     children?: React.ReactNode;
     dayId: number;
 }
 
 export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
-    contentType,
+    typeTitle,
     children,
     dayId,
 }) => {
     const insets = useSafeAreaInsets();
 
-    const getTitle = () => {
-        if (isOctober) return "Un jeu";
-
-        switch (contentType) {
-            case ContentType.Game:
-                return "Jeu du jour";
-            case ContentType.Quiz:
-                return "Quiz du jour";
-            default:
-                return "Jeu du jour";
-        }
-    };
+    const title = typeTitle || "Jeu du jour";
 
     const closeContent = async () => {
         if (isOctober) {
@@ -68,7 +56,7 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
                     type="contentTitle"
                     style={[styles.title, { paddingTop: insets.top }]}
                 >
-                    {getTitle()}
+                    {title}
                 </ThemedText>
 
                 {children}

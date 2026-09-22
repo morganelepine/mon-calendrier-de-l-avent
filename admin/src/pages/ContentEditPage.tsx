@@ -22,6 +22,7 @@ const EMPTY: ContentInput = {
     season: "christmas",
     type: "anecdote",
     subType: "anecdote",
+    typeTitle: "",
     title: "",
     content1: "",
     content2: "",
@@ -54,6 +55,7 @@ export function ContentEditPage() {
                     season: content.season,
                     type: content.type,
                     subType: content.subType,
+                    typeTitle: content.typeTitle,
                     title: content.title,
                     content1: content.content1,
                     content2: content.content2,
@@ -213,6 +215,20 @@ export function ContentEditPage() {
                             </option>
                         ))}
                     </select>
+                </label>
+
+                <label>
+                    Titre d'en-tête (ex. "La recette du jour")
+                    <input
+                        type="text"
+                        value={form.typeTitle}
+                        onChange={(e) =>
+                            setForm((f) => ({
+                                ...f,
+                                typeTitle: e.target.value,
+                            }))
+                        }
+                    />
                 </label>
 
                 <label>

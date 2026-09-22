@@ -110,6 +110,7 @@ model Content {
   season    Season            @default(christmas)
   type      ContentFamily
   subType   String            @default("") // fine-grained kind within type - see server/README.md
+  typeTitle String            @default("") // header label shown above the content (e.g. "La recette du jour")
   title     String
   content1  String            @default("")
   content2  String            @default("")

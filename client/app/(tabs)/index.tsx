@@ -32,7 +32,7 @@ export default function HomeScreen() {
             return;
         }
 
-        // // ------- For testing purposes
+        // ------- For testing purposes
         // await AsyncStorage.multiRemove([
         //     "userUuid",
         //     "playMusic",

@@ -6,7 +6,6 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors, Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
-import { ContentType, IdeaType } from "@/enums/enums";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
@@ -14,42 +13,21 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 interface ContentScreenWrapperProps {
-    contentType: string | undefined;
+    typeTitle: string | undefined;
     backgroundImage: string;
     children?: React.ReactNode;
     dayId: number;
 }
 
 export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
-    contentType,
+    typeTitle,
     backgroundImage,
     children,
     dayId,
 }) => {
     const insets = useSafeAreaInsets();
 
-    const getTitle = () => {
-        switch (contentType) {
-            case ContentType.Story:
-                return "L'histoire du\u00A0jour";
-            case ContentType.Anecdote:
-                return isOctober ? "Une anecdote" : "L'anecdote du\u00A0jour";
-            case ContentType.Word:
-                return "Le mot du jour";
-            case ContentType.Song:
-                return "La chanson du\u00A0jour";
-            case ContentType.Drink:
-                return "La boisson du\u00A0jour";
-            case ContentType.Recipe:
-                return isOctober ? "Une recette" : "La recette du\u00A0jour";
-            case ContentType.Idea:
-                return "L'idée du jour";
-            case IdeaType.List:
-                return isOctober ? "Des recos" : "Une petite sélection";
-            default:
-                return "Contenu du jour";
-        }
-    };
+    const title = typeTitle || "Contenu du jour";
 
     const closeContent = async () => {
         if (isOctober) {
@@ -71,7 +49,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                     style={{
                         backgroundColor: Colors.snow,
                         borderWidth: 1,
-                        borderColor: Theme.green,
+                        borderColor: Colors.snow,
                     }}
                 >
                     <Ionicons
@@ -86,7 +64,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                         type="contentTitle"
                         style={[styles.flatTitle, { paddingTop: insets.top }]}
                     >
-                        {getTitle()}
+                        {title}
                     </ThemedText>
 
                     <CustomScrollView>
@@ -126,7 +104,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
                 }
             >
                 <View style={styles.container}>
-                    <ThemedText type="contentTitle">{getTitle()}</ThemedText>
+                    <ThemedText type="contentTitle">{title}</ThemedText>
 
                     {children}
                 </View>
@@ -154,12 +132,11 @@ const styles = StyleSheet.create({
         backgroundColor: Theme.header,
     },
     flatTitle: {
-        paddingBottom: 2,
         paddingHorizontal: 20,
         color: Colors.snow,
     },
     flatChildrenContainer: {
         paddingHorizontal: 20,
-        marginTop: 20,
+        marginVertical: 20,
     },
 });
