@@ -7,6 +7,8 @@ export interface ListOfContentsItem {
     author?: string;
     image?: string;
     url?: string;
+    answers?: string;
+    correctAnswer?: string;
 }
 
 export interface Content {
@@ -52,6 +54,8 @@ export async function getContents(): Promise<Content[]> {
             author: item.author,
             image: item.image,
             url: item.url,
+            answers: item.answers,
+            correctAnswer: item.correctAnswer,
         })),
     }));
 }

@@ -10,6 +10,8 @@ export interface ContentListItemInput {
     author: string;
     image: string;
     url: string;
+    answers: string;
+    correctAnswer: string;
 }
 
 export interface ContentListItem extends ContentListItemInput {

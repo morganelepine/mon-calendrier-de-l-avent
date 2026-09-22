@@ -1,5 +1,10 @@
 import { useEffect, useState, SubmitEvent } from "react";
-import { useNavigate, useParams, useSearchParams, Link } from "react-router-dom";
+import {
+    useNavigate,
+    useParams,
+    useSearchParams,
+    Link,
+} from "react-router-dom";
 import {
     createContent,
     deleteContent,
@@ -70,6 +75,8 @@ export function ContentEditPage() {
                         author: item.author,
                         image: item.image,
                         url: item.url,
+                        answers: item.answers,
+                        correctAnswer: item.correctAnswer,
                     })),
                 }),
             )
@@ -121,7 +128,15 @@ export function ContentEditPage() {
             ...f,
             listItems: [
                 ...f.listItems,
-                { title: "", description: "", author: "", image: "", url: "" },
+                {
+                    title: "",
+                    description: "",
+                    author: "",
+                    image: "",
+                    url: "",
+                    answers: "",
+                    correctAnswer: "",
+                },
             ],
         }));
     };
@@ -146,7 +161,9 @@ export function ContentEditPage() {
     if (loading) return <p className="loading">Ho ho ho...</p>;
 
     const labels = CONTENT_FIELD_LABELS[form.type];
-    const showListEditor = form.type === "idea" && form.subType === "list";
+    const isQuizList = form.type === "game" && form.subType.startsWith("quiz");
+    const showListEditor =
+        (form.type === "idea" && form.subType === "list") || isQuizList;
 
     return (
         <div className="content-edit-page">
@@ -321,7 +338,11 @@ export function ContentEditPage() {
 
                 {showListEditor && (
                     <fieldset>
-                        <legend>Éléments de la liste</legend>
+                        <legend>
+                            {isQuizList
+                                ? "Questions du quiz"
+                                : "Éléments de la liste"}
+                        </legend>
                         {form.listItems.map((item, index) => (
                             <div className="list-item" key={index}>
                                 <div className="list-item-controls">
@@ -351,7 +372,9 @@ export function ContentEditPage() {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Titre"
+                                    placeholder={
+                                        isQuizList ? "Question" : "Titre"
+                                    }
                                     value={item.title}
                                     onChange={(e) =>
                                         updateListItem(index, {
@@ -359,8 +382,39 @@ export function ContentEditPage() {
                                         })
                                     }
                                 />
+
+                                {isQuizList && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Réponses (séparées par des virgules)"
+                                            value={item.answers}
+                                            onChange={(e) =>
+                                                updateListItem(index, {
+                                                    answers: e.target.value,
+                                                })
+                                            }
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Bonne réponse"
+                                            value={item.correctAnswer}
+                                            onChange={(e) =>
+                                                updateListItem(index, {
+                                                    correctAnswer:
+                                                        e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </>
+                                )}
+
                                 <textarea
-                                    placeholder="Description"
+                                    placeholder={
+                                        isQuizList
+                                            ? "Explication (texte - laisser vide pour un quiz vidéo)"
+                                            : "Description"
+                                    }
                                     rows={2}
                                     value={item.description}
                                     onChange={(e) =>
@@ -369,29 +423,39 @@ export function ContentEditPage() {
                                         })
                                     }
                                 />
+
+                                {!isQuizList && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Auteur"
+                                            value={item.author}
+                                            onChange={(e) =>
+                                                updateListItem(index, {
+                                                    author: e.target.value,
+                                                })
+                                            }
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Image (id Cloudinary)"
+                                            value={item.image}
+                                            onChange={(e) =>
+                                                updateListItem(index, {
+                                                    image: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </>
+                                )}
+
                                 <input
                                     type="text"
-                                    placeholder="Auteur"
-                                    value={item.author}
-                                    onChange={(e) =>
-                                        updateListItem(index, {
-                                            author: e.target.value,
-                                        })
+                                    placeholder={
+                                        isQuizList
+                                            ? "ID vidéo YouTube (quiz citation uniquement)"
+                                            : "ID vidéo"
                                     }
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Image (id Cloudinary)"
-                                    value={item.image}
-                                    onChange={(e) =>
-                                        updateListItem(index, {
-                                            image: e.target.value,
-                                        })
-                                    }
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="URL"
                                     value={item.url}
                                     onChange={(e) =>
                                         updateListItem(index, {
@@ -402,7 +466,9 @@ export function ContentEditPage() {
                             </div>
                         ))}
                         <button type="button" onClick={addListItem}>
-                            + Ajouter un élément
+                            {isQuizList
+                                ? "+ Ajouter une question"
+                                : "+ Ajouter un élément"}
                         </button>
                     </fieldset>
                 )}

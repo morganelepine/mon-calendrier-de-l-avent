@@ -22,6 +22,8 @@ export interface ListOfContents {
     image?: string;
     link?: string;
     url?: string;
+    answers?: string;
+    correctAnswer?: string;
 }
 
 export interface WallpaperData {

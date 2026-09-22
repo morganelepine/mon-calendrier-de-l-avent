@@ -65,7 +65,7 @@ export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
                 <>
                     <ThemedText>{resultText}</ThemedText>
                     <NextQuestion
-                        games={words}
+                        totalCount={words.length}
                         currentQuestionIndex={currentWordIndex}
                         handleNextQuestion={handleNextQuestion}
                     />

@@ -47,10 +47,10 @@ export default function GameScreen() {
     const totalQuestions =
         (gamesByType.pendu?.content1.split(",").length ?? 0) +
         (gamesByType.jeu?.content1.split(",").length ?? 0) +
-        gamesByType.quizCitation.length +
-        gamesByType.quizNoel.length +
-        gamesByType.quizEmojis.length +
-        gamesByType.quizHalloween.length;
+        (gamesByType.quizCitation?.listOfContents?.length ?? 0) +
+        (gamesByType.quizNoel?.listOfContents?.length ?? 0) +
+        (gamesByType.quizEmojis?.listOfContents?.length ?? 0) +
+        (gamesByType.quizHalloween?.listOfContents?.length ?? 0);
 
     const totalQuestionsText =
         gamesByType.pendu || gamesByType.jeu
@@ -109,51 +109,51 @@ export default function GameScreen() {
                         />
                     )}
 
-                    {gamesByType.quizCitation.length > 0 && (
+                    {gamesByType.quizCitation && (
                         <>
                             <ThemedText type="contentSubtitle">
                                 À quel film de Noël appartient
                                 cette&nbsp;réplique&nbsp;?
                             </ThemedText>
                             <Quiz
-                                games={gamesByType.quizCitation}
+                                content={gamesByType.quizCitation}
                                 setScore={setScore}
                             />
                         </>
                     )}
 
-                    {gamesByType.quizNoel.length > 0 && (
+                    {gamesByType.quizNoel && (
                         <>
                             <ThemedText type="contentSubtitle">
                                 Êtes-vous incollable sur&nbsp;Noël&nbsp;?
                             </ThemedText>
                             <Quiz
-                                games={gamesByType.quizNoel}
+                                content={gamesByType.quizNoel}
                                 setScore={setScore}
                             />
                         </>
                     )}
 
-                    {gamesByType.quizEmojis.length > 0 && (
+                    {gamesByType.quizEmojis && (
                         <>
                             <ThemedText type="contentSubtitle">
                                 Êtes-vous incollable sur&nbsp;Noël&nbsp;?
                             </ThemedText>
                             <Quiz
-                                games={gamesByType.quizEmojis}
+                                content={gamesByType.quizEmojis}
                                 setScore={setScore}
                             />
                         </>
                     )}
 
-                    {gamesByType.quizHalloween.length > 0 && (
+                    {gamesByType.quizHalloween && (
                         <>
                             <ThemedText type="contentSubtitle">
                                 Êtes-vous incollable sur l'automne et
                                 Halloween&nbsp;?
                             </ThemedText>
                             <Quiz
-                                games={gamesByType.quizHalloween}
+                                content={gamesByType.quizHalloween}
                                 setScore={setScore}
                             />
                         </>

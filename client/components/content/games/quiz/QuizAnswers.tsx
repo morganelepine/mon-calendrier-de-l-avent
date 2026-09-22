@@ -1,10 +1,9 @@
 import { Pressable, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Content } from "@/interfaces/contentInterface";
 import { getButtonStyles } from "@/services/content.service";
 
 interface QuizAnswersProps {
-    currentGame: Content;
+    correctAnswer: string;
     answers: string[];
     handleAnswer: (answer: string) => void;
     selectedAnswer: string | null;
@@ -12,7 +11,7 @@ interface QuizAnswersProps {
 }
 
 export const QuizAnswers: React.FC<QuizAnswersProps> = ({
-    currentGame,
+    correctAnswer,
     answers,
     handleAnswer,
     selectedAnswer,
@@ -24,7 +23,7 @@ export const QuizAnswers: React.FC<QuizAnswersProps> = ({
                 const { buttonStyle, textStyle } = getButtonStyles(
                     answer,
                     selectedAnswer,
-                    currentGame.content3 || ""
+                    correctAnswer
                 );
                 return (
                     <Pressable

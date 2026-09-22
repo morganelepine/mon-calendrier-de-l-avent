@@ -128,15 +128,17 @@ model Content {
 }
 
 model ContentListItem {
-  id          Int     @id @default(autoincrement())
-  contentId   Int
-  content     Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  order       Int // 0-based position in the list - replaces the JSON array index
-  title       String
-  description String  @default("")
-  author      String  @default("")
-  image       String  @default("")
-  url         String  @default("")
+  id            Int     @id @default(autoincrement())
+  contentId     Int
+  content       Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  order         Int // 0-based position in the list - replaces the JSON array index
+  title         String
+  description   String  @default("") // idea/list: description - game/quiz-*: text explanation
+  author        String  @default("")
+  image         String  @default("")
+  url           String  @default("")
+  answers       String  @default("") // game/quiz-*: comma-separated answer choices
+  correctAnswer String  @default("") // game/quiz-*: the correct answer
 
   @@unique([contentId, order])
   @@index([contentId])

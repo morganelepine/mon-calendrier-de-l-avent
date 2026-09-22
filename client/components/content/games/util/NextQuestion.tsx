@@ -2,22 +2,21 @@ import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Theme } from "@/constants/Colors";
-import { Content } from "@/interfaces/contentInterface";
 
 interface NextQuestionProps {
-    games: Content[] | string[];
+    totalCount: number;
     currentQuestionIndex: number;
     handleNextQuestion: () => void;
 }
 
 export const NextQuestion: React.FC<NextQuestionProps> = ({
-    games,
+    totalCount,
     currentQuestionIndex,
     handleNextQuestion,
 }) => {
     return (
         <>
-            {currentQuestionIndex === games.length - 1 ? (
+            {currentQuestionIndex === totalCount - 1 ? (
                 <ThemedText type="italic14" style={styles.finalText}>
                     Ce jeu est terminé !
                 </ThemedText>

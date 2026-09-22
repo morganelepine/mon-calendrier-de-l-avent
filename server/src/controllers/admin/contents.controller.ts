@@ -8,6 +8,8 @@ interface ListItemInput {
     author?: string;
     image?: string;
     url?: string;
+    answers?: string;
+    correctAnswer?: string;
 }
 
 export class AdminContentsController {
@@ -133,5 +135,7 @@ function toListItemsCreateData(listItems: ListItemInput[]) {
         author: item.author ?? "",
         image: item.image ?? "",
         url: item.url ?? "",
+        answers: item.answers ?? "",
+        correctAnswer: item.correctAnswer ?? "",
     }));
 }

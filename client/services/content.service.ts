@@ -8,10 +8,10 @@ import { Colors, Theme } from "@/constants/Colors";
 interface GamesByType {
     pendu?: Content;
     jeu?: Content;
-    quizCitation: Content[];
-    quizNoel: Content[];
-    quizEmojis: Content[];
-    quizHalloween: Content[];
+    quizCitation?: Content;
+    quizNoel?: Content;
+    quizEmojis?: Content;
+    quizHalloween?: Content;
 }
 
 interface DayContents {
@@ -107,12 +107,7 @@ export const classifyGames = (
     gamesByType: GamesByType;
     type: string;
 } => {
-    const gamesByType: GamesByType = {
-        quizCitation: [],
-        quizNoel: [],
-        quizEmojis: [],
-        quizHalloween: [],
-    };
+    const gamesByType: GamesByType = {};
 
     let type = "";
 
@@ -127,19 +122,19 @@ export const classifyGames = (
                 type = ContentType.Game;
                 break;
             case GameType.QuizCitation:
-                gamesByType.quizCitation.push(game);
+                gamesByType.quizCitation = game;
                 type = ContentType.Quiz;
                 break;
             case GameType.QuizNoel:
-                gamesByType.quizNoel.push(game);
+                gamesByType.quizNoel = game;
                 type = ContentType.Quiz;
                 break;
             case GameType.QuizEmojis:
-                gamesByType.quizEmojis.push(game);
+                gamesByType.quizEmojis = game;
                 type = ContentType.Quiz;
                 break;
             case GameType.QuizHalloween:
-                gamesByType.quizHalloween.push(game);
+                gamesByType.quizHalloween = game;
                 type = ContentType.Quiz;
                 break;
         }

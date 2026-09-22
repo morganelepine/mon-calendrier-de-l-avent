@@ -2,28 +2,33 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Video } from "@/components/utils/custom/Video";
 import { NextQuestion } from "@/components/content/games/util/NextQuestion";
-import { Content } from "@/interfaces/contentInterface";
 import { GameType } from "@/enums/enums";
 
 interface QuizExplanationProps {
-    games: Content[];
+    subType: string | undefined;
+    correctAnswer: string;
+    explanation?: string;
+    videoId?: string;
     selectedAnswer: string;
-    currentGame: Content;
+    totalQuestions: number;
     currentQuestionIndex: number;
     handleNextQuestion: () => void;
 }
 
 export const QuizExplanation: React.FC<QuizExplanationProps> = ({
-    games,
+    subType,
+    correctAnswer,
+    explanation,
+    videoId,
     selectedAnswer,
-    currentGame,
+    totalQuestions,
     currentQuestionIndex,
     handleNextQuestion,
 }) => {
     return (
         <View>
             <View>
-                {selectedAnswer === currentGame.content3 ? (
+                {selectedAnswer === correctAnswer ? (
                     <ThemedText style={styles.response}>
                         Bonne réponse !
                     </ThemedText>
@@ -33,30 +38,28 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
                             Oops... la bonne réponse était :
                         </ThemedText>
                         <ThemedText style={styles.response}>
-                            {currentGame.content3}
+                            {correctAnswer}
                         </ThemedText>
                     </>
                 )}
 
-                {currentGame.subType === GameType.QuizNoel ||
-                currentGame.subType === GameType.QuizHalloween ||
-                (currentGame.subType === GameType.QuizEmojis &&
-                    currentGame.content4) ? (
+                {subType === GameType.QuizNoel ||
+                subType === GameType.QuizHalloween ||
+                (subType === GameType.QuizEmojis && explanation) ? (
                     <ThemedText style={styles.explanations}>
-                        {currentGame.content4}
+                        {explanation}
                     </ThemedText>
                 ) : null}
 
-                {currentGame.subType === GameType.QuizCitation &&
-                currentGame.content4 ? (
+                {subType === GameType.QuizCitation && videoId ? (
                     <View style={styles.videoContainer}>
-                        <Video videoId={currentGame.content4} />
+                        <Video videoId={videoId} />
                     </View>
                 ) : null}
             </View>
 
             <NextQuestion
-                games={games}
+                totalCount={totalQuestions}
                 currentQuestionIndex={currentQuestionIndex}
                 handleNextQuestion={handleNextQuestion}
             />
