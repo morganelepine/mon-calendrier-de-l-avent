@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { prisma } from "../../lib/prisma";
+import { contentPrisma } from "../../lib/prisma";
 import { ContentFamily, Season } from "@prisma/client";
 
 interface ListItemInput {
@@ -22,7 +22,7 @@ export class AdminContentsController {
         const season =
             typeof seasonParam === "string" ? (seasonParam as Season) : undefined;
 
-        const contents = await prisma.content.findMany({
+        const contents = await contentPrisma.content.findMany({
             where: {
                 ...(dayNumber !== undefined ? { dayNumber } : {}),
                 ...(season !== undefined ? { season } : {}),
@@ -47,7 +47,7 @@ export class AdminContentsController {
     // GET /admin/contents/:id
     async get(request: Request, response: Response, next: NextFunction) {
         const id = Number(request.params.id);
-        const content = await prisma.content.findUnique({
+        const content = await contentPrisma.content.findUnique({
             where: { id },
             include: { listItems: { orderBy: { order: "asc" } } },
         });
@@ -63,7 +63,7 @@ export class AdminContentsController {
         const data = toContentData(request.body ?? {});
         const listItems: ListItemInput[] = request.body?.listItems ?? [];
 
-        const content = await prisma.content.create({
+        const content = await contentPrisma.content.create({
             data: {
                 ...data,
                 listItems: { create: toListItemsCreateData(listItems) },
@@ -83,7 +83,7 @@ export class AdminContentsController {
         // Whole-row replace for listItems: at this scale (<=15 items/list)
         // simpler and more atomic than granular per-item endpoints, and
         // matches a natural "edit the form, hit save" UX.
-        const content = await prisma.$transaction(async (tx) => {
+        const content = await contentPrisma.$transaction(async (tx) => {
             await tx.contentListItem.deleteMany({ where: { contentId: id } });
             return tx.content.update({
                 where: { id },
@@ -101,7 +101,7 @@ export class AdminContentsController {
     // DELETE /admin/contents/:id
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = Number(request.params.id);
-        await prisma.content.delete({ where: { id } });
+        await contentPrisma.content.delete({ where: { id } });
         // Not a bare 204: the registerRoutes wrapper always sends a JSON
         // body alongside `status`, so 204 (No Content) would be a spec
         // violation here — 200 + a small body is the honest shape.

@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma";
+import { contentPrisma } from "../lib/prisma";
 
 export interface ListOfContentsItem {
     id: number;
@@ -28,7 +28,7 @@ export interface Content {
 }
 
 export async function getContents(): Promise<Content[]> {
-    const rows = await prisma.content.findMany({
+    const rows = await contentPrisma.content.findMany({
         where: { published: true },
         include: { listItems: { orderBy: { order: "asc" } } },
         orderBy: { id: "asc" },
