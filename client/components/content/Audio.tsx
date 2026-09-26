@@ -37,7 +37,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
         const getMusicPreference = async (): Promise<void> => {
             try {
                 const musicPref = await AsyncStorage.getItem(
-                    StorageKeys.playMusic
+                    StorageKeys.playMusic,
                 );
                 setPlayMusic(musicPref as MusicPreference);
             } catch (error) {
@@ -59,7 +59,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
             <Ionicons
                 name={isPlaying ? "pause" : "play"}
                 size={26}
-                color={Theme.tint}
+                color={Theme.orangeToBlue}
             ></Ionicons>
         </Pressable>
     );

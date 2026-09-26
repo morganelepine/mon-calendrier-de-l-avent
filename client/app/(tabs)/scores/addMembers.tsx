@@ -97,7 +97,7 @@ export default function AddMembersScreen() {
                                 styles.user,
                                 {
                                     backgroundColor: selected.includes(item.id)
-                                        ? Theme.green
+                                        ? Theme.orangeToGreen
                                         : Colors.snow,
                                 },
                             ]}
@@ -106,7 +106,7 @@ export default function AddMembersScreen() {
                                 style={{
                                     color: selected.includes(item.id)
                                         ? Colors.snow
-                                        : Theme.tint,
+                                        : Theme.orangeToBlue,
                                 }}
                             >
                                 {item.username}

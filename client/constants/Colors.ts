@@ -52,11 +52,13 @@ export const Colors = {
 };
 
 export const Theme = {
-    tint: isOctober ? Colors.autumnRed : Colors.blue,
-    surface: isOctober ? Colors.autumnGold : Colors.blue,
+    orangeToBlue: isOctober ? Colors.autumnRed : Colors.blue,
+    goldToBlue: isOctober ? Colors.autumnGold : Colors.blue,
     deep: isOctober ? Colors.black : Colors.darkBlue,
-    green: isOctober ? Colors.autumnRed : Colors.green,
-    red: isOctober ? Colors.autumnRed : Colors.red,
-    header: isOctober ? Colors.autumnGreenDark : Colors.green,
-    autumnGreen: isOctober ? Colors.autumnGreenDark : Colors.autumnGreen,
+    orangeToGreen: isOctober ? Colors.autumnRed : Colors.green,
+    orangeToRed: isOctober ? Colors.autumnRed : Colors.red,
+    autumnGreenDarkToGreen: isOctober ? Colors.autumnGreenDark : Colors.green,
+    autumnGreenDarkToautumnGreen: isOctober
+        ? Colors.autumnGreenDark
+        : Colors.autumnGreen,
 };

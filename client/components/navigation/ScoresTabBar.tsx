@@ -28,6 +28,6 @@ export const ScoresTabBar = () => {
 
 const styles = StyleSheet.create({
     safeArea: {
-        backgroundColor: Theme.surface,
+        backgroundColor: Theme.goldToBlue,
     },
 });

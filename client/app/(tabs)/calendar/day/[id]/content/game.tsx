@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { GameScreenWrapper } from "@/components/utils/custom/GameScreenWrapper";
+import { FlatScreenWrapper } from "@/components/utils/custom/FlatScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
 import { OtherGames } from "@/components/content/games/others/OtherGames";
@@ -89,7 +89,7 @@ export default function GameScreen() {
     };
 
     return (
-        <GameScreenWrapper typeTitle={games[0]?.typeTitle} dayId={dayId}>
+        <FlatScreenWrapper typeTitle={games[0]?.typeTitle} dayId={dayId}>
             <CustomScrollView>
                 {answeredCount > 0 && (
                     <ThemedText style={styles.progress}>
@@ -160,7 +160,7 @@ export default function GameScreen() {
                     )}
                 </View>
             </CustomScrollView>
-        </GameScreenWrapper>
+        </FlatScreenWrapper>
     );
 }
 

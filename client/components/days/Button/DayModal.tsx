@@ -33,13 +33,12 @@ export const DayModal: React.FC<DayModalProps> = ({
             contentStyle={styles.modalView}
         >
             <View>
-                <ThemedText style={styles.quotationMark}>«</ThemedText>
+                <ThemedText style={styles.quotationMark}>”</ThemedText>
                 <ThemedText style={styles.quote}>{day.quote}</ThemedText>
-                <ThemedText style={styles.quotationMark}>»</ThemedText>
             </View>
 
             {day.quoteAuthor ? (
-                <ThemedText type="italic14" style={{ marginTop: 10 }}>
+                <ThemedText style={styles.quoteAuthor}>
                     {day.quoteAuthor}
                 </ThemedText>
             ) : null}
@@ -60,25 +59,34 @@ export const DayModal: React.FC<DayModalProps> = ({
 
 const styles = StyleSheet.create({
     modalView: {
-        margin: 20,
         padding: 20,
-        elevation: 4,
+        width: "80%",
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 0,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 50,
     },
     quotationMark: {
-        fontSize: Platform.OS === "web" ? 42 : 50,
-        lineHeight: 50,
-        color: Theme.green,
+        fontSize: Platform.OS === "web" ? 42 : 54,
+        lineHeight: 45,
+        fontFamily: "FreightNeoBold",
+        color: Theme.autumnGreenDarkToGreen,
         textAlign: "center",
     },
     quote: {
         fontSize: 20,
-        fontStyle: "italic",
         textAlign: "center",
+        fontFamily: "FreightNeo",
+    },
+    quoteAuthor: {
+        fontSize: 12,
+        textAlign: "center",
+        marginTop: 16,
     },
     button: {
         borderRadius: 50,
-        backgroundColor: Theme.green,
-        marginTop: 30,
+        backgroundColor: Theme.autumnGreenDarkToGreen,
+        marginTop: 16,
         height: 48,
         width: 48,
         alignItems: "center",

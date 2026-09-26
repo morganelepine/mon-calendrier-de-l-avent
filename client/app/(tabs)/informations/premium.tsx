@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     container: { backgroundColor: Colors.snow, flex: 1, paddingTop: 20 },
     intro: {
         fontFamily: "FreightNeoBold",
-        color: Theme.surface,
+        color: Theme.goldToBlue,
         textAlign: "center",
         fontSize: 18,
         marginBottom: 16,

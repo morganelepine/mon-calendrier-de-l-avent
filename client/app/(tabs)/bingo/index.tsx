@@ -38,7 +38,7 @@ export default function GamesHubScreen() {
                                 ? "Réalisez un maximum d'activités typiquement automnales tout au long du mois d'octobre"
                                 : "Trois bingos à réaliser tout au long du mois de décembre pour se plonger dans l'ambiance de Noël"
                         }
-                        color={Theme.green}
+                        color={Theme.orangeToGreen}
                         route={isOctober ? "halloween" : "bingos"}
                         onRulesPress={() => setBingoRulesVisible(true)}
                     />

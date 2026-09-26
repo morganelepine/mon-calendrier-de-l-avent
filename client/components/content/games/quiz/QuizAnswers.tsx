@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native";
+import { Pressable, TextStyle, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { getButtonStyles } from "@/services/content.service";
 
@@ -23,7 +23,7 @@ export const QuizAnswers: React.FC<QuizAnswersProps> = ({
                 const { buttonStyle, textStyle } = getButtonStyles(
                     answer,
                     selectedAnswer,
-                    correctAnswer
+                    correctAnswer,
                 );
                 return (
                     <Pressable
@@ -34,7 +34,7 @@ export const QuizAnswers: React.FC<QuizAnswersProps> = ({
                         style={buttonStyle}
                         disabled={answerButtonIsDisabled}
                     >
-                        <ThemedText style={textStyle as any}>
+                        <ThemedText style={textStyle as TextStyle}>
                             {answer}
                         </ThemedText>
                     </Pressable>

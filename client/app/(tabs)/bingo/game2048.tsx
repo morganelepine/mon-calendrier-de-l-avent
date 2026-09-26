@@ -41,7 +41,7 @@ export default function Game2048Screen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Theme.surface,
+        backgroundColor: Theme.goldToBlue,
         justifyContent: "space-between",
     },
 });

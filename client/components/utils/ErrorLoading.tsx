@@ -18,7 +18,10 @@ export const ErrorLoading = ({
         return (
             <View style={styles.container}>
                 <ThemedText style={styles.text}>{error}</ThemedText>
-                <CustomButton onPress={refreshScores} color={Theme.autumnGreen}>
+                <CustomButton
+                    onPress={refreshScores}
+                    color={Theme.autumnGreenDarkToautumnGreen}
+                >
                     Réessayer
                 </CustomButton>
             </View>

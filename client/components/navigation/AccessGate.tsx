@@ -119,7 +119,7 @@ export function AccessGate({
                             disabled={submitting}
                             loading={submitting}
                             color={Colors.snow}
-                            textColor={Theme.surface}
+                            textColor={Theme.goldToBlue}
                         >
                             Continuer
                         </CustomButton>

@@ -17,7 +17,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const currentWord = words[currentWordIndex];
     const [hiddenWord, setHiddenWord] = useState<string[]>([]);
-    const maxTries = 7;
+    const maxTries = 6;
     const [mistakes, setMistakes] = useState(0);
     const [clickedLetters, setClickedLetters] = useState<string[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -85,9 +85,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     return (
         <View key={game.id} style={{ alignItems: "center" }}>
             <ThemedText type={"contentSubtitle"}>
-                {isOctober
-                    ? "Trouvez 3 mots autour d'Halloween et de l'automne"
-                    : "Trouvez 3 mots autour de l'hiver et de Noël"}
+                {`Trouvez ${words.length} mots autour ${isOctober ? "de l'automne et d'Halloween" : "de l'hiver et de Noël"}`}
             </ThemedText>
 
             <ThemedText style={{ fontSize: 35, paddingTop: 10 }}>

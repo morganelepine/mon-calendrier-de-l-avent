@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors, Theme } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { ThemedText } from "@/components/ThemedText";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
+import { FlatScreenWrapper } from "@/components/utils/custom/FlatScreenWrapper";
 import { CloseContentButton } from "@/components/utils/buttons/CloseContentButton";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
@@ -40,55 +41,36 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
         });
     };
 
-    // Octobre : même format "plat" que les jeux (voir GameScreenWrapper)
+    // Octobre : même format "plat" que les jeux (voir FlatScreenWrapper)
     if (isOctober) {
         return (
-            <>
-                <CloseContentButton
-                    onPress={closeContent}
-                    style={{
-                        backgroundColor: Colors.snow,
-                        borderWidth: 1,
-                        borderColor: Colors.snow,
-                    }}
-                >
-                    <Ionicons
-                        name={"return-up-back-outline"}
-                        size={35}
-                        color={Colors.snow}
-                    />
-                </CloseContentButton>
-
-                <View style={styles.flatContainer}>
-                    <ThemedText
-                        type="contentTitle"
-                        style={[styles.flatTitle, { paddingTop: insets.top }]}
-                    >
-                        {title}
-                    </ThemedText>
-
-                    <CustomScrollView>
-                        <View style={styles.flatChildrenContainer}>
-                            {children}
-                        </View>
-                    </CustomScrollView>
-                </View>
-            </>
+            <FlatScreenWrapper typeTitle={title} dayId={dayId}>
+                <CustomScrollView>
+                    <View style={{ padding: 20 }}>{children}</View>
+                </CustomScrollView>
+            </FlatScreenWrapper>
         );
     }
 
     return (
         <>
-            <CloseContentButton
-                onPress={closeContent}
-                style={{ backgroundColor: Colors.snow }}
+            <View
+                style={[
+                    styles.floatingCloseButton,
+                    { top: insets.top + 10 },
+                ]}
             >
-                <Ionicons
-                    name={"return-up-back-outline"}
-                    size={35}
-                    color={Colors.green}
-                />
-            </CloseContentButton>
+                <CloseContentButton
+                    onPress={closeContent}
+                    style={{ backgroundColor: Colors.snow }}
+                >
+                    <Ionicons
+                        name={"return-up-back-outline"}
+                        size={35}
+                        color={Colors.green}
+                    />
+                </CloseContentButton>
+            </View>
             <ParallaxScrollView
                 headerBackgroundColor={{
                     light: Colors.snow,
@@ -114,6 +96,11 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
 };
 
 const styles = StyleSheet.create({
+    floatingCloseButton: {
+        position: "absolute",
+        right: 20,
+        zIndex: 1,
+    },
     headerImage: {
         height: "100%",
         width: "100%",
@@ -123,20 +110,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: "space-between",
         flex: 1,
-    },
-    flatContainer: {
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        width: "100%",
-        backgroundColor: Theme.header,
-    },
-    flatTitle: {
-        paddingHorizontal: 20,
-        color: Colors.snow,
-    },
-    flatChildrenContainer: {
-        paddingHorizontal: 20,
-        marginVertical: 20,
     },
 });

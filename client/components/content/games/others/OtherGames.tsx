@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     word: {
         textAlign: "center",
         fontFamily: "FreightNeoBold",
-        color: Theme.autumnGreen,
+        color: Theme.autumnGreenDarkToautumnGreen,
         fontSize: 32,
         letterSpacing: 8,
     },

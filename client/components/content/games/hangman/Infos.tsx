@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
         padding: 5,
         borderWidth: 1,
         borderRadius: 20,
-        borderColor: Theme.green,
+        borderColor: Theme.autumnGreenDarkToautumnGreen,
     },
     info: {
         fontSize: 14,
-        color: Theme.green,
+        color: Theme.autumnGreenDarkToautumnGreen,
         textAlign: "center",
     },
 });

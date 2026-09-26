@@ -24,6 +24,7 @@ export const NextQuestion: React.FC<NextQuestionProps> = ({
                 <CustomButton
                     onPress={handleNextQuestion}
                     style={styles.button}
+                    color={Theme.orangeToRed}
                 >
                     Question suivante
                 </CustomButton>
@@ -39,6 +40,6 @@ const styles = StyleSheet.create({
     },
     finalText: {
         marginVertical: 20,
-        color: Theme.red,
+        color: Theme.orangeToRed,
     },
 });

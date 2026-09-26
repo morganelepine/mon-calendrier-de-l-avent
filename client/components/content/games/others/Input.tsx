@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> = ({
 const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
-        borderColor: Theme.green,
+        borderColor: Theme.autumnGreenDarkToGreen,
         borderRadius: 50,
         paddingHorizontal: 16,
         paddingBottom: Platform.OS === "web" ? 0 : 6,

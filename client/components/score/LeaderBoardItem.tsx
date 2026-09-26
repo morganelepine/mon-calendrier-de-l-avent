@@ -36,7 +36,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                     {
                         backgroundColor:
                             item.username === username
-                                ? Theme.green
+                                ? Theme.orangeToGreen
                                 : Colors.snow,
                     },
                 ]}
@@ -48,7 +48,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Theme.tint,
+                                    : Theme.orangeToBlue,
                         },
                     ]}
                 >
@@ -65,7 +65,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Theme.tint,
+                                    : Theme.orangeToBlue,
                             fontFamily:
                                 item.username === username
                                     ? "PoppinsBold"
@@ -82,7 +82,7 @@ export const LeaderBoardItem: React.FC<LeaderBoardItemProps> = ({
                             color:
                                 item.username === username
                                     ? Colors.snow
-                                    : Theme.tint,
+                                    : Theme.orangeToBlue,
                         },
                     ]}
                 >
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
     },
     rank: {
         fontFamily: "PoppinsBold",
-        color: Theme.tint,
+        color: Theme.orangeToBlue,
     },
     usernameContainer: {
         flexShrink: 1,
     },
-    score: { fontFamily: "PoppinsBold", color: Theme.tint },
+    score: { fontFamily: "PoppinsBold", color: Theme.orangeToBlue },
 });

@@ -8,7 +8,7 @@ export default function InformationsLayout() {
         <Stack
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: Theme.tint,
+                    backgroundColor: Theme.orangeToBlue,
                 },
             }}
         >
@@ -20,7 +20,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Contenu de l'application"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -34,7 +34,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Règles du jeu"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -52,7 +52,7 @@ export default function InformationsLayout() {
                                         ? "Le bingo automnal"
                                         : "Les bingos de Noël"
                                 }
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -66,7 +66,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Noter l'application"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -80,7 +80,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Remerciements"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -94,7 +94,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Paramètres"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -108,7 +108,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="La Hotte Magique"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );
@@ -122,7 +122,7 @@ export default function InformationsLayout() {
                         return (
                             <ScreenHeader
                                 title="Me contacter"
-                                backgroundColor={Theme.surface}
+                                backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />
                         );

@@ -6,6 +6,8 @@ import { ThemedText } from "@/components/ThemedText";
 interface CustomMarkdownProps {
     children?: React.ReactNode;
     style?: TextStyle;
+    // When true, "- " list items are rendered close together instead of the default spaced-out layout.
+    compactList?: boolean;
 }
 
 // Minimal markdown renderer covering the subset our content actually uses:
@@ -159,8 +161,14 @@ function renderInline(text: string) {
 export const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
     children,
     style = {},
+    compactList = false,
 }) => {
     const bodyStyle: TextStyle = { ...styles.body, ...style };
+    // bodyStyle's vertical padding is what spaces list items out by default;
+    // drop it for compact lists so items sit right next to each other.
+    const listTextStyle: TextStyle = compactList
+        ? { ...bodyStyle, paddingVertical: 0 }
+        : bodyStyle;
     const blocks = parseBlocks(String(children ?? ""));
 
     return (
@@ -170,10 +178,12 @@ export const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
                     <View key={`list-${block.items.join("|")}`}>
                         {block.items.map((item) => (
                             <View key={`item-${item}`} style={styles.listItem}>
-                                <Text style={[bodyStyle, styles.bullet]}>
+                                <Text style={[listTextStyle, styles.bullet]}>
                                     {"•"}
                                 </Text>
-                                <Text style={[bodyStyle, styles.listItemText]}>
+                                <Text
+                                    style={[listTextStyle, styles.listItemText]}
+                                >
                                     {renderInline(item)}
                                 </Text>
                             </View>
@@ -220,7 +230,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     link: {
-        color: Theme.green,
+        color: Theme.orangeToGreen,
         textDecorationLine: "underline",
     },
 });

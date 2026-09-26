@@ -7,11 +7,11 @@ import { OptionItem } from "@/components/informations/OptionItem";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
-import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
+// import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
 
 export default function InformationsScreen() {
     const { username } = useUser();
-    const { premiumPackage } = usePremium();
+    // const { premiumPackage } = usePremium();
 
     return (
         <BlueBackground>
@@ -29,7 +29,7 @@ export default function InformationsScreen() {
                         onPress={() => router.push("/informations/content")}
                     />
 
-                    {premiumPackage && PURCHASES_SUPPORTED && (
+                    {/* {premiumPackage && PURCHASES_SUPPORTED && (
                         <OptionItem
                             title="La Hotte Magique"
                             iconName="sparkles-outline"
@@ -40,7 +40,7 @@ export default function InformationsScreen() {
                             }
                             onPress={() => router.push("/informations/premium")}
                         />
-                    )}
+                    )} */}
 
                     <OptionItem
                         title="Règles pour gagner des points"

@@ -75,7 +75,7 @@ export const PillTabBar: React.FC<PillTabBarProps> = ({
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: Theme.surface,
+        backgroundColor: Theme.goldToBlue,
     },
     container: {
         flexDirection: "row",
@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: Platform.OS === "web" ? 16 : 12,
     },
     pillFilledActive: {
-        backgroundColor: Theme.green,
+        backgroundColor: Theme.orangeToGreen,
         opacity: 1,
     },
     labelFilled: {
-        color: Theme.tint,
+        color: Theme.orangeToBlue,
         textAlign: "center",
         fontSize: 14,
     },
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     pillOutlineActive: {
-        backgroundColor: Theme.autumnGreen,
+        backgroundColor: Theme.autumnGreenDarkToautumnGreen,
     },
     labelOutline: {
         fontSize: 13,

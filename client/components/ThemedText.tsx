@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     sectionSubtitle: {
         fontFamily: "FreightNeo",
         color: Colors.snow,
-        backgroundColor: Theme.tint,
+        backgroundColor: Theme.orangeToBlue,
         textAlign: "left",
         fontSize: 17,
         paddingTop: 3,
@@ -90,17 +90,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     contentTitle: {
-        color: Theme.green,
+        color: Theme.orangeToGreen,
         fontSize: 32,
         fontFamily: "FreightNeoBold",
-        textAlign: "center",
-        marginVertical: 20,
+        marginVertical: 16,
         letterSpacing: 1,
     },
     contentSubtitle: {
-        color: Theme.header,
-        fontSize: 16,
-        fontFamily: "PoppinsBold",
+        color: Theme.autumnGreenDarkToGreen,
+        fontSize: 22,
+        fontFamily: "FreightNeoBold",
+        marginBottom: 16,
     },
     italic14: {
         fontSize: 14,
@@ -117,13 +117,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 20,
         fontSize: 28,
-        color: Theme.tint,
+        color: Theme.orangeToBlue,
     },
     modalTitleSmall: {
         fontFamily: "PoppinsBold",
         textAlign: "center",
         marginTop: 20,
         fontSize: 22,
-        color: Theme.tint,
+        color: Theme.orangeToBlue,
     },
 });

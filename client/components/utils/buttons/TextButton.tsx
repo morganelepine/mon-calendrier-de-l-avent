@@ -14,7 +14,7 @@ export const TextButton: React.FC<TextButtonProps> = ({
     children,
     style = {},
     onPress,
-    textColor = Theme.tint,
+    textColor = Theme.orangeToBlue,
     accessibilityLabel = "",
 }) => {
     return (

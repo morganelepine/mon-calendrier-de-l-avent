@@ -41,11 +41,15 @@ export const HangmanModal: React.FC<ModalProps> = ({
                 <CustomButton
                     onPress={handleNextQuestion}
                     style={styles.button}
+                    color={Theme.orangeToRed}
                 >
                     Partie suivante
                 </CustomButton>
             ) : (
-                <ThemedText type="italic14" style={{ color: Theme.red }}>
+                <ThemedText
+                    type="italic14"
+                    style={{ color: Theme.orangeToRed }}
+                >
                     Ce jeu est terminé !
                 </ThemedText>
             )}

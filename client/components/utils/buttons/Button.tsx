@@ -26,7 +26,7 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
     style = {},
     disabled,
     onPress,
-    color = Theme.autumnGreen,
+    color = Theme.autumnGreenDarkToautumnGreen,
     textColor = Colors.snow,
     loading = false,
 }) => {

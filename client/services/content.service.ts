@@ -164,7 +164,7 @@ export const getButtonStyles = (
     if (isCorrect) {
         color = Colors.snow;
     } else {
-        color = isSelected ? Theme.green : Colors.snow;
+        color = isSelected ? Theme.orangeToGreen : Colors.snow;
     }
 
     return {
@@ -182,7 +182,7 @@ export const getButtonStyles = (
 
 const styles = StyleSheet.create({
     answer: {
-        backgroundColor: Theme.green,
+        backgroundColor: Theme.autumnGreenDarkToGreen,
         marginVertical: 5,
         borderRadius: 50,
         paddingHorizontal: 20,
@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
     },
     isNotCorrect: {
         backgroundColor: Colors.snow,
-        color: Theme.green,
+        color: Theme.orangeToGreen,
         opacity: 0.4,
-        borderColor: Theme.green,
+        borderColor: Theme.orangeToGreen,
         borderWidth: 0.6,
     },
 });

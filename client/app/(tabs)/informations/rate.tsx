@@ -43,7 +43,7 @@ export default function RateScreen() {
                 chaque jour, votre soutien m'aiderait à la garder en vie ☕️
             </ThemedText>
             <ExternalLinkButton
-                color={Theme.tint}
+                color={Theme.orangeToBlue}
                 url="https://ko-fi.com/merrymate"
             >
                 Me soutenir

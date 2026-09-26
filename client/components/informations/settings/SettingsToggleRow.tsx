@@ -17,7 +17,10 @@ export const SettingsToggleRow = ({
 }: SettingsToggleRowProps) => {
     return (
         <View style={[styles.row, disabled && styles.disabled]}>
-            <ThemedText type="sectionText" style={{ color: Theme.tint }}>
+            <ThemedText
+                type="sectionText"
+                style={{ color: Theme.orangeToBlue }}
+            >
                 {label}
             </ThemedText>
 
@@ -25,7 +28,7 @@ export const SettingsToggleRow = ({
                 value={value}
                 onValueChange={onValueChange}
                 disabled={disabled}
-                trackColor={{ false: "#ccc", true: Theme.tint }}
+                trackColor={{ false: "#ccc", true: Theme.orangeToBlue }}
                 thumbColor="#fff"
                 style={styles.switch}
             />

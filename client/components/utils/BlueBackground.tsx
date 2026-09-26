@@ -11,7 +11,7 @@ export const BlueBackground: React.FC<Props> = ({ children }) => {
         <View
             style={{
                 flex: 1,
-                backgroundColor: Theme.surface,
+                backgroundColor: Theme.goldToBlue,
             }}
         >
             {children}

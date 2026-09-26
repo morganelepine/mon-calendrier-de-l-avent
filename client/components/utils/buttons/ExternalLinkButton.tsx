@@ -19,7 +19,7 @@ export const ExternalLinkButton: React.FC<ExternalLinkButtonProps> = ({
     children,
     url,
     style = {},
-    color = Theme.autumnGreen,
+    color = Theme.autumnGreenDarkToautumnGreen,
 }) => {
     return (
         <ExternalLink

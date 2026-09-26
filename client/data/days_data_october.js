@@ -41,6 +41,21 @@ const HALLOWEEN_MUSICS = [
 
 const QUOTES = [
     {
+        text: "La beauté de l’automne\nest un poème écrit\npar la nature.",
+        author: "Charles Baudelaire",
+        source: "",
+    },
+    {
+        text: "L'automne est un deuxième printemps où chaque feuille est une fleur.",
+        author: "Albert Camus",
+        source: "",
+    },
+    {
+        text: "L'automne est une demeure d'or et de pluie.",
+        author: "Jacques Chessex",
+        source: "",
+    },
+    {
         text: "L'automne raconte à la terre les feuilles qu'elle a prêtées à l'été.",
         author: "Georg Christoph Lichtenberg",
         source: "",
@@ -56,18 +71,13 @@ const QUOTES = [
         source: "François le Champi",
     },
     {
-        text: "Les nouvelles sont comme les feuilles d'automne. Le vent qui les porte les malmène.",
+        text: "Les nouvelles sont comme les feuilles d'automne. Le vent qui les porte les malmène.",
         author: "Christian Bobin",
         source: "Tout le monde est occupé",
     },
     {
         text: "L'arbre se sauve en faisant tomber ses feuilles.",
         author: "Pierre Jean Jouve",
-        source: "",
-    },
-    {
-        text: "L'automne est une demeure d'or et de pluie.",
-        author: "Jacques Chessex",
         source: "",
     },
     {
@@ -86,14 +96,9 @@ const QUOTES = [
         source: "",
     },
     {
-        text: "L'automne est un deuxième printemps où chaque feuille est une fleur.",
-        author: "Albert Camus",
-        source: "",
-    },
-    {
-        text: "La beauté de l’automne est un poème écrit par la nature.",
-        author: "Charles Baudelaire",
-        source: "",
+        text: "Les sanglots longs des violons de l'automne blessent mon coeur d'une langueur monotone.",
+        author: "Paul Verlaine",
+        source: "Chanson d'automne",
     },
     {
         text: "L'automne est le printemps de l'hiver.",
@@ -101,17 +106,17 @@ const QUOTES = [
         source: "",
     },
     {
-        text: "Automne en fleurs\nHiver plein de rigueur.",
-        author: "Dicton",
+        text: "Sois le bienvenu, rouge Automne,\nAccours dans ton riche appareil,\nEmbrase le coteau vermeil\nQue la vigne pare et festonne",
+        author: "Théodore de Banville",
         source: "",
     },
     {
-        text: "Sous-bois d'automne:\nsymphonie pour bois et cuivre.",
+        text: "Sous-bois d'automne:\nsymphonie pour bois et cuivre.",
         author: "Sylvain Tesson",
         source: "Aphorismes sous la lune et autres pensées sauvages",
     },
     {
-        text: "L'automne fait les bruits froissés\nDe nos tumultueux baisers...",
+        text: "L'automne fait les bruits froissés de nos tumultueux baisers...",
         author: "Charles Cros",
         source: "",
     },
@@ -121,32 +126,27 @@ const QUOTES = [
         source: "Dans les forêts de Sibérie",
     },
     {
-        text: "Les sanglots longs des violons de l'automne blessent mon coeur d'une langueur monotone.",
-        author: "Paul Verlaine",
-        source: "Chanson d'automne",
-    },
-    {
         text: "L'automne, l'automne merveilleux, mêlait son or et sa pourpre aux dernières verdures restées vives, comme si des gouttes de soleil fondu avaient coulé du ciel dans l'épaisseur des bois.",
         author: "Guy de Maupassant",
         source: "Contes de la bécasse",
     },
     {
-        text: "Pourquoi moi ? doit se dire en tombant la première feuille qu'un arbre lâche à l'automne.",
+        text: "Pourquoi moi ? doit se dire en tombant la première feuille qu'un arbre lâche à l'automne.",
         author: "Grégoire Lacroix",
         source: "Les euphorismes de Grégoire",
     },
     {
-        text: "Attends-moi de l'autre côté de l'année: tu me rencontreras comme un éclair étendu au bord de l'automne.",
+        text: "Attends-moi de l'autre côté de l'année : tu me rencontreras comme un éclair étendu au bord de l'automne.",
         author: "Octavio Paz",
         source: "Liberté sur parole",
     },
     {
-        text: "Le timide a peur avant le danger, le lâche au milieu du danger, le courageux après le danger.",
+        text: "Le timide a peur avant le danger, le lâche au milieu du danger, le courageux après le danger.",
         author: "Jean-Paul Richter",
         source: "",
     },
     {
-        text: "Les soupçons dans les pensées sont comme les chauves-souris parmi les oiseaux.",
+        text: "Les soupçons dans les pensées sont comme les chauves-souris parmi les oiseaux.",
         author: "Francis Bacon",
         source: "Essais",
     },
@@ -156,7 +156,7 @@ const QUOTES = [
         source: "Journal",
     },
     {
-        text: "Dis-moi qui tu hantes, et je te dirai qui tu es.",
+        text: "Dis-moi qui tu hantes,\net je te dirai qui tu es.",
         author: "Miguel de Cervantès",
         source: "Don Quichotte",
     },
@@ -166,27 +166,27 @@ const QUOTES = [
         source: "",
     },
     {
-        text: "Est-ce que je crois aux fantômes ? Non, mais j’en ai peur.",
+        text: "Est-ce que je crois aux fantômes ?\nNon, mais j’en ai peur.",
         author: "Marie du Deffand",
         source: "",
     },
     {
-        text: "Une bonne terreur, de temps en temps, vous remet les idées en perspective.",
+        text: "Une bonne terreur,\nde temps en temps,\nvous remet les idées en perspective.",
         author: "Elisabeth Vonarburg",
         source: "",
     },
     {
-        text: "La nuit est propice à la réflexion, au silence, à la peur aussi. C'est dans l'obscurité qu'on dort, qu'on se tait, qu'on voit les fantômes.",
+        text: "La nuit est propice à la réflexion, au silence, à la peur aussi. C'est dans l'obscurité qu'on dort, qu'on se tait, qu'on voit les fantômes.",
         author: "Simone Piuze",
         source: "",
     },
     {
-        text: "Si la nuit est noire, c'est pour que rien ne puisse nous distraire de nos cauchemars.",
+        text: "Si la nuit est noire,\nc'est pour que rien ne puisse nous distraire de nos cauchemars.",
         author: "Bill Watterson",
         source: "Allez, on se tire !",
     },
     {
-        text: "Quand on a faim, une citrouille vaut mieux qu'un carrosse.",
+        text: "Quand on a faim, une citrouille vaut mieux qu'un carrosse.",
         author: "Thérèse Amiel",
         source: "",
     },

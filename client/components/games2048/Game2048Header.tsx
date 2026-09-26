@@ -29,7 +29,7 @@ export const Game2048Header = ({
                 onPress={() =>
                     router.push("/bingo/game2048-leaderboard/general")
                 }
-                color={Theme.autumnGreen}
+                color={Theme.autumnGreenDarkToautumnGreen}
                 style={{ alignSelf: "flex-start" }}
             >
                 Classement
@@ -47,7 +47,7 @@ export const Game2048Header = ({
                     ]}
                 >
                     <ThemedText
-                        style={[styles.score, { color: Theme.surface }]}
+                        style={[styles.score, { color: Theme.goldToBlue }]}
                     >
                         Score : {score}
                     </ThemedText>

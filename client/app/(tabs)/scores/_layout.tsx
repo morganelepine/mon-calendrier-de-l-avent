@@ -9,7 +9,7 @@ export default function ScoresLayout() {
                 headerStyle: {
                     backgroundColor: Colors.snow,
                 },
-                headerTintColor: Theme.tint,
+                headerTintColor: Theme.orangeToBlue,
             }}
         >
             {/* Mes scores / Mon groupe / Top / Mon classement */}
@@ -22,7 +22,7 @@ export default function ScoresLayout() {
                             <GroupHeader
                                 title="Ajouter des membres"
                                 backgroundColor={Colors.snow}
-                                color={Theme.tint}
+                                color={Theme.orangeToBlue}
                             />
                         );
                     },

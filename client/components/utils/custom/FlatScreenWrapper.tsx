@@ -14,7 +14,7 @@ interface GameScreenWrapperProps {
     dayId: number;
 }
 
-export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
+export const FlatScreenWrapper: React.FC<GameScreenWrapperProps> = ({
     typeTitle,
     children,
     dayId,
@@ -35,33 +35,30 @@ export const GameScreenWrapper: React.FC<GameScreenWrapperProps> = ({
     };
 
     return (
-        <>
-            <CloseContentButton
-                onPress={closeContent}
-                style={{
-                    backgroundColor: Colors.snow,
-                    borderWidth: 1,
-                    borderColor: Theme.green,
-                }}
-            >
-                <Ionicons
-                    name={"return-up-back-outline"}
-                    size={35}
-                    color={Colors.snow}
-                />
-            </CloseContentButton>
-
-            <View style={styles.container}>
-                <ThemedText
-                    type="contentTitle"
-                    style={[styles.title, { paddingTop: insets.top }]}
-                >
+        <View style={styles.container}>
+            <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
+                <ThemedText type="contentTitle" style={styles.title}>
                     {title}
                 </ThemedText>
 
-                {children}
+                <CloseContentButton
+                    onPress={closeContent}
+                    style={{
+                        backgroundColor: Colors.snow,
+                        borderWidth: 1,
+                        borderColor: Colors.snow,
+                    }}
+                >
+                    <Ionicons
+                        name={"return-up-back-outline"}
+                        size={30}
+                        color={Colors.snow}
+                    />
+                </CloseContentButton>
             </View>
-        </>
+
+            {children}
+        </View>
     );
 };
 
@@ -71,11 +68,16 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         width: "100%",
-        backgroundColor: Theme.header,
+        backgroundColor: Theme.autumnGreenDarkToGreen,
     },
     title: {
-        paddingBottom: 2,
-        paddingHorizontal: 20,
         color: Colors.snow,
+    },
+    headerContainer: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 20,
     },
 });

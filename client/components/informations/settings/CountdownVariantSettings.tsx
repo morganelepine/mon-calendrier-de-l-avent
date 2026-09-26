@@ -171,12 +171,12 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
     },
     optionSelected: {
-        borderColor: Theme.autumnGreen,
+        borderColor: Theme.autumnGreenDarkToautumnGreen,
     },
     previewBox: {
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: Theme.tint,
+        backgroundColor: Theme.orangeToBlue,
         borderRadius: 8,
         paddingBottom: 20,
         marginHorizontal: 12,

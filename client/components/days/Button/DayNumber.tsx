@@ -29,7 +29,7 @@ export const DayNumber: React.FC<DayNumberProps> = ({ day, dayIsOpen }) => {
                 style={[
                     styles.itemText,
                     {
-                        color: dayIsOpen ? Theme.green : day.textColor,
+                        color: dayIsOpen ? Theme.orangeToGreen : day.textColor,
                     },
                 ]}
             >

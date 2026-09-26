@@ -50,7 +50,7 @@ export const List: React.FC<ListProps> = ({
                                     styles.switchButtonTextActive,
                             ]}
                         >
-                            {`Idée ${index + 1}`}
+                            {`${index + 1}`}
                         </ThemedText>
                     </Pressable>
                 ))}
@@ -76,21 +76,23 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         flexWrap: "wrap",
-        marginVertical: 20,
+        marginVertical: 16,
         gap: 8,
     },
     switchButton: {
-        borderColor: Theme.green,
+        borderColor: Theme.orangeToGreen,
         borderWidth: 1,
         borderRadius: 50,
-        paddingHorizontal: 12,
-        paddingBottom: Platform.OS === "web" ? 2 : 0,
+        width: 36,
+        height: 36,
+        justifyContent: "center",
+        alignItems: "center",
     },
     switchButtonActive: {
-        backgroundColor: Theme.green,
+        backgroundColor: Theme.orangeToGreen,
     },
     switchButtonText: {
-        color: Theme.green,
+        color: Theme.orangeToGreen,
     },
     switchButtonTextActive: {
         color: "white",

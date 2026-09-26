@@ -1,10 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Pressable } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+    StyleSheet,
+    View,
+    Pressable,
+    StyleProp,
+    ViewStyle,
+} from "react-native";
 
 interface CloseContentButtonProps {
     onPress: () => void;
-    style: {};
+    style: StyleProp<ViewStyle>;
     children?: React.ReactNode;
 }
 
@@ -13,13 +18,9 @@ export const CloseContentButton: React.FC<CloseContentButtonProps> = ({
     style,
     children,
 }) => {
-    const insets = useSafeAreaInsets();
     return (
-        <Pressable
-            onPress={onPress}
-            style={[styles.button, { top: insets.top + 10 }]}
-        >
-            <View style={{ ...styles.buttonBackground, ...style }} />
+        <Pressable onPress={onPress} style={styles.button}>
+            <View style={[styles.buttonBackground, style]} />
             {children}
         </Pressable>
     );
@@ -27,12 +28,14 @@ export const CloseContentButton: React.FC<CloseContentButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        position: "absolute",
-        right: 20,
-        zIndex: 1,
-        height: 48,
-        width: 48,
-        alignSelf: "center",
+        // position: "absolute",
+        // right: 20,
+        // zIndex: 1,
+        // height: 48,
+        // width: 48,
+        // alignSelf: "center",
+        height: 40,
+        width: 40,
         alignItems: "center",
         justifyContent: "center",
     },

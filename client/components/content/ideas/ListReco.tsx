@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: "PoppinsBold",
         fontSize: 16,
-        color: Theme.green,
+        color: Theme.orangeToGreen,
     },
     where: {
         fontStyle: "italic",
