@@ -56,7 +56,7 @@ const QUOTES = [
         source: "",
     },
     {
-        text: "L'automne raconte à la terre les feuilles qu'elle a prêtées à l'été.",
+        text: "L'automne raconte à la terre les feuilles qu'elle a prêtées à l'été.",
         author: "Georg Christoph Lichtenberg",
         source: "",
     },

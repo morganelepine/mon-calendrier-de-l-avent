@@ -23,9 +23,7 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Contenu de l'application"
                         iconName="gift-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnGreenDark : Colors.blue
-                        }
+                        iconColor={isOctober ? Colors.autumnRed : Colors.blue}
                         onPress={() => router.push("/informations/content")}
                     />
 
@@ -45,9 +43,7 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Règles pour gagner des points"
                         iconName="game-controller-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnGreen : Colors.green
-                        }
+                        iconColor={isOctober ? Colors.gold : Colors.green}
                         onPress={() => router.push("/informations/rules")}
                     />
 
@@ -59,7 +55,9 @@ export default function InformationsScreen() {
                         }
                         iconName="eye-outline"
                         iconColor={
-                            isOctober ? Colors.autumnYellow : Colors.lightBlue
+                            isOctober
+                                ? Colors.autumnGreenDark
+                                : Colors.lightBlue
                         }
                         onPress={() => router.push("/informations/bingo")}
                     />
@@ -74,24 +72,15 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Noter l'application"
                         iconName="star-outline"
-                        iconColor={
-                            isOctober ? Colors.autumnGreenDark : Colors.gold
-                        }
+                        iconColor={isOctober ? Colors.gold : Colors.gold}
                         onPress={() => router.push("/informations/rate")}
-                    />
-
-                    <OptionItem
-                        title="Me contacter"
-                        iconName="flower-outline"
-                        iconColor={isOctober ? Colors.autumnYellow : "#646681"}
-                        onPress={() => router.push("/informations/contact")}
                     />
 
                     <OptionItem
                         title="Paramètres"
                         iconName="settings-outline"
                         iconColor={
-                            isOctober ? Colors.autumnGreen : Colors.darkBlue
+                            isOctober ? Colors.autumnGreenDark : Colors.darkBlue
                         }
                         onPress={() => router.push("/informations/settings")}
                     />

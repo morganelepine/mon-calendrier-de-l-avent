@@ -115,20 +115,6 @@ export default function InformationsLayout() {
                     },
                 }}
             />
-            <Stack.Screen
-                name="contact"
-                options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Me contacter"
-                                backgroundColor={Theme.goldToBlue}
-                                color={Colors.snow}
-                            />
-                        );
-                    },
-                }}
-            />
         </Stack>
     );
 }

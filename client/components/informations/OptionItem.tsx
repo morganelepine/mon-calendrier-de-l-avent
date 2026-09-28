@@ -1,6 +1,7 @@
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
+import { ThemedText } from "@/components/ThemedText";
 
 export function OptionItem({
     title,
@@ -21,7 +22,7 @@ export function OptionItem({
                 <Ionicons name={iconName} size={20} color="#fff" />
             </View>
 
-            <Text style={styles.title}>{title}</Text>
+            <ThemedText style={styles.title}>{title}</ThemedText>
 
             <Ionicons name="chevron-forward" size={20} color="#aaa" />
         </TouchableOpacity>
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        fontSize: 16,
-        color: "#333",
+        fontSize: 14,
     },
 });

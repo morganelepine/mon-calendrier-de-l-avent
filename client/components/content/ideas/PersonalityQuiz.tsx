@@ -79,7 +79,10 @@ export const PersonalityQuiz: React.FC<PersonalityQuizProps> = ({ idea }) => {
                     <ThemedText style={styles.progress}>Vous êtes…</ThemedText>
                     <ThemedText
                         type="contentSubtitle"
-                        style={{ color: Theme.orangeToGreen }}
+                        style={{
+                            color: Theme.orangeToGreen,
+                            textAlign: "left",
+                        }}
                     >
                         {profile.title}
                     </ThemedText>
