@@ -17,6 +17,8 @@ import {
     daysToCalendar,
     christmasDay,
     getDaysUntil,
+    isHalloween,
+    daysToHalloween,
 } from "@/constants/Dates";
 import { ChristmasTargetDay } from "@/enums/enums";
 import { CountdownDisplay } from "@/components/calendar/Countdown/CountdownDisplay";
@@ -27,8 +29,10 @@ import {
 } from "@/contexts/CountdownVariantContext";
 
 // BACKGROUND IMAGES
+const today = new Date().getDate();
 const WINTER_BACKGROUND = "3_thng7s";
-const HALLOWEEN_BACKGROUND = "halloween_txyg5n"; // october
+const HALLOWEEN_BACKGROUND =
+    today < 20 ? "Rumeysa_Cinar_nhebdq" : "halloween_txyg5n"; // october
 
 // MUSICS
 const DEFAULT_MUSIC =
@@ -101,12 +105,38 @@ export const Home = () => {
                             right: 10,
                         }}
                     >
-                        <AudioPlayer music={music} />
+                        <AudioPlayer music={music} type="icon" />
                     </View>
+
+                    {/* October: countdown to Halloween */}
+
+                    {isOctober && !isHalloween && (
+                        <>
+                            <ThemedText
+                                style={[styles.title, styles.countdown]}
+                            >
+                                {daysToHalloween}{" "}
+                                {daysToHalloween > 1 ? "jours" : "jour"}
+                            </ThemedText>
+                            <ThemedText
+                                style={[styles.title, styles.beforeCalendar]}
+                            >
+                                avant Halloween
+                            </ThemedText>
+                        </>
+                    )}
+
+                    {isHalloween && (
+                        <ThemedText
+                            style={[styles.title, styles.christmasGreeting]}
+                        >
+                            Happy{"\n"}Halloween
+                        </ThemedText>
+                    )}
 
                     {/* Before calendar departure */}
 
-                    {!isDecember && (
+                    {!isDecember && !isOctober && (
                         <>
                             <ThemedText
                                 style={[styles.title, styles.countdown]}

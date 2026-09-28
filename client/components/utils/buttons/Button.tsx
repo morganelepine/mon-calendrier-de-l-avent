@@ -62,6 +62,8 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
     button: {
         ...pillButtonBase,
+        borderWidth: 1,
+        borderColor: Colors.snow,
     },
     buttonText: {
         ...pillButtonTextBase,
