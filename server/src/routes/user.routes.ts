@@ -2,12 +2,6 @@ import { UserController } from "../controllers/user.controller";
 
 export const UserRoutes = [
     {
-        method: "get",
-        route: "/users",
-        controller: UserController,
-        action: "getUsers",
-    },
-    {
         method: "post",
         route: "/users",
         controller: UserController,

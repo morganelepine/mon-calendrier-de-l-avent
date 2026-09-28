@@ -32,12 +32,6 @@ function generateFallbackUsername(usedUsernames: Set<string>): string {
 }
 
 export class UserController {
-    // GET /users
-    async getUsers(request: Request, response: Response, next: NextFunction) {
-        const users = await prisma.user.findMany();
-        return users;
-    }
-
     // GET /users/:uuid
     async getUser(request: Request, response: Response, next: NextFunction) {
         const uuid = request.params.uuid;
@@ -79,6 +73,7 @@ export class UserController {
                     notIn: excludedIds,
                 },
             },
+            select: { id: true, username: true },
         });
 
         return users;

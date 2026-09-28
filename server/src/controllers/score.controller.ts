@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
 export interface Score {
@@ -26,11 +26,11 @@ export class ScoreController {
     }
 
     async getUserYearScore(userId: number, year: number): Promise<number> {
-        const result = await prisma.score.aggregate({
-            where: { userId, year },
-            _sum: { points: true },
+        const yearScore = await prisma.userYearScore.findUnique({
+            where: { userId_year: { userId, year } },
+            select: { total: true },
         });
-        return result._sum.points ?? 0;
+        return yearScore?.total ?? 0;
     }
 
     async saveScore(request: Request) {
@@ -133,17 +133,37 @@ export class ScoreController {
             }
         }
 
-        // Create score
-        const createdScore = await prisma.score.create({
-            data: {
-                userId: user.id,
-                day: dayId,
-                points,
-                reason,
-                itemNumber,
-                year,
-            },
-        });
+        // Create score, and add it to the user's yearly total
+        // in the same transaction so the two can never drift apart.
+        // The upsert's increment is atomic, so concurrent saves
+        // (e.g. a pending-scores flush) add up instead of overwriting each other.
+        const earnedAt = new Date();
+        const [createdScore] = await prisma.$transaction([
+            prisma.score.create({
+                data: {
+                    userId: user.id,
+                    day: dayId,
+                    points,
+                    reason,
+                    itemNumber,
+                    year,
+                    earnedAt,
+                },
+            }),
+            prisma.userYearScore.upsert({
+                where: { userId_year: { userId: user.id, year } },
+                create: {
+                    userId: user.id,
+                    year,
+                    total: points,
+                    lastEarnedAt: earnedAt,
+                },
+                update: {
+                    total: { increment: points },
+                    lastEarnedAt: earnedAt,
+                },
+            }),
+        ]);
 
         return {
             status: 200,
@@ -218,68 +238,59 @@ export class ScoreController {
         return Object.values(scoresByDay);
     }
 
-    // Ranks this season's players only: grouping Score rows by user for the
-    // current year both computes each user's total and doubles as the
-    // "has this user scored anything this year" filter (a user with no rows
-    // for the year simply doesn't come out of groupBy). Sorted by score
-    // (descending) then by last earned time (ascending, to break ties).
-    // Shared by getLeaderboard (top N, paginated) and getLeaderboardAround
-    // (a window around one player) so both stay consistent with each other.
-    private async buildLeaderboard(year: number) {
-        const totals = await prisma.score.groupBy({
-            by: ["userId"],
-            where: { year },
-            _sum: { points: true },
-            _max: { earnedAt: true },
-            having: { points: { _sum: { gt: 0 } } },
-        });
-
-        const users = await prisma.user.findMany({
-            where: { id: { in: totals.map((t) => t.userId) } },
-            select: { id: true, username: true },
-        });
-        const usernameById = new Map(users.map((u) => [u.id, u.username]));
-
-        return totals
-            .map((t) => ({
-                userId: t.userId,
-                username: usernameById.get(t.userId) ?? "",
-                score: t._sum.points ?? 0,
-                lastEarnedAt: t._max.earnedAt,
-            }))
-            .sort((a, b) => {
-                if (b.score !== a.score) return b.score - a.score;
-                const aTime = a.lastEarnedAt?.getTime() ?? Infinity;
-                const bTime = b.lastEarnedAt?.getTime() ?? Infinity;
-                return aTime - bTime;
-            });
+    private rankedWhere(year: number) {
+        return { year, total: { gt: 0 } };
     }
 
-    async getLeaderboard(req: Request) {
+    private readonly rankingOrder = [
+        { total: "desc" },
+        { lastEarnedAt: "asc" },
+        { userId: "asc" },
+    ] as const;
+
+    private async readLeaderboard(year: number, skip?: number, take?: number) {
+        const rows = await prisma.userYearScore.findMany({
+            where: this.rankedWhere(year),
+            orderBy: [...this.rankingOrder],
+            skip,
+            take,
+            select: { total: true, user: { select: { username: true } } },
+        });
+        return rows.map((row) => ({
+            username: row.user.username,
+            score: row.total,
+        }));
+    }
+
+    async getLeaderboard(req: Request, res: Response) {
         const currentYear = new Date().getFullYear();
-        const leaderboard = await this.buildLeaderboard(currentYear);
+
+        // Same ranking for everyone, so Vercel's CDN can serve it
+        // to all players without invoking the function.
+        res.setHeader(
+            "Cache-Control",
+            "public, s-maxage=30, stale-while-revalidate=30",
+        );
 
         if (!req.query.page && !req.query.limit) {
-            return leaderboard.map(({ username, score }) => ({
-                username,
-                score,
-            }));
+            return this.readLeaderboard(currentYear);
         }
 
         const page = Number.parseInt(req.query.page as string) || 1;
-        const limit = Number.parseInt(req.query.limit as string) || 75;
+        const limit = Number.parseInt(req.query.limit as string) || 25;
         const skip = (page - 1) * limit;
 
-        const leaderboardPage = leaderboard.slice(skip, skip + limit);
-        const hasMore = skip + leaderboardPage.length < leaderboard.length;
+        const [data, total] = await Promise.all([
+            this.readLeaderboard(currentYear, skip, limit),
+            prisma.userYearScore.count({
+                where: this.rankedWhere(currentYear),
+            }),
+        ]);
 
         return {
-            data: leaderboardPage.map(({ username, score }) => ({
-                username,
-                score,
-            })),
-            total: leaderboard.length,
-            hasMore,
+            data,
+            total,
+            hasMore: skip + data.length < total,
         };
     }
 
@@ -292,21 +303,49 @@ export class ScoreController {
         if (!user) return { status: 404, message: "User not found" };
 
         const currentYear = new Date().getFullYear();
-        const leaderboard = await this.buildLeaderboard(currentYear);
-
-        const userIndex = leaderboard.findIndex((e) => e.userId === user.id);
-        if (userIndex === -1) {
+        const mine = await prisma.userYearScore.findUnique({
+            where: { userId_year: { userId: user.id, year: currentYear } },
+        });
+        if (!mine || mine.total <= 0) {
             // Known user, but no points yet this season.
             return { userHasScore: false };
         }
 
+        // Everyone ranked ahead of this player, following rankingOrder.
+        const [aheadCount, total] = await Promise.all([
+            prisma.userYearScore.count({
+                where: {
+                    ...this.rankedWhere(currentYear),
+                    OR: [
+                        { total: { gt: mine.total } },
+                        {
+                            total: mine.total,
+                            lastEarnedAt: { lt: mine.lastEarnedAt },
+                        },
+                        {
+                            total: mine.total,
+                            lastEarnedAt: mine.lastEarnedAt,
+                            userId: { lt: mine.userId },
+                        },
+                    ],
+                },
+            }),
+            prisma.userYearScore.count({
+                where: this.rankedWhere(currentYear),
+            }),
+        ]);
+        const userIndex = aheadCount;
+
         const before = Number.parseInt(req.query.before as string) || 10;
         const after = Number.parseInt(req.query.after as string) || 10;
-        const total = leaderboard.length;
 
         const startIndex = Math.max(0, userIndex - before);
         const endIndex = Math.min(total - 1, userIndex + after);
-        const windowEntries = leaderboard.slice(startIndex, endIndex + 1);
+        const windowEntries = await this.readLeaderboard(
+            currentYear,
+            startIndex,
+            endIndex - startIndex + 1,
+        );
 
         return {
             userHasScore: true,

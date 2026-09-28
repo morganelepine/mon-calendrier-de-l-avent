@@ -18,6 +18,7 @@ model User {
   isPremium    Boolean  @default(false)
   premiumSince DateTime?
   scoreHistory Score[]
+  yearScores   UserYearScore[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -26,13 +27,9 @@ model User {
   gameHighScores GameHighScore[]
 }
 
-// No stored running total on purpose: a user's score for a given year is
-// always derived by summing Score.points where year = that year. That keeps
-// it impossible for a counter to drift from the rows that back it, and means
-// a new calendar season needs no reset step at all - it just has no rows yet
-// for that year. `year` is set explicitly at creation time (server's current
-// calendar year), not derived from `earnedAt`, so past years stay queryable
-// (e.g. a "last year's score" figure) without ever deleting anything.
+// Source of truth for a user's score: their total for a given year is the
+// sum of Score.points where year = that year. UserYearScore (below) keeps
+// that sum pre-computed for leaderboards, updated in the same transaction.
 model Score {
   id         Int      @id @default(autoincrement())
   userId     Int
@@ -46,6 +43,17 @@ model Score {
 
   @@index([userId, year, day])
   @@index([year])
+}
+
+model UserYearScore {
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  year         Int
+  total        Int      @default(0)
+  lastEarnedAt DateTime // tie-breaker: at equal totals, whoever got there first ranks higher
+
+  @@id([userId, year])
+  @@index([year, total(sort: Desc), lastEarnedAt])
 }
 
 model AppConfig {

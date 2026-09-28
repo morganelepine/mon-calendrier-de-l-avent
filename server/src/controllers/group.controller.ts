@@ -22,10 +22,6 @@ export class GroupController {
         return group;
     }
 
-    // A member's score is this season's only (see ScoreController for why
-    // it's never stored) - group ranking can't be a plain Prisma orderBy on
-    // a column anymore, so members are fetched as-is and re-sorted in JS
-    // once each one's current-year total has been computed.
     async getGroup(request: Request) {
         const { userId } = request.params;
         const currentYear = new Date().getFullYear();
@@ -35,7 +31,7 @@ export class GroupController {
             include: {
                 members: {
                     include: {
-                        user: true,
+                        user: { select: { id: true, username: true } },
                     },
                 },
             },
@@ -43,16 +39,15 @@ export class GroupController {
 
         if (!group) return group;
 
-        const totals = await prisma.score.groupBy({
-            by: ["userId"],
+        const totals = await prisma.userYearScore.findMany({
             where: {
                 year: currentYear,
                 userId: { in: group.members.map((member) => member.userId) },
             },
-            _sum: { points: true },
+            select: { userId: true, total: true },
         });
         const scoreByUserId = new Map(
-            totals.map((total) => [total.userId, total._sum.points ?? 0]),
+            totals.map((total) => [total.userId, total.total]),
         );
 
         const members = group.members
