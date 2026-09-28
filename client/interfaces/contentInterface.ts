@@ -26,6 +26,28 @@ export interface ListOfContents {
     correctAnswer?: string;
 }
 
+export interface PersonalityQuizData {
+    description?: string;
+    questions: PersonalityQuizQuestion[];
+    profiles: Record<string, PersonalityQuizProfile>;
+}
+
+export interface PersonalityQuizQuestion {
+    question: string;
+    answers: PersonalityQuizAnswer[];
+}
+
+export interface PersonalityQuizAnswer {
+    text: string;
+    profiles: string[]; // keys of PersonalityQuizData.profiles
+}
+
+export interface PersonalityQuizProfile {
+    title: string;
+    description: string;
+    image?: string; // Cloudinary id
+}
+
 export interface WallpaperData {
     id: string | number;
     image: string;

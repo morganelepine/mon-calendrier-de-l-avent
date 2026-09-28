@@ -10,6 +10,9 @@ Calendar content is split in two, by how often each part changes:
   `GET /content/contents`. This is the content that's actually edited often, hence the backoffice
   below. `ContentListItem` gives `idea`/`list` rows a real one-to-many relation (with an explicit
   `order` column) instead of a JSON blob for what the client sees as `listOfContents`.
+  Exception: `idea`/`personality_quiz` stores the whole quiz (questions, answers → profiles,
+  profiles) as JSON in `content1`, validated by the admin before saving (format in
+  `admin/src/constants/personalityQuiz.ts`).
 
 ### Backoffice
 

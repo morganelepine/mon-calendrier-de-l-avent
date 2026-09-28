@@ -2,7 +2,7 @@ import { ContentFamily } from "../types";
 
 export const SUBTYPES_BY_TYPE: Record<ContentFamily, string[]> = {
     anecdote: ["anecdote", "word", "song", "drink"],
-    idea: ["idea", "list", "recipe"],
+    idea: ["idea", "list", "recipe", "personality_quiz"],
     game: [
         "quiz-noel",
         "quiz-citation",

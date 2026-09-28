@@ -15,6 +15,7 @@ export enum IdeaType {
     Video = "video",
     Game = "game",
     Creator = "creator",
+    PersonalityQuiz = "personality_quiz",
 }
 
 export enum GameType {

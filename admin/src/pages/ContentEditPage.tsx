@@ -16,6 +16,11 @@ import {
     SUBTYPES_BY_TYPE,
 } from "../constants/contentSubtypes";
 import {
+    countProfilePoints,
+    findDuplicateProfiles,
+    validatePersonalityQuiz,
+} from "../constants/personalityQuiz";
+import {
     ContentFamily,
     ContentInput,
     ContentListItemInput,
@@ -50,6 +55,9 @@ export function ContentEditPage() {
     const [loading, setLoading] = useState(!isNew);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const isPersonalityQuiz =
+        form.type === "idea" && form.subType === "personality_quiz";
 
     useEffect(() => {
         if (isNew) return;
@@ -90,6 +98,13 @@ export function ContentEditPage() {
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
         setError(null);
+        if (isPersonalityQuiz) {
+            const quizError = validatePersonalityQuiz(form.content1);
+            if (quizError) {
+                setError(quizError);
+                return;
+            }
+        }
         setSaving(true);
         try {
             if (isNew) {
@@ -161,6 +176,9 @@ export function ContentEditPage() {
     if (loading) return <p className="loading">Ho ho ho...</p>;
 
     const labels = CONTENT_FIELD_LABELS[form.type];
+    const quizError = isPersonalityQuiz
+        ? validatePersonalityQuiz(form.content1)
+        : null;
     const isQuizList = form.type === "game" && form.subType.startsWith("quiz");
     const showListEditor =
         (form.type === "idea" && form.subType === "list") || isQuizList;
@@ -260,15 +278,36 @@ export function ContentEditPage() {
                 </label>
 
                 <label>
-                    {labels[0]}
+                    {isPersonalityQuiz ? "Quiz (JSON)" : labels[0]}
                     <textarea
-                        rows={5}
+                        rows={isPersonalityQuiz ? 25 : 5}
+                        className={isPersonalityQuiz ? "code" : undefined}
                         value={form.content1}
                         onChange={(e) =>
                             setForm((f) => ({ ...f, content1: e.target.value }))
                         }
                     />
                 </label>
+                {isPersonalityQuiz && form.content1 && (
+                    <p className={quizError ? "error" : "hint"}>
+                        {quizError ??
+                            "Points possibles par profil : " +
+                                countProfilePoints(form.content1)
+                                    .map(
+                                        ([key, n]) =>
+                                            `${key} ${Math.round(n * 10) / 10}`,
+                                    )
+                                    .join(" · ")}
+                    </p>
+                )}
+                {isPersonalityQuiz &&
+                    form.content1 &&
+                    !quizError &&
+                    findDuplicateProfiles(form.content1).map((warning) => (
+                        <p className="hint" key={warning}>
+                            ⚠ {warning}
+                        </p>
+                    ))}
                 <label>
                     {labels[1]}
                     <textarea

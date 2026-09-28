@@ -394,3 +394,14 @@ fieldset > button {
     font-size: 14px;
     margin: 0;
 }
+
+.hint {
+    color: var(--mute);
+    font-size: 14px;
+    margin: 0;
+}
+
+textarea.code {
+    font-family: var(--font-code);
+    font-size: 13px;
+}
