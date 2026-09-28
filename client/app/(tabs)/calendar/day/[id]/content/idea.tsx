@@ -5,6 +5,7 @@ import { Reco } from "@/components/content/ideas/Reco";
 import { Recipe } from "@/components/content/ideas/Recipe";
 import { List } from "@/components/content/ideas/List";
 import { PersonalityQuiz } from "@/components/content/ideas/PersonalityQuiz";
+import { Cards } from "@/components/content/ideas/Cards";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Content } from "@/interfaces/contentInterface";
@@ -101,6 +102,10 @@ export default function IdeaScreen() {
 
                             {idea.subType === IdeaType.PersonalityQuiz && (
                                 <PersonalityQuiz idea={idea} />
+                            )}
+
+                            {idea.subType === IdeaType.Cards && (
+                                <Cards idea={idea} />
                             )}
                         </View>
                     </CustomScrollView>

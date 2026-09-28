@@ -20,6 +20,7 @@ import {
     findDuplicateProfiles,
     validatePersonalityQuiz,
 } from "../constants/personalityQuiz";
+import { validateCards } from "../constants/cards";
 import {
     ContentFamily,
     ContentInput,
@@ -58,6 +59,8 @@ export function ContentEditPage() {
 
     const isPersonalityQuiz =
         form.type === "idea" && form.subType === "personality_quiz";
+    const isCards = form.type === "idea" && form.subType === "cards";
+    const isJson = isPersonalityQuiz || isCards;
 
     useEffect(() => {
         if (isNew) return;
@@ -98,12 +101,14 @@ export function ContentEditPage() {
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
         setError(null);
-        if (isPersonalityQuiz) {
-            const quizError = validatePersonalityQuiz(form.content1);
-            if (quizError) {
-                setError(quizError);
-                return;
-            }
+        const jsonError = isPersonalityQuiz
+            ? validatePersonalityQuiz(form.content1)
+            : isCards
+              ? validateCards(form.content1)
+              : null;
+        if (jsonError) {
+            setError(jsonError);
+            return;
         }
         setSaving(true);
         try {
@@ -278,10 +283,14 @@ export function ContentEditPage() {
                 </label>
 
                 <label>
-                    {isPersonalityQuiz ? "Quiz (JSON)" : labels[0]}
+                    {isPersonalityQuiz
+                        ? "Quiz (JSON)"
+                        : isCards
+                          ? "Fiches (JSON)"
+                          : labels[0]}
                     <textarea
-                        rows={isPersonalityQuiz ? 25 : 5}
-                        className={isPersonalityQuiz ? "code" : undefined}
+                        rows={isJson ? 25 : 5}
+                        className={isJson ? "code" : undefined}
                         value={form.content1}
                         onChange={(e) =>
                             setForm((f) => ({ ...f, content1: e.target.value }))
@@ -298,6 +307,18 @@ export function ContentEditPage() {
                                             `${key} ${Math.round(n * 10) / 10}`,
                                     )
                                     .join(" · ")}
+                    </p>
+                )}
+                {isCards && (
+                    <p
+                        className={
+                            form.content1 && validateCards(form.content1)
+                                ? "error"
+                                : "hint"
+                        }
+                    >
+                        {(form.content1 && validateCards(form.content1)) ||
+                            'Format : { "description": "…", "labels": { "clé": "Libellé" }, "items": [{ "titre": "…", "clé": "…" }] } — la 1re clé de chaque élément est son titre.'}
                     </p>
                 )}
                 {isPersonalityQuiz &&

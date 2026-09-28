@@ -13,6 +13,8 @@ Calendar content is split in two, by how often each part changes:
   Exception: `idea`/`personality_quiz` stores the whole quiz (questions, answers → profiles,
   profiles) as JSON in `content1`, validated by the admin before saving (format in
   `admin/src/constants/personalityQuiz.ts`).
+  Same for `idea`/`cards`: a list of cards as JSON in `content1` (format in
+  `admin/src/constants/cards.ts`), e.g. a horoscope with one card per sign.
 
 ### Backoffice
 

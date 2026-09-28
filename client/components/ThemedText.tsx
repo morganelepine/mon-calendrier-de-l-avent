@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontFamily: "FreightNeoBold",
         marginBottom: 16,
+        textAlign: "center",
     },
     italic14: {
         fontSize: 14,

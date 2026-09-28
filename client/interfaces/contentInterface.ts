@@ -48,6 +48,13 @@ export interface PersonalityQuizProfile {
     image?: string; // Cloudinary id
 }
 
+// First key of each card is its title, the other keys are its fields.
+export interface CardsData {
+    description?: string;
+    labels?: Record<string, string>; // field key -> displayed label
+    items: Record<string, string>[];
+}
+
 export interface WallpaperData {
     id: string | number;
     image: string;
