@@ -28,20 +28,11 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
     return (
         <View>
             <View>
-                {selectedAnswer === correctAnswer ? (
-                    <ThemedText style={styles.response}>
-                        Bonne réponse !
-                    </ThemedText>
-                ) : (
-                    <>
-                        <ThemedText style={styles.response}>
-                            Oops... la bonne réponse était :
-                        </ThemedText>
-                        <ThemedText style={styles.response}>
-                            {correctAnswer}
-                        </ThemedText>
-                    </>
-                )}
+                <ThemedText style={styles.response}>
+                    {selectedAnswer === correctAnswer
+                        ? "Bonne réponse !"
+                        : `Oops... la bonne réponse était : ${correctAnswer}`}
+                </ThemedText>
 
                 {subType === GameType.QuizNoel ||
                 subType === GameType.QuizHalloween ||

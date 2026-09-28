@@ -45,6 +45,7 @@ export default function IdeaScreen() {
         for (const idea of ideas) {
             if (idea.listOfContents) {
                 for (const content of idea.listOfContents) {
+                    if (idea.content4 === IdeaType.Video) continue;
                     const maxHeight =
                         idea.content4 === IdeaType.Book ||
                         idea.content4 === IdeaType.TvShow
@@ -54,7 +55,7 @@ export default function IdeaScreen() {
                         idea.dayNumber,
                         content.image,
                         maxHeight,
-                        setImageDimensions
+                        setImageDimensions,
                     );
                 }
             }
@@ -68,6 +69,11 @@ export default function IdeaScreen() {
                 <ContentScreenWrapper
                     typeTitle={idea.typeTitle}
                     backgroundImage={modalBackground}
+                    topImage={
+                        idea.subType === IdeaType.Recipe
+                            ? idea.media
+                            : undefined
+                    }
                     key={idea.id}
                     dayId={dayId}
                 >

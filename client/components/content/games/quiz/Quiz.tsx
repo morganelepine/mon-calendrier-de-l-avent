@@ -56,7 +56,7 @@ export const Quiz: React.FC<QuizProps> = ({ content, setScore }) => {
                     {currentQuestion.title}
                 </CustomMarkdown>
             ) : (
-                <CustomMarkdown style={{ marginVertical: 20 }}>
+                <CustomMarkdown style={{ marginBottom: 20 }}>
                     {currentQuestion.title}
                 </CustomMarkdown>
             )}

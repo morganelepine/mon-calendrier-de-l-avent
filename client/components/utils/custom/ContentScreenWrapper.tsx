@@ -16,6 +16,7 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 interface ContentScreenWrapperProps {
     typeTitle: string | undefined;
     backgroundImage: string;
+    topImage?: string;
     children?: React.ReactNode;
     dayId: number;
 }
@@ -23,6 +24,7 @@ interface ContentScreenWrapperProps {
 export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     typeTitle,
     backgroundImage,
+    topImage,
     children,
     dayId,
 }) => {
@@ -46,6 +48,14 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
         return (
             <FlatScreenWrapper typeTitle={title} dayId={dayId}>
                 <CustomScrollView>
+                    {topImage ? (
+                        <Image
+                            source={{ uri: getCloudinaryImageUrl(topImage) }}
+                            style={styles.topImage}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                        />
+                    ) : null}
                     <View style={{ padding: 20 }}>{children}</View>
                 </CustomScrollView>
             </FlatScreenWrapper>
@@ -55,10 +65,7 @@ export const ContentScreenWrapper: React.FC<ContentScreenWrapperProps> = ({
     return (
         <>
             <View
-                style={[
-                    styles.floatingCloseButton,
-                    { top: insets.top + 10 },
-                ]}
+                style={[styles.floatingCloseButton, { top: insets.top + 10 }]}
             >
                 <CloseContentButton
                     onPress={closeContent}
@@ -104,6 +111,10 @@ const styles = StyleSheet.create({
     headerImage: {
         height: "100%",
         width: "100%",
+    },
+    topImage: {
+        width: "100%",
+        height: 200,
     },
     container: {
         paddingBottom: 20,

@@ -1,9 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { Href } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
-import { ExternalLink } from "@/components/utils/ExternalLink";
+import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
@@ -26,40 +25,33 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
 
             {/* IMAGE OR BUTTON */}
             {idea.media &&
-                (idea.content4 == IdeaType.Game ? (
-                    <View style={{ alignItems: "center", marginVertical: 10 }}>
+                (idea.content4 === IdeaType.Game ? (
+                    <View style={styles.imageContainer}>
                         <Image
                             source={{
                                 uri: getCloudinaryImageUrl(idea.media ?? ""),
                             }}
-                            style={[{ width: 350 }, { height: 280 }]}
+                            style={styles.image}
                             contentFit="cover"
                             cachePolicy="memory-disk"
                         />
                     </View>
                 ) : (
-                    <ExternalLink
-                        href={idea.content4 as Href}
-                        style={styles.button}
-                    >
-                        <ThemedText style={styles.buttonText}>
-                            {idea.content3}
-                        </ThemedText>
-                    </ExternalLink>
+                    <ExternalLinkButton url={idea.media}>
+                        {idea.content3}
+                    </ExternalLinkButton>
                 ))}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: Colors.green,
-        borderRadius: 50,
-        marginTop: 10,
-        marginBottom: 20,
-        paddingHorizontal: 20,
-        alignSelf: "center",
-        textAlign: "center",
+    imageContainer: {
+        alignItems: "center",
+        marginVertical: 10,
     },
-    buttonText: { color: "white", lineHeight: 48 },
+    image: {
+        width: 350,
+        height: 280,
+    },
 });
