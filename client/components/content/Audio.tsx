@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Pressable, View } from "react-native";
+import { StyleSheet, Pressable, View, ViewStyle } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
-import { MusicPreference } from "@/types/types";
 import { StorageKeys } from "@/constants/storageKeys";
+import { MusicPreference } from "@/types/types";
 
 interface AudioPlayerProps {
     music: string;
+    type: "button" | "icon";
+    style?: ViewStyle;
 }
 
-export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
+export const AudioPlayer: React.FC<AudioPlayerProps> = ({
+    music,
+    type = "icon",
+    style = {},
+}) => {
     const audioSource = music ? { uri: music } : null;
     const player = useAudioPlayer(audioSource);
     const status = useAudioPlayerStatus(player);
@@ -53,7 +60,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
         }
     }, [playMusic, player]);
 
-    return (
+    return type === "icon" ? (
         <Pressable onPress={togglePlayPause} style={styles.button}>
             <View style={styles.buttonBackground} />
             <Ionicons
@@ -62,6 +69,16 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ music }) => {
                 color={Theme.orangeToBlue}
             ></Ionicons>
         </Pressable>
+    ) : (
+        <CustomButton onPress={togglePlayPause} style={style}>
+            <Ionicons
+                name={isPlaying ? "pause" : "play"}
+                size={16}
+                color={Colors.snow}
+            ></Ionicons>
+            &nbsp;
+            {isPlaying ? "Mettre en pause" : "Écouter"}
+        </CustomButton>
     );
 };
 

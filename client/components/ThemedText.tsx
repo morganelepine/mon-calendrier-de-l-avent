@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontFamily: "FreightNeoBold",
         marginVertical: 16,
-        letterSpacing: 1,
+        letterSpacing: 0.6,
     },
     contentSubtitle: {
         color: Theme.autumnGreenDarkToGreen,

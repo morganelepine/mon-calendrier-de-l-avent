@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
+import { AudioPlayer } from "@/components/content/Audio";
 import { Colors } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
@@ -23,7 +24,7 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
 
             <CustomMarkdown>{idea.content2}</CustomMarkdown>
 
-            {/* IMAGE OR BUTTON */}
+            {/* IMAGE OR AUDIO OR BUTTON */}
             {idea.media &&
                 (idea.content4 === IdeaType.Game ? (
                     <View style={styles.imageContainer}>
@@ -36,6 +37,12 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
                             cachePolicy="memory-disk"
                         />
                     </View>
+                ) : idea.content4 === IdeaType.Audio ? (
+                    <AudioPlayer
+                        music={idea.media}
+                        type="button"
+                        style={{ marginTop: 16 }}
+                    />
                 ) : (
                     <ExternalLinkButton url={idea.media}>
                         {idea.content3}
