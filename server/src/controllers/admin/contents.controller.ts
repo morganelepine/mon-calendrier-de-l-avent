@@ -35,8 +35,7 @@ export class AdminContentsController {
                 subType: true,
                 typeTitle: true,
                 title: true,
-                published: true,
-                isNew: true,
+                years: true,
             },
             orderBy: [{ season: "asc" }, { dayNumber: "asc" }, { id: "asc" }],
         });
@@ -122,9 +121,15 @@ function toContentData(body: any) {
         content3: body.content3 ?? "",
         content4: body.content4 ?? "",
         media: body.media ?? "",
-        published: body.published ?? true,
-        isNew: body.isNew ?? false,
+        years: toYears(body.years),
     };
+}
+
+function toYears(years: unknown): number[] {
+    if (!Array.isArray(years)) return [];
+    return [...new Set(years.map(Number).filter(Number.isInteger))].sort(
+        (a, b) => a - b,
+    );
 }
 
 function toListItemsCreateData(listItems: ListItemInput[]) {

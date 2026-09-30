@@ -15,6 +15,9 @@ Calendar content is split in two, by how often each part changes:
   `admin/src/constants/personalityQuiz.ts`).
   Same for `idea`/`cards`: a list of cards as JSON in `content1` (format in
   `admin/src/constants/cards.ts`), e.g. a horoscope with one card per sign.
+  `Content.years` lists the years a content is shown in the app: `GET /content/contents` only
+  returns rows whose `years` contains the current year, and an empty list means draft. The years
+  offered in the admin live in `admin/src/constants/years.ts` — add the next one each season.
 
 ### Backoffice
 

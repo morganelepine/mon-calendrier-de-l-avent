@@ -29,7 +29,7 @@ export interface Content {
 
 export async function getContents(): Promise<Content[]> {
     const rows = await contentPrisma.content.findMany({
-        where: { published: true },
+        where: { years: { has: new Date().getFullYear() } },
         include: { listItems: { orderBy: { order: "asc" } } },
         orderBy: { id: "asc" },
     });

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { listContents } from "../services/contents.service";
 import { logout } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
+import { YearsFilter, YearsFilterValue } from "../components/YearsFilter";
 import { ContentFamily, ContentSummary, Season } from "../types";
 
 const TYPE_LABELS: Record<ContentFamily, string> = {
@@ -24,6 +25,15 @@ export function ContentsListPage() {
     const seasonFilter = (searchParams.get("season") ?? "christmas") as
         | Season
         | "";
+    // ?year=2024,2026 or ?year=none (drafts)
+    const yearParam = searchParams.get("year") ?? "2026";
+    const yearFilter = useMemo<YearsFilterValue>(
+        () =>
+            yearParam === "none"
+                ? "none"
+                : yearParam.split(",").filter(Boolean).map(Number),
+        [yearParam],
+    );
     const [loading, setLoading] = useState(true);
     const { setAuthenticated } = useAuth();
 
@@ -41,8 +51,20 @@ export function ContentsListPage() {
     const setSeasonFilter = (value: Season | "") => {
         setSearchParams(
             (params) => {
-                if (value) params.set("season", value);
-                else params.delete("season");
+                // Kept even when empty: a missing param means "christmas".
+                params.set("season", value);
+                return params;
+            },
+            { replace: true },
+        );
+    };
+
+    const setYearFilter = (value: YearsFilterValue) => {
+        setSearchParams(
+            (params) => {
+                if (value === "none") params.set("year", value);
+                else if (value.length) params.set("year", value.join(","));
+                else params.delete("year");
                 return params;
             },
             { replace: true },
@@ -59,8 +81,13 @@ export function ContentsListPage() {
         () =>
             contents
                 .filter((c) => !typeFilter || c.type === typeFilter)
-                .filter((c) => !seasonFilter || c.season === seasonFilter),
-        [contents, typeFilter, seasonFilter],
+                .filter((c) => !seasonFilter || c.season === seasonFilter)
+                .filter((c) =>
+                    yearFilter === "none"
+                        ? c.years.length === 0
+                        : yearFilter.every((year) => c.years.includes(year)),
+                ),
+        [contents, typeFilter, seasonFilter, yearFilter],
     );
 
     const byDay = useMemo(() => {
@@ -98,33 +125,34 @@ export function ContentsListPage() {
             </header>
 
             <div className="type-filter">
-                <label htmlFor="season-filter">Filtrer par saison</label>
+                <span>Filtrer par</span>
                 <select
-                    id="season-filter"
+                    aria-label="Saison"
                     value={seasonFilter}
                     onChange={(e) =>
                         setSeasonFilter(e.target.value as Season | "")
                     }
                 >
-                    <option value="">Toutes</option>
+                    <option value="">Saison</option>
                     <option value="christmas">Noël</option>
                     <option value="halloween">Halloween</option>
                 </select>
 
-                <label htmlFor="type-filter">Filtrer par type</label>
                 <select
-                    id="type-filter"
+                    aria-label="Type"
                     value={typeFilter}
                     onChange={(e) =>
                         setTypeFilter(e.target.value as ContentFamily | "")
                     }
                 >
-                    <option value="">Tous</option>
+                    <option value="">Type</option>
                     <option value="anecdote">Anecdote</option>
                     <option value="idea">Idée</option>
                     <option value="game">Jeu</option>
                     <option value="story">Histoire</option>
                 </select>
+
+                <YearsFilter value={yearFilter} onChange={setYearFilter} />
             </div>
 
             {byDay.map(([day, items]) => (
@@ -147,14 +175,14 @@ export function ContentsListPage() {
                                     </span>{" "}
                                     {item.title || "(sans titre)"}
                                 </Link>
-                                {!item.published && (
-                                    <span className="badge">brouillon</span>
-                                )}
-                                {item.isNew && (
-                                    <span className="badge badge-new">
-                                        nouveau
+                                {item.years.map((year) => (
+                                    <span
+                                        key={year}
+                                        className={`badge badge-year-${year}`}
+                                    >
+                                        {year}
                                     </span>
-                                )}
+                                ))}
                             </li>
                         ))}
                     </ul>

@@ -28,8 +28,7 @@ export interface ContentSummary {
     subType: string;
     typeTitle: string;
     title: string;
-    published: boolean;
-    isNew: boolean;
+    years: number[];
 }
 
 export interface ContentDetail extends ContentSummary {
@@ -53,7 +52,6 @@ export interface ContentInput {
     content3: string;
     content4: string;
     media: string;
-    published: boolean;
-    isNew: boolean;
+    years: number[];
     listItems: ContentListItemInput[];
 }

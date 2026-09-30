@@ -21,6 +21,7 @@ import {
     validatePersonalityQuiz,
 } from "../constants/personalityQuiz";
 import { validateCards } from "../constants/cards";
+import { YEARS } from "../constants/years";
 import {
     ContentFamily,
     ContentInput,
@@ -40,8 +41,7 @@ const EMPTY: ContentInput = {
     content3: "",
     content4: "",
     media: "",
-    published: true,
-    isNew: false,
+    years: [],
     listItems: [],
 };
 
@@ -78,8 +78,7 @@ export function ContentEditPage() {
                     content3: content.content3,
                     content4: content.content4,
                     media: content.media,
-                    published: content.published,
-                    isNew: content.isNew,
+                    years: content.years,
                     listItems: content.listItems.map((item) => ({
                         title: item.title,
                         description: item.description,
@@ -371,30 +370,28 @@ export function ContentEditPage() {
                     />
                 </label>
 
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        checked={form.published}
-                        onChange={(e) =>
-                            setForm((f) => ({
-                                ...f,
-                                published: e.target.checked,
-                            }))
-                        }
-                    />
-                    Publié
-                </label>
-
-                <label className="checkbox">
-                    <input
-                        type="checkbox"
-                        checked={form.isNew}
-                        onChange={(e) =>
-                            setForm((f) => ({ ...f, isNew: e.target.checked }))
-                        }
-                    />
-                    Nouveau cette année
-                </label>
+                <fieldset className="years">
+                    <legend>Années de publication</legend>
+                    {YEARS.map((year) => (
+                        <label className="checkbox" key={year}>
+                            <input
+                                type="checkbox"
+                                checked={form.years.includes(year)}
+                                onChange={(e) =>
+                                    setForm((f) => ({
+                                        ...f,
+                                        years: e.target.checked
+                                            ? [...f.years, year].sort(
+                                                  (a, b) => a - b,
+                                              )
+                                            : f.years.filter((y) => y !== year),
+                                    }))
+                                }
+                            />
+                            {year}
+                        </label>
+                    ))}
+                </fieldset>
 
                 {showListEditor && (
                     <fieldset>

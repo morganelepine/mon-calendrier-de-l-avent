@@ -135,14 +135,52 @@ header {
     margin-top: 24px;
 }
 
-.type-filter label {
+.type-filter span {
     font-family: var(--font-body);
     font-size: 14px;
     color: var(--charcoal);
 }
 
-.type-filter select {
-    width: auto;
+.type-filter select,
+.years-filter > button {
+    width: 160px;
+}
+
+/* Styled like the selects next to it, down to the arrow. */
+.years-filter {
+    position: relative;
+}
+
+.years-filter > button {
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 10px 18px;
+    border-color: var(--hairline);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.years-filter > button::after {
+    content: "▾";
+    float: right;
+    color: var(--charcoal);
+}
+
+.years-filter-panel {
+    position: absolute;
+    top: calc(100% + var(--space-xs));
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--surface-card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    white-space: nowrap;
 }
 
 ul {
@@ -205,7 +243,18 @@ li a:hover {
     color: var(--charcoal);
 }
 
-.badge-new {
+/* One colour per year, the current one filled so "new this year" stands out. */
+.badge-year-2024 {
+    color: #6b6bd6;
+    border-color: #6b6bd6;
+}
+
+.badge-year-2025 {
+    color: #cf2c7d;
+    border-color: #cf2c7d;
+}
+
+.badge-year-2026 {
     background: var(--badge-success);
     border-color: var(--badge-success);
     color: var(--on-primary);
@@ -294,6 +343,12 @@ label {
     font-size: 13px;
     font-weight: 600;
     color: var(--charcoal);
+}
+
+fieldset.years {
+    flex-direction: row;
+    display: flex;
+    gap: var(--space-lg);
 }
 
 label.checkbox {
