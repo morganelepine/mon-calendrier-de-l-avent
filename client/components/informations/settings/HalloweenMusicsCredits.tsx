@@ -10,8 +10,8 @@ export const HalloweenMusicsCredits = () => {
                 type="italic14"
                 style={[styles.musicCredits, { marginBottom: 8 }]}
             >
-                Deux nouveaux morceaux sont proposés en octobre et s'alternent
-                un jour sur deux :
+                Deux morceaux sont proposés en octobre et s'alternent un jour
+                sur deux :
             </ThemedText>
             <View style={styles.musicCredits}>
                 <ExternalLink href="https://pixabay.com/fr/users/soundgallerybydmitrytaras-11640913/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=116010">
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingVertical: 12,
         marginHorizontal: 20,
+        marginTop: 12,
     },
     musicCredits: {
         paddingHorizontal: 20,

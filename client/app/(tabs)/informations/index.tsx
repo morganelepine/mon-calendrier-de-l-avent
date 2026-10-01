@@ -62,17 +62,23 @@ export default function InformationsScreen() {
                         onPress={() => router.push("/informations/bingo")}
                     />
 
-                    <OptionItem
-                        title="Remerciements"
-                        iconName="heart-outline"
-                        iconColor={isOctober ? Colors.autumnRed : Colors.red}
-                        onPress={() => router.push("/informations/copyrights")}
-                    />
+                    {!isOctober && (
+                        <OptionItem
+                            title="Remerciements"
+                            iconName="heart-outline"
+                            iconColor={Colors.red}
+                            onPress={() =>
+                                router.push("/informations/copyrights")
+                            }
+                        />
+                    )}
 
                     <OptionItem
                         title="Noter l'application"
                         iconName="star-outline"
-                        iconColor={isOctober ? Colors.gold : Colors.gold}
+                        iconColor={
+                            isOctober ? Colors.autumnOrange : Colors.gold
+                        }
                         onPress={() => router.push("/informations/rate")}
                     />
 
@@ -80,7 +86,7 @@ export default function InformationsScreen() {
                         title="Paramètres"
                         iconName="settings-outline"
                         iconColor={
-                            isOctober ? Colors.autumnGreenDark : Colors.darkBlue
+                            isOctober ? Colors.autumnGreen : Colors.darkBlue
                         }
                         onPress={() => router.push("/informations/settings")}
                     />

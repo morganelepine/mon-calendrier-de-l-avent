@@ -21,6 +21,9 @@ const HalloweenRules = () => (
                 Rien à gagner ici, juste le plaisir de profiter de l'automne à
                 fond.
             </ThemedText>
+            <ThemedText type="sectionText">
+                Les 3 bingos de Noël seront de retour le 1er novembre.
+            </ThemedText>
         </View>
     </View>
 );

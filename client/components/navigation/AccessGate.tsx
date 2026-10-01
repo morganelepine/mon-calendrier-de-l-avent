@@ -9,7 +9,18 @@ import { StorageKeys } from "@/constants/storageKeys";
 import { verifyWebAccessCode } from "@/services/access.service";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 
-type Status = "checking" | "needs-install" | "locked" | "granted";
+type Status = "checking" | "desktop" | "needs-install" | "locked" | "granted";
+
+// True on phones/tablets. iPadOS reports a desktop "Macintosh" UA,
+// so fall back to touch support to tell it apart from a real Mac.
+function isMobileDevice(): boolean {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent;
+    return (
+        /iPhone|iPad|iPod|Android/i.test(ua) ||
+        (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
+    );
+}
 
 // True only inside an installed home-screen PWA (iOS `navigator.standalone`,
 // or the standard `display-mode: standalone` media query elsewhere).
@@ -26,9 +37,10 @@ function isStandalone(): boolean {
 }
 
 // Web/PWA only.
-// Two gates, in order:
-// 1. Must know the shared access code.
-// 2. Must be running from the installed home-screen icon, not a Safari tab.
+// Three gates, in order:
+// 1. Must be on a phone/tablet, not a computer.
+// 2. Must know the shared access code.
+// 3. Must be running from the installed home-screen icon, not a Safari tab.
 export function AccessGate({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -40,6 +52,11 @@ export function AccessGate({
     const [submitting, setSubmitting] = useState(false);
 
     const checkStatus = async () => {
+        if (!isMobileDevice()) {
+            setStatus("desktop");
+            return;
+        }
+
         const granted = await AsyncStorage.getItem(
             StorageKeys.webAccessGranted,
         );
@@ -78,6 +95,24 @@ export function AccessGate({
             setSubmitting(false);
         }
     };
+
+    if (status === "desktop") {
+        return (
+            <BlueBackground>
+                <SafeAreaView style={styles.safeArea}>
+                    <View style={styles.container}>
+                        <ThemedText style={styles.title}>
+                            Sorry not sorry
+                        </ThemedText>
+                        <ThemedText style={styles.text}>
+                            Ce calendrier se savoure uniquement sur téléphone.
+                            Ouvre ce lien depuis ton iPhone pour continuer.
+                        </ThemedText>
+                    </View>
+                </SafeAreaView>
+            </BlueBackground>
+        );
+    }
 
     if (status === "locked") {
         return (

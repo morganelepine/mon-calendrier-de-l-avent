@@ -1,9 +1,20 @@
 import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { isOctober } from "@/constants/Dates";
+import { Colors } from "@/constants/Colors";
 
 export const Rules = () => {
     return (
         <View>
+            {isOctober && (
+                <View style={styles.halloweenDetails}>
+                    <ThemedText type="italic14">
+                        🍂 Le calendrier de l'automne ne permet pas de gagner
+                        des points.
+                    </ThemedText>
+                </View>
+            )}
+
             <View style={styles.section}>
                 <ThemedText type="sectionText">
                     Chaque jour de décembre, vous pouvez accumuler des points
@@ -98,5 +109,15 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontFamily: "PoppinsBold",
+    },
+    halloweenDetails: {
+        marginBottom: 20,
+        borderWidth: 1,
+        borderColor: Colors.autumnRed,
+        backgroundColor: Colors.autumnRed + "15",
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginHorizontal: 20,
     },
 });

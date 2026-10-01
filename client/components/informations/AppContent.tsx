@@ -8,14 +8,12 @@ export const AppContent = () => {
         <View>
             {isOctober && (
                 <View style={styles.halloweenDetails}>
-                    <ThemedText
-                        type="italic14"
-                        style={{ paddingHorizontal: 20 }}
-                    >
-                        C'est nouveau : tout au long du mois d'octobre,
+                    <ThemedText type="italic14">
+                        🍂 C'est nouveau : tout au long du mois d'octobre,
                         l'application se met aux couleurs de l'automne et
                         d'Halloween !{"\n\n"}Au programme : un bingo spécial et
-                        un calendrier rempli de petites surprises automnales.
+                        un calendrier rempli de petites surprises automnales (un
+                        contenu par jour).
                         {"\n\n"}Pas d'inquiétude : l'ambiance de Noël reviendra
                         le 1er novembre et le calendrier de l'avent démarrera le
                         1er décembre.
@@ -104,6 +102,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.autumnRed + "15",
         borderRadius: 8,
         paddingVertical: 12,
+        paddingHorizontal: 20,
         marginHorizontal: 20,
     },
 });

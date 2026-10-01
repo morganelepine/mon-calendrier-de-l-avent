@@ -43,3 +43,9 @@ export const getDaysUntil = (target: Date): number =>
 export const daysToChristmas = getDaysUntil(christmasDay);
 
 export const daysToCalendar = getDaysUntil(calendarDay);
+
+const halloweenDay = new Date(today.getFullYear(), 9, 31);
+
+export const isHalloween = isOctober && currentDay === halloweenDay.getDate();
+
+export const daysToHalloween = getDaysUntil(halloweenDay);
