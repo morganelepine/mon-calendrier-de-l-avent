@@ -4,6 +4,8 @@ import { Colors, Theme } from "@/constants/Colors";
 export type ThemedTextProps = TextProps & {
     type?:
         | "default"
+        | "sectionTitle"
+        | "sectionDates"
         | "sectionSubtitle"
         | "sectionText"
         | "sectionTextBold"
@@ -25,6 +27,8 @@ export function ThemedText({
         <Text
             style={[
                 type === "default" ? styles.default : undefined,
+                type === "sectionTitle" ? styles.sectionTitle : undefined,
+                type === "sectionDates" ? styles.sectionDates : undefined,
                 type === "sectionSubtitle" ? styles.sectionSubtitle : undefined,
                 type === "sectionText" ? styles.sectionText : undefined,
                 type === "sectionTextBold" ? styles.sectionTextBold : undefined,
@@ -53,6 +57,20 @@ const styles = StyleSheet.create({
         color: Colors.darkGreen,
         paddingTop: 3,
     },
+    sectionTitle: {
+        color: Theme.autumnGreenDarkToautumnGreen,
+        fontFamily: "FreightNeoBold",
+        fontSize: 22,
+        paddingHorizontal: 20,
+    },
+    sectionDates: {
+        color: Theme.autumnGreenDarkToautumnGreen,
+        fontFamily: "PoppinsItalic",
+        fontSize: 14,
+        paddingHorizontal: 20,
+        marginTop: 4,
+        marginBottom: 20,
+    },
     sectionSubtitle: {
         fontFamily: "FreightNeo",
         color: Colors.snow,
@@ -74,6 +92,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         color: Theme.deep,
         paddingHorizontal: 20,
+        paddingVertical: 2,
     },
     sectionTextBold: {
         fontSize: 15,

@@ -1,21 +1,34 @@
 import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { isOctober } from "@/constants/Dates";
-import { Colors } from "@/constants/Colors";
+import { Separator } from "@/components/utils/Separator";
 
 export const Rules = () => {
     return (
         <View>
-            {isOctober && (
-                <View style={styles.halloweenDetails}>
-                    <ThemedText type="italic14">
-                        🍂 Le calendrier de l'automne ne permet pas de gagner
-                        des points.
-                    </ThemedText>
-                </View>
-            )}
+            <View style={styles.section}>
+                <ThemedText type="sectionTitle">
+                    Mon calendrier de l'automne
+                </ThemedText>
+                <ThemedText type="sectionDates">
+                    Du 1er au 31 octobre
+                </ThemedText>
+
+                <ThemedText type="sectionText">
+                    Le calendrier de l'automne ne permet pas de gagner des
+                    points.
+                </ThemedText>
+            </View>
+
+            <Separator />
 
             <View style={styles.section}>
+                <ThemedText type="sectionTitle">
+                    Mon calendrier de l'avent
+                </ThemedText>
+                <ThemedText type="sectionDates">
+                    Du 1er au 25 décembre
+                </ThemedText>
+
                 <ThemedText type="sectionText">
                     Chaque jour de décembre, vous pouvez accumuler des points
                     pour tenter d'accéder à une petite surprise le 25 décembre !
@@ -109,15 +122,5 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontFamily: "PoppinsBold",
-    },
-    halloweenDetails: {
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: Colors.autumnRed,
-        backgroundColor: Colors.autumnRed + "15",
-        borderRadius: 8,
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        marginHorizontal: 20,
     },
 });

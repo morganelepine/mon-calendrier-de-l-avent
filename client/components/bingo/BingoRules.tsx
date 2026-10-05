@@ -1,9 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { isOctober } from "@/constants/Dates";
+import { Separator } from "@/components/utils/Separator";
 
 const HalloweenRules = () => (
     <View>
+        <ThemedText type="sectionTitle">Mon calendrier de l'automne</ThemedText>
+        <ThemedText type="sectionDates">Du 1er au 31 octobre</ThemedText>
+
         <ThemedText type="sectionSubtitle">
             Bingo d'automne &amp;&nbsp;Halloween
         </ThemedText>
@@ -21,19 +24,17 @@ const HalloweenRules = () => (
                 Rien à gagner ici, juste le plaisir de profiter de l'automne à
                 fond.
             </ThemedText>
-            <ThemedText type="sectionText">
-                Les 3 bingos de Noël seront de retour le 1er novembre.
-            </ThemedText>
         </View>
     </View>
 );
 
 const ChristmasRules = () => (
     <View>
+        <ThemedText type="sectionTitle">Mon calendrier de l'avent</ThemedText>
+        <ThemedText type="sectionDates">À partir du 1er novembre</ThemedText>
+
         {/* MOVIES */}
-        <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
-            Bingo des films de Noël
-        </ThemedText>
+        <ThemedText type="sectionSubtitle">Bingo des films de Noël</ThemedText>
         <View style={styles.section}>
             <ThemedText type="sectionText">
                 Une sélection de films de Noël pour tous les goûts pour se
@@ -115,7 +116,13 @@ const ChristmasRules = () => (
 );
 
 export const BingoRules = () => {
-    return isOctober ? <HalloweenRules /> : <ChristmasRules />;
+    return (
+        <>
+            <HalloweenRules />
+            <Separator />
+            <ChristmasRules />
+        </>
+    );
 };
 
 const styles = StyleSheet.create({

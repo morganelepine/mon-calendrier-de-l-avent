@@ -47,11 +47,7 @@ export default function InformationsLayout() {
                     header: () => {
                         return (
                             <ScreenHeader
-                                title={
-                                    isOctober
-                                        ? "Le bingo automnal"
-                                        : "Les bingos de Noël"
-                                }
+                                title={"Les bingos"}
                                 backgroundColor={Theme.goldToBlue}
                                 color={Colors.snow}
                             />

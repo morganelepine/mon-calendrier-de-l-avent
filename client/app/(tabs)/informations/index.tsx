@@ -48,11 +48,7 @@ export default function InformationsScreen() {
                     />
 
                     <OptionItem
-                        title={
-                            isOctober
-                                ? "Fonctionnement du bingo"
-                                : "Fonctionnement des bingos"
-                        }
+                        title={"Fonctionnement des bingos"}
                         iconName="eye-outline"
                         iconColor={
                             isOctober

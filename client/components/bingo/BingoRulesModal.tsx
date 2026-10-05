@@ -1,7 +1,6 @@
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { BingoRules } from "@/components/bingo/BingoRules";
-import { isOctober } from "@/constants/Dates";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 
 interface Props {
@@ -18,16 +17,10 @@ export const BingoRulesModal: React.FC<Props> = ({
     };
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
-            <ThemedText type="modalTitle">
-                {isOctober ? "Le bingo automnal" : "Les bingos de Noël"}
-            </ThemedText>
-            {isOctober ? (
+            <ThemedText type="modalTitle">Les bingos</ThemedText>
+            <CustomScrollView>
                 <BingoRules />
-            ) : (
-                <CustomScrollView>
-                    <BingoRules />
-                </CustomScrollView>
-            )}
+            </CustomScrollView>
         </ModalWithCloseButton>
     );
 };

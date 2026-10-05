@@ -1,27 +1,43 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { isOctober } from "@/constants/Dates";
-import { Colors } from "@/constants/Colors";
+import { Separator } from "@/components/utils/Separator";
 
 export const AppContent = () => {
     return (
         <View>
-            {isOctober && (
-                <View style={styles.halloweenDetails}>
-                    <ThemedText type="italic14">
-                        🍂 C'est nouveau : tout au long du mois d'octobre,
-                        l'application se met aux couleurs de l'automne et
-                        d'Halloween !{"\n\n"}Au programme : un bingo spécial et
-                        un calendrier rempli de petites surprises automnales (un
-                        contenu par jour).
-                        {"\n\n"}Pas d'inquiétude : l'ambiance de Noël reviendra
-                        le 1er novembre et le calendrier de l'avent démarrera le
-                        1er décembre.
-                    </ThemedText>
-                </View>
-            )}
+            <View style={styles.section}>
+                <ThemedText type="sectionTitle">
+                    Mon calendrier de l'automne
+                </ThemedText>
+                <ThemedText type="sectionDates">
+                    Du 1er au 31 octobre
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    C'est nouveau : tout au long du mois d'octobre,
+                    l'application se met aux couleurs de l'automne et
+                    d'Halloween !
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Au programme : un bingo spécial et un calendrier rempli de
+                    petites surprises automnales (un contenu par jour).
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Pas d'inquiétude : l'ambiance de Noël reviendra le 1er
+                    novembre et le calendrier de l'avent démarrera le 1er
+                    décembre.
+                </ThemedText>
+            </View>
+
+            <Separator />
 
             <View style={styles.section}>
+                <ThemedText type="sectionTitle">
+                    Mon calendrier de l'avent
+                </ThemedText>
+                <ThemedText type="sectionDates">
+                    Du 1er au 31 décembre
+                </ThemedText>
+
                 <ThemedText type="sectionText">
                     Chaque jour de décembre, plongez dans la magie de Noël et
                     découvrez :
@@ -94,15 +110,5 @@ export const AppContent = () => {
 const styles = StyleSheet.create({
     section: {
         marginBottom: 20,
-    },
-    halloweenDetails: {
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: Colors.autumnRed,
-        backgroundColor: Colors.autumnRed + "15",
-        borderRadius: 8,
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        marginHorizontal: 20,
     },
 });
