@@ -7,6 +7,7 @@ import { Colors, Theme } from "@/constants/Colors";
 
 interface GamesByType {
     pendu?: Content;
+    wordle?: Content;
     jeu?: Content;
     quizCitation?: Content;
     quizNoel?: Content;
@@ -115,6 +116,10 @@ export const classifyGames = (
         switch (game.subType) {
             case GameType.Pendu:
                 gamesByType.pendu = game;
+                type = ContentType.Game;
+                break;
+            case GameType.Wordle:
+                gamesByType.wordle = game;
                 type = ContentType.Game;
                 break;
             case GameType.Jeu:

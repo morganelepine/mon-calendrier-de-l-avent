@@ -22,6 +22,7 @@ export enum IdeaType {
 
 export enum GameType {
     Pendu = "pendu",
+    Wordle = "wordle",
     Jeu = "jeu",
     QuizCitation = "quiz-citation",
     QuizNoel = "quiz-noel",

@@ -9,6 +9,7 @@ export const SUBTYPES_BY_TYPE: Record<ContentFamily, string[]> = {
         "quiz-emojis",
         "quiz-halloween",
         "pendu",
+        "wordle",
         "jeu",
     ],
     story: ["story", "article"],

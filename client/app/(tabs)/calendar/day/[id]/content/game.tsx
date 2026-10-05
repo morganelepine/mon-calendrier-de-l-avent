@@ -5,6 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { FlatScreenWrapper } from "@/components/utils/custom/FlatScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
+import { Wordle } from "@/components/content/games/wordle/Wordle";
 import { OtherGames } from "@/components/content/games/others/OtherGames";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { showPointsToast } from "@/components/utils/Toast";
@@ -46,6 +47,7 @@ export default function GameScreen() {
     // populated - and avoids having to branch on which one it is.
     const totalQuestions =
         (gamesByType.pendu?.content1.split(",").length ?? 0) +
+        (gamesByType.wordle?.content1.split(",").length ?? 0) +
         (gamesByType.jeu?.content1.split(",").length ?? 0) +
         (gamesByType.quizCitation?.listOfContents?.length ?? 0) +
         (gamesByType.quizNoel?.listOfContents?.length ?? 0) +
@@ -53,7 +55,7 @@ export default function GameScreen() {
         (gamesByType.quizHalloween?.listOfContents?.length ?? 0);
 
     const totalQuestionsText =
-        gamesByType.pendu || gamesByType.jeu
+        gamesByType.pendu || gamesByType.wordle || gamesByType.jeu
             ? `Vous avez joué ${answeredCount} ${answeredCount > 1 ? "mots" : "mot"} sur ${totalQuestions}`
             : `Vous avez répondu à ${answeredCount} ${answeredCount > 1 ? "questions" : "question"} sur ${totalQuestions}`;
 
@@ -100,6 +102,10 @@ export default function GameScreen() {
                 <View style={styles.container}>
                     {gamesByType.pendu && (
                         <Hangman game={gamesByType.pendu} setScore={setScore} />
+                    )}
+
+                    {gamesByType.wordle && (
+                        <Wordle game={gamesByType.wordle} setScore={setScore} />
                     )}
 
                     {gamesByType.jeu && (
