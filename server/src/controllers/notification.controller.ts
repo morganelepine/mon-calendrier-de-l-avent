@@ -17,6 +17,10 @@ function getActiveSeason(parisNow: Date): Season | null {
     return null;
 }
 
+function getDayOpeningReason(season: Season): string {
+    return season === "halloween" ? "OctoberOpening" : "DayOpening";
+}
+
 function buildReminderContent(
     season: Season,
     parisNow: Date,
@@ -75,16 +79,47 @@ export class NotificationController {
 
         const users = await prisma.user.findMany({
             where: { pushToken: { not: null } },
-            select: { pushToken: true },
+            select: { id: true, pushToken: true },
         });
 
         if (users.length === 0) {
             return { status: 200, sent: 0 };
         }
 
+        // Skip anyone who already opened today's door.
+        // ?ignoreOpened=true bypasses this for testing.
+        const ignoreOpened = request.query.ignoreOpened === "true";
+        let usersToNotify = users;
+        if (!ignoreOpened) {
+            const alreadyOpened = await prisma.score.findMany({
+                where: {
+                    year: parisNow.getFullYear(),
+                    day: parisNow.getDate(),
+                    reason: getDayOpeningReason(season),
+                    userId: { in: users.map((user) => user.id) },
+                },
+                select: { userId: true },
+            });
+            const alreadyOpenedIds = new Set(
+                alreadyOpened.map((score) => score.userId),
+            );
+            usersToNotify = users.filter(
+                (user) => !alreadyOpenedIds.has(user.id),
+            );
+        }
+
+        if (usersToNotify.length === 0) {
+            return {
+                status: 200,
+                season,
+                sent: 0,
+                skippedAlreadyOpened: users.length,
+            };
+        }
+
         const { title, body } = buildReminderContent(season, parisNow);
         const results = await sendExpoPushNotifications(
-            users.map((user) => ({
+            usersToNotify.map((user) => ({
                 to: user.pushToken as string,
                 title,
                 body,
@@ -107,6 +142,7 @@ export class NotificationController {
             season,
             sent: results.filter((result) => result.ok).length,
             forgotten: tokensToForget.length,
+            skippedAlreadyOpened: users.length - usersToNotify.length,
         };
     }
 }
