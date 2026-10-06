@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import { ScoreType } from "../score.controller";
+import { POSSIBLE_USERNAMES_COUNT } from "../user.controller";
+import { usernames } from "../../data/usernames";
+
+const curatedUsernames = [...new Set(usernames)];
 
 const CONTENT_TYPE_BY_ITEM_NUMBER: Record<number, string> = {
     1: "story",
@@ -53,6 +57,7 @@ export class AdminStatsController {
             groupCount,
             groupMemberCount,
             usersInGroup,
+            assignedCuratedUsernames,
         ] = await Promise.all([
             prisma.$queryRaw<CountRow[]>`
                 SELECT "day" AS key, COUNT(DISTINCT "userId") AS users
@@ -103,6 +108,9 @@ export class AdminStatsController {
             prisma.group.count(),
             prisma.groupMember.count(),
             prisma.user.count({ where: { memberships: { some: {} } } }),
+            prisma.user.count({
+                where: { username: { in: curatedUsernames } },
+            }),
         ]);
 
         const toDateSeries = (rows: DateRow[]) =>
@@ -144,6 +152,12 @@ export class AdminStatsController {
                 premium: premiumUsers,
                 total: totalUsers,
                 byDate: toDateSeries(premiumByDate),
+            },
+            usernames: {
+                possible: POSSIBLE_USERNAMES_COUNT,
+                curated: curatedUsernames.length,
+                curatedAvailable:
+                    curatedUsernames.length - assignedCuratedUsernames,
             },
             groups: {
                 count: groupCount,

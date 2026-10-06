@@ -5,6 +5,14 @@ import { prisma } from "../lib/prisma";
 const FALLBACK_SEGMENTS = ["de_Noël", "du_Nord", "de_Minuit"];
 const MAX_FALLBACK_ATTEMPTS = 200;
 
+// A Set so a segment name that happens to also be curated isn't counted twice.
+export const POSSIBLE_USERNAMES_COUNT = new Set([
+    ...usernames,
+    ...usernames.flatMap((base) =>
+        FALLBACK_SEGMENTS.map((segment) => `${base}_${segment}`),
+    ),
+]).size;
+
 // Only used once the curated `usernames` pool is fully taken.
 // First tries completing an existing name with one of a few curated segments (e.g. "Ange_Doré_de_Noël").
 // If that tier is somehow exhausted too, falls back to a random numeric suffix
@@ -54,12 +62,12 @@ export class UserController {
             return [];
         }
 
-        const group = await prisma.group.findUnique({
-            where: { id: Number(groupId) },
-            include: { members: true },
-        });
+            const group = await prisma.group.findUnique({
+                where: { id: Number(groupId) },
+                include: { members: true },
+            });
 
-        if (!group) return [];
+            if (!group) return [];
 
         const excludedIds = group.members.map((member) => member.userId);
 

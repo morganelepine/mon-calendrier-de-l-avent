@@ -41,3 +41,6 @@ export const fillMonth = (rows: DateCount[], month: string): DateCount[] => {
         return { date, count: counts.get(date) ?? 0 };
     });
 };
+
+// 2385656 -> "2 385 656"
+export const formatNumber = (value: number) => value.toLocaleString("fr-FR");

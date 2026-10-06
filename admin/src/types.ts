@@ -76,6 +76,11 @@ export interface Stats {
     };
     notifications: { withToken: number; total: number };
     premium: { premium: number; total: number; byDate: DateCount[] };
+    usernames: {
+        possible: number; // curated + with segment (numeric suffixes excluded)
+        curated: number; // server/src/data/usernames.ts
+        curatedAvailable: number; // curated, not yet given to a user
+    };
     groups: {
         count: number;
         avgSize: number;

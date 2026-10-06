@@ -7,7 +7,7 @@ import { ColumnChart } from "../components/stats/ColumnChart";
 import { PieChart } from "../components/stats/PieChart";
 import { DateChart, MonthlyDateChart } from "../components/stats/DateCharts";
 import { Kpi } from "../components/stats/Kpi";
-import { percent } from "../components/stats/statsFormat";
+import { formatNumber, percent } from "../components/stats/statsFormat";
 import { Season, Stats } from "../types";
 
 const DAYS_BY_SEASON: Record<Season, number> = {
@@ -135,7 +135,31 @@ export function StatsPage() {
                         />
                     </div>
 
-                    <h2>Ancienneté · activité</h2>
+                    <h2>Pseudos</h2>
+                    <div className="kpis">
+                        <Kpi
+                            label="Liste de base"
+                            value={formatNumber(stats.usernames.curated)}
+                            detail="usernames.ts"
+                        />
+                        <Kpi
+                            label="Disponibles"
+                            value={percent(
+                                stats.usernames.curatedAvailable,
+                                stats.usernames.curated,
+                            )}
+                            detail={`${formatNumber(
+                                stats.usernames.curatedAvailable,
+                            )} noms disponibles`}
+                        />
+                        <Kpi
+                            label="Possibles"
+                            value={formatNumber(stats.usernames.possible)}
+                            detail="liste de base + segments"
+                        />
+                    </div>
+
+                    <h2>Ancienneté · Activité</h2>
                     <PieChart
                         slices={[
                             {
