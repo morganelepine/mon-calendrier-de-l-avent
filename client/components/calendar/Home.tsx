@@ -27,6 +27,13 @@ import {
     useCountdownShowSeconds,
     useChristmasTargetDay,
 } from "@/contexts/CountdownVariantContext";
+import { usePremium } from "@/contexts/PremiumContext";
+import { useMusicSelection } from "@/contexts/MusicSelectionContext";
+import {
+    currentMusicSeason,
+    getAvailableMusics,
+    getMusicForDay,
+} from "@/constants/Musics";
 
 // BACKGROUND IMAGES
 const today = new Date().getDate();
@@ -34,19 +41,13 @@ const WINTER_BACKGROUND = "3_thng7s";
 const HALLOWEEN_BACKGROUND =
     today < 20 ? "Rumeysa_Cinar_nhebdq" : "halloween_txyg5n"; // october
 
-// MUSICS
-const DEFAULT_MUSIC =
-    "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3";
-const HALLOWEEN_MUSIC_EVEN_DAYS =
-    "https://res.cloudinary.com/deauthz29/video/upload/Dmitry-Taras-Halloween_gacrmx.mp3";
-const HALLOWEEN_MUSIC_ODD_DAYS =
-    "https://res.cloudinary.com/deauthz29/video/upload/Mikhail-Smusev-Halloween_jqgdtd.mp3";
-
 export const Home = () => {
     const insets = useSafeAreaInsets();
     const [countdownVariant] = useCountdownVariant();
     const [showSeconds] = useCountdownShowSeconds();
     const [targetDay] = useChristmasTargetDay(); // 24 or 25
+    const { isPremium } = usePremium();
+    const { excludedIds } = useMusicSelection();
 
     const countdownTargetDate = new Date(
         christmasDay.getFullYear(),
@@ -77,17 +78,10 @@ export const Home = () => {
         backgroundImage = WINTER_BACKGROUND;
     }
 
-    let music;
-    if (day && isDecember) {
-        music = day.music;
-    } else if (isOctober) {
-        music =
-            currentDay % 2 === 0
-                ? HALLOWEEN_MUSIC_EVEN_DAYS
-                : HALLOWEEN_MUSIC_ODD_DAYS;
-    } else {
-        music = DEFAULT_MUSIC;
-    }
+    const music = getMusicForDay(
+        currentDay,
+        getAvailableMusics(currentMusicSeason, isPremium, excludedIds),
+    );
 
     return (
         <>
@@ -105,7 +99,7 @@ export const Home = () => {
                             right: 10,
                         }}
                     >
-                        <AudioPlayer music={music} type="icon" />
+                        <AudioPlayer music={music?.url ?? ""} type="icon" />
                     </View>
 
                     {/* October: countdown to Halloween */}

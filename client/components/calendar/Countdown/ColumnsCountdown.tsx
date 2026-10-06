@@ -1,6 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { countdownTitleStyle } from "@/components/calendar/Countdown/countdownStyles";
+import {
+    countdownTitleStyle,
+    scaleTextStyle,
+} from "@/components/calendar/Countdown/countdownStyles";
 import {
     formatUnitLabel,
     getCountdownUnits,
@@ -9,11 +12,13 @@ import { CountdownValues } from "@/hooks/useCountdown";
 
 interface ColumnsCountdownProps extends CountdownValues {
     showSeconds: boolean;
+    scale?: number;
 }
 
 // Premium variant: (days/)hours/minutes/(seconds) side by side.
 export const ColumnsCountdown = ({
     showSeconds,
+    scale = 1,
     ...values
 }: ColumnsCountdownProps) => {
     const units = getCountdownUnits(showSeconds, values.days);
@@ -29,8 +34,12 @@ export const ColumnsCountdown = ({
                         <ThemedText
                             style={[
                                 countdownTitleStyle,
-                                styles.value,
-                                compact && styles.valueCompact,
+                                scaleTextStyle(
+                                    compact
+                                        ? styles.valueCompact
+                                        : styles.value,
+                                    scale,
+                                ),
                             ]}
                         >
                             {String(value).padStart(2, "0")}
@@ -38,8 +47,12 @@ export const ColumnsCountdown = ({
                         <ThemedText
                             style={[
                                 countdownTitleStyle,
-                                styles.label,
-                                compact && styles.labelCompact,
+                                scaleTextStyle(
+                                    compact
+                                        ? styles.labelCompact
+                                        : styles.label,
+                                    scale,
+                                ),
                             ]}
                         >
                             {formatUnitLabel(value, singular, plural)}
@@ -67,13 +80,16 @@ const styles = StyleSheet.create({
     },
     valueCompact: {
         fontSize: 52,
+        letterSpacing: 2,
+        fontVariant: ["tabular-nums"],
     },
     label: {
         fontSize: 20,
         fontFamily: "FreightNeo",
-        marginTop: -8,
+        marginTop: -6,
     },
     labelCompact: {
         fontSize: 15,
+        fontFamily: "FreightNeo",
     },
 });

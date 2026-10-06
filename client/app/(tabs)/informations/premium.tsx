@@ -7,6 +7,8 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { CountdownVariantSettings } from "@/components/informations/settings/CountdownVariantSettings";
 import { Game2048PremiumSettings } from "@/components/informations/settings/Game2048PremiumSettings";
+import { MusicSelection } from "@/components/informations/settings/MusicSelection";
+import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
 import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { showToast } from "@/components/utils/Toast";
 import { Separator } from "@/components/utils/Separator";
@@ -81,53 +83,35 @@ export default function PremiumScreen() {
                     votre calendrier de l’Avent ✨
                 </ThemedText>
 
-                <CountdownVariantSettings />
+                <CountdownVariantSettings color={Colors.green} />
 
-                <Game2048PremiumSettings />
+                <Game2048PremiumSettings color={Colors.lightGreen} />
 
-                <View style={{ marginVertical: 8 }}>
-                    <ThemedText type="sectionSubtitle">
-                        3 bonus pour votre série de connexion
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Trois bonus supplémentaires pour vous aider à faire
-                        durer votre série et ne jamais perdre le fil de votre
-                        Avent !
-                    </ThemedText>
-                </View>
+                {/* <PremiumFeatureCard
+                    title="3 bonus pour votre série de connexion"
+                    color={Colors.green}
+                    description="Trois bonus supplémentaires pour vous aider à faire durer votre série et ne jamais perdre le fil de votre Avent !"
+                /> */}
 
-                <View style={{ marginVertical: 8 }}>
-                    <ThemedText type="sectionSubtitle">
-                        Encore plus de musique
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Découvrez de nouvelles musiques de Noël et choisissez
-                        celles qui vous accompagneront tout au long du mois.
-                    </ThemedText>
-                </View>
+                <MusicSelection color={Colors.blue} />
 
-                <View style={{ marginVertical: 8 }}>
-                    <ThemedText type="sectionSubtitle">
-                        Une surprise le 25 décembre
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        Avec La Hotte Magique, vous remportez automatiquement la
-                        petite surprise du 25&nbsp;décembre, quel que soit votre
-                        score.
-                    </ThemedText>
-                </View>
+                <PremiumFeatureCard
+                    title="Une surprise le 25 décembre"
+                    color={Colors.red}
+                    description={
+                        <>
+                            Avec La Hotte Magique, vous remportez
+                            automatiquement la petite surprise du
+                            25&nbsp;décembre, quel que soit votre score.
+                        </>
+                    }
+                />
 
-                <View style={{ marginVertical: 8 }}>
-                    <ThemedText type="sectionSubtitle">
-                        Une bonne action
-                    </ThemedText>
-                    <ThemedText type="sectionText">
-                        La Hotte Magique, c’est aussi une façon de soutenir le
-                        développement de l’application et de donner un petit
-                        coup de pouce à sa créatrice. Merci de faire partie de
-                        l’aventure ❤️
-                    </ThemedText>
-                </View>
+                <PremiumFeatureCard
+                    title="Une bonne action"
+                    color={Colors.autumnGold}
+                    description="La Hotte Magique, c’est aussi une façon de soutenir le développement de l’application et de donner un petit coup de pouce à sa créatrice. Merci de faire partie de l’aventure 🤍"
+                />
 
                 <Separator />
 
@@ -174,7 +158,7 @@ const styles = StyleSheet.create({
         color: Theme.goldToBlue,
         textAlign: "center",
         fontSize: 18,
-        marginBottom: 16,
+        marginBottom: 8,
     },
     purchaseBox: {
         gap: 12,

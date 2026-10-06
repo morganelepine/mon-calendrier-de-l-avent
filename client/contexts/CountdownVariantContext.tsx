@@ -1,55 +1,7 @@
-import React, {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useContext, useMemo } from "react";
 import { StorageKeys } from "@/constants/storageKeys";
 import { ChristmasTargetDay, CountdownVariant } from "@/enums/enums";
-import { logClient } from "@/services/log.service";
-
-// Reads/writes a single AsyncStorage-backed preference.
-const usePersistedPreference = <T,>(
-    key: string,
-    defaultValue: T,
-    parse: (raw: string) => T | null,
-    serialize: (value: T) => string,
-): [T, (next: T) => void] => {
-    const [value, setValueState] = useState<T>(defaultValue);
-
-    useEffect(() => {
-        AsyncStorage.getItem(key).then((stored) => {
-            if (stored === null) return;
-            const parsed = parse(stored);
-            if (parsed !== null) setValueState(parsed);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [key]);
-
-    // Stable across renders (only changes if the key itself does) so
-    // consumers - e.g. the context's own useMemo below - can safely depend
-    // on it without recomputing every render.
-    const setValue = useCallback(
-        (next: T): void => {
-            setValueState(next);
-            AsyncStorage.setItem(key, serialize(next)).catch((error) => {
-                console.error(`Error setting "${key}" preference`, error);
-                logClient(`Error setting "${key}" preference`, {
-                    error: String(error),
-                });
-            });
-        },
-        // parse/serialize are expected to be pure functions of `key` alone
-        // (see call sites below) - only `key` should ever change identity.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [key],
-    );
-
-    return [value, setValue];
-};
+import { usePersistedPreference } from "@/hooks/usePersistedPreference";
 
 const isCountdownVariant = (value: string | null): value is CountdownVariant =>
     !!value && (Object.values(CountdownVariant) as string[]).includes(value);

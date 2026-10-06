@@ -8,6 +8,7 @@ export const StorageKeys = {
     userId: "userId",
     hasLaunched: "hasLaunched",
     playMusic: "playMusic",
+    excludedMusics: "excluded_musics",
     countdownVariant: "countdown_variant",
     countdownShowSeconds: "countdown_show_seconds",
     countdownTargetDay: "countdown_target_day",

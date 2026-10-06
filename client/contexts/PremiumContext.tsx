@@ -60,7 +60,7 @@ export const PremiumProvider = ({
         if (!PURCHASES_SUPPORTED || !userUuid) return () => {};
 
         if (!REVENUECAT_ANDROID_KEY) {
-            logClient("Missing EXPO_PUBLIC_REVENUECAT_ANDROID_KEY");
+            // logClient("Missing EXPO_PUBLIC_REVENUECAT_ANDROID_KEY");
             setIsReady(true);
             return () => {};
         }

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { ThemedText } from "@/components/ThemedText";
+import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
 import { getIconForTier, getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER, FREE_MAX_TIER } from "@/utils/games2048/engine";
 import { Colors } from "@/constants/Colors";
@@ -10,16 +10,20 @@ const BONUS_TIERS = Array.from(
     (_, i) => FREE_MAX_TIER + 1 + i,
 );
 
-export const Game2048PremiumSettings = () => {
+export const Game2048PremiumSettings = ({ color }: { color: string }) => {
     return (
-        <View style={{ marginVertical: 8 }}>
-            <ThemedText type="sectionSubtitle">Un 2048 plus complet</ThemedText>
-            <ThemedText type="sectionText">
-                La version de base s'arrête au palier {FREE_MAX_TIER}. La Hotte
-                Magique débloque {BONUS_TIERS.length} niveaux supplémentaires
-                pour prolonger vos parties et mettre votre talent à l’épreuve !
-            </ThemedText>
-
+        <PremiumFeatureCard
+            title="Un 2048 plus complet"
+            color={color}
+            description={
+                <>
+                    La version de base s'arrête au palier {FREE_MAX_TIER}. La
+                    Hotte Magique débloque {BONUS_TIERS.length} niveaux
+                    supplémentaires pour prolonger vos parties et mettre votre
+                    talent à l’épreuve !
+                </>
+            }
+        >
             <View style={styles.previewBox}>
                 {BONUS_TIERS.map((tier) => (
                     <View key={tier} style={styles.tile}>
@@ -35,7 +39,7 @@ export const Game2048PremiumSettings = () => {
                     </View>
                 ))}
             </View>
-        </View>
+        </PremiumFeatureCard>
     );
 };
 
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         gap: 16,
-        padding: 8,
+        paddingTop: 12,
     },
     tile: {
         alignItems: "center",

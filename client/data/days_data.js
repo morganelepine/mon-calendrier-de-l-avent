@@ -12,7 +12,6 @@ export const daysArray = [
         quote: "« Tu fais quoi pour Noël ?  \nJe prends deux kilos. »",
         quoteAuthor: "Anna Gavalda",
         quoteSource: "Ensemble, c’est tout",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/we-wish-you-a-merry-christmas_fcqhsn.mp3",
     },
     {
         dayNumber: 8,
@@ -27,7 +26,6 @@ export const daysArray = [
         quote: "Celui qui n’a pas Noël dans le coeur ne le trouvera jamais au pied d’un arbre.",
         quoteAuthor: "Roy Lemon Smith",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/carol-of-the-bells_asxlr9.mp3",
     },
     {
         dayNumber: 23,
@@ -42,7 +40,6 @@ export const daysArray = [
         quote: "Noël, c’est la veille, c’est l’attente.",
         quoteAuthor: "Georges Dor",
         quoteSource: "Après l'enfance",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1732811467/petit-papa-noel_pq0ywr.mp4",
     },
     {
         dayNumber: 5,
@@ -57,7 +54,6 @@ export const daysArray = [
         quote: "Le meilleur de tous les cadeaux autour de n'importe quel sapin de Noël : la présence d'une famille heureuse tous enveloppés l'un dans l'autre.",
         quoteAuthor: "Burton Hillis",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1732811467/petit-papa-noel_pq0ywr.mp4",
     },
     {
         dayNumber: 9,
@@ -72,7 +68,6 @@ export const daysArray = [
         quote: "Pour préparer un arbre de Noël, il faut trois choses, outre les ornements et l’arbre, la foi dans les beaux jours à venir.",
         quoteAuthor: "Zahrad",
         quoteSource: "Un Arbre de Noël",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1764420642/Greensleeves_ddi2zo.mp4",
     },
     {
         dayNumber: 13,
@@ -87,7 +82,6 @@ export const daysArray = [
         quote: "A Noël je n'ai pas plus envie de rose que je ne voudrais de neige au printemps. J'aime chaque saison pour ce qu’elle apporte.",
         quoteAuthor: "William Shakespeare",
         quoteSource: "Peines d’amour perdues",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/we-wish-you-a-merry-christmas_fcqhsn.mp3",
     },
     {
         dayNumber: 2,
@@ -102,7 +96,6 @@ export const daysArray = [
         quote: "Noël agite une baguette magique sur ce monde et voici, tout est plus doux et plus beau.",
         quoteAuthor: "Norman Vincent Peale",
         quoteSource: "The Power of Positive Thinking",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/carol-of-the-bells_asxlr9.mp3",
     },
     {
         dayNumber: 6,
@@ -117,7 +110,6 @@ export const daysArray = [
         quote: "J'ai compris que le Père Noël n'existait pas quand j'avais 5 ans. Je suis entrée dans un grand magasin et il m'a demandé un autographe.",
         quoteAuthor: "Shirley Temple",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
     },
     {
         dayNumber: 12,
@@ -132,7 +124,6 @@ export const daysArray = [
         quote: "Le temps, c'est quand on va d'un Noël à l'autre.",
         quoteAuthor: "Paul Villeneuve",
         quoteSource: "Johnny Bungalow",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
     },
     {
         dayNumber: 15,
@@ -147,7 +138,6 @@ export const daysArray = [
         quote: "Ne pourrait-on pas fixer la Saint-Sylvestre au 15 août, afin que le père Noël évolue enfin dans des cheminées éteintes ?",
         quoteAuthor: "Kevin Bright",
         quoteSource: "Friends",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1764420642/Greensleeves_ddi2zo.mp4",
     },
     {
         dayNumber: 16,
@@ -162,7 +152,6 @@ export const daysArray = [
         quote: "J'avais mis mes souliers devant la cheminée, le père Noël m'a apporté des pieds.",
         quoteAuthor: "Philippe Geluck",
         quoteSource: "Le Chat",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/white-christmas_ztcmxd.mp3",
     },
     {
         dayNumber: 20,
@@ -177,7 +166,6 @@ export const daysArray = [
         quote: "Ce n'est pas seulement pour duper nos enfants que nous les entretenons dans la croyance au Père Noël: leur ferveur nous réchauffe, nous aide à nous tromper nous-mêmes.",
         quoteAuthor: "Claude Lévi-Strauss",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/carol-of-the-bells_asxlr9.mp3",
     },
     {
         dayNumber: 22,
@@ -192,7 +180,6 @@ export const daysArray = [
         quote: "J'ai entendu les cloches de Noël  \nJ'ai écouté les vieux chants familiers  \nEt leurs mots puissants et doux rappellent  \nPaix sur Terre aux hommes de bonne volonté !",
         quoteAuthor: "Henry Wadsworth Longfellow",
         quoteSource: "Christmas Bells",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/white-christmas_ztcmxd.mp3",
     },
     {
         dayNumber: 14,
@@ -207,7 +194,6 @@ export const daysArray = [
         quote: "Ce qui compte à Noël, ce n’est pas de décorer le sapin, c’est d’être tous réunis.",
         quoteAuthor: "Philippe Bouvard",
         quoteSource: "Les Pensées",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/carol-of-the-bells_asxlr9.mp3",
     },
     {
         dayNumber: 4,
@@ -222,7 +208,6 @@ export const daysArray = [
         quote: "On dit que la jeunesse ne croit plus à rien. Quelle tristesse...  \nEt si un jour le Père Noël ne croyait plus aux enfants !",
         quoteAuthor: "Pierre Doris",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/white-christmas_ztcmxd.mp3",
     },
     {
         dayNumber: 17,
@@ -237,7 +222,6 @@ export const daysArray = [
         quote: "Dès que l'adulte tue le mythe de l'existence du père Noël, il oublie le miracle du vrai partage qui existe dans le coeur de l'enfant.",
         quoteAuthor: "Michel Bouthot",
         quoteSource: "Chemins parsemés d'immortelles pensées",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1732811467/petit-papa-noel_pq0ywr.mp4",
     },
     {
         dayNumber: 1,
@@ -252,7 +236,6 @@ export const daysArray = [
         quote: "L'enfance, c'est de croire qu'avec le sapin de Noël et trois flocons de neige, toute la Terre est changée.",
         quoteAuthor: "André Laurendeau",
         quoteSource: "Voyages au pays de l'enfance",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
     },
     {
         dayNumber: 10,
@@ -267,7 +250,6 @@ export const daysArray = [
         quote: "Tout ce que je veux pour Noël, c'est un autre film avec Audrey Hepburn !",
         quoteAuthor: "Cary Grant",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/white-christmas_ztcmxd.mp3",
     },
     {
         dayNumber: 3,
@@ -282,7 +264,6 @@ export const daysArray = [
         quote: "Sans les cadeaux, Noël ne serait pas Noël.",
         quoteAuthor: "Louisa May Alcott",
         quoteSource: "Les Filles du docteur March",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1764420642/Greensleeves_ddi2zo.mp4",
     },
     {
         dayNumber: 7,
@@ -297,7 +278,6 @@ export const daysArray = [
         quote: "Noël n'est pas un jour ni une saison, c'est un état d'esprit.",
         quoteAuthor: "John Calvin Coolidge",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/we-wish-you-a-merry-christmas_fcqhsn.mp3",
     },
     {
         dayNumber: 24,
@@ -312,7 +292,6 @@ export const daysArray = [
         quote: "Noël est là,  \nCe joyeux Noël, des cadeaux plein les bras,  \nQui réchauffe nos coeurs et apporte la joie,  \nJour des plus beaux souvenirs,  \nPlus beau jour de l'année.",
         quoteAuthor: "Washington Irving",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
     },
     {
         dayNumber: 18,
@@ -327,7 +306,6 @@ export const daysArray = [
         quote: "Ne soyez jamais trop grand pour surveiller le ciel la veille de Noël.",
         quoteAuthor: "Anonyme",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
     },
     {
         dayNumber: 21,
@@ -342,7 +320,6 @@ export const daysArray = [
         quote: "A Noël, il est tout aussi important d'ouvrir notre coeur que d'ouvrir nos cadeaux.",
         quoteAuthor: "Janice Maeditere",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1764420642/Greensleeves_ddi2zo.mp4",
     },
     {
         dayNumber: 11,
@@ -357,7 +334,6 @@ export const daysArray = [
         quote: "Quand on mange au chaud le gâteau (de Noël), on mange les oeufs (de Pâques) derrière le fourneau.",
         quoteAuthor: "Dicton français",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1732811467/petit-papa-noel_pq0ywr.mp4",
     },
     {
         dayNumber: 25,
@@ -372,6 +348,5 @@ export const daysArray = [
         quote: "C'est Noël : Il est grand temps de rallumer les étoiles…",
         quoteAuthor: "Guillaume Apollinaire",
         quoteSource: "",
-        music: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/we-wish-you-a-merry-christmas_fcqhsn.mp3",
     },
 ];

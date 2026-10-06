@@ -11,5 +11,4 @@ export interface Day {
     quote: string;
     quoteAuthor: string;
     quoteSource: string;
-    music: string;
 }

@@ -34,11 +34,6 @@ const HALLOWEEN_IMAGES = [
     "31_zjs3yb",
 ];
 
-const HALLOWEEN_MUSICS = [
-    "https://res.cloudinary.com/deauthz29/video/upload/Dmitry-Taras-Halloween_gacrmx.mp3",
-    "https://res.cloudinary.com/deauthz29/video/upload/Mikhail-Smusev-Halloween_jqgdtd.mp3",
-];
-
 const QUOTES = [
     {
         text: "La beauté de l’automne\nest un poème écrit\npar la nature.",
@@ -267,6 +262,5 @@ export const octoberDaysArray = VISUAL_ORDER.map((dayNumber, index) => {
         quote: QUOTES[dayNumber - 1].text,
         quoteAuthor: QUOTES[dayNumber - 1].author,
         quoteSource: QUOTES[dayNumber - 1].source,
-        music: HALLOWEEN_MUSICS[(dayNumber - 1) % HALLOWEEN_MUSICS.length],
     };
 });

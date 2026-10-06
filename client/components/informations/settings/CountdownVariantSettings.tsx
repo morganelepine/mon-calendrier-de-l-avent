@@ -3,6 +3,10 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
 import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
+import {
+    PremiumFeatureCard,
+    PremiumFeaturePanel,
+} from "@/components/informations/settings/PremiumFeatureCard";
 import { NightsCountdown } from "@/components/calendar/Countdown/NightsCountdown";
 import { ColumnsCountdown } from "@/components/calendar/Countdown/ColumnsCountdown";
 import {
@@ -15,8 +19,10 @@ import { ChristmasTargetDay, CountdownVariant } from "@/enums/enums";
 import { Colors, Theme } from "@/constants/Colors";
 
 const DEMO_COUNTDOWN = { days: 12, hours: 15, minutes: 13, seconds: 1 };
+// The previews sit in a narrower box than the home screen countdown.
+const PREVIEW_SCALE = 0.7;
 
-export const CountdownVariantSettings = () => {
+export const CountdownVariantSettings = ({ color }: { color: string }) => {
     const { isPremium } = usePremium();
     const [variant, setVariant] = useCountdownVariant();
     const [showSeconds, setShowSeconds] = useCountdownShowSeconds();
@@ -26,7 +32,12 @@ export const CountdownVariantSettings = () => {
     const options: { variant: CountdownVariant; preview: ReactNode }[] = [
         {
             variant: CountdownVariant.Nights,
-            preview: <NightsCountdown nights={DEMO_COUNTDOWN.days} />,
+            preview: (
+                <NightsCountdown
+                    nights={DEMO_COUNTDOWN.days}
+                    scale={PREVIEW_SCALE}
+                />
+            ),
         },
         {
             variant: CountdownVariant.Columns,
@@ -34,22 +45,24 @@ export const CountdownVariantSettings = () => {
                 <ColumnsCountdown
                     {...DEMO_COUNTDOWN}
                     showSeconds={showSeconds}
+                    scale={PREVIEW_SCALE}
                 />
             ),
         },
     ];
 
     return (
-        <View style={{ marginVertical: 8 }}>
-            <ThemedText type="sectionSubtitle">
-                Un compte à rebours à votre image
-            </ThemedText>
-            <ThemedText type="sectionText">
-                Choisissez comment le décompte s'affiche sur l'écran d'accueil
-                pendant le mois de décembre et décidez s’il vous accompagne
-                jusqu’au 24 ou jusqu’au 25&nbsp;décembre.
-            </ThemedText>
-
+        <PremiumFeatureCard
+            title="Un compte à rebours personnalisable"
+            color={color}
+            description={
+                <>
+                    Choisissez comment le décompte s'affiche sur l'écran
+                    d'accueil pendant le mois de décembre et décidez s’il vous
+                    accompagne jusqu’au 24 ou jusqu’au 25&nbsp;décembre.
+                </>
+            }
+        >
             <TouchableOpacity
                 style={styles.toggleButton}
                 onPress={() => setShowSettings((prev) => !prev)}
@@ -62,25 +75,12 @@ export const CountdownVariantSettings = () => {
                 <Ionicons
                     name={showSettings ? "chevron-up" : "chevron-down"}
                     size={18}
-                    color={Colors.autumnGreen}
+                    color={Colors.snow}
                 />
             </TouchableOpacity>
 
             {showSettings && (
-                <>
-                    {!isPremium && (
-                        <View style={styles.lockedNotice}>
-                            <Ionicons
-                                name="lock-closed"
-                                size={14}
-                                color={Colors.autumnGreen}
-                            />
-                            <ThemedText style={styles.lockedNoticeText}>
-                                Personnalisable avec la Hotte Magique
-                            </ThemedText>
-                        </View>
-                    )}
-
+                <PremiumFeaturePanel>
                     <View
                         style={[styles.options, !isPremium && styles.disabled]}
                     >
@@ -106,7 +106,7 @@ export const CountdownVariantSettings = () => {
                     </View>
 
                     <SettingsToggleRow
-                        label={"Décompte jusqu'au 25 décembre"}
+                        label={"Décompte jusqu'au 25"}
                         value={targetDay === ChristmasTargetDay.Day}
                         disabled={!isPremium}
                         onValueChange={(value) =>
@@ -126,9 +126,9 @@ export const CountdownVariantSettings = () => {
                             onValueChange={setShowSeconds}
                         />
                     )}
-                </>
+                </PremiumFeaturePanel>
             )}
-        </View>
+        </PremiumFeatureCard>
     );
 };
 
@@ -142,27 +142,16 @@ const styles = StyleSheet.create({
     },
     toggleButtonText: {
         fontSize: 14,
-        color: Colors.autumnGreen,
+        fontFamily: "PoppinsBold",
+        color: Colors.snow,
     },
     options: {
         paddingHorizontal: 20,
         gap: 12,
-        marginVertical: 16,
+        marginBottom: 16,
     },
     disabled: {
         opacity: 0.6,
-    },
-    lockedNotice: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 6,
-        paddingHorizontal: 20,
-        paddingTop: 12,
-    },
-    lockedNoticeText: {
-        fontSize: 13,
-        fontFamily: "PoppinsItalic",
-        color: Colors.autumnGreen,
     },
     option: {
         borderWidth: 2,
@@ -178,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: Theme.orangeToBlue,
         borderRadius: 8,
-        paddingBottom: 20,
+        paddingBottom: 14,
         marginHorizontal: 12,
     },
 });
