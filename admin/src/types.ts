@@ -55,3 +55,31 @@ export interface ContentInput {
     years: number[];
     listItems: ContentListItemInput[];
 }
+
+// As returned by server/src/controllers/admin/stats.controller.ts.
+export interface DateCount {
+    date: string; // YYYY-MM-DD, French time
+    count: number;
+}
+
+export interface Stats {
+    year: number;
+    season: Season;
+    openingsByDay: { day: number; users: number }[];
+    openingsByType: { type: ContentFamily; users: number }[] | null; // null for October: content openings aren't recorded.
+    newUsersByDate: DateCount[];
+    userCohorts: {
+        returningActive: number;
+        returningInactive: number;
+        newActive: number;
+        newInactive: number;
+    };
+    notifications: { withToken: number; total: number };
+    premium: { premium: number; total: number; byDate: DateCount[] };
+    groups: {
+        count: number;
+        avgSize: number;
+        usersInGroup: number;
+        totalUsers: number;
+    };
+}

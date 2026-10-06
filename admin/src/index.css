@@ -121,6 +121,7 @@ header {
     gap: var(--space-sm);
     padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--hairline-strong);
+    margin-bottom: 24px;
 }
 
 .header-actions {
@@ -128,11 +129,32 @@ header {
     gap: var(--space-sm);
 }
 
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
 .type-filter {
     display: flex;
     align-items: center;
     gap: var(--space-lg);
-    margin-top: 24px;
+}
+
+.filters {
+    display: flex;
+    gap: var(--space-lg);
+}
+
+@media (max-width: 640px) {
+    .type-filter {
+        flex-direction: column;
+        gap: var(--space-sm);
+
+        .filters {
+            gap: var(--space-sm);
+        }
+    }
 }
 
 .type-filter span {
@@ -454,9 +476,199 @@ fieldset > button {
     color: var(--mute);
     font-size: 14px;
     margin: 0;
+
+    @media (max-width: 640px) {
+        text-align: center;
+    }
 }
 
 textarea.code {
+    font-family: var(--font-code);
+    font-size: 13px;
+}
+
+/* Stats page - hand-rolled CSS charts, no chart library. */
+.stats-page .hint {
+    margin-top: var(--space-sm);
+}
+
+@media (max-width: 640px) {
+    .stats-page h2 {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.kpi {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxs);
+    background: var(--surface-card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+}
+
+.kpi-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--charcoal);
+}
+
+.kpi-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.kpi-detail {
+    font-size: 12px;
+    color: var(--mute);
+}
+
+.column-chart {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    height: 200px;
+    margin-top: var(--space-lg);
+}
+
+.column {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.column-bar {
+    width: 100%;
+    height: calc(var(--ratio) * 100%);
+    background: var(--hero-glow);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+}
+
+.column:hover .column-bar {
+    background: var(--primary);
+}
+
+.column-value,
+.column-label {
+    font-family: var(--font-code);
+    font-size: 11px;
+    color: var(--charcoal);
+    white-space: nowrap;
+    line-height: 1.6;
+    min-height: 1.6em;
+}
+
+.column-value {
+    color: var(--hero-glow);
+    font-weight: 600;
+}
+
+/* Long date ranges only label every Nth day - the rest stay readable
+   on hover, and come back on mobile where every row has room for one. */
+.column-label-sparse {
+    visibility: hidden;
+}
+
+.month-switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.month-switch button {
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .column-chart {
+        flex-direction: column;
+        height: auto;
+        gap: var(--space-xs);
+    }
+
+    /* Day, then the bar right against it, then the number at its tip.
+       --label-width is the longest label of the chart (set in ColumnChart),
+       so every bar starts at the same x. */
+    .column {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .column-label {
+        order: 0;
+        width: var(--label-width);
+        flex-shrink: 0;
+        text-align: right;
+        visibility: visible;
+    }
+
+    .column-bar {
+        order: 1;
+        flex-shrink: 0;
+        height: 12px;
+        width: calc(var(--ratio) * (100% - var(--label-width) - 5em));
+        border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    }
+
+    .column-value {
+        order: 2;
+    }
+}
+
+.pie-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-xxl);
+    margin-top: var(--space-lg);
+}
+
+.pie {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+
+.pie-legend {
+    margin: 0;
+    flex: 1;
+    min-width: 220px;
+}
+
+.pie-legend li {
+    font-size: 14px;
+}
+
+.pie-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-xs);
+    flex-shrink: 0;
+}
+
+.pie-label {
+    flex: 1;
+}
+
+.pie-value {
     font-family: var(--font-code);
     font-size: 13px;
 }

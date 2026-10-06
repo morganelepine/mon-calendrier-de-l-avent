@@ -3,15 +3,9 @@ import { Link, useSearchParams } from "react-router-dom";
 import { listContents } from "../services/contents.service";
 import { logout } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
+import { TYPE_LABELS } from "../constants/contentTypes";
 import { YearsFilter, YearsFilterValue } from "../components/YearsFilter";
 import { ContentFamily, ContentSummary, Season } from "../types";
-
-const TYPE_LABELS: Record<ContentFamily, string> = {
-    story: "Histoire",
-    idea: "Idée",
-    anecdote: "Anecdote",
-    game: "Jeu",
-};
 
 const SEASON_LABELS: Record<Season, string> = {
     christmas: "Noël",
@@ -112,11 +106,8 @@ export function ContentsListPage() {
             <header>
                 <h1>Contenus</h1>
                 <div className="header-actions">
-                    <Link
-                        to={`/contents/new?${searchParams.toString()}`}
-                        className="button primary"
-                    >
-                        + Nouveau
+                    <Link to="/stats" className="button">
+                        Statistiques
                     </Link>
                     <button type="button" onClick={handleLogout}>
                         Se déconnecter
@@ -124,35 +115,44 @@ export function ContentsListPage() {
                 </div>
             </header>
 
-            <div className="type-filter">
-                <span>Filtrer par</span>
-                <select
-                    aria-label="Saison"
-                    value={seasonFilter}
-                    onChange={(e) =>
-                        setSeasonFilter(e.target.value as Season | "")
-                    }
-                >
-                    <option value="">Saison</option>
-                    <option value="christmas">Noël</option>
-                    <option value="halloween">Halloween</option>
-                </select>
+            <div className="filters-container">
+                <div className="type-filter">
+                    <span>Filtrer par</span>
+                    <select
+                        aria-label="Saison"
+                        value={seasonFilter}
+                        onChange={(e) =>
+                            setSeasonFilter(e.target.value as Season | "")
+                        }
+                    >
+                        <option value="">Saison</option>
+                        <option value="christmas">Noël</option>
+                        <option value="halloween">Halloween</option>
+                    </select>
 
-                <select
-                    aria-label="Type"
-                    value={typeFilter}
-                    onChange={(e) =>
-                        setTypeFilter(e.target.value as ContentFamily | "")
-                    }
-                >
-                    <option value="">Type</option>
-                    <option value="anecdote">Anecdote</option>
-                    <option value="idea">Idée</option>
-                    <option value="game">Jeu</option>
-                    <option value="story">Histoire</option>
-                </select>
+                    <select
+                        aria-label="Type"
+                        value={typeFilter}
+                        onChange={(e) =>
+                            setTypeFilter(e.target.value as ContentFamily | "")
+                        }
+                    >
+                        <option value="">Type</option>
+                        <option value="anecdote">Anecdote</option>
+                        <option value="idea">Idée</option>
+                        <option value="game">Jeu</option>
+                        <option value="story">Histoire</option>
+                    </select>
 
-                <YearsFilter value={yearFilter} onChange={setYearFilter} />
+                    <YearsFilter value={yearFilter} onChange={setYearFilter} />
+                </div>
+
+                <Link
+                    to={`/contents/new?${searchParams.toString()}`}
+                    className="button primary"
+                >
+                    + Nouveau
+                </Link>
             </div>
 
             {byDay.map(([day, items]) => (

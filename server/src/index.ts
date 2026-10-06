@@ -19,6 +19,7 @@ import { Games2048Routes } from "./routes/games2048.routes";
 import { RevenueCatRoutes } from "./routes/revenuecat.routes";
 import { AdminAuthRoutes } from "./routes/admin/auth.routes";
 import { AdminContentsRoutes } from "./routes/admin/contents.routes";
+import { AdminStatsRoutes } from "./routes/admin/stats.routes";
 import { requireAdminAuth } from "./middleware/adminAuth.middleware";
 
 function registerRoutes(app: Application, routes: any[]) {
@@ -81,6 +82,7 @@ app.use("/admin", adminCors);
 registerRoutes(app, AdminAuthRoutes); // public: /admin-auth/*
 app.use("/admin", requireAdminAuth);
 registerRoutes(app, AdminContentsRoutes);
+registerRoutes(app, AdminStatsRoutes);
 
 // Public routes
 app.use(cors());

@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { LoginPage } from "./pages/LoginPage";
 import { ContentsListPage } from "./pages/ContentsListPage";
 import { ContentEditPage } from "./pages/ContentEditPage";
+import { StatsPage } from "./pages/StatsPage";
 
 function ProtectedRoute({ children }: Readonly<{ children: ReactNode }>) {
     const { authenticated } = useAuth();
@@ -31,6 +32,14 @@ function AppRoutes() {
                 element={
                     <ProtectedRoute>
                         <ContentEditPage />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/stats"
+                element={
+                    <ProtectedRoute>
+                        <StatsPage />
                     </ProtectedRoute>
                 }
             />
