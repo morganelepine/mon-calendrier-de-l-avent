@@ -8,6 +8,7 @@ import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Video } from "@/components/utils/custom/Video";
 import { getContentsByDay } from "@/services/content.service";
 import { Content } from "@/interfaces/contentInterface";
+import { isOctober } from "@/constants/Dates";
 
 export default function AnecdoteScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -25,10 +26,14 @@ export default function AnecdoteScreen() {
         return null;
     }
 
+    const backgroundImage = isOctober
+        ? "buveur_de_boissons_chaudes_mess4j"
+        : "kiwi1_r7kihz";
+
     return (
         <ContentScreenWrapper
             typeTitle={anecdote.typeTitle}
-            backgroundImage={"kiwi1_r7kihz"}
+            backgroundImage={backgroundImage}
             dayId={dayId}
         >
             <ThemedText type="contentSubtitle">{anecdote.title}</ThemedText>

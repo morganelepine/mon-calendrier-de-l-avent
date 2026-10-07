@@ -20,12 +20,15 @@ interface DaysProps {
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const [dayModal, setDayModal] = useState<number | null>(null);
 
-    const registerDayOpening = (dayNumber: number) => {
+    const registerDayOpening = (
+        dayNumber: number,
+        wasAlreadyOpen: boolean,
+    ) => {
         if (dayNumber !== currentDay) return;
 
         if (isDecember) {
             void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
-            showPointsToast(40);
+            if (!wasAlreadyOpen) showPointsToast(40);
         } else if (isOctober) {
             void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
             // showPointsToast(10);
@@ -33,6 +36,9 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     };
 
     const handleDayOpening = (dayNumber: number) => {
+        const wasAlreadyOpen =
+            days.find((day) => day.dayNumber === dayNumber)?.isOpen ?? false;
+
         const updatedDays = days.map((day) => {
             return (isDecember || isOctober) &&
                 day.dayNumber === dayNumber &&
@@ -45,7 +51,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
 
         if ((isDecember || isOctober) && dayNumber <= currentDay) {
             setDayModal(dayNumber);
-            registerDayOpening(dayNumber);
+            registerDayOpening(dayNumber, wasAlreadyOpen);
         } else {
             const emoji = isOctober ? "👻" : "🎅";
             showToast(`Un peu de patience ${emoji}`);

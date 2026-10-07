@@ -7,14 +7,16 @@ import { List } from "@/components/content/ideas/List";
 import { PersonalityQuiz } from "@/components/content/ideas/PersonalityQuiz";
 import { Cards } from "@/components/content/ideas/Cards";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
-import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Content } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
 import { formatImage } from "@/services/image.service";
 import { getContentsByDay } from "@/services/content.service";
+import { isOctober } from "@/constants/Dates";
 
 export default function IdeaScreen() {
-    const backgroundImage = "se-regaler_mnonwh";
+    const backgroundImage = isOctober
+        ? "pumpkin_spice_addict_tad9te"
+        : "se-regaler_mnonwh";
     const [modalBackground, setModalBackground] = useState(backgroundImage);
 
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -35,7 +37,6 @@ export default function IdeaScreen() {
     const getmodalImage = (idea: Content) => {
         if (idea.subType === IdeaType.Recipe) {
             const imageSource = idea.media ? idea.media : "se-divertir_xvdksq";
-
             setModalBackground(imageSource);
         } else {
             setModalBackground(backgroundImage);
@@ -78,37 +79,33 @@ export default function IdeaScreen() {
                     key={idea.id}
                     dayId={dayId}
                 >
-                    <CustomScrollView>
-                        <View>
-                            {idea.subType === IdeaType.Recipe && (
-                                <Recipe content={idea} />
-                            )}
+                    <View>
+                        {idea.subType === IdeaType.Recipe && (
+                            <Recipe content={idea} />
+                        )}
 
-                            {idea.subType === IdeaType.List && (
-                                <List
-                                    idea={idea}
-                                    imageWidth={
-                                        imageDimensions[idea.dayNumber]?.width
-                                    }
-                                    imageHeight={
-                                        imageDimensions[idea.dayNumber]?.height
-                                    }
-                                />
-                            )}
+                        {idea.subType === IdeaType.List && (
+                            <List
+                                idea={idea}
+                                imageWidth={
+                                    imageDimensions[idea.dayNumber]?.width
+                                }
+                                imageHeight={
+                                    imageDimensions[idea.dayNumber]?.height
+                                }
+                            />
+                        )}
 
-                            {idea.subType === IdeaType.Idea && (
-                                <Reco idea={idea} />
-                            )}
+                        {idea.subType === IdeaType.Idea && <Reco idea={idea} />}
 
-                            {idea.subType === IdeaType.PersonalityQuiz && (
-                                <PersonalityQuiz idea={idea} />
-                            )}
+                        {idea.subType === IdeaType.PersonalityQuiz && (
+                            <PersonalityQuiz idea={idea} />
+                        )}
 
-                            {idea.subType === IdeaType.Cards && (
-                                <Cards idea={idea} />
-                            )}
-                        </View>
-                    </CustomScrollView>
+                        {idea.subType === IdeaType.Cards && (
+                            <Cards idea={idea} />
+                        )}
+                    </View>
                 </ContentScreenWrapper>
             ))}
         </>

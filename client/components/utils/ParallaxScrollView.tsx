@@ -1,29 +1,36 @@
 import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet, View, useColorScheme } from "react-native";
 import Animated, {
     interpolate,
     useAnimatedRef,
     useAnimatedStyle,
-    useScrollViewOffset,
+    useScrollOffset,
 } from "react-native-reanimated";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 
-const HEADER_HEIGHT = 300;
+const DEFAULT_HEADER_HEIGHT = 300;
+// Hauteur dont le contenu remonte sur le bas de l'en-tête
+const CONTENT_OVERLAP = 50;
 
 type Props = PropsWithChildren<{
     headerImage: ReactElement;
     headerBackgroundColor: { dark: string; light: string };
+    headerHeight?: number;
+    // Affiché par-dessus l'image, sans effet parallax (ex. titre)
+    headerOverlay?: ReactElement;
 }>;
 
 export default function ParallaxScrollView({
     children,
     headerImage,
     headerBackgroundColor,
+    headerHeight = DEFAULT_HEADER_HEIGHT,
+    headerOverlay,
 }: Props) {
     const colorScheme = useColorScheme() ?? "light";
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
-    const scrollOffset = useScrollViewOffset(scrollRef);
+    const scrollOffset = useScrollOffset(scrollRef);
 
     const headerAnimatedStyle = useAnimatedStyle(() => {
         return {
@@ -31,14 +38,14 @@ export default function ParallaxScrollView({
                 {
                     translateY: interpolate(
                         scrollOffset.value,
-                        [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+                        [-headerHeight, 0, headerHeight],
+                        [-headerHeight / 2, 0, headerHeight * 0.75]
                     ),
                 },
                 {
                     scale: interpolate(
                         scrollOffset.value,
-                        [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+                        [-headerHeight, 0, headerHeight],
                         [2, 1, 1]
                     ),
                 },
@@ -57,13 +64,26 @@ export default function ParallaxScrollView({
                 <Animated.View
                     style={[
                         styles.header,
-                        { backgroundColor: headerBackgroundColor[colorScheme] },
+                        {
+                            height: headerHeight,
+                            backgroundColor: headerBackgroundColor[colorScheme],
+                        },
                         headerAnimatedStyle,
                     ]}
                 >
                     {headerImage}
                 </Animated.View>
-                <ThemedView style={styles.contentContainer}>
+                {headerOverlay ? (
+                    <View style={[styles.header, { height: headerHeight }]}>
+                        {headerOverlay}
+                    </View>
+                ) : null}
+                <ThemedView
+                    style={[
+                        styles.contentContainer,
+                        { marginTop: headerHeight - CONTENT_OVERLAP },
+                    ]}
+                >
                     <ThemedView style={styles.content}>{children}</ThemedView>
                 </ThemedView>
             </Animated.ScrollView>
@@ -77,14 +97,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.snow,
     },
     header: {
-        height: HEADER_HEIGHT,
         position: "absolute",
         top: 0,
         left: 0,
         right: 0,
     },
     contentContainer: {
-        marginTop: HEADER_HEIGHT - 50,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
         overflow: "hidden",
