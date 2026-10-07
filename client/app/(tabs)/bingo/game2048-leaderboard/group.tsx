@@ -62,11 +62,7 @@ export default function Game2048LeaderboardGroupScreen() {
             )}
 
             {!loading && userId && !error && !myGroup && (
-                <NoGroup
-                    userId={userId}
-                    userUuid={userUuid}
-                    onCreated={() => fetchMyGroup(userId)}
-                />
+                <NoGroup />
             )}
 
             {!loading && userId && !error && myGroup && (

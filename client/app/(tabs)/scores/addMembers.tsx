@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, TextInput, FlatList, Pressable } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { LeaderBoardButton } from "@/components/score/LeaderBoardButton";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors, Theme } from "@/constants/Colors";
 import { showToast } from "@/components/utils/Toast";
 import { User } from "@/types/types";
+import { useUser } from "@/contexts/UserContext";
+import { useCreateGroup } from "@/hooks/useCreateGroup";
 import { searchUsers } from "@/services/user.service";
 import { addMember } from "@/services/group.service";
 
 export default function AddMembersScreen() {
+    const router = useRouter();
     const params = useLocalSearchParams();
-    const groupId = params.groupId as string;
+
+    // Absent when coming from NoGroup: the group is created on the first add.
+    const groupId = params.groupId as string | undefined;
+
+    const { userId, userUuid } = useUser();
+    const createMyGroup = useCreateGroup(userId, userUuid);
 
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<User[]>([]);
@@ -23,8 +31,10 @@ export default function AddMembersScreen() {
             setResults([]);
             return;
         }
+        const scope = groupId ? { groupId } : userId ? { userId } : null;
+        if (!scope) return;
         try {
-            const users = await searchUsers(text, groupId);
+            const users = await searchUsers(text, scope);
             setResults(users);
         } catch (error) {
             console.error("Error searching users:", error);
@@ -46,6 +56,18 @@ export default function AddMembersScreen() {
         );
 
     const handleAdd = async () => {
+        if (!groupId) {
+            // First add: creates the group with the owner + the selection.
+            const group = await createMyGroup(selected);
+            if (!group) return;
+            router.setParams({ groupId: String(group.id) });
+            showToast(selected.length > 1 ? "Ajouté·e·s !" : "Ajouté·e !");
+            setQuery("");
+            setResults([]);
+            setSelected([]);
+            return;
+        }
+
         try {
             for (const id of selected) {
                 await addMember(Number(groupId), id);
@@ -118,7 +140,7 @@ export default function AddMembersScreen() {
                 {selected.length > 0 && (
                     <LeaderBoardButton
                         onPress={handleAdd}
-                        text="Ajouter au groupe"
+                        text={groupId ? "Ajouter au groupe" : "Créer le groupe"}
                     />
                 )}
             </View>

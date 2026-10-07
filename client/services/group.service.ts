@@ -1,10 +1,13 @@
 import { Group } from "@/types/types";
 import { apiFetch } from "@/services/apiFetch";
 
-export async function createGroup(ownerId: number): Promise<Group> {
+export async function createGroup(
+    ownerId: number,
+    memberIds: number[],
+): Promise<Group> {
     return apiFetch<Group>("/groups", {
         method: "POST",
-        body: { ownerId },
+        body: { ownerId, memberIds },
     });
 }
 

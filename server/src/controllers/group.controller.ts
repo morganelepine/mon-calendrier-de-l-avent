@@ -2,24 +2,42 @@ import { Request } from "express";
 import { prisma } from "../lib/prisma";
 
 export class GroupController {
+    // The group is only created once the owner adds their first members
+    // Idempotent: if the owner already has a group (double tap, retry after a lost response),
+    // the members are added to it instead.
     async createGroup(request: Request) {
-        const { ownerId } = request.body;
+        const ownerId = Number(request.body.ownerId);
+        const memberIds: number[] = Array.isArray(request.body.memberIds)
+            ? request.body.memberIds.map(Number)
+            : [];
 
-        const group = await prisma.group.create({
+        if (memberIds.length === 0) {
+            return { status: 400, message: "memberIds is required" };
+        }
+
+        const userIds = [...new Set([ownerId, ...memberIds])];
+
+        const existing = await prisma.group.findFirst({ where: { ownerId } });
+        if (existing) {
+            await prisma.groupMember.createMany({
+                data: userIds.map((userId) => ({
+                    groupId: existing.id,
+                    userId,
+                })),
+                skipDuplicates: true,
+            });
+            return existing;
+        }
+
+        return prisma.group.create({
             data: {
                 name: "Mon groupe",
-                ownerId: Number(ownerId),
+                ownerId,
+                members: {
+                    create: userIds.map((userId) => ({ userId })),
+                },
             },
         });
-
-        await prisma.groupMember.create({
-            data: {
-                groupId: group.id,
-                userId: Number(ownerId),
-            },
-        });
-
-        return group;
     }
 
     async getGroup(request: Request) {

@@ -3,22 +3,25 @@ import { createGroup } from "@/services/group.service";
 import { logClient } from "@/services/log.service";
 import { StorageKeys } from "@/constants/storageKeys";
 import { showToast } from "@/components/utils/Toast";
+import { Group } from "@/types/types";
 
 export function useCreateGroup(userId: number | null, userUuid: string | null) {
-    return async function createMyGroup(): Promise<boolean> {
-        if (!userId) return false;
+    return async function createMyGroup(
+        memberIds: number[],
+    ): Promise<Group | null> {
+        if (!userId) return null;
 
         try {
-            await createGroup(userId);
+            const group = await createGroup(userId, memberIds);
             await AsyncStorage.setItem(StorageKeys.groupCreated, "true");
-            return true;
+            return group;
         } catch (error) {
             await logClient("Group creation failed", {
                 userUuid,
                 error: String(error),
             });
             showToast("Oops... Veuillez réessayer !", "long");
-            return false;
+            return null;
         }
     };
 }

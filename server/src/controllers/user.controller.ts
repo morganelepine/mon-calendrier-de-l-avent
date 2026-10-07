@@ -56,12 +56,17 @@ export class UserController {
 
     // GET /users/search/:query
     async searchUsers(request: Request) {
-        const { query, groupId } = request.query;
+        const { query, groupId, userId } = request.query;
 
-        if (typeof query !== "string" || !groupId) {
+        if (typeof query !== "string" || (!groupId && !userId)) {
             return [];
         }
 
+        // No group yet (it's created on the first add):
+        // only exclude the searching user themself.
+        let excludedIds = [Number(userId)];
+
+        if (groupId) {
             const group = await prisma.group.findUnique({
                 where: { id: Number(groupId) },
                 include: { members: true },
@@ -69,7 +74,8 @@ export class UserController {
 
             if (!group) return [];
 
-        const excludedIds = group.members.map((member) => member.userId);
+            excludedIds = group.members.map((member) => member.userId);
+        }
 
         const users = await prisma.user.findMany({
             where: {

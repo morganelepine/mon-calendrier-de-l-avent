@@ -35,22 +35,28 @@ export default function HomeScreen() {
         // ------- For testing purposes
         // await AsyncStorage.multiRemove([
         //     "userUuid",
-        //     "playMusic",
-        //     "hasLaunched",
-        //     "lastResetYear",
         //     "username",
+        //     "userId",
+        //     "hasLaunched",
+        //     "playMusic",
+        //     "excluded_musics",
+        //     "countdown_variant",
+        //     "countdown_show_seconds",
+        //     "countdown_target_day",
+        //     "groupCreated",
+        //     "halloween_notice_seen",
+        //     "notifications_notice_seen",
+
+        //     // YEARLY_RESET_KEYS
+        //     "calendar",
+        //     "october_calendar",
         //     "gameState",
         //     "bingo_halloween_clicked_cells",
         //     "bingo_movies_clicked_cells",
         //     "bingo_telefilms_clicked_cells",
         //     "bingo_activities_clicked_cells",
-        //     "calendar",
-        //     "october_calendar",
-        //     "groupCreated",
-        //     "isNew",
-        //     "halloween_notice_seen",
-        //     "notifications_notice_seen",
         //     "game2048_in_progress",
+        //     "lastResetYear",
         // ]);
     };
 

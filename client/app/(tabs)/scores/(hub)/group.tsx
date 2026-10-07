@@ -66,11 +66,7 @@ export default function GroupScreen() {
             {!loading && userId && !error && !myGroup && (
                 // Fetch succeeded, there's just no group yet — offer to
                 // create one instead of spinning forever.
-                <NoGroup
-                    userId={userId}
-                    userUuid={userUuid}
-                    onCreated={() => fetchMyGroup(userId)}
-                />
+                <NoGroup />
             )}
 
             {!loading && userId && !error && myGroup && (

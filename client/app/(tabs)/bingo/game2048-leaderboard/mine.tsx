@@ -65,8 +65,8 @@ export default function Game2048LeaderboardMineScreen() {
 
             {!error && !loading && result && !result.userHasScore && (
                 <EmptyState>
-                    Vous n&apos;avez pas encore de score enregistré. Lancez une
-                    partie pour apparaître dans le classement !
+                    Vous n&apos;avez pas encore de score enregistré. Terminez
+                    une partie pour apparaître dans le classement !
                 </EmptyState>
             )}
 

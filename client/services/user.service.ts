@@ -16,7 +16,11 @@ export const getUser = async (userUuid: string): Promise<User> => {
 
 export async function searchUsers(
     query: string,
-    groupId: string,
+    scope: { groupId: string } | { userId: number },
 ): Promise<User[]> {
-    return apiFetch<User[]>(`/users/search?query=${query}&groupId=${groupId}`);
+    const filter =
+        "groupId" in scope
+            ? `groupId=${scope.groupId}`
+            : `userId=${scope.userId}`;
+    return apiFetch<User[]>(`/users/search?query=${query}&${filter}`);
 }
