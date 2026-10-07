@@ -25,6 +25,32 @@ interface CohortRow {
     count: bigint;
 }
 
+interface DaysOpenedRow {
+    days: number;
+    users: bigint;
+}
+
+// Calendar boxes per season (day 25 is recorded as a Christmas day opening).
+const SEASON_DAYS = { christmas: 25, halloween: 31 };
+const SEASON_MONTH = { christmas: 12, halloween: 10 };
+
+// How many boxes could have been opened so far in that season: all of them
+// once it's over, none before it starts, today's date (French time) during it.
+const getAvailableDays = (
+    year: number,
+    season: keyof typeof SEASON_DAYS,
+): number => {
+    const [todayYear, todayMonth, todayDay] = new Date()
+        .toLocaleDateString("en-CA", { timeZone: "Europe/Paris" })
+        .split("-")
+        .map(Number);
+    const month = SEASON_MONTH[season];
+    if (todayYear > year || (todayYear === year && todayMonth > month))
+        return SEASON_DAYS[season];
+    if (todayYear < year || todayMonth < month) return 0;
+    return Math.min(todayDay, SEASON_DAYS[season]);
+};
+
 interface DateRow {
     date: Date;
     count: bigint;
@@ -48,6 +74,7 @@ export class AdminStatsController {
         const [
             openingsByDay,
             openingsByItem,
+            daysOpened,
             newUsersByDate,
             premiumByDate,
             cohorts,
@@ -73,6 +100,17 @@ export class AdminStatsController {
                     GROUP BY 1
                     ORDER BY 1`
                 : Promise.resolve([]),
+            // For each user who opened at least one box: how many distinct boxes.
+            prisma.$queryRaw<DaysOpenedRow[]>`
+                SELECT days::int AS days, COUNT(*) AS users
+                FROM (
+                    SELECT "userId", COUNT(DISTINCT "day") AS days
+                    FROM "Score"
+                    WHERE "year" = ${year} AND "reason" = ${dayOpeningReason}
+                    GROUP BY "userId"
+                ) per_user
+                GROUP BY days
+                ORDER BY days DESC`,
             // Timestamps are stored in UTC but bucketed in French time,
             // so a sign-up at 00:30 on Dec 3rd counts for Dec 3rd.
             prisma.$queryRaw<DateRow[]>`
@@ -140,6 +178,18 @@ export class AdminStatsController {
                       users: Number(row.users),
                   }))
                 : null,
+            dayOpeners: {
+                // Users who opened at least one box that season
+                active: daysOpened.reduce(
+                    (sum, row) => sum + Number(row.users),
+                    0,
+                ),
+                availableDays: getAvailableDays(year, season),
+                byDaysOpened: daysOpened.map((row) => ({
+                    days: row.days,
+                    users: Number(row.users),
+                })),
+            },
             newUsersByDate: toDateSeries(newUsersByDate),
             userCohorts: {
                 returningActive: cohortCount(true, true),

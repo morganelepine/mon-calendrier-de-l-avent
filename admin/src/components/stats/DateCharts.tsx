@@ -8,10 +8,11 @@ import {
     formatMonth,
 } from "./statsFormat";
 
-export function DateChart({
-    rows,
-    showValues,
-}: Readonly<{ rows: DateCount[]; showValues?: boolean }>) {
+const sumCounts = (rows: DateCount[]) =>
+    rows.reduce((sum, row) => sum + row.count, 0);
+
+// Percentages are shares of the whole period shown.
+export function DateChart({ rows }: Readonly<{ rows: DateCount[] }>) {
     const filled = fillDateGaps(rows);
     if (filled.length === 0) return <p className="hint">Aucune donnée.</p>;
 
@@ -25,17 +26,14 @@ export function DateChart({
                 showLabel:
                     index % labelEvery === 0 || index === filled.length - 1,
             }))}
-            showValues={showValues}
+            percentOf={sumCounts(filled)}
         />
     );
 }
 
 // One month at a time, picked with a pill switch among the months that
 // have data - the latest one by default.
-export function MonthlyDateChart({
-    rows,
-    showValues,
-}: Readonly<{ rows: DateCount[]; showValues?: boolean }>) {
+export function MonthlyDateChart({ rows }: Readonly<{ rows: DateCount[] }>) {
     const months = useMemo(
         () => [...new Set(rows.map((row) => row.date.slice(0, 7)))].sort(),
         [rows],
@@ -46,6 +44,7 @@ export function MonthlyDateChart({
 
     if (!month) return <p className="hint">Aucune donnée.</p>;
 
+    const days = fillMonth(rows, month);
     return (
         <>
             <div className="month-switch">
@@ -61,11 +60,10 @@ export function MonthlyDateChart({
                 ))}
             </div>
             <ColumnChart
-                bars={fillMonth(rows, month).map((row) => ({
+                bars={days.map((row) => ({
                     label: String(Number(row.date.slice(8))),
                     value: row.count,
                 }))}
-                showValues={showValues}
             />
         </>
     );

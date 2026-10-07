@@ -43,6 +43,21 @@ export function StatsPage() {
             .catch(() => setError(true));
     }, [year, season]);
 
+    // Cumulative: each bar counts users who opened at least that many boxes,
+    // so the "≥ 1" bar is all of them. Summed from the top, shown from 1 up.
+    const daysOpenedBars = useMemo(() => {
+        if (!stats) return [];
+        const { availableDays, byDaysOpened } = stats.dayOpeners;
+        const users = new Map(byDaysOpened.map((row) => [row.days, row.users]));
+        const maxDays = Math.max(availableDays, ...users.keys());
+        let atLeast = 0;
+        return Array.from({ length: maxDays }, (_, i) => {
+            const days = maxDays - i;
+            atLeast += users.get(days) ?? 0;
+            return { label: `≥ ${days}`, value: atLeast };
+        }).reverse();
+    }, [stats]);
+
     const dayBars = useMemo(() => {
         if (!stats) return [];
         const users = new Map(
@@ -95,120 +110,179 @@ export function StatsPage() {
             )}
             {!stats && !error && <p className="loading">Ho ho ho...</p>}
 
-            {stats && (
-                <>
-                    <h2>Aujourd'hui</h2>
+            <div className="stats-content">
+                {stats && (
+                    <>
+                        <div>
+                            <h2>Aujourd'hui</h2>
 
-                    <div className="kpis">
-                        <Kpi
-                            label="Utilisateur·ice·s"
-                            value={String(stats.notifications.total)}
-                        />
-                        <Kpi
-                            label="Premium"
-                            value={percent(
-                                stats.premium.premium,
-                                stats.premium.total,
-                            )}
-                            detail={`${stats.premium.premium} utilisateur·ice·s`}
-                        />
-                        <Kpi
-                            label="Groupes"
-                            value={String(stats.groups.count)}
-                            detail={`${stats.groups.avgSize.toFixed(1)} membres en moyenne`}
-                        />
-                        <Kpi
-                            label="Dans un groupe"
-                            value={percent(
-                                stats.groups.usersInGroup,
-                                stats.groups.totalUsers,
-                            )}
-                            detail={`${stats.groups.usersInGroup} utilisateur·ice·s`}
-                        />
-                        <Kpi
-                            label="Notifications"
-                            value={percent(
-                                stats.notifications.withToken,
-                                stats.notifications.total,
-                            )}
-                            detail={`${stats.notifications.withToken} utilisateur·ice·s`}
-                        />
-                    </div>
+                            <div className="kpis">
+                                <Kpi
+                                    label="Utilisateur·ice·s"
+                                    value={String(stats.notifications.total)}
+                                />
+                                <Kpi
+                                    label="Actif·ve·s"
+                                    value={percent(
+                                        stats.dayOpeners.active,
+                                        stats.notifications.total,
+                                    )}
+                                    detail={`${stats.dayOpeners.active} ont ouvert au moins une case`}
+                                />
+                                <Kpi
+                                    label="Groupes"
+                                    value={String(stats.groups.count)}
+                                    detail={`${stats.groups.avgSize.toFixed(1)} membres en moyenne`}
+                                />
+                                <Kpi
+                                    label="Dans un groupe"
+                                    value={percent(
+                                        stats.groups.usersInGroup,
+                                        stats.groups.totalUsers,
+                                    )}
+                                    detail={`${stats.groups.usersInGroup} utilisateur·ice·s`}
+                                />
+                                <Kpi
+                                    label="Notifications"
+                                    value={percent(
+                                        stats.notifications.withToken,
+                                        stats.notifications.total,
+                                    )}
+                                    detail={`${stats.notifications.withToken} utilisateur·ice·s`}
+                                />
+                                <Kpi
+                                    label="Premium"
+                                    value={percent(
+                                        stats.premium.premium,
+                                        stats.premium.total,
+                                    )}
+                                    detail={`${stats.premium.premium} utilisateur·ice·s`}
+                                />
+                            </div>
+                        </div>
 
-                    <h2>Pseudos</h2>
-                    <div className="kpis">
-                        <Kpi
-                            label="Liste de base"
-                            value={formatNumber(stats.usernames.curated)}
-                            detail="usernames.ts"
-                        />
-                        <Kpi
-                            label="Disponibles"
-                            value={percent(
-                                stats.usernames.curatedAvailable,
-                                stats.usernames.curated,
-                            )}
-                            detail={`${formatNumber(
-                                stats.usernames.curatedAvailable,
-                            )} noms disponibles`}
-                        />
-                        <Kpi
-                            label="Possibles"
-                            value={formatNumber(stats.usernames.possible)}
-                            detail="liste de base + segments"
-                        />
-                    </div>
+                        <div>
+                            <h2>Pseudos</h2>
+                            <div className="kpis">
+                                <Kpi
+                                    label="Liste de base"
+                                    value={formatNumber(
+                                        stats.usernames.curated,
+                                    )}
+                                    detail="usernames.ts"
+                                />
+                                <Kpi
+                                    label="Disponibles"
+                                    value={percent(
+                                        stats.usernames.curatedAvailable,
+                                        stats.usernames.curated,
+                                    )}
+                                    detail={`${formatNumber(
+                                        stats.usernames.curatedAvailable,
+                                    )} noms disponibles`}
+                                />
+                                <Kpi
+                                    label="Possibles"
+                                    value={formatNumber(
+                                        stats.usernames.possible,
+                                    )}
+                                    detail="liste de base + segments"
+                                />
+                            </div>
+                        </div>
 
-                    <h2>Ancienneté · Activité</h2>
-                    <PieChart
-                        slices={[
-                            {
-                                label: `Avant ${year} · avec score`,
-                                value: stats.userCohorts.returningActive,
-                                color: "#0b84c1",
-                            },
-                            {
-                                label: `Avant ${year} · sans score`,
-                                value: stats.userCohorts.returningInactive,
-                                color: "#9ccbe8",
-                            },
-                            {
-                                label: `En ${year} · avec score`,
-                                value: stats.userCohorts.newActive,
-                                color: "#f16800",
-                            },
-                            {
-                                label: `En ${year} · sans score`,
-                                value: stats.userCohorts.newInactive,
-                                color: "#f8bf94",
-                            },
-                        ]}
-                    />
-
-                    <h2>Ouvertures par case</h2>
-                    <p className="hint">Cases ouvertes le jour même</p>
-                    <ColumnChart bars={dayBars} showValues />
-
-                    {stats.openingsByType && (
-                        <>
-                            <h2>Ouvertures par contenu</h2>
+                        <div>
+                            <h2>Ancienneté · Activité</h2>
                             <PieChart
-                                slices={stats.openingsByType.map((row) => ({
-                                    label: TYPE_LABELS[row.type] ?? row.type,
-                                    value: row.users,
-                                    color: TYPE_COLORS[row.type] ?? "#8d8d8d",
-                                }))}
+                                slices={[
+                                    {
+                                        label: `Avant ${year} · avec score`,
+                                        value: stats.userCohorts
+                                            .returningActive,
+                                        color: "#0b84c1",
+                                    },
+                                    {
+                                        label: `Avant ${year} · sans score`,
+                                        value: stats.userCohorts
+                                            .returningInactive,
+                                        color: "#9ccbe8",
+                                    },
+                                    {
+                                        label: `En ${year} · avec score`,
+                                        value: stats.userCohorts.newActive,
+                                        color: "#f16800",
+                                    },
+                                    {
+                                        label: `En ${year} · sans score`,
+                                        value: stats.userCohorts.newInactive,
+                                        color: "#f8bf94",
+                                    },
+                                ]}
                             />
-                        </>
-                    )}
+                        </div>
 
-                    <h2>Nouveaux membres</h2>
-                    <MonthlyDateChart rows={stats.newUsersByDate} showValues />
+                        <div>
+                            <h2>Ouvertures par case</h2>
+                            <p className="hint">Cases ouvertes le jour même</p>
+                            <ColumnChart
+                                bars={dayBars}
+                                percentOf={stats.dayOpeners.active}
+                                secondaryPercentOf={stats.notifications.total}
+                            />
+                        </div>
 
-                    <h2>Nouveaux premium</h2>
-                    <DateChart rows={stats.premium.byDate} />
-                </>
-            )}
+                        <div>
+                            <h2>Assiduité</h2>
+                            {daysOpenedBars.length === 0 ? (
+                                <p className="hint">Aucune donnée.</p>
+                            ) : (
+                                <>
+                                    <p className="hint">
+                                        Au moins N cases ouvertes sur{" "}
+                                        {daysOpenedBars.length} disponibles, en
+                                        % des actif·ve·s
+                                    </p>
+                                    <ColumnChart
+                                        bars={daysOpenedBars}
+                                        percentOf={stats.dayOpeners.active}
+                                    />
+                                </>
+                            )}
+                        </div>
+
+                        <div>
+                            {stats.openingsByType && (
+                                <>
+                                    <h2>Ouvertures par contenu</h2>
+                                    <PieChart
+                                        slices={stats.openingsByType.map(
+                                            (row) => ({
+                                                label:
+                                                    TYPE_LABELS[row.type] ??
+                                                    row.type,
+                                                value: row.users,
+                                                color:
+                                                    TYPE_COLORS[row.type] ??
+                                                    "#8d8d8d",
+                                            }),
+                                        )}
+                                    />
+                                </>
+                            )}
+                        </div>
+
+                        <div>
+                            <h2>Nouveaux membres</h2>
+                            <MonthlyDateChart rows={stats.newUsersByDate} />
+                        </div>
+
+                        <div>
+                            <h2>Nouveaux premium</h2>
+                            <DateChart rows={stats.premium.byDate} />
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     );
 }

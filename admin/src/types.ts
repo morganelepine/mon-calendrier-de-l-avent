@@ -67,6 +67,11 @@ export interface Stats {
     season: Season;
     openingsByDay: { day: number; users: number }[];
     openingsByType: { type: ContentFamily; users: number }[] | null; // null for October: content openings aren't recorded.
+    dayOpeners: {
+        active: number; // opened at least one box that season
+        availableDays: number; // boxes openable so far (all once it's over)
+        byDaysOpened: { days: number; users: number }[]; // most days first
+    };
     newUsersByDate: DateCount[];
     userCohorts: {
         returningActive: number;
