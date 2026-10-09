@@ -6,13 +6,10 @@ import { isOctober } from "@/constants/Dates";
 import { Colors, Theme } from "@/constants/Colors";
 
 interface GamesByType {
-    pendu?: Content;
+    hangman?: Content;
     wordle?: Content;
-    jeu?: Content;
-    quizCitation?: Content;
-    quizNoel?: Content;
-    quizEmojis?: Content;
-    quizHalloween?: Content;
+    inputGame?: Content;
+    quiz?: Content;
 }
 
 interface DayContents {
@@ -114,32 +111,23 @@ export const classifyGames = (
 
     games.forEach((game) => {
         switch (game.subType) {
-            case GameType.Pendu:
-                gamesByType.pendu = game;
+            case GameType.Hangman:
+                gamesByType.hangman = game;
                 type = ContentType.Game;
                 break;
             case GameType.Wordle:
                 gamesByType.wordle = game;
                 type = ContentType.Game;
                 break;
-            case GameType.Jeu:
-                gamesByType.jeu = game;
+            case GameType.InputGame:
+                gamesByType.inputGame = game;
                 type = ContentType.Game;
                 break;
             case GameType.QuizCitation:
-                gamesByType.quizCitation = game;
-                type = ContentType.Quiz;
-                break;
             case GameType.QuizNoel:
-                gamesByType.quizNoel = game;
-                type = ContentType.Quiz;
-                break;
             case GameType.QuizEmojis:
-                gamesByType.quizEmojis = game;
-                type = ContentType.Quiz;
-                break;
             case GameType.QuizHalloween:
-                gamesByType.quizHalloween = game;
+                gamesByType.quiz = game;
                 type = ContentType.Quiz;
                 break;
         }
@@ -161,9 +149,26 @@ export const getButtonStyles = (
     answer: string,
     selectedAnswer: string | null,
     goodAnswer: string,
+    isCard = false,
 ): ButtonStyles => {
     const isCorrect = answer.trim() === goodAnswer.trim();
     const isSelected = selectedAnswer !== null;
+
+    if (isCard) {
+        const isRevealedCorrect = isSelected && isCorrect;
+        return {
+            buttonStyle: [
+                styles.card,
+                isRevealedCorrect ? styles.cardIsCorrect : null,
+                isSelected && !isCorrect ? styles.cardIsNotCorrect : null,
+            ],
+            textStyle: {
+                color: isRevealedCorrect ? Colors.snow : Colors.darkGreen,
+                fontSize: 15,
+                textAlign: "left",
+            },
+        };
+    }
 
     let color;
     if (isCorrect) {
@@ -202,5 +207,19 @@ const styles = StyleSheet.create({
         opacity: 0.4,
         borderColor: Theme.orangeToGreen,
         borderWidth: 0.6,
+    },
+    card: {
+        marginVertical: 6,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: Theme.autumnGreenDarkToGreen,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+    },
+    cardIsCorrect: {
+        backgroundColor: Theme.autumnGreenDarkToGreen,
+    },
+    cardIsNotCorrect: {
+        opacity: 0.4,
     },
 });

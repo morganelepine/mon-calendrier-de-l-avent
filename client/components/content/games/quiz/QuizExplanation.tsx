@@ -2,10 +2,8 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Video } from "@/components/utils/custom/Video";
 import { NextQuestion } from "@/components/content/games/util/NextQuestion";
-import { GameType } from "@/enums/enums";
 
 interface QuizExplanationProps {
-    subType: string | undefined;
     correctAnswer: string;
     explanation?: string;
     videoId?: string;
@@ -16,7 +14,6 @@ interface QuizExplanationProps {
 }
 
 export const QuizExplanation: React.FC<QuizExplanationProps> = ({
-    subType,
     correctAnswer,
     explanation,
     videoId,
@@ -29,20 +26,18 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
         <View>
             <View>
                 <ThemedText style={styles.response}>
-                    {selectedAnswer === correctAnswer
+                    {selectedAnswer.trim() === correctAnswer.trim()
                         ? "Bonne réponse !"
                         : `Oops... la bonne réponse était : ${correctAnswer}`}
                 </ThemedText>
 
-                {subType === GameType.QuizNoel ||
-                subType === GameType.QuizHalloween ||
-                (subType === GameType.QuizEmojis && explanation) ? (
+                {explanation ? (
                     <ThemedText style={styles.explanations}>
                         {explanation}
                     </ThemedText>
                 ) : null}
 
-                {subType === GameType.QuizCitation && videoId ? (
+                {videoId ? (
                     <View style={styles.videoContainer}>
                         <Video videoId={videoId} />
                     </View>

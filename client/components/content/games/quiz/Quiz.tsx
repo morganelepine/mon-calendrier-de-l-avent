@@ -11,12 +11,23 @@ interface QuizProps {
     setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
 }
 
+// Answers are one per line or comma-separated.
+const parseAnswers = (answers?: string): string[] => {
+    if (!answers) return [];
+    const separator = answers.includes("\n") ? /\r?\n/ : ",";
+    return answers
+        .split(separator)
+        .map((answer) => answer.trim())
+        .filter(Boolean);
+};
+
 export const Quiz: React.FC<QuizProps> = ({ content, setScore }) => {
     const questions = content.listOfContents ?? [];
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const currentQuestion = questions[currentQuestionIndex];
-    const answers = currentQuestion.answers?.split(",") || [];
+    const answers = parseAnswers(currentQuestion.answers);
+    const hasQuestion = Boolean(currentQuestion.title?.trim());
     const [answerButtonIsDisabled, setAnswerButtonIsDisabled] =
         useState<boolean>(false);
 
@@ -24,7 +35,8 @@ export const Quiz: React.FC<QuizProps> = ({ content, setScore }) => {
         setSelectedAnswer(answer);
         setAnswerButtonIsDisabled(true);
 
-        const isCorrect = answer === currentQuestion.correctAnswer;
+        const isCorrect =
+            answer.trim() === (currentQuestion.correctAnswer ?? "").trim();
         setScore(currentQuestionIndex, isCorrect);
     };
 
@@ -38,28 +50,26 @@ export const Quiz: React.FC<QuizProps> = ({ content, setScore }) => {
 
     return (
         <>
-            {content.subType === GameType.QuizEmojis && (
-                <ThemedText style={{ marginVertical: 10 }}>
-                    Retrouvez dans quelle chanson se trouve ce refrain en
-                    émojis&nbsp;:
-                </ThemedText>
-            )}
+            <ThemedText type="contentSubtitle">{content.title}</ThemedText>
 
-            {content.subType === GameType.QuizEmojis ? (
-                <CustomMarkdown
-                    style={{
-                        fontSize: 26,
-                        lineHeight: 48,
-                        alignSelf: "center",
-                    }}
-                >
-                    {currentQuestion.title}
-                </CustomMarkdown>
-            ) : (
-                <CustomMarkdown style={{ marginBottom: 20 }}>
-                    {currentQuestion.title}
-                </CustomMarkdown>
-            )}
+            {hasQuestion &&
+                (content.subType === GameType.QuizEmojis ? (
+                    <CustomMarkdown
+                        style={{
+                            fontSize: 26,
+                            lineHeight: 48,
+                            alignSelf: "center",
+                        }}
+                    >
+                        {currentQuestion.title}
+                    </CustomMarkdown>
+                ) : (
+                    <CustomMarkdown
+                        style={{ marginBottom: 20, textAlign: "center" }}
+                    >
+                        {currentQuestion.title}
+                    </CustomMarkdown>
+                ))}
 
             <QuizAnswers
                 correctAnswer={currentQuestion.correctAnswer || ""}
@@ -67,11 +77,11 @@ export const Quiz: React.FC<QuizProps> = ({ content, setScore }) => {
                 selectedAnswer={selectedAnswer}
                 handleAnswer={handleAnswer}
                 answerButtonIsDisabled={answerButtonIsDisabled}
+                isCard={!hasQuestion}
             />
 
             {selectedAnswer !== null && (
                 <QuizExplanation
-                    subType={content.subType}
                     correctAnswer={currentQuestion.correctAnswer || ""}
                     explanation={currentQuestion.description}
                     videoId={currentQuestion.url}

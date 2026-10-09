@@ -8,6 +8,7 @@ interface QuizAnswersProps {
     handleAnswer: (answer: string) => void;
     selectedAnswer: string | null;
     answerButtonIsDisabled: boolean;
+    isCard?: boolean;
 }
 
 export const QuizAnswers: React.FC<QuizAnswersProps> = ({
@@ -16,6 +17,7 @@ export const QuizAnswers: React.FC<QuizAnswersProps> = ({
     handleAnswer,
     selectedAnswer,
     answerButtonIsDisabled,
+    isCard = false,
 }) => {
     return (
         <View style={{ marginBottom: 30 }}>
@@ -24,6 +26,7 @@ export const QuizAnswers: React.FC<QuizAnswersProps> = ({
                     answer,
                     selectedAnswer,
                     correctAnswer,
+                    isCard,
                 );
                 return (
                     <Pressable

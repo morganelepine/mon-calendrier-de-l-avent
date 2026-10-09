@@ -12,7 +12,7 @@ interface OtherGamesProps {
     setScore: (questionNumber: number, isCorrect: boolean) => Promise<void>;
 }
 
-export const OtherGames: React.FC<OtherGamesProps> = ({ game, setScore }) => {
+export const InputGame: React.FC<OtherGamesProps> = ({ game, setScore }) => {
     const words = game.content1.toUpperCase().split(",");
     const answers = (game.content2 ?? "").toUpperCase().split(",");
     const [currentWordIndex, setCurrentWordIndex] = useState(0);

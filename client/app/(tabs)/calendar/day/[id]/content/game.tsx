@@ -6,7 +6,7 @@ import { FlatScreenWrapper } from "@/components/utils/custom/FlatScreenWrapper";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { Hangman } from "@/components/content/games/hangman/Hangman";
 import { Wordle } from "@/components/content/games/wordle/Wordle";
-import { OtherGames } from "@/components/content/games/others/OtherGames";
+import { InputGame } from "@/components/content/games/others/InputGame";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { showPointsToast } from "@/components/utils/Toast";
 import { classifyGames, getContentsByDay } from "@/services/content.service";
@@ -46,16 +46,13 @@ export default function GameScreen() {
     // across every bucket is equivalent to picking whichever one is
     // populated - and avoids having to branch on which one it is.
     const totalQuestions =
-        (gamesByType.pendu?.content1.split(",").length ?? 0) +
+        (gamesByType.hangman?.content1.split(",").length ?? 0) +
         (gamesByType.wordle?.content1.split(",").length ?? 0) +
-        (gamesByType.jeu?.content1.split(",").length ?? 0) +
-        (gamesByType.quizCitation?.listOfContents?.length ?? 0) +
-        (gamesByType.quizNoel?.listOfContents?.length ?? 0) +
-        (gamesByType.quizEmojis?.listOfContents?.length ?? 0) +
-        (gamesByType.quizHalloween?.listOfContents?.length ?? 0);
+        (gamesByType.inputGame?.content1.split(",").length ?? 0) +
+        (gamesByType.quiz?.listOfContents?.length ?? 0);
 
     const totalQuestionsText =
-        gamesByType.pendu || gamesByType.wordle || gamesByType.jeu
+        gamesByType.hangman || gamesByType.wordle || gamesByType.inputGame
             ? `Vous avez joué ${answeredCount} ${answeredCount > 1 ? "mots" : "mot"} sur ${totalQuestions}`
             : `Vous avez répondu à ${answeredCount} ${answeredCount > 1 ? "questions" : "question"} sur ${totalQuestions}`;
 
@@ -100,69 +97,26 @@ export default function GameScreen() {
                 )}
 
                 <View style={styles.container}>
-                    {gamesByType.pendu && (
-                        <Hangman game={gamesByType.pendu} setScore={setScore} />
+                    {gamesByType.hangman && (
+                        <Hangman
+                            game={gamesByType.hangman}
+                            setScore={setScore}
+                        />
                     )}
 
                     {gamesByType.wordle && (
                         <Wordle game={gamesByType.wordle} setScore={setScore} />
                     )}
 
-                    {gamesByType.jeu && (
-                        <OtherGames
-                            game={gamesByType.jeu}
+                    {gamesByType.inputGame && (
+                        <InputGame
+                            game={gamesByType.inputGame}
                             setScore={setScore}
                         />
                     )}
 
-                    {gamesByType.quizCitation && (
-                        <>
-                            <ThemedText type="contentSubtitle">
-                                À quel film de Noël appartient
-                                cette&nbsp;réplique&nbsp;?
-                            </ThemedText>
-                            <Quiz
-                                content={gamesByType.quizCitation}
-                                setScore={setScore}
-                            />
-                        </>
-                    )}
-
-                    {gamesByType.quizNoel && (
-                        <>
-                            <ThemedText type="contentSubtitle">
-                                Êtes-vous incollable sur&nbsp;Noël&nbsp;?
-                            </ThemedText>
-                            <Quiz
-                                content={gamesByType.quizNoel}
-                                setScore={setScore}
-                            />
-                        </>
-                    )}
-
-                    {gamesByType.quizEmojis && (
-                        <>
-                            <ThemedText type="contentSubtitle">
-                                Êtes-vous incollable sur&nbsp;Noël&nbsp;?
-                            </ThemedText>
-                            <Quiz
-                                content={gamesByType.quizEmojis}
-                                setScore={setScore}
-                            />
-                        </>
-                    )}
-
-                    {gamesByType.quizHalloween && (
-                        <>
-                            <ThemedText type="contentSubtitle">
-                                Êtes-vous incollable sur l'automne et
-                                Halloween&nbsp;?
-                            </ThemedText>
-                            <Quiz
-                                content={gamesByType.quizHalloween}
-                                setScore={setScore}
-                            />
-                        </>
+                    {gamesByType.quiz && (
+                        <Quiz content={gamesByType.quiz} setScore={setScore} />
                     )}
                 </View>
             </CustomScrollView>
@@ -181,5 +135,6 @@ const styles = StyleSheet.create({
         color: Colors.red,
         opacity: 0.85,
         fontSize: 13,
+        textAlign: "center",
     },
 });

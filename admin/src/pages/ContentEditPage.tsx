@@ -430,7 +430,9 @@ export function ContentEditPage() {
                                 <input
                                     type="text"
                                     placeholder={
-                                        isQuizList ? "Question" : "Titre"
+                                        isQuizList
+                                            ? "Question (vide = réponses longues affichées en cartes)"
+                                            : "Titre"
                                     }
                                     value={item.title}
                                     onChange={(e) =>
@@ -442,9 +444,9 @@ export function ContentEditPage() {
 
                                 {isQuizList && (
                                     <>
-                                        <input
-                                            type="text"
-                                            placeholder="Réponses (séparées par des virgules)"
+                                        <textarea
+                                            placeholder="Réponses (une par ligne ou séparées par des virgules)"
+                                            rows={4}
                                             value={item.answers}
                                             onChange={(e) =>
                                                 updateListItem(index, {
@@ -452,9 +454,9 @@ export function ContentEditPage() {
                                                 })
                                             }
                                         />
-                                        <input
-                                            type="text"
-                                            placeholder="Bonne réponse"
+                                        <textarea
+                                            placeholder="Bonne réponse (identique à l'une des réponses)"
+                                            rows={2}
                                             value={item.correctAnswer}
                                             onChange={(e) =>
                                                 updateListItem(index, {
