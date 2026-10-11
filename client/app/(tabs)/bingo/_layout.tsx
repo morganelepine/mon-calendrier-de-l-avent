@@ -58,6 +58,20 @@ export default function BingoLayout() {
                 }}
             />
             <Stack.Screen
+                name="daily-song"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="La chanson du jour"
+                                backgroundColor={Colors.snow}
+                                color={Colors.blue}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
                 name="game2048"
                 options={{
                     headerShown: false,

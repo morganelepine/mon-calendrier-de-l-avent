@@ -7,6 +7,7 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 import { MusicPreference } from "@/types/types";
+import { useDailySong } from "@/contexts/DailySongContext";
 
 interface AudioPlayerProps {
     music: string;
@@ -25,6 +26,8 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
     const isPlaying = status.playing;
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
+    const { playing: dailySongPlaying, setPlaying: setDailySongPlaying } =
+        useDailySong();
 
     const togglePlayPause = () => {
         if (!player) return;
@@ -36,6 +39,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             if (status.didJustFinish || status.currentTime >= status.duration) {
                 player.seekTo(0);
             }
+            setDailySongPlaying(false);
             player.play();
         }
     };
@@ -54,11 +58,18 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         getMusicPreference();
     }, []);
 
+    // Never autoplay over the daily song: the user explicitly started it.
     useEffect(() => {
-        if (playMusic === "yes" && player) {
+        if (playMusic === "yes" && player && !dailySongPlaying) {
             player.play();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playMusic, player]);
+
+    // Starting the daily song pauses this track.
+    useEffect(() => {
+        if (dailySongPlaying) player.pause();
+    }, [dailySongPlaying, player]);
 
     return type === "icon" ? (
         <Pressable onPress={togglePlayPause} style={styles.button}>

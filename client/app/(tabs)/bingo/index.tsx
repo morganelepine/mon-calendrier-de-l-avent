@@ -8,6 +8,7 @@ import { Game2048RulesModal } from "@/components/games2048/Game2048RulesModal";
 import { BingoRulesModal } from "@/components/bingo/BingoRulesModal";
 import { Colors, Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
+import { getTodaySong } from "@/constants/DailySongs";
 
 export default function GamesHubScreen() {
     const [game2048RulesVisible, setGame2048RulesVisible] = useState(false);
@@ -21,7 +22,7 @@ export default function GamesHubScreen() {
                 <View style={styles.cardsContainer}>
                     <HubCard
                         title={`Le 2048 ${isOctober ? "d'automne" : "de Noël"}`}
-                        description={`Faites glisser les cases dans tous les\u00A0sens pour tenter d'atteindre ${goal}`}
+                        description={`Tentez d'atteindre ${goal}`}
                         color={isOctober ? Colors.autumnGreenDark : Colors.red}
                         route="game2048"
                         onRulesPress={() => setGame2048RulesVisible(true)}
@@ -36,12 +37,22 @@ export default function GamesHubScreen() {
                         description={
                             isOctober
                                 ? "Réalisez un maximum d'activités typiquement automnales tout au long du mois d'octobre"
-                                : "Trois bingos à réaliser tout au long du mois de décembre pour se plonger dans l'ambiance de Noël"
+                                : "À réaliser tout au long du mois pour se plonger dans l'ambiance"
                         }
                         color={Theme.orangeToGreen}
                         route={isOctober ? "halloween" : "bingos"}
                         onRulesPress={() => setBingoRulesVisible(true)}
                     />
+
+                    {getTodaySong() ? (
+                        <HubCard
+                            title="La chanson de Noël"
+                            description="Chaque jour, une chanson de Noël à (re)découvrir"
+                            color={Colors.blue}
+                            route="daily-song"
+                            buttonLabel="Écouter"
+                        />
+                    ) : null}
                 </View>
 
                 <Game2048RulesModal
@@ -61,7 +72,7 @@ export default function GamesHubScreen() {
 const styles = StyleSheet.create({
     cardsContainer: {
         width: "100%",
-        gap: 24,
+        gap: 20,
         paddingHorizontal: 20,
     },
 });

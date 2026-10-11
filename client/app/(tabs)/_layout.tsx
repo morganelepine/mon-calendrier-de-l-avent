@@ -71,7 +71,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="bingo"
                 options={{
-                    title: "Jeux",
+                    title: "Activités",
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={

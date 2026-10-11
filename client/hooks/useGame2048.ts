@@ -222,6 +222,6 @@ export const useGoalForCurrentSeason = (): string => {
     const octoberGoal = isPremium ? "le chaudron magique !" : "la courge 🎃";
     const decemberGoal = isPremium
         ? "le Père Noël 🎅"
-        : "la couronne de Noël !";
+        : "la couronne de Noël !";
     return isOctober ? octoberGoal : decemberGoal;
 };

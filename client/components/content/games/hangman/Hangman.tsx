@@ -85,7 +85,7 @@ export const Hangman: React.FC<HangmanProps> = ({ game, setScore }) => {
     return (
         <View key={game.id} style={{ alignItems: "center" }}>
             <ThemedText type={"contentSubtitle"}>
-                {`Trouvez ${words.length} mots autour ${isOctober ? "de l'automne et d'Halloween" : "de l'hiver et de Noël"}`}
+                {`Trouvez ${words.length} mots autour ${isOctober ? "de l'automne ou d'Halloween" : "de l'hiver ou de Noël"}`}
             </ThemedText>
 
             <ThemedText style={{ fontSize: 35, paddingTop: 10 }}>

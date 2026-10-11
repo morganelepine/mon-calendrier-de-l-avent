@@ -10,6 +10,7 @@ import { ScoreProvider } from "@/contexts/ScoreContext";
 import { CountdownVariantProvider } from "@/contexts/CountdownVariantContext";
 import { PremiumProvider } from "@/contexts/PremiumContext";
 import { MusicSelectionProvider } from "@/contexts/MusicSelectionContext";
+import { DailySongProvider } from "@/contexts/DailySongContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { prefetchContents } from "@/services/content.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
@@ -20,6 +21,7 @@ import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { ToastHost } from "@/components/utils/Toast";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
+import { DailySongPlayer } from "@/components/dailySong/DailySongPlayer";
 import { initSentry, Sentry } from "@/services/sentry.service";
 
 initSentry();
@@ -73,35 +75,38 @@ function RootLayout() {
                                     <ScoreProvider>
                                         <CountdownVariantProvider>
                                             <MusicSelectionProvider>
-                                                <PremiumProvider>
-                                                    <Stack>
-                                                        <Stack.Screen
-                                                            name="(tabs)"
-                                                            options={{
-                                                                headerShown: false,
-                                                            }}
-                                                        />
-                                                        <Stack.Screen
-                                                            name="onboarding"
-                                                            options={{
-                                                                headerShown: false,
-                                                            }}
-                                                        />
-                                                        <Stack.Screen
-                                                            name="halloween-notice"
-                                                            options={{
-                                                                headerShown: false,
-                                                            }}
-                                                        />
-                                                        <Stack.Screen
-                                                            name="notifications-notice"
-                                                            options={{
-                                                                headerShown: false,
-                                                            }}
-                                                        />
-                                                        <Stack.Screen name="+not-found" />
-                                                    </Stack>
-                                                </PremiumProvider>
+                                                <DailySongProvider>
+                                                    <PremiumProvider>
+                                                        <Stack>
+                                                            <Stack.Screen
+                                                                name="(tabs)"
+                                                                options={{
+                                                                    headerShown: false,
+                                                                }}
+                                                            />
+                                                            <Stack.Screen
+                                                                name="onboarding"
+                                                                options={{
+                                                                    headerShown: false,
+                                                                }}
+                                                            />
+                                                            <Stack.Screen
+                                                                name="halloween-notice"
+                                                                options={{
+                                                                    headerShown: false,
+                                                                }}
+                                                            />
+                                                            <Stack.Screen
+                                                                name="notifications-notice"
+                                                                options={{
+                                                                    headerShown: false,
+                                                                }}
+                                                            />
+                                                            <Stack.Screen name="+not-found" />
+                                                        </Stack>
+                                                        <DailySongPlayer />
+                                                    </PremiumProvider>
+                                                </DailySongProvider>
                                             </MusicSelectionProvider>
                                         </CountdownVariantProvider>
                                     </ScoreProvider>

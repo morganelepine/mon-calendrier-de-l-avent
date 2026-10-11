@@ -10,6 +10,7 @@ interface HubCardProps {
     description: string;
     color: string;
     route: string;
+    buttonLabel?: string;
     onRulesPress?: () => void;
 }
 
@@ -18,6 +19,7 @@ export const HubCard: React.FC<HubCardProps> = ({
     description,
     color,
     route,
+    buttonLabel = "Jouer",
     onRulesPress,
 }) => {
     return (
@@ -30,7 +32,7 @@ export const HubCard: React.FC<HubCardProps> = ({
                 onPress={() => router.push(`/bingo/${route}` as never)}
                 color={color}
             >
-                Jouer
+                {buttonLabel}
             </CustomButton>
             {onRulesPress ? (
                 <TextButton
@@ -48,11 +50,10 @@ export const HubCard: React.FC<HubCardProps> = ({
 const styles = StyleSheet.create({
     card: {
         borderRadius: 16,
-        paddingVertical: 20,
-        paddingHorizontal: 16,
+        padding: 16,
         backgroundColor: Colors.snow,
         opacity: 0.9,
-        gap: 8,
+        gap: 4,
     },
     cardTitle: {
         fontSize: 20,
