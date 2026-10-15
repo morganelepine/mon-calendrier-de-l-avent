@@ -1,18 +1,12 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { StorageKeys } from "@/constants/storageKeys";
 import { ChristmasTargetDay, CountdownVariant } from "@/enums/enums";
 import { usePersistedPreference } from "@/hooks/usePersistedPreference";
+import { parseChristmasTargetDay } from "@/utils/christmasTargetDay";
+import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
 
 const isCountdownVariant = (value: string | null): value is CountdownVariant =>
     !!value && (Object.values(CountdownVariant) as string[]).includes(value);
-
-const parseChristmasTargetDay = (raw: string): ChristmasTargetDay | null => {
-    const parsed = Number(raw);
-    return parsed === ChristmasTargetDay.Eve ||
-        parsed === ChristmasTargetDay.Day
-        ? parsed
-        : null;
-};
 
 interface CountdownVariantContextType {
     variant: CountdownVariant;
@@ -51,13 +45,23 @@ export const CountdownVariantProvider = ({
         (value) => (value ? "yes" : "no"),
     );
 
-    const [targetDay, setTargetDay] =
+    const [targetDay, setStoredTargetDay] =
         usePersistedPreference<ChristmasTargetDay>(
             StorageKeys.countdownTargetDay,
             ChristmasTargetDay.Day,
             parseChristmasTargetDay,
             (value) => String(value),
         );
+
+    // Keeps the home screen widget in sync with the 24th/25th choice right away,
+    // instead of waiting for its next periodic update.
+    const setTargetDay = useCallback(
+        (next: ChristmasTargetDay): void => {
+            setStoredTargetDay(next);
+            refreshCountdownWidget(next);
+        },
+        [setStoredTargetDay],
+    );
 
     const value = useMemo(
         () => ({
