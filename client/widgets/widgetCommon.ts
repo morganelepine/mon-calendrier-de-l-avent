@@ -112,10 +112,16 @@ export const fitTextStack = (
 
 // Pixel size of a bundled image, read from the asset itself so the layout
 // follows a replaced image without updating any constant.
+// Image.resolveAssetSource only exists on native: the widgets are never
+// rendered on web, but their modules are still bundled (and run) there,
+// so it must not throw.
 export const getImageSize = (
     source: ImageRequireSource,
 ): { width: number; height: number } => {
-    const { width, height } = Image.resolveAssetSource(source);
+    const { width, height } = Image.resolveAssetSource?.(source) ?? {
+        width: 0,
+        height: 0,
+    };
     return { width, height };
 };
 
