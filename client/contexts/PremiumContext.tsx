@@ -14,6 +14,8 @@ import Purchases, {
 } from "react-native-purchases";
 import { useUser } from "@/contexts/UserContext";
 import { logClient } from "@/services/log.service";
+import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
+import { storeWidgetsPremium } from "@/widgets/widgetState";
 
 // Must match the entitlement identifier configured in the RevenueCat dashboard.
 const ENTITLEMENT_ID = "premium";
@@ -124,6 +126,26 @@ export const PremiumProvider = ({
     }, []);
 
     const isPremium = devOverride ?? hasActiveEntitlement(customerInfo);
+
+    // The home screen widgets are premium-only and run without the app:
+    // keep their copy of the status up to date, and redraw them when it changes
+    // (purchase, restore, dev override). Skipped while the status is unknown
+    // (RevenueCat not loaded yet, or failed offline), so that an outage never
+    // locks a premium user's widgets.
+    useEffect(() => {
+        if (!PURCHASES_SUPPORTED) return;
+        if (devOverride === null && customerInfo === null) return;
+
+        storeWidgetsPremium(isPremium)
+            .then((changed) => {
+                if (changed) refreshCountdownWidget({ isPremium });
+            })
+            .catch((error) => {
+                logClient("Error storing widgets premium status", {
+                    error: String(error),
+                });
+            });
+    }, [isPremium, devOverride, customerInfo]);
 
     const value = useMemo(
         () => ({

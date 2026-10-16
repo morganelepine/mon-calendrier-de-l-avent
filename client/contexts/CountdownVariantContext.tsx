@@ -58,7 +58,7 @@ export const CountdownVariantProvider = ({
     const setTargetDay = useCallback(
         (next: ChristmasTargetDay): void => {
             setStoredTargetDay(next);
-            refreshCountdownWidget(next);
+            refreshCountdownWidget({ targetDay: next });
         },
         [setStoredTargetDay],
     );

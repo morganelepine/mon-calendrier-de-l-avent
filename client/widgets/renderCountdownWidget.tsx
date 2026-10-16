@@ -1,5 +1,4 @@
 import type { WidgetInfo } from "react-native-android-widget";
-import { ChristmasTargetDay } from "@/enums/enums";
 import {
     GIFTS_WIDGET_NAME,
     GiftsCountdownWidget,
@@ -12,7 +11,11 @@ import {
     SNOWBALL_WIDGET_NAME,
     SnowballCountdownWidget,
 } from "@/widgets/SnowballCountdownWidget";
-import { getWidgetCountdown } from "@/widgets/getWidgetCountdown";
+import {
+    getWidgetCountdown,
+    LOCKED_COUNTDOWN,
+} from "@/widgets/getWidgetCountdown";
+import type { WidgetState } from "@/widgets/widgetState";
 
 // One component per widget declared in app.json, keyed by its "name".
 const WIDGETS = {
@@ -25,7 +28,7 @@ export const WIDGET_NAMES = Object.keys(WIDGETS);
 
 export const renderCountdownWidget = (
     widgetInfo: WidgetInfo,
-    targetDay: ChristmasTargetDay,
+    { targetDay, isPremium }: WidgetState,
 ) => {
     const Widget =
         WIDGETS[widgetInfo.widgetName as keyof typeof WIDGETS] ??
@@ -33,7 +36,9 @@ export const renderCountdownWidget = (
 
     return (
         <Widget
-            countdown={getWidgetCountdown(targetDay)}
+            countdown={
+                isPremium ? getWidgetCountdown(targetDay) : LOCKED_COUNTDOWN
+            }
             width={widgetInfo.width}
             height={widgetInfo.height}
         />

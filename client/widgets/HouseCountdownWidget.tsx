@@ -12,6 +12,7 @@ import {
     fitTextStack,
     getImageSize,
     getNightsLabel,
+    getWidgetClickProps,
     WIDGET_FONT_BOLD,
     WIDGET_FONT_SEMI,
     WIDGET_TEXT_COLOR,
@@ -36,6 +37,8 @@ const TEXT_ZONE_MARGIN = 0.03;
 const TEXT_FILL = 0.6;
 // How much each line overlaps the one above (share of its font size).
 const NIGHTS_OVERLAPS = [0.2, 0.4, 0.35];
+// Shown instead of the countdown without La Hotte Magique.
+const LOCKED_LINES = ["Avec", "La Hotte", "Magique"];
 
 // Tall (1x2) beige card, the image edge to edge and anchored at the bottom:
 // "12 / nuits / avant / Noël" stacked above the houses, or "Joyeux / Noël" on the day itself.
@@ -63,14 +66,24 @@ export const HouseCountdownWidget = ({
               "avant",
               "Noël",
           ]
-        : [countdown.top, countdown.bottom];
+        : countdown.kind === "greeting"
+          ? countdown.lines
+          : LOCKED_LINES;
+    // A message's lines all get the size of its longest one.
+    const messageSize = Math.min(
+        ...lines.map((line) =>
+            fitFontSize(line, width * TEXT_WIDTH, width * WORD_SIZE),
+        ),
+    );
     // As big as the zone allows (so the smallest widget gets the biggest text it can),
     // capped by these sizes and by the width.
     const { fontSizes, marginsTop, bleedTop, bleedBottom } = fitTextStack(
         lines.map((line, index) =>
             isNights && index === 0
                 ? Math.round(width * NUMBER_SIZE)
-                : fitFontSize(line, width * TEXT_WIDTH, width * WORD_SIZE),
+                : isNights
+                  ? fitFontSize(line, width * TEXT_WIDTH, width * WORD_SIZE)
+                  : messageSize,
         ),
         Math.round(zoneHeight * TEXT_FILL),
         {
@@ -81,7 +94,7 @@ export const HouseCountdownWidget = ({
 
     return (
         <OverlapWidget
-            clickAction="OPEN_APP"
+            {...getWidgetClickProps(countdown)}
             accessibilityLabel={
                 isNights
                     ? `${countdown.nights} ${getNightsLabel(countdown.nights)} avant Noël`

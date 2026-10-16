@@ -10,7 +10,15 @@ export type WidgetCountdown =
     // nights: same count as NightsCountdown
     // days/hours: same split as useCountdown (Columns variant)
     | { kind: "nights"; nights: number; days: number; hours: number }
-    | { kind: "greeting"; message: string; top: string; bottom: string };
+    // message: full sentence (accessibility), lines: what the widget shows
+    | { kind: "greeting"; message: string; lines: string[] }
+    // Not premium
+    | { kind: "locked"; message: string };
+
+export const LOCKED_COUNTDOWN: WidgetCountdown = {
+    kind: "locked",
+    message: "Widget disponible avec La Hotte Magique",
+};
 
 // Recomputed from a fresh "now" on every render: the widget's headless JS
 // context can outlive a day, so the frozen `today` from Dates.ts would go stale.
@@ -27,8 +35,7 @@ export const getWidgetCountdown = (
         return {
             kind: "greeting",
             message: isEve ? "Joyeux réveillon de Noël !" : "Joyeux Noël !",
-            top: "Joyeux",
-            bottom: isEve ? "réveillon" : "Noël",
+            lines: ["Joyeux", isEve ? "réveillon" : "Noël"],
         };
     }
 

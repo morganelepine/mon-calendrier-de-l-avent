@@ -6,7 +6,7 @@
         "newArchEnabled": true,
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
-        "scheme": "myapp",
+        "scheme": "mon-calendrier-de-l-avent",
         "userInterfaceStyle": "automatic",
         "splash": {
             "image": "./assets/images/splash.png",

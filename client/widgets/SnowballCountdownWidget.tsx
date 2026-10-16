@@ -11,6 +11,7 @@ import {
     fitFontSize,
     fitTextStack,
     getNightsLabel,
+    getWidgetClickProps,
     WIDGET_FONT_BOLD,
     WIDGET_FONT_SEMI,
     WIDGET_TEXT_COLOR,
@@ -28,6 +29,8 @@ const BAND = { top: 475, height: 106, left: 14, width: 572 };
 // The text's visible glyphs fill this share of the band's height at most, and 92% of its width.
 const TEXT_FILL = 0.37;
 const TEXT_WIDTH = 0.92;
+// Shown instead of the countdown without La Hotte Magique.
+const LOCKED_TEXT = "Avec La Hotte Magique";
 
 // Snow globe (2x2) with "12 nuits avant Noël", or "Joyeux Noël" on the day itself, written on its green base.
 export const SnowballCountdownWidget = ({
@@ -45,7 +48,9 @@ export const SnowballCountdownWidget = ({
     const isNights = countdown.kind === "nights";
     const text = isNights
         ? `${countdown.nights} ${getNightsLabel(countdown.nights)} avant Noël`
-        : `${countdown.top} ${countdown.bottom}`;
+        : countdown.kind === "greeting"
+          ? countdown.lines.join(" ")
+          : LOCKED_TEXT;
     // One line, as big as the band allows: its height, or its width for long texts.
     const {
         fontSizes: [fontSize],
@@ -58,7 +63,7 @@ export const SnowballCountdownWidget = ({
 
     return (
         <FlexWidget
-            clickAction="OPEN_APP"
+            {...getWidgetClickProps(countdown)}
             accessibilityLabel={isNights ? text : countdown.message}
             style={{
                 height: "match_parent",

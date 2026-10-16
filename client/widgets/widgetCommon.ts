@@ -125,5 +125,19 @@ export const getImageSize = (
     return { width, height };
 };
 
+// Tap action of a widget: opens the app, or the premium screen (deep link,
+// see "scheme" in app.json) when the widget is locked.
+const PREMIUM_SCREEN_URI = "mon-calendrier-de-l-avent://informations/premium";
+
+export const getWidgetClickProps = (
+    countdown: WidgetCountdown,
+): { clickAction: string; clickActionData?: { uri: string } } =>
+    countdown.kind === "locked"
+        ? {
+              clickAction: "OPEN_URI",
+              clickActionData: { uri: PREMIUM_SCREEN_URI },
+          }
+        : { clickAction: "OPEN_APP" };
+
 export const getNightsLabel = (nights: number): string =>
     nights > 1 ? "nuits" : "nuit";

@@ -11,6 +11,7 @@ import {
     fitFontSize,
     fitTextStack,
     getImageSize,
+    getWidgetClickProps,
     NUMBER_OVERLAP,
     TextStack,
     WIDGET_FONT_BOLD,
@@ -43,6 +44,8 @@ const TEXT_MIN_HEIGHT = 0.44;
 const TEXT_GAP = 0.03;
 // Share of the room for the glyphs (between the images, minus the gaps) they may fill at most.
 const TEXT_FILL = 0.85;
+// Shown instead of the countdown without La Hotte Magique.
+const LOCKED_LINES = ["Avec la", "Hotte Magique"];
 
 // Only refreshed every 30 min by Android (updatePeriodMillis),
 // so the hours can lag behind by up to that much.
@@ -133,11 +136,19 @@ export const GiftsCountdownWidget = ({
         glyphsHeight,
         { overlaps: [NUMBER_OVERLAP], startsWithNumber: true },
     );
-    const greetingLines = isNights ? [] : [countdown.top, countdown.bottom];
-    const greetingStack = fitTextStack(
-        greetingLines.map((line) =>
+    const greetingLines = isNights
+        ? []
+        : countdown.kind === "greeting"
+          ? countdown.lines
+          : LOCKED_LINES;
+    // A message's lines all get the size of its longest one.
+    const messageSize = Math.min(
+        ...greetingLines.map((line) =>
             fitFontSize(line, base * 0.88, base * 0.17),
         ),
+    );
+    const greetingStack = fitTextStack(
+        greetingLines.map(() => messageSize),
         glyphsHeight,
     );
     // The empty top/bottom of the text's line boxes may overlap the images,
@@ -146,7 +157,7 @@ export const GiftsCountdownWidget = ({
 
     return (
         <FlexWidget
-            clickAction="OPEN_APP"
+            {...getWidgetClickProps(countdown)}
             accessibilityLabel={
                 isNights
                     ? `${countdown.days} ${formatUnitLabel(countdown.days, "jour", "jours")} et ${countdown.hours} ${formatUnitLabel(countdown.hours, "heure", "heures")} avant Noël`
