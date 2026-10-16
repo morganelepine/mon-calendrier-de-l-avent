@@ -13,6 +13,7 @@ import {
     getImageSize,
     getNightsLabel,
     getWidgetClickProps,
+    LOCKED_VEIL_COLOR,
     WIDGET_FONT_BOLD,
     WIDGET_FONT_SEMI,
     WIDGET_TEXT_COLOR,
@@ -38,7 +39,7 @@ const TEXT_FILL = 0.6;
 // How much each line overlaps the one above (share of its font size).
 const NIGHTS_OVERLAPS = [0.2, 0.4, 0.35];
 // Shown instead of the countdown without La Hotte Magique.
-const LOCKED_LINES = ["Avec", "La Hotte", "Magique"];
+const LOCKED_LINES = ["Débloquez", "la Hotte", "Magique"];
 
 // Tall (1x2) beige card, the image edge to edge and anchored at the bottom:
 // "12 / nuits / avant / Noël" stacked above the houses, or "Joyeux / Noël" on the day itself.
@@ -124,6 +125,16 @@ export const HouseCountdownWidget = ({
                     style={{ width, height: imageHeight }}
                 />
             </FlexWidget>
+            {countdown.kind === "locked" && (
+                <FlexWidget
+                    style={{
+                        height: "match_parent",
+                        width: "match_parent",
+                        backgroundColor: LOCKED_VEIL_COLOR,
+                        borderRadius: radius,
+                    }}
+                />
+            )}
             <FlexWidget
                 style={{
                     height: "match_parent",

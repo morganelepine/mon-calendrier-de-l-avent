@@ -125,6 +125,20 @@ export const getImageSize = (
     return { width, height };
 };
 
+// Locked widgets (no La Hotte Magique).
+const LOCKED_DIM = 0.5;
+export const LOCKED_VEIL_COLOR = `rgba(0, 0, 0, ${LOCKED_DIM})` as const;
+
+// `hex` (#rrggbb) as seen through the locked veil, for plain backgrounds.
+export const dimColor = (hex: string): `#${string}` => {
+    const channels = [1, 3, 5].map((start) =>
+        Math.round(parseInt(hex.slice(start, start + 2), 16) * (1 - LOCKED_DIM))
+            .toString(16)
+            .padStart(2, "0"),
+    );
+    return `#${channels.join("")}`;
+};
+
 // Tap action of a widget: opens the app, or the premium screen (deep link,
 // see "scheme" in app.json) when the widget is locked.
 const PREMIUM_SCREEN_URI = "mon-calendrier-de-l-avent://informations/premium";

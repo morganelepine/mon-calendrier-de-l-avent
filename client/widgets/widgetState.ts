@@ -11,30 +11,29 @@ export interface WidgetState {
     isPremium: boolean;
 }
 
-const readIsPremium = async (): Promise<boolean> => {
+// "yes", "no", or null if never stored (or unreadable).
+const readStoredPremium = async (): Promise<string | null> => {
     try {
-        return (
-            (await AsyncStorage.getItem(StorageKeys.widgetsPremium)) === "yes"
-        );
+        return await AsyncStorage.getItem(StorageKeys.widgetsPremium);
     } catch {
-        return false;
+        return null;
     }
 };
 
 export const readWidgetState = async (): Promise<WidgetState> => ({
     targetDay: await readChristmasTargetDay(),
-    isPremium: await readIsPremium(),
+    // Locked until the app has stored a known premium status.
+    isPremium: (await readStoredPremium()) === "yes",
 });
 
-// Stores the premium status for the widgets. Returns whether it changed,
-// i.e. whether the widgets need redrawing.
+// Stores the premium status for the widgets. Returns whether the stored value
+// changed, i.e. whether the widgets need redrawing. Never stored before counts
+// as a change: widgets placed earlier may still show an outdated state.
 export const storeWidgetsPremium = async (
     isPremium: boolean,
 ): Promise<boolean> => {
-    if ((await readIsPremium()) === isPremium) return false;
-    await AsyncStorage.setItem(
-        StorageKeys.widgetsPremium,
-        isPremium ? "yes" : "no",
-    );
+    const value = isPremium ? "yes" : "no";
+    if ((await readStoredPremium()) === value) return false;
+    await AsyncStorage.setItem(StorageKeys.widgetsPremium, value);
     return true;
 };

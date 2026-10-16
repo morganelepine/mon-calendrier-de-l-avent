@@ -22,6 +22,8 @@ import {
 export const SNOWBALL_WIDGET_NAME = "SnowballCountdown";
 
 const SNOWBALL = require("@/assets/images/widget/widget_snowball.webp");
+// Same image dimmed (see LOCKED_VEIL_COLOR), shown without La Hotte Magique.
+const SNOWBALL_LOCKED = require("@/assets/images/widget/widget_snowball_locked.webp");
 // widget_snowball.webp is a 600x600 square on a transparent background, with
 // an empty green band at the bottom for the text. Band position in image pixels:
 const IMAGE_SIZE = 600;
@@ -30,7 +32,7 @@ const BAND = { top: 475, height: 106, left: 14, width: 572 };
 const TEXT_FILL = 0.37;
 const TEXT_WIDTH = 0.92;
 // Shown instead of the countdown without La Hotte Magique.
-const LOCKED_TEXT = "Avec La Hotte Magique";
+const LOCKED_TEXT = "Débloquez La Hotte Magique";
 
 // Snow globe (2x2) with "12 nuits avant Noël", or "Joyeux Noël" on the day itself, written on its green base.
 export const SnowballCountdownWidget = ({
@@ -75,7 +77,9 @@ export const SnowballCountdownWidget = ({
             {/* No fragments here: the widget tree builder can't render them. */}
             <OverlapWidget style={{ width: side, height: side }}>
                 <ImageWidget
-                    image={SNOWBALL}
+                    image={
+                        countdown.kind === "locked" ? SNOWBALL_LOCKED : SNOWBALL
+                    }
                     imageWidth={side}
                     imageHeight={side}
                 />

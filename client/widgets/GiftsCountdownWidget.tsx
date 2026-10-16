@@ -3,6 +3,7 @@
 import {
     FlexWidget,
     ImageWidget,
+    OverlapWidget,
     TextWidget,
 } from "react-native-android-widget";
 import { formatUnitLabel } from "@/components/calendar/Countdown/countdownUnits";
@@ -11,7 +12,9 @@ import {
     fitFontSize,
     fitTextStack,
     getImageSize,
+    dimColor,
     getWidgetClickProps,
+    LOCKED_VEIL_COLOR,
     NUMBER_OVERLAP,
     TextStack,
     WIDGET_FONT_BOLD,
@@ -45,7 +48,35 @@ const TEXT_GAP = 0.03;
 // Share of the room for the glyphs (between the images, minus the gaps) they may fill at most.
 const TEXT_FILL = 0.85;
 // Shown instead of the countdown without La Hotte Magique.
-const LOCKED_LINES = ["Avec la", "Hotte Magique"];
+const LOCKED_LINES = ["Débloquez la", "Hotte Magique"];
+
+// A gifts image, under the locked veil when needed (the background is
+// dimmed accordingly, so the whole widget looks dimmed but the text).
+const GiftsImage = ({
+    image,
+    width,
+    height,
+    dimmed,
+}: {
+    image: number;
+    width: number;
+    height: number;
+    dimmed: boolean;
+}) =>
+    dimmed ? (
+        <OverlapWidget style={{ width, height }}>
+            <ImageWidget
+                image={image}
+                imageWidth={width}
+                imageHeight={height}
+            />
+            <FlexWidget
+                style={{ width, height, backgroundColor: LOCKED_VEIL_COLOR }}
+            />
+        </OverlapWidget>
+    ) : (
+        <ImageWidget image={image} imageWidth={width} imageHeight={height} />
+    );
 
 // Only refreshed every 30 min by Android (updatePeriodMillis),
 // so the hours can lag behind by up to that much.
@@ -125,6 +156,7 @@ export const GiftsCountdownWidget = ({
     const columnWidth = Math.round(base * 0.44);
 
     const isNights = countdown.kind === "nights";
+    const isLocked = countdown.kind === "locked";
     const glyphsHeight = Math.round(
         (textHeight - 2 * Math.round(base * TEXT_GAP)) * TEXT_FILL,
     );
@@ -169,15 +201,16 @@ export const GiftsCountdownWidget = ({
                 flexDirection: "column",
                 alignItems: "center",
                 padding,
-                backgroundColor: BACKGROUND,
+                backgroundColor: isLocked ? dimColor(BACKGROUND) : BACKGROUND,
                 borderRadius: Math.round(Math.min(width * 0.12, 20)),
             }}
         >
             {/* No fragments here: the widget tree builder can't render them. */}
-            <ImageWidget
+            <GiftsImage
                 image={TOP_GIFT}
-                imageWidth={imageWidth}
-                imageHeight={topHeight}
+                width={imageWidth}
+                height={topHeight}
+                dimmed={isLocked}
             />
             <FlexWidget
                 style={{
@@ -225,10 +258,11 @@ export const GiftsCountdownWidget = ({
                     />
                 ))}
             </FlexWidget>
-            <ImageWidget
+            <GiftsImage
                 image={BOTTOM_GIFTS}
-                imageWidth={imageWidth}
-                imageHeight={bottomHeight}
+                width={imageWidth}
+                height={bottomHeight}
+                dimmed={isLocked}
             />
         </FlexWidget>
     );
