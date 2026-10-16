@@ -111,6 +111,7 @@ export const classifyGames = (
 
     games.forEach((game) => {
         switch (game.subType) {
+            case "pendu":
             case GameType.Hangman:
                 gamesByType.hangman = game;
                 type = ContentType.Game;
@@ -119,6 +120,7 @@ export const classifyGames = (
                 gamesByType.wordle = game;
                 type = ContentType.Game;
                 break;
+            case "jeu":
             case GameType.InputGame:
                 gamesByType.inputGame = game;
                 type = ContentType.Game;
