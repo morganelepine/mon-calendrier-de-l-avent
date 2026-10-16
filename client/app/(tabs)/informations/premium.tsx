@@ -8,6 +8,7 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { CountdownVariantSettings } from "@/components/informations/settings/CountdownVariantSettings";
 import { Game2048PremiumSettings } from "@/components/informations/settings/Game2048PremiumSettings";
 import { MusicSelection } from "@/components/informations/settings/MusicSelection";
+import { WidgetsPremiumSettings } from "@/components/informations/settings/WidgetsPremiumSettings";
 import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
 import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { showToast } from "@/components/utils/Toast";
@@ -87,17 +88,19 @@ export default function PremiumScreen() {
 
                 <Game2048PremiumSettings color={Colors.lightGreen} />
 
+                <WidgetsPremiumSettings color={Colors.blue} />
+
                 {/* <PremiumFeatureCard
                     title="3 bonus pour votre série de connexion"
                     color={Colors.green}
-                    description="Trois bonus supplémentaires pour vous aider à faire durer votre série et ne jamais perdre le fil de votre Avent !"
+                    description="Trois bonus pour vous aider à faire durer votre série et ne jamais perdre le fil de votre Avent !"
                 /> */}
 
-                <MusicSelection color={Colors.blue} />
+                <MusicSelection color={Colors.red} />
 
                 <PremiumFeatureCard
                     title="Une surprise le 25 décembre"
-                    color={Colors.red}
+                    color={Colors.green}
                     description={
                         <>
                             Avec La Hotte Magique, vous remportez
@@ -109,7 +112,7 @@ export default function PremiumScreen() {
 
                 <PremiumFeatureCard
                     title="Une bonne action"
-                    color={Colors.autumnGold}
+                    color={Colors.lightGreen}
                     description="La Hotte Magique, c’est aussi une façon de soutenir le développement de l’application et de donner un petit coup de pouce à sa créatrice. Merci de faire partie de l’aventure 🤍"
                 />
 
