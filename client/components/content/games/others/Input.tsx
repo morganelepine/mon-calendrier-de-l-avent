@@ -32,9 +32,9 @@ export const Input: React.FC<InputProps> = ({
         setScore(currentWordIndex, isCorrect);
 
         if (isCorrect) {
-            setResultText("Bravo ! Le mot à trouver était bien : " + answer);
+            setResultText(`Bravo ! Le mot à trouver était bien "${answer}"`);
         } else {
-            setResultText(`Raté... la bonne réponse était : ${answer}`);
+            setResultText(`Raté... la bonne réponse était "${answer}"`);
         }
 
         setShowResult(true);

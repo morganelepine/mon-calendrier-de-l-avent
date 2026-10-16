@@ -28,7 +28,7 @@ export const QuizExplanation: React.FC<QuizExplanationProps> = ({
                 <ThemedText style={styles.response}>
                     {selectedAnswer.trim() === correctAnswer.trim()
                         ? "Bonne réponse !"
-                        : `Oops... la bonne réponse était : ${correctAnswer}`}
+                        : `Oops... la bonne réponse était "${correctAnswer}"`}
                 </ThemedText>
 
                 {explanation ? (

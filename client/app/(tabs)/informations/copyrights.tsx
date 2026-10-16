@@ -39,12 +39,10 @@ export default function CopyrightsScreen() {
                 </View>
 
                 <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">
-                        Morgane (c'est moi 😄)
-                    </ThemedText>
+                    <ThemedText type="sectionSubtitle">Morgane</ThemedText>
                     <ThemedText type="sectionText">
                         ...qui a développé l'application et créé la plupart des
-                        contenus, à votre service !
+                        contenus.
                     </ThemedText>
                 </View>
 
