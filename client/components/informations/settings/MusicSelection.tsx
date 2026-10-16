@@ -60,9 +60,9 @@ export const MusicSelection = ({ color }: { color: string }) => {
 
     return (
         <PremiumFeatureCard
-            title="Encore plus de musique"
+            title="Le choix des musiques"
             color={color}
-            description="Découvrez X nouvelles musiques de Noël et choisissez celles qui vous accompagneront tout au long du mois."
+            description="Sélectionnez les musiques qui vous accompagneront tout au long du mois."
         >
             <TouchableOpacity
                 style={styles.toggleButton}

@@ -10,10 +10,9 @@ import { Game2048PremiumSettings } from "@/components/informations/settings/Game
 import { MusicSelection } from "@/components/informations/settings/MusicSelection";
 import { WidgetsPremiumSettings } from "@/components/informations/settings/WidgetsPremiumSettings";
 import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
-import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { showToast } from "@/components/utils/Toast";
 import { Separator } from "@/components/utils/Separator";
-import { PURCHASES_SUPPORTED, usePremium } from "@/contexts/PremiumContext";
+import { usePremium } from "@/contexts/PremiumContext";
 import { logClient } from "@/services/log.service";
 import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
@@ -25,11 +24,11 @@ export default function PremiumScreen() {
         premiumPackage,
         purchasePremium,
         restorePurchases,
-        devOverride,
-        setDevOverride,
     } = usePremium();
     const [purchasing, setPurchasing] = useState(false);
     const [restoring, setRestoring] = useState(false);
+
+    const isComingSoon = true;
 
     const handlePurchase = async () => {
         setPurchasing(true);
@@ -69,24 +68,14 @@ export default function PremiumScreen() {
     return (
         <CustomScrollView>
             <SafeAreaView edges={NO_TOP_EDGES} style={styles.container}>
-                {__DEV__ && (
-                    // DEV ONLY: bypasses the real purchase flow to preview the
-                    // premium/free experience. Never shown in production builds.
-                    <SettingsToggleRow
-                        label="Simuler le statut premium (dev)"
-                        value={devOverride ?? isPremium}
-                        onValueChange={(value) => setDevOverride(value)}
-                    />
-                )}
-
                 <ThemedText type="sectionText" style={styles.intro}>
                     La Hotte Magique, c’est un petit supplément de magie pour
                     votre calendrier de l’Avent ✨
                 </ThemedText>
 
-                <CountdownVariantSettings color={Colors.green} />
+                <CountdownVariantSettings color={Colors.red} />
 
-                <Game2048PremiumSettings color={Colors.lightGreen} />
+                <Game2048PremiumSettings color={Colors.green} />
 
                 <WidgetsPremiumSettings color={Colors.blue} />
 
@@ -96,11 +85,11 @@ export default function PremiumScreen() {
                     description="Trois bonus pour vous aider à faire durer votre série et ne jamais perdre le fil de votre Avent !"
                 /> */}
 
-                <MusicSelection color={Colors.red} />
+                <MusicSelection color={Colors.autumnGreen} />
 
                 <PremiumFeatureCard
-                    title="Une surprise le 25 décembre"
-                    color={Colors.green}
+                    title="Une surprise pour Noël"
+                    color={Colors.red}
                     description={
                         <>
                             Avec La Hotte Magique, vous remportez
@@ -112,14 +101,22 @@ export default function PremiumScreen() {
 
                 <PremiumFeatureCard
                     title="Une bonne action"
-                    color={Colors.lightGreen}
+                    color={Colors.green}
                     description="La Hotte Magique, c’est aussi une façon de soutenir le développement de l’application et de donner un petit coup de pouce à sa créatrice. Merci de faire partie de l’aventure 🤍"
                 />
 
                 <Separator />
 
                 <View style={styles.purchaseBox}>
-                    {!isPremium && PURCHASES_SUPPORTED ? (
+                    {isComingSoon ? (
+                        <CustomButton disabled onPress={() => {}}>
+                            Bientôt disponible ✨
+                        </CustomButton>
+                    ) : isPremium ? (
+                        <ThemedText type="sectionText" style={styles.intro}>
+                            Merci d'avoir débloqué{"\n"}La Hotte Magique{"\n"}✨
+                        </ThemedText>
+                    ) : (
                         <>
                             <CustomButton
                                 onPress={handlePurchase}
@@ -143,10 +140,6 @@ export default function PremiumScreen() {
                                     : "Déjà débloqué ? Restaurer mon achat"}
                             </ThemedText>
                         </>
-                    ) : (
-                        <ThemedText type="sectionText" style={styles.intro}>
-                            Merci d'avoir débloqué{"\n"}La Hotte Magique ✨
-                        </ThemedText>
                     )}
                 </View>
             </SafeAreaView>
@@ -161,7 +154,6 @@ const styles = StyleSheet.create({
         color: Theme.goldToBlue,
         textAlign: "center",
         fontSize: 18,
-        marginBottom: 8,
     },
     purchaseBox: {
         gap: 12,

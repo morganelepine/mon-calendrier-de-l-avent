@@ -9,7 +9,7 @@ const REVENUECAT_API_URL = "https://api.revenuecat.com/v1";
 
 // Must match the entitlement identifier configured in the RevenueCat
 // dashboard, and PremiumContext.tsx on the client.
-const ENTITLEMENT_ID = "premium";
+const ENTITLEMENT_ID = "com_merrymate_moncalendrierdelavent_pro";
 
 export async function isPremiumEntitlementActive(
     appUserId: string,

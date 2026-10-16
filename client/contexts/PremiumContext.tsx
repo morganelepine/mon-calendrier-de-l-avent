@@ -7,6 +7,7 @@ import React, {
     useState,
 } from "react";
 import { Platform } from "react-native";
+import Constants, { ExecutionEnvironment } from "expo-constants";
 import Purchases, {
     CustomerInfo,
     PurchasesPackage,
@@ -18,9 +19,13 @@ import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
 import { storeWidgetsPremium } from "@/widgets/widgetState";
 
 // Must match the entitlement identifier configured in the RevenueCat dashboard.
-const ENTITLEMENT_ID = "premium";
+const ENTITLEMENT_ID = "com_merrymate_moncalendrierdelavent_pro";
 
-const REVENUECAT_ANDROID_KEY = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
+const IS_EXPO_GO =
+    Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+const REVENUECAT_ANDROID_KEY = IS_EXPO_GO
+    ? process.env.EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY
+    : process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
 
 export const PURCHASES_SUPPORTED = Platform.OS === "android";
 
@@ -32,10 +37,6 @@ interface PremiumContextType {
     premiumPackage: PurchasesPackage | null;
     purchasePremium: () => Promise<void>;
     restorePurchases: () => Promise<void>;
-    // DEV ONLY: stand-in to preview the premium/free experience without a real purchase.
-    // Remove once real purchases have been exercised end-to-end and this is no longer needed for QA.
-    devOverride: boolean | null;
-    setDevOverride: (value: boolean | null) => void;
 }
 
 const PremiumContext = createContext<PremiumContextType | undefined>(undefined);
@@ -54,7 +55,6 @@ export const PremiumProvider = ({
     const [premiumPackage, setPremiumPackage] =
         useState<PurchasesPackage | null>(null);
     const [isReady, setIsReady] = useState(!PURCHASES_SUPPORTED);
-    const [devOverride, setDevOverride] = useState<boolean | null>(null);
 
     useEffect(() => {
         // consistent-return requires every path in this effect to either
@@ -62,7 +62,8 @@ export const PremiumProvider = ({
         if (!PURCHASES_SUPPORTED || !userUuid) return () => {};
 
         if (!REVENUECAT_ANDROID_KEY) {
-            // logClient("Missing EXPO_PUBLIC_REVENUECAT_ANDROID_KEY");
+            if (!IS_EXPO_GO)
+                logClient("Missing EXPO_PUBLIC_REVENUECAT_ANDROID_KEY");
             setIsReady(true);
             return () => {};
         }
@@ -70,10 +71,16 @@ export const PremiumProvider = ({
         Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
 
         let cancelled = false;
-        Purchases.configure({
-            apiKey: REVENUECAT_ANDROID_KEY,
-            appUserID: userUuid,
-        });
+        try {
+            Purchases.configure({
+                apiKey: REVENUECAT_ANDROID_KEY,
+                appUserID: userUuid,
+            });
+        } catch (error) {
+            logClient("RevenueCat configure failed", { error: String(error) });
+            setIsReady(true);
+            return () => {};
+        }
 
         const listener = (info: CustomerInfo) => {
             if (!cancelled) setCustomerInfo(info);
@@ -125,7 +132,7 @@ export const PremiumProvider = ({
         setCustomerInfo(info);
     }, []);
 
-    const isPremium = devOverride ?? hasActiveEntitlement(customerInfo);
+    const isPremium = hasActiveEntitlement(customerInfo);
 
     // The home screen widgets are premium-only and run without the app:
     // keep their copy of the status up to date, and redraw them when it changes
@@ -134,7 +141,7 @@ export const PremiumProvider = ({
     // locks a premium user's widgets.
     useEffect(() => {
         if (!PURCHASES_SUPPORTED) return;
-        if (devOverride === null && customerInfo === null) return;
+        if (customerInfo === null) return;
 
         storeWidgetsPremium(isPremium)
             .then((changed) => {
@@ -145,7 +152,7 @@ export const PremiumProvider = ({
                     error: String(error),
                 });
             });
-    }, [isPremium, devOverride, customerInfo]);
+    }, [isPremium, customerInfo]);
 
     const value = useMemo(
         () => ({
@@ -154,17 +161,8 @@ export const PremiumProvider = ({
             premiumPackage,
             purchasePremium,
             restorePurchases,
-            devOverride,
-            setDevOverride,
         }),
-        [
-            isPremium,
-            isReady,
-            premiumPackage,
-            purchasePremium,
-            restorePurchases,
-            devOverride,
-        ],
+        [isPremium, isReady, premiumPackage, purchasePremium, restorePurchases],
     );
 
     return (

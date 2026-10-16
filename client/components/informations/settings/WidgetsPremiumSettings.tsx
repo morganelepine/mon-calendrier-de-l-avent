@@ -27,7 +27,7 @@ export const WidgetsPremiumSettings = ({ color }: { color: string }) =>
         <PremiumFeatureCard
             title="Des widgets"
             color={color}
-            description="Suivez le décompte jusqu’à Noël depuis votre écran d’accueil avec ces trois widgets."
+            description="Suivez le décompte jusqu’à Noël depuis votre écran d’accueil avec trois widgets au choix."
         >
             <View style={styles.previews}>
                 {WIDGET_PREVIEWS.map(({ label, source, aspectRatio }) => (
