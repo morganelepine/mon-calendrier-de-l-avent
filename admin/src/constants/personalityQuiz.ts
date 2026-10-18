@@ -12,12 +12,17 @@ export function validatePersonalityQuiz(json: string): string | null {
     for (const [key, profile] of Object.entries<{
         title?: unknown;
         description?: unknown;
+        summary?: unknown;
     }>(quiz.profiles)) {
         if (typeof profile?.title !== "string" || !profile.title) {
             return `Profil "${key}" : titre manquant.`;
         }
         if (typeof profile.description !== "string") {
             return `Profil "${key}" : description manquante.`;
+        }
+        // Short version shown on the share image, where the description won't fit.
+        if (typeof profile.summary !== "string" || !profile.summary) {
+            return `Profil "${key}" : résumé ("summary", 2 phrases) manquant.`;
         }
     }
 
