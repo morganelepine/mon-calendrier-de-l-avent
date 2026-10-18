@@ -2,7 +2,7 @@
     "expo": {
         "name": "Calendrier de l'avent",
         "slug": "advent-calendar",
-        "version": "1.4.3",
+        "version": "1.4.31",
         "newArchEnabled": true,
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",

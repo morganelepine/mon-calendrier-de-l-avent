@@ -28,12 +28,6 @@ export const CloseContentButton: React.FC<CloseContentButtonProps> = ({
 
 const styles = StyleSheet.create({
     button: {
-        // position: "absolute",
-        // right: 20,
-        // zIndex: 1,
-        // height: 48,
-        // width: 48,
-        // alignSelf: "center",
         height: 40,
         width: 40,
         alignItems: "center",

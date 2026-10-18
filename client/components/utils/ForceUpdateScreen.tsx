@@ -3,11 +3,9 @@ import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { PLAY_STORE_URL } from "@/constants/Links";
 
 export default function ForceUpdateScreen() {
-    const storeUrl =
-        "https://play.google.com/store/apps/details?id=com.merrymate.moncalendrierdelavent";
-
     return (
         <BackgroundImage image="17_mz6l5c">
             <View style={styles.container}>
@@ -17,7 +15,7 @@ export default function ForceUpdateScreen() {
                 </ThemedText>
 
                 <CustomButton
-                    onPress={() => Linking.openURL(storeUrl)}
+                    onPress={() => Linking.openURL(PLAY_STORE_URL)}
                     color={Colors.snow}
                     textColor={Colors.blue}
                 >

@@ -45,6 +45,7 @@ export interface PersonalityQuizAnswer {
 export interface PersonalityQuizProfile {
     title: string;
     description: string;
+    summary: string; // 2 sentences, shown on the share image
     image?: string; // Cloudinary id
 }
 

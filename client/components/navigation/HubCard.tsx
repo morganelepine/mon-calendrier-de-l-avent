@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         fontFamily: "FreightNeoBold",
     },
     cardSubtitle: {
-        fontSize: 15,
+        fontSize: 14,
         textAlign: "center",
     },
 });

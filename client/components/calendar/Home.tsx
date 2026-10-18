@@ -1,32 +1,26 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { daysArray } from "@/data/days_data";
-import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { AudioPlayer } from "@/components/content/Audio";
-import { Colors } from "@/constants/Colors";
+import { ShareBackgroundPicker } from "@/components/utils/share/ShareBackgroundPicker";
+import {
+    HomeHeadline,
+    useHomeShareMessage,
+} from "@/components/calendar/HomeHeadline";
+import { Colors, Theme } from "@/constants/Colors";
 import {
     isOctober,
     currentDay,
     isDecember,
     isAfterChristmas,
-    daysToCalendar,
-    christmasDay,
-    getDaysUntil,
-    isHalloween,
-    daysToHalloween,
 } from "@/constants/Dates";
-import { ChristmasTargetDay } from "@/enums/enums";
-import { CountdownDisplay } from "@/components/calendar/Countdown/CountdownDisplay";
-import {
-    useCountdownVariant,
-    useCountdownShowSeconds,
-    useChristmasTargetDay,
-} from "@/contexts/CountdownVariantContext";
+import { useChristmasTargetDay } from "@/contexts/CountdownVariantContext";
 import { usePremium } from "@/contexts/PremiumContext";
 import { useMusicSelection } from "@/contexts/MusicSelectionContext";
 import {
@@ -34,6 +28,7 @@ import {
     getAvailableMusics,
     getMusicForDay,
 } from "@/constants/Musics";
+import { COUNTDOWN_SHARE_BACKGROUNDS } from "@/constants/shareBackgrounds";
 
 // BACKGROUND IMAGES
 const today = new Date().getDate();
@@ -43,26 +38,14 @@ const HALLOWEEN_BACKGROUND =
 
 export const Home = () => {
     const insets = useSafeAreaInsets();
-    const [countdownVariant] = useCountdownVariant();
-    const [showSeconds] = useCountdownShowSeconds();
     const [targetDay] = useChristmasTargetDay(); // 24 or 25
     const { isPremium } = usePremium();
     const { excludedIds } = useMusicSelection();
+    const shareMessage = useHomeShareMessage();
+    const [pickerVisible, setPickerVisible] = useState(false);
 
-    const countdownTargetDate = new Date(
-        christmasDay.getFullYear(),
-        11,
-        targetDay,
-    );
-    const nightsToTarget = getDaysUntil(countdownTargetDate);
-
-    const showCountdown = isDecember && currentDay < targetDay;
     const showChristmasGreeting =
         isDecember && currentDay >= targetDay && !isAfterChristmas;
-    const christmasGreeting =
-        targetDay === ChristmasTargetDay.Eve && currentDay === 24
-            ? "Joyeux réveillon de Noël !"
-            : "Joyeux Noël !";
 
     const daysMap = new Map(daysArray.map((day) => [day.dayNumber, day]));
     const day = daysMap.get(currentDay);
@@ -78,6 +61,9 @@ export const Home = () => {
         backgroundImage = WINTER_BACKGROUND;
     }
 
+    const shareBackgrounds = COUNTDOWN_SHARE_BACKGROUNDS.filter(
+        (id) => id !== backgroundImage,
+    );
     const music = getMusicForDay(
         currentDay,
         getAvailableMusics(currentMusicSeason, isPremium, excludedIds),
@@ -91,92 +77,38 @@ export const Home = () => {
                     <Snowfall count={showChristmasGreeting ? 500 : 100} />
                 )}
 
-                <CustomSafeAreaView>
-                    <View
-                        style={{
-                            position: "absolute",
-                            top: insets.top + 10,
-                            right: 10,
-                        }}
+                {shareMessage && (
+                    <ShareBackgroundPicker
+                        visible={pickerVisible}
+                        onClose={() => setPickerVisible(false)}
+                        backgrounds={shareBackgrounds}
+                        message={shareMessage}
+                        contentPosition="top"
                     >
+                        <HomeHeadline />
+                    </ShareBackgroundPicker>
+                )}
+
+                <CustomSafeAreaView>
+                    <View style={[styles.actions, { top: insets.top + 10 }]}>
+                        {shareMessage && (
+                            <Pressable
+                                onPress={() => setPickerVisible(true)}
+                                style={styles.button}
+                            >
+                                <View style={styles.buttonBackground} />
+                                <Ionicons
+                                    name="share-social"
+                                    size={26}
+                                    color={Theme.orangeToBlue}
+                                />
+                            </Pressable>
+                        )}
                         <AudioPlayer music={music?.url ?? ""} type="icon" />
                     </View>
 
-                    {/* October: countdown to Halloween */}
-
-                    {isOctober && !isHalloween && (
-                        <>
-                            <ThemedText
-                                style={[styles.title, styles.countdown]}
-                            >
-                                {daysToHalloween}{" "}
-                                {daysToHalloween > 1 ? "jours" : "jour"}
-                            </ThemedText>
-                            <ThemedText
-                                style={[styles.title, styles.beforeCalendar]}
-                            >
-                                avant Halloween
-                            </ThemedText>
-                        </>
-                    )}
-
-                    {isHalloween && (
-                        <ThemedText
-                            style={[styles.title, styles.christmasGreeting]}
-                        >
-                            Happy{"\n"}Halloween
-                        </ThemedText>
-                    )}
-
-                    {/* Before calendar departure */}
-
-                    {!isDecember && !isOctober && (
-                        <>
-                            <ThemedText
-                                style={[styles.title, styles.countdown]}
-                            >
-                                {daysToCalendar}{" "}
-                                {daysToCalendar > 1 ? "jours" : "jour"}
-                            </ThemedText>
-                            <ThemedText
-                                style={[styles.title, styles.beforeCalendar]}
-                            >
-                                avant le départ du calendrier
-                            </ThemedText>
-                        </>
-                    )}
-
-                    {/* During calendar period */}
-
                     <View style={styles.textContainer}>
-                        {showCountdown && (
-                            <CountdownDisplay
-                                variant={countdownVariant}
-                                nights={nightsToTarget}
-                                targetDate={countdownTargetDate}
-                                showSeconds={showSeconds}
-                            />
-                        )}
-
-                        {/* Target day(s) reached, until the 26th */}
-
-                        {showChristmasGreeting && (
-                            <ThemedText
-                                style={[styles.title, styles.christmasGreeting]}
-                            >
-                                {christmasGreeting}
-                            </ThemedText>
-                        )}
-
-                        {/* After calendar period, in december only */}
-
-                        {isAfterChristmas && (
-                            <ThemedText
-                                style={[styles.title, styles.afterChristmas]}
-                            >
-                                Rendez-vous l'année prochaine&nbsp;!
-                            </ThemedText>
-                        )}
+                        <HomeHeadline />
                     </View>
                 </CustomSafeAreaView>
             </BackgroundImage>
@@ -185,31 +117,26 @@ export const Home = () => {
 };
 
 const styles = StyleSheet.create({
+    actions: {
+        position: "absolute",
+        right: 10,
+        flexDirection: "row",
+        gap: 10,
+    },
+    button: {
+        height: 42,
+        width: 42,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    buttonBackground: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: Colors.snow,
+        borderRadius: 50,
+        opacity: 0.7,
+    },
     textContainer: {
         marginBottom: 250,
         paddingHorizontal: 20,
-    },
-    title: {
-        fontFamily: "FreightNeoBold",
-        letterSpacing: 0.4,
-        textAlign: "center",
-        color: Colors.snow,
-    },
-    countdown: {
-        fontSize: 55,
-        letterSpacing: 6,
-    },
-    beforeCalendar: {
-        fontSize: 20,
-        fontFamily: "FreightNeo",
-        marginBottom: 30,
-    },
-    christmasGreeting: {
-        fontSize: 40,
-        letterSpacing: 1,
-    },
-    afterChristmas: {
-        fontSize: 40,
-        letterSpacing: 1,
     },
 });

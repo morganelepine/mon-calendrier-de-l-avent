@@ -7,6 +7,7 @@ import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButto
 import { Separator } from "@/components/utils/Separator";
 import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
+import { PLAY_STORE_URL } from "@/constants/Links";
 
 export default function RateScreen() {
     const contactMe = () => {
@@ -42,7 +43,7 @@ export default function RateScreen() {
                 <ThemedText type="sectionText">
                     Merci pour votre soutien !
                 </ThemedText>
-                <ExternalLinkButton url="https://play.google.com/store/apps/details?id=com.merrymate.moncalendrierdelavent">
+                <ExternalLinkButton url={PLAY_STORE_URL}>
                     Laisser un avis
                 </ExternalLinkButton>
 
