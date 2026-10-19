@@ -57,6 +57,7 @@ export default function HomeScreen() {
         //     "bingo_activities_clicked_cells",
         //     "game2048_in_progress",
         //     "lastResetYear",
+        //     "dismissed_update_version",
         // ]);
     };
 

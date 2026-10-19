@@ -1,12 +1,12 @@
 const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
 // DEBUG: force a fake "today" to test the app as if it were a specific date
-// const DEBUG_FAKE_TODAY: Date | null = new Date(
-//     new Date().getFullYear(),
-//     11,
-//     25,
-// );
-const DEBUG_FAKE_TODAY: Date | null = null;
+const DEBUG_FAKE_TODAY: Date | null = new Date(
+    new Date().getFullYear(),
+    11,
+    19,
+);
+// const DEBUG_FAKE_TODAY: Date | null = null;
 
 const today = DEBUG_FAKE_TODAY ?? new Date();
 

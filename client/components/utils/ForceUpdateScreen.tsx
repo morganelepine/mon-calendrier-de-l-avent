@@ -5,13 +5,17 @@ import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { PLAY_STORE_URL } from "@/constants/Links";
 
-export default function ForceUpdateScreen() {
+const DEFAULT_MESSAGE =
+    "Pour profiter pleinement de ce que les lutins ont préparé ces derniers jours, veuillez mettre l’application à jour ✨";
+
+export default function ForceUpdateScreen({
+    message,
+}: Readonly<{ message: string | null }>) {
     return (
         <BackgroundImage image="17_mz6l5c">
             <View style={styles.container}>
                 <ThemedText style={styles.text}>
-                    Pour profiter pleinement de ce que les lutins ont préparé
-                    ces derniers jours, veuillez mettre l’application à jour ✨
+                    {message ?? DEFAULT_MESSAGE}
                 </ThemedText>
 
                 <CustomButton

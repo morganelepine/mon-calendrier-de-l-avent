@@ -1,6 +1,10 @@
 import { apiFetch } from "@/services/apiFetch";
 
-export const getMinRequiredVersion = async (): Promise<string> => {
-    const data = await apiFetch<{ min_required_version: string }>("/version");
-    return data.min_required_version;
+export type VersionRequirement = {
+    min_supported_version: string;
+    latest_version: string;
+    update_message: string | null;
 };
+
+export const getVersionRequirement = (): Promise<VersionRequirement> =>
+    apiFetch<VersionRequirement>("/version");

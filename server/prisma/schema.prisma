@@ -56,12 +56,16 @@ model UserYearScore {
   @@index([year, total(sort: Desc), lastEarnedAt])
 }
 
-model AppConfig {
-  id        Int      @id @default(autoincrement())
-  key       String   @unique
-  value     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model AppVersionRequirement {
+  id                  Int      @id @default(1)
+  // Below this version: blocking update screen.
+  minSupportedVersion String
+  // Below this version: dismissible update prompt.
+  latestVersion       String
+  // Shown in both prompts; null → the client's default text.
+  updateMessage       String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model Group {
