@@ -29,6 +29,7 @@ import {
     getMusicForDay,
 } from "@/constants/Musics";
 import { COUNTDOWN_SHARE_BACKGROUNDS } from "@/constants/shareBackgrounds";
+import { isShareSupported } from "@/services/share.service";
 
 // BACKGROUND IMAGES
 const today = new Date().getDate();
@@ -41,7 +42,8 @@ export const Home = () => {
     const [targetDay] = useChristmasTargetDay(); // 24 or 25
     const { isPremium } = usePremium();
     const { excludedIds } = useMusicSelection();
-    const shareMessage = useHomeShareMessage();
+    const homeShareMessage = useHomeShareMessage();
+    const shareMessage = isShareSupported ? homeShareMessage : null;
     const [pickerVisible, setPickerVisible] = useState(false);
 
     const showChristmasGreeting =

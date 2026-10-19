@@ -1,11 +1,10 @@
 import { RefObject } from "react";
-import { View } from "react-native";
-import Share from "react-native-share";
+import { TurboModuleRegistry, View } from "react-native";
 import { captureRef } from "react-native-view-shot";
+import { SHARE_IMAGE_HEIGHT, SHARE_IMAGE_WIDTH } from "@/constants/shareImage";
 
-// 4:5 portrait, the format Instagram and most messaging apps display in full.
-export const SHARE_IMAGE_WIDTH = 1080;
-export const SHARE_IMAGE_HEIGHT = 1350;
+// react-native-share's native module isn't in Expo Go.
+export const isShareSupported = TurboModuleRegistry.get("RNShare") != null;
 
 /**
  * Captures the share card as an image and opens the native share sheet,
@@ -15,6 +14,8 @@ export const shareView = async (
     ref: RefObject<View | null>,
     message: string,
 ): Promise<void> => {
+    if (!isShareSupported) return;
+
     let imageUri: string | undefined;
     try {
         imageUri = await captureRef(ref, {
@@ -29,6 +30,7 @@ export const shareView = async (
     }
 
     try {
+        const { default: Share } = await import("react-native-share");
         await Share.open({
             message,
             ...(imageUri ? { url: imageUri, type: "image/jpeg" } : {}),

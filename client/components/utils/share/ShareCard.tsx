@@ -5,10 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import {
-    SHARE_IMAGE_HEIGHT,
-    SHARE_IMAGE_WIDTH,
-} from "@/services/share.service";
+import { SHARE_IMAGE_HEIGHT, SHARE_IMAGE_WIDTH } from "@/constants/shareImage";
 
 // Laid out at phone size (360x450), then upscaled to 1080x1350 by the capture.
 export const CARD_WIDTH = 360;

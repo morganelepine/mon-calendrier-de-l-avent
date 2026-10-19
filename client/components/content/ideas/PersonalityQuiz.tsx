@@ -10,7 +10,7 @@ import { PLAY_STORE_URL } from "@/constants/Links";
 import { QUIZ_SHARE_BACKGROUND } from "@/constants/shareBackgrounds";
 import { Content, PersonalityQuizAnswer } from "@/interfaces/contentInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { shareView } from "@/services/share.service";
+import { isShareSupported, shareView } from "@/services/share.service";
 import {
     computeProfile,
     parsePersonalityQuiz,
@@ -111,33 +111,37 @@ export const PersonalityQuiz: React.FC<PersonalityQuizProps> = ({ idea }) => {
                         >
                             Recommencer
                         </CustomButton>
-                        <CustomButton
-                            color={Theme.orangeToRed}
-                            onPress={() =>
-                                shareView(
-                                    shareCardRef,
-                                    `J'ai fait le quiz "${idea.title}" et je suis "${profile.title}" ✨ et toi ?\nFais-le dans l'app Mon calendrier de l'avent : ${PLAY_STORE_URL}`,
-                                )
-                            }
-                        >
-                            Partager
-                        </CustomButton>
+                        {isShareSupported && (
+                            <CustomButton
+                                color={Theme.orangeToRed}
+                                onPress={() =>
+                                    shareView(
+                                        shareCardRef,
+                                        `J'ai fait le quiz "${idea.title}" et je suis "${profile.title}" ✨ et toi ?\nFais-le dans l'app Mon calendrier de l'avent : ${PLAY_STORE_URL}`,
+                                    )
+                                }
+                            >
+                                Partager
+                            </CustomButton>
+                        )}
                     </View>
 
-                    <ShareCard
-                        ref={shareCardRef}
-                        backgroundImage={QUIZ_SHARE_BACKGROUND}
-                    >
-                        <ThemedText style={styles.shareQuizTitle}>
-                            {idea.title}
-                        </ThemedText>
-                        <ThemedText style={styles.shareProfileTitle}>
-                            {profile.title}
-                        </ThemedText>
-                        <ThemedText style={styles.shareSummary}>
-                            {profile.summary}
-                        </ThemedText>
-                    </ShareCard>
+                    {isShareSupported && (
+                        <ShareCard
+                            ref={shareCardRef}
+                            backgroundImage={QUIZ_SHARE_BACKGROUND}
+                        >
+                            <ThemedText style={styles.shareQuizTitle}>
+                                {idea.title}
+                            </ThemedText>
+                            <ThemedText style={styles.shareProfileTitle}>
+                                {profile.title}
+                            </ThemedText>
+                            <ThemedText style={styles.shareSummary}>
+                                {profile.summary}
+                            </ThemedText>
+                        </ShareCard>
+                    )}
                 </>
             )}
         </View>
