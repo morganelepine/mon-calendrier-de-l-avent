@@ -6,15 +6,15 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
 import { Separator } from "@/components/utils/Separator";
 import { Colors, Theme } from "@/constants/Colors";
+import { isOctober } from "@/constants/Dates";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
-import { PLAY_STORE_URL } from "@/constants/Links";
+import {
+    PLAY_STORE_URL,
+    CONTACT_FORM_URL,
+    SATISFACTION_SURVEY_URL,
+} from "@/constants/Links";
 
 export default function RateScreen() {
-    const contactMe = () => {
-        const url = "mailto:merrymerrymate@gmail.com";
-        Linking.openURL(url);
-    };
-
     return (
         <CustomScrollView>
             <SafeAreaView
@@ -26,14 +26,16 @@ export default function RateScreen() {
                     paddingTop: 20,
                 }}
             >
-                <ThemedText type="sectionText">
-                    Votre avis compte beaucoup pour moi. Alors si vous appréciez
-                    cette application, prenez un moment pour laisser un avis !
+                <ThemedText
+                    type="sectionText"
+                    style={{ fontFamily: "PoppinsBold" }}
+                >
+                    Votre avis est précieux
                 </ThemedText>
                 <ThemedText type="sectionText">
-                    Cela me fera très plaisir et donnera peut-être envie à
-                    d'autres utilisateur·ice·s de découvrir ce calendrier de
-                    l'avent.
+                    Votre avis compte beaucoup pour moi. Alors si vous appréciez
+                    cette application, prenez un moment pour laisser un avis sur
+                    le Play Store !
                 </ThemedText>
                 <ThemedText type="sectionText">
                     PS : n'oubliez pas que, derrière l'écran, il y a un être
@@ -46,6 +48,30 @@ export default function RateScreen() {
                 <ExternalLinkButton url={PLAY_STORE_URL}>
                     Laisser un avis
                 </ExternalLinkButton>
+
+                {isOctober && (
+                    <>
+                        <Separator />
+
+                        <ThemedText
+                            type="sectionText"
+                            style={{ fontFamily: "PoppinsBold" }}
+                        >
+                            Quelques minutes devant vous ?
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            Répondez à un mini questionnaire de satisfaction :
+                            vos réponses m'aideront à rendre ce calendrier
+                            encore plus cosy-spooky !
+                        </ThemedText>
+                        <ExternalLinkButton
+                            url={SATISFACTION_SURVEY_URL}
+                            color={Theme.goldToBlue}
+                        >
+                            Répondre au questionnaire
+                        </ExternalLinkButton>
+                    </>
+                )}
 
                 <Separator />
 
@@ -61,17 +87,8 @@ export default function RateScreen() {
                     amélioration, suggérer des contenus, signaler un problème,
                     partager votre avis...
                 </ThemedText>
-                <ThemedText type="sectionText">
-                    Chaque message sera lu avec attention et m’aidera à
-                    améliorer l’application. Merci de faire partie de l’aventure
-                    !
-                </ThemedText>
-                <ThemedText type="sectionText">
-                    PS : n'hésitez pas à préciser votre nom de lutin·e de Noël
-                    dans le message !
-                </ThemedText>
                 <CustomButton
-                    onPress={contactMe}
+                    onPress={() => Linking.openURL(CONTACT_FORM_URL)}
                     color={Theme.orangeToRed}
                     style={{ marginTop: 12 }}
                 >

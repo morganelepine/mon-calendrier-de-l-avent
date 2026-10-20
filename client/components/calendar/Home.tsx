@@ -30,6 +30,7 @@ import {
 } from "@/constants/Musics";
 import { COUNTDOWN_SHARE_BACKGROUNDS } from "@/constants/shareBackgrounds";
 import { isShareSupported } from "@/services/share.service";
+import { AnnouncementModal } from "@/components/utils/AnnouncementModal";
 
 // BACKGROUND IMAGES
 const today = new Date().getDate();
@@ -85,11 +86,13 @@ export const Home = () => {
                         onClose={() => setPickerVisible(false)}
                         backgrounds={shareBackgrounds}
                         message={shareMessage}
-                        contentPosition="top"
+                        contentPosition={isOctober ? "center" : "top"}
                     >
                         <HomeHeadline />
                     </ShareBackgroundPicker>
                 )}
+
+                <AnnouncementModal />
 
                 <CustomSafeAreaView>
                     <View style={[styles.actions, { top: insets.top + 10 }]}>

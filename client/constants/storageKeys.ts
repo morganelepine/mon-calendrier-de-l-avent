@@ -42,6 +42,10 @@ export const StorageKeys = {
     lastResetYear: "lastResetYear",
 } as const;
 
+// One key per home announcement (see constants/Announcements.ts).
+export const announcementSeenKey = (id: string): string =>
+    `announcement_seen_${id}`;
+
 // Everything that represents "this year's" progress
 // and must be wiped when a new advent calendar season starts.
 export const YEARLY_RESET_KEYS = [
