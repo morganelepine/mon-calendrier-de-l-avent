@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface CustomModalProps {
     visible: boolean;

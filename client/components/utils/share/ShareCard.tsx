@@ -66,7 +66,7 @@ export const ShareCard = forwardRef<View, ShareCardProps>(
 
                     <View style={styles.footer}>
                         <Image
-                            source={require("@/assets/images/icon.png")}
+                            source={require("@/assets/images/share-icon.png")}
                             style={styles.icon}
                         />
                         <View>

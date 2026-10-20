@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { getIconForTier, getGame2048IconUrl } from "@/constants/game2048Icons";
 import { Colors } from "@/constants/Colors";
 

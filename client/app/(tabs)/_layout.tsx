@@ -32,7 +32,7 @@ export default function TabLayout() {
                                 isOctober
                                     ? focused
                                         ? "ghost"
-                                        : "ghost-outline"
+                                        : "ghost-outline" // skull-outline
                                     : focused
                                       ? "sparkles"
                                       : "sparkles-outline"
@@ -52,7 +52,7 @@ export default function TabLayout() {
                                 isOctober
                                     ? focused
                                         ? "spider"
-                                        : "spider-outline"
+                                        : "spider-outline" // leaf-outline
                                     : focused
                                       ? "gift"
                                       : "gift-outline"
@@ -76,7 +76,7 @@ export default function TabLayout() {
                         <TabBarIcon
                             name={
                                 isOctober
-                                    ? "pumpkin"
+                                    ? "pumpkin" // bug-outline
                                     : focused
                                       ? "game-controller"
                                       : "game-controller-outline"
@@ -102,7 +102,7 @@ export default function TabLayout() {
                                 isOctober
                                     ? focused
                                         ? "skull"
-                                        : "skull-outline"
+                                        : "skull-outline" // umbrella-outline
                                     : focused
                                       ? "snow"
                                       : "snow-outline"
@@ -128,7 +128,7 @@ export default function TabLayout() {
                                 isOctober
                                     ? focused
                                         ? "emoticon-devil"
-                                        : "emoticon-devil-outline"
+                                        : "emoticon-devil-outline" // nutrition-outline
                                     : focused
                                       ? "heart-circle"
                                       : "heart-circle-outline"

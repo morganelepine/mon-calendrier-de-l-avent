@@ -2,7 +2,7 @@ import { StyleSheet, View, Pressable, Platform } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { CenteredModal } from "@/components/utils/custom/CenteredModal";
 import { Colors, Theme } from "@/constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Day } from "@/interfaces/dayInterface";
 
 interface DayModalProps {

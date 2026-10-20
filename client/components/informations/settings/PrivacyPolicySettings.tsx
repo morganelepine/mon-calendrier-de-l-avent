@@ -1,6 +1,6 @@
 import { Linking, StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const PRIVACY_POLICY_URL = "https://mon-calendrier-de-l-avent.vercel.app";
 

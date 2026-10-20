@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedText } from "@/components/ThemedText";
 import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import {
