@@ -16,7 +16,17 @@
                 "buildType": "apk"
             },
             "env": {
-                "EXPO_PUBLIC_API_URL_PROD": "https://advent-calendar-v3.vercel.app"
+                "EXPO_PUBLIC_API_URL_PROD": "https://advent-calendar-v3.vercel.app",
+                "EXPO_PUBLIC_PREMIUM_ENABLED": "true"
+            }
+        },
+        "closed-testing": {
+            "extends": "production",
+            "channel": "closed-testing",
+            "env": {
+                "SENTRY_ORG": "mon-calendrier-de-lavent",
+                "SENTRY_PROJECT": "react-native",
+                "EXPO_PUBLIC_PREMIUM_ENABLED": "true"
             }
         },
         "production": {
@@ -27,11 +37,17 @@
             },
             "env": {
                 "SENTRY_ORG": "mon-calendrier-de-lavent",
-                "SENTRY_PROJECT": "react-native"
+                "SENTRY_PROJECT": "react-native",
+                "EXPO_PUBLIC_PREMIUM_ENABLED": "false"
             }
         }
     },
     "submit": {
-        "production": {}
+        "production": {},
+        "closed-testing": {
+            "android": {
+                "track": "alpha"
+            }
+        }
     }
 }

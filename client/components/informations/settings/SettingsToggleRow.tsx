@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingRight: 20,
+        paddingVertical: 4,
     },
     disabled: {
         opacity: 0.6,

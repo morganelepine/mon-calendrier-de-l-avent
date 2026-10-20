@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PurchasesError } from "react-native-purchases";
+import Purchases, { PurchasesError } from "react-native-purchases";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { CustomButton } from "@/components/utils/buttons/Button";
@@ -12,7 +12,7 @@ import { WidgetsPremiumSettings } from "@/components/informations/settings/Widge
 import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
 import { showToast } from "@/components/utils/Toast";
 import { Separator } from "@/components/utils/Separator";
-import { usePremium } from "@/contexts/PremiumContext";
+import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
 import { logClient } from "@/services/log.service";
 import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
@@ -28,7 +28,7 @@ export default function PremiumScreen() {
     const [purchasing, setPurchasing] = useState(false);
     const [restoring, setRestoring] = useState(false);
 
-    const isComingSoon = true;
+    const isComingSoon = !PURCHASES_SUPPORTED;
 
     const handlePurchase = async () => {
         setPurchasing(true);
@@ -36,8 +36,22 @@ export default function PremiumScreen() {
             await purchasePremium();
             showToast("La Hotte Magique est débloquée ✨");
         } catch (error) {
-            if (!(error as PurchasesError)?.userCancelled) {
-                showToast("L'achat n'a pas abouti, réessayez plus tard.");
+            if (
+                (error as PurchasesError)?.code ===
+                Purchases.PURCHASES_ERROR_CODE.PAYMENT_PENDING_ERROR
+            ) {
+                showToast(
+                    "Paiement en attente de validation. La Hotte Magique sera débloquée dès sa confirmation ✨",
+                    "long",
+                );
+            } else if (
+                (error as PurchasesError)?.code !==
+                Purchases.PURCHASES_ERROR_CODE.PURCHASE_CANCELLED_ERROR
+            ) {
+                showToast(
+                    "L'achat n'a pas abouti, réessayez plus tard.",
+                    "long",
+                );
                 await logClient("Premium purchase failed", {
                     error: String(error),
                 });
@@ -50,8 +64,13 @@ export default function PremiumScreen() {
     const handleRestore = async () => {
         setRestoring(true);
         try {
-            await restorePurchases();
-            showToast("Achat restauré");
+            const restored = await restorePurchases();
+            showToast(
+                restored
+                    ? "Achat restauré"
+                    : "Aucun achat à restaurer sur ce compte Google.",
+                restored ? "short" : "long",
+            );
         } catch (error) {
             showToast(
                 "Impossible de restaurer votre achat pour le moment.",

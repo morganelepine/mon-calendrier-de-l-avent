@@ -27,7 +27,12 @@ const REVENUECAT_ANDROID_KEY = IS_EXPO_GO
     ? process.env.EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY
     : process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
 
-export const PURCHASES_SUPPORTED = Platform.OS === "android";
+// Set per EAS build profile: the closed testing build ships the premium offer,
+// while production keeps RevenueCat entirely off until the offer goes live.
+const PREMIUM_ENABLED =
+    __DEV__ || process.env.EXPO_PUBLIC_PREMIUM_ENABLED === "true";
+
+export const PURCHASES_SUPPORTED = Platform.OS === "android" && PREMIUM_ENABLED;
 
 interface PremiumContextType {
     isPremium: boolean;
@@ -36,13 +41,26 @@ interface PremiumContextType {
     isReady: boolean;
     premiumPackage: PurchasesPackage | null;
     purchasePremium: () => Promise<void>;
-    restorePurchases: () => Promise<void>;
+    // Resolves to whether the restore found an active premium purchase.
+    restorePurchases: () => Promise<boolean>;
 }
 
 const PremiumContext = createContext<PremiumContextType | undefined>(undefined);
 
 function hasActiveEntitlement(info: CustomerInfo | null): boolean {
     return !!info?.entitlements.active[ENTITLEMENT_ID];
+}
+
+// Being offline at launch is expected and would flood Sentry on every start.
+const OFFLINE_ERROR_CODES: string[] = [
+    Purchases.PURCHASES_ERROR_CODE.NETWORK_ERROR,
+    Purchases.PURCHASES_ERROR_CODE.OFFLINE_CONNECTION_ERROR,
+];
+
+function logPurchasesError(message: string, error: unknown) {
+    const code = (error as { code?: string } | null)?.code;
+    if (code && OFFLINE_ERROR_CODES.includes(code)) return Promise.resolve();
+    return logClient(message, { code, error: String(error) });
 }
 
 export const PremiumProvider = ({
@@ -95,20 +113,25 @@ export const PremiumProvider = ({
                 const info = await Purchases.restorePurchases();
                 if (!cancelled) setCustomerInfo(info);
             } catch (error) {
-                await logClient("RevenueCat restore failed", {
-                    error: String(error),
-                });
+                await logPurchasesError("RevenueCat restore failed", error);
             }
 
             try {
                 const offerings = await Purchases.getOfferings();
                 const current = offerings.current;
                 const pkg = current?.lifetime ?? current?.availablePackages[0];
+                if (!pkg) {
+                    await logClient("RevenueCat no premium package", {
+                        currentOffering: current?.identifier ?? null,
+                        offerings: Object.keys(offerings.all),
+                    });
+                }
                 if (!cancelled) setPremiumPackage(pkg ?? null);
             } catch (error) {
-                await logClient("RevenueCat getOfferings failed", {
-                    error: String(error),
-                });
+                await logPurchasesError(
+                    "RevenueCat getOfferings failed",
+                    error,
+                );
             } finally {
                 if (!cancelled) setIsReady(true);
             }
@@ -130,6 +153,7 @@ export const PremiumProvider = ({
     const restorePurchases = useCallback(async () => {
         const info = await Purchases.restorePurchases();
         setCustomerInfo(info);
+        return hasActiveEntitlement(info);
     }, []);
 
     const isPremium = hasActiveEntitlement(customerInfo);

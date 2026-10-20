@@ -7,11 +7,10 @@ import { OptionItem } from "@/components/informations/OptionItem";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
-// import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
+import { PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
 
 export default function InformationsScreen() {
     const { username } = useUser();
-    // const { premiumPackage } = usePremium();
 
     return (
         <BlueBackground>
@@ -27,34 +26,32 @@ export default function InformationsScreen() {
                         onPress={() => router.push("/informations/content")}
                     />
 
-                    {/* {premiumPackage && PURCHASES_SUPPORTED && (
+                    {PURCHASES_SUPPORTED && (
                         <OptionItem
                             title="La Hotte Magique"
                             iconName="sparkles-outline"
                             iconColor={
                                 isOctober
-                                    ? Colors.autumnRed
+                                    ? Colors.autumnGold
                                     : Colors.autumnGreen
                             }
                             onPress={() => router.push("/informations/premium")}
                         />
-                    )} */}
+                    )}
 
                     <OptionItem
                         title="Règles pour gagner des points"
                         iconName="game-controller-outline"
-                        iconColor={isOctober ? Colors.gold : Colors.green}
+                        iconColor={
+                            isOctober ? Colors.autumnGreenDark : Colors.green
+                        }
                         onPress={() => router.push("/informations/rules")}
                     />
 
                     <OptionItem
                         title={"Fonctionnement des bingos"}
                         iconName="eye-outline"
-                        iconColor={
-                            isOctober
-                                ? Colors.autumnGreenDark
-                                : Colors.lightBlue
-                        }
+                        iconColor={isOctober ? Colors.gold : Colors.lightBlue}
                         onPress={() => router.push("/informations/bingo")}
                     />
 

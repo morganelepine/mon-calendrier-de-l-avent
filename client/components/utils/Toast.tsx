@@ -13,7 +13,7 @@ type ToastVariant = "default" | "points";
 
 const DURATIONS: Record<ToastDuration, number> = {
     short: 1800,
-    long: 3500,
+    long: 3700,
 };
 
 type ToastListener = (
