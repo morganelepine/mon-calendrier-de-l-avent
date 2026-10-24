@@ -15,8 +15,14 @@ const DAYS_BY_SEASON: Record<Season, number> = {
     halloween: 31,
 };
 
+// 0-based, as returned by Date.getMonth().
+const SEASON_MONTH: Record<Season, number> = {
+    christmas: 11,
+    halloween: 9,
+};
+
 const DEFAULT_SEASON: Season =
-    new Date().getMonth() === 9 ? "halloween" : "christmas";
+    new Date().getMonth() === SEASON_MONTH.halloween ? "halloween" : "christmas";
 
 export function StatsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -68,6 +74,31 @@ export function StatsPage() {
             value: users.get(i + 1) ?? 0,
         }));
     }, [stats, season]);
+
+    // Only boxes openable so far, otherwise future days would drag min/avg to 0.
+    const dayOpeningsSummary = useMemo(() => {
+        if (!stats) return null;
+        const openable = dayBars.slice(0, stats.dayOpeners.availableDays);
+        if (openable.length === 0) return null;
+        const total = openable.reduce((sum, bar) => sum + bar.value, 0);
+        const byValue = [...openable].sort((a, b) => a.value - b.value);
+        // Today's box is still being opened, so it would always be the minimum.
+        const now = new Date();
+        const isOngoing =
+            now.getFullYear() === year &&
+            now.getMonth() === SEASON_MONTH[season];
+        const closed = isOngoing ? openable.slice(0, -1) : openable;
+        const minBar = closed.reduce<(typeof closed)[number] | null>(
+            (min, bar) => (!min || bar.value < min.value ? bar : min),
+            null,
+        );
+        return {
+            average: Math.round(total / openable.length),
+            days: openable.length,
+            min: minBar,
+            max: byValue[byValue.length - 1],
+        };
+    }, [stats, dayBars, year, season]);
 
     return (
         <div className="stats-page">
@@ -224,6 +255,40 @@ export function StatsPage() {
                         <div>
                             <h2>Ouvertures par case</h2>
                             <p className="hint">Cases ouvertes le jour même</p>
+                            {dayOpeningsSummary && (
+                                <div className="kpis">
+                                    <Kpi
+                                        label="Maximum"
+                                        value={formatNumber(
+                                            dayOpeningsSummary.max.value,
+                                        )}
+                                        detail={`case ${dayOpeningsSummary.max.label}`}
+                                    />
+                                    <Kpi
+                                        label="Minimum"
+                                        value={
+                                            dayOpeningsSummary.min
+                                                ? formatNumber(
+                                                      dayOpeningsSummary.min
+                                                          .value,
+                                                  )
+                                                : "-"
+                                        }
+                                        detail={
+                                            dayOpeningsSummary.min
+                                                ? `case ${dayOpeningsSummary.min.label}`
+                                                : "hors case du jour"
+                                        }
+                                    />
+                                    <Kpi
+                                        label="Moyenne"
+                                        value={formatNumber(
+                                            dayOpeningsSummary.average,
+                                        )}
+                                        detail={`sur ${dayOpeningsSummary.days} cases`}
+                                    />
+                                </div>
+                            )}
                             <ColumnChart
                                 bars={dayBars}
                                 percentOf={stats.dayOpeners.active}

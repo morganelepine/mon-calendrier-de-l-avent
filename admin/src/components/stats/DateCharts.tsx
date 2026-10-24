@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { DateCount } from "../../types";
 import { ColumnChart } from "./ColumnChart";
+import { Kpi } from "./Kpi";
 import {
     fillDateGaps,
     fillMonth,
     formatDate,
     formatMonth,
+    formatNumber,
 } from "./statsFormat";
 
 const sumCounts = (rows: DateCount[]) =>
@@ -58,6 +60,13 @@ export function MonthlyDateChart({ rows }: Readonly<{ rows: DateCount[] }>) {
                         {formatMonth(m)}
                     </button>
                 ))}
+            </div>
+            <div className="kpis">
+                <Kpi
+                    label="Total"
+                    value={formatNumber(sumCounts(days))}
+                    detail={`en ${formatMonth(month)}`}
+                />
             </div>
             <ColumnChart
                 bars={days.map((row) => ({
