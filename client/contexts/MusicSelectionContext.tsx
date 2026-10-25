@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 import { StorageKeys } from "@/constants/storageKeys";
 import { usePersistedPreference } from "@/hooks/usePersistedPreference";
 
@@ -18,6 +18,9 @@ interface MusicSelectionContextType {
     // selections means every newly added track is checked by default.
     excludedIds: string[];
     setExcludedIds: (ids: string[]) => void;
+    // Track previewed in Settings: Home's music pauses while it plays.
+    previewId: string | null;
+    setPreviewId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const MusicSelectionContext = createContext<
@@ -38,9 +41,11 @@ export const MusicSelectionProvider = ({
         (value) => JSON.stringify(value),
     );
 
+    const [previewId, setPreviewId] = useState<string | null>(null);
+
     const value = useMemo(
-        () => ({ excludedIds, setExcludedIds }),
-        [excludedIds, setExcludedIds],
+        () => ({ excludedIds, setExcludedIds, previewId, setPreviewId }),
+        [excludedIds, setExcludedIds, previewId],
     );
 
     return (

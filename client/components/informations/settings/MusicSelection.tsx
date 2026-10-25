@@ -15,12 +15,12 @@ import { useMusicSelection } from "@/contexts/MusicSelectionContext";
 
 export const MusicSelection = ({ color }: { color: string }) => {
     const { isPremium } = usePremium();
-    const { excludedIds, setExcludedIds } = useMusicSelection();
+    const { excludedIds, setExcludedIds, previewId, setPreviewId } =
+        useMusicSelection();
     const musics = getSeasonMusics(currentMusicSeason);
     const [showMusics, setShowMusics] = useState(false);
 
     // A single preview player shared by every row, so two tracks never overlap.
-    const [previewId, setPreviewId] = useState<string | null>(null);
     const previewMusic = musics.find((music) => music.id === previewId);
     const player = useAudioPlayer(
         previewMusic ? { uri: previewMusic.url } : null,
@@ -33,10 +33,12 @@ export const MusicSelection = ({ color }: { color: string }) => {
 
     useEffect(() => {
         if (didJustFinish) setPreviewId(null);
-    }, [didJustFinish]);
+    }, [didJustFinish, setPreviewId]);
 
     // Stop the preview when leaving the screen.
-    useFocusEffect(useCallback(() => () => setPreviewId(null), []));
+    useFocusEffect(
+        useCallback(() => () => setPreviewId(null), [setPreviewId]),
+    );
 
     const togglePreview = (id: string) =>
         setPreviewId((current) => (current === id ? null : id));

@@ -1,5 +1,6 @@
-export const CLOUDINARY_BASE_URL =
-    "https://res.cloudinary.com/deauthz29/image/upload/";
+const CLOUDINARY_ROOT_URL = "https://res.cloudinary.com/deauthz29";
+export const CLOUDINARY_BASE_URL = `${CLOUDINARY_ROOT_URL}/image/upload/`;
+const CLOUDINARY_AUDIO_BASE_URL = `${CLOUDINARY_ROOT_URL}/video/upload/`;
 
 // Applied to every image: f_auto serves WebP/AVIF to clients that support it,
 // q_auto lets Cloudinary pick the smallest quality that still looks good.
@@ -19,3 +20,9 @@ export const getCloudinaryImageUrl = (
         : DEFAULT_TRANSFORMATIONS;
     return `${CLOUDINARY_BASE_URL}${transformations}/${publicId}`;
 };
+
+// 96 kbps is plenty for background music and cuts the files 2-3x (bandwidth
+// is most of the Cloudinary bill). The .mp3 extension makes Cloudinary drop
+// the video track of .mp4 sources.
+export const getCloudinaryAudioUrl = (publicId: string): string =>
+    `${CLOUDINARY_AUDIO_BASE_URL}br_96k/${publicId}.mp3`;

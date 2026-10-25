@@ -1,4 +1,5 @@
 import { isOctober } from "@/constants/Dates";
+import { getCloudinaryAudioUrl } from "@/services/cloudinary.service";
 
 export type MusicSeason = "december" | "october";
 
@@ -16,56 +17,56 @@ export const MUSICS: Music[] = [
     {
         id: "silent-night",
         title: "Silent Night",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/silent-night_ff2gwk.mp3",
+        url: getCloudinaryAudioUrl("silent-night_ff2gwk"),
         season: "december",
         premium: false,
     },
     {
         id: "white-christmas",
         title: "White Christmas",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/white-christmas_ztcmxd.mp3",
+        url: getCloudinaryAudioUrl("white-christmas_ztcmxd"),
         season: "december",
         premium: true,
     },
     {
         id: "we-wish-you-a-merry-christmas",
         title: "We Wish You a Merry Christmas",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/we-wish-you-a-merry-christmas_fcqhsn.mp3",
+        url: getCloudinaryAudioUrl("we-wish-you-a-merry-christmas_fcqhsn"),
         season: "december",
         premium: false,
     },
     {
         id: "greensleeves",
         title: "Greensleeves",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1764420642/Greensleeves_ddi2zo.mp4",
+        url: getCloudinaryAudioUrl("Greensleeves_ddi2zo"),
         season: "december",
         premium: false,
     },
     {
         id: "carol-of-the-bells",
         title: "Carol of the Bells",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1730978205/carol-of-the-bells_asxlr9.mp3",
+        url: getCloudinaryAudioUrl("carol-of-the-bells_asxlr9"),
         season: "december",
         premium: false,
     },
     {
         id: "petit-papa-noel",
         title: "Petit Papa Noël",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/v1732811467/petit-papa-noel_pq0ywr.mp4",
+        url: getCloudinaryAudioUrl("petit-papa-noel_pq0ywr"),
         season: "december",
         premium: false,
     },
     {
         id: "halloween-dmitry-taras",
         title: "Halloween",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/Dmitry-Taras-Halloween_gacrmx.mp3",
+        url: getCloudinaryAudioUrl("Dmitry-Taras-Halloween_gacrmx"),
         season: "october",
         premium: false,
     },
     {
         id: "halloween-mikhail-smusev",
         title: "Halloween Background Music",
-        url: "https://res.cloudinary.com/deauthz29/video/upload/Mikhail-Smusev-Halloween_jqgdtd.mp3",
+        url: getCloudinaryAudioUrl("Mikhail-Smusev-Halloween_jqgdtd"),
         season: "october",
         premium: false,
     },
