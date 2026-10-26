@@ -9,6 +9,7 @@ import { StorageKeys } from "@/constants/storageKeys";
 import { MusicPreference } from "@/types/types";
 import { useDailySong } from "@/contexts/DailySongContext";
 import { useMusicSelection } from "@/contexts/MusicSelectionContext";
+import { getCachedAudioUri } from "@/services/audioCache.service";
 
 interface AudioPlayerProps {
     music: string;
@@ -26,6 +27,9 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     const player = useAudioPlayer(null);
     const status = useAudioPlayerStatus(player);
     const loadedMusic = useRef<string | null>(null);
+    // Bumped by every play/pause request, so a download that completes after
+    // the user paused (or started another track) doesn't start playback.
+    const playRequest = useRef(0);
 
     const isPlaying = status.playing;
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
@@ -33,20 +37,28 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         useDailySong();
     const { previewId } = useMusicSelection();
 
-    const play = (): void => {
+    const play = async (): Promise<void> => {
         if (!music) return;
+        const request = ++playRequest.current;
         if (loadedMusic.current !== music) {
-            player.replace({ uri: music });
+            const uri = await getCachedAudioUri(music);
+            if (request !== playRequest.current) return;
+            player.replace({ uri });
             loadedMusic.current = music;
         }
         player.play();
+    };
+
+    const pause = (): void => {
+        playRequest.current++;
+        player.pause();
     };
 
     const togglePlayPause = () => {
         if (!player) return;
 
         if (isPlaying) {
-            player.pause();
+            pause();
         } else {
             // If the track already reached the end, rewind before replaying
             if (
@@ -56,17 +68,18 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 player.seekTo(0);
             }
             setDailySongPlaying(false);
-            play();
+            void play();
         }
     };
 
     // The track changed (e.g. music selection edited): stop the old one.
     useEffect(() => {
         if (loadedMusic.current && loadedMusic.current !== music) {
-            player.pause();
+            pause();
             loadedMusic.current = null;
         }
-    }, [music, player]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [music]);
 
     useEffect(() => {
         const getMusicPreference = async (): Promise<void> => {
@@ -86,20 +99,16 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     // started them.
     useEffect(() => {
         if (playMusic === "yes" && player && !dailySongPlaying && !previewId) {
-            play();
+            void play();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playMusic, music]);
 
-    // Starting the daily song pauses this track.
+    // Starting the daily song or a preview in the music selection pauses this track.
     useEffect(() => {
-        if (dailySongPlaying) player.pause();
-    }, [dailySongPlaying, player]);
-
-    // Same for a preview in the music selection.
-    useEffect(() => {
-        if (previewId) player.pause();
-    }, [previewId, player]);
+        if (dailySongPlaying || previewId) pause();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dailySongPlaying, previewId]);
 
     return type === "icon" ? (
         <Pressable onPress={togglePlayPause} style={styles.button}>

@@ -38,11 +38,21 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
                         />
                     </View>
                 ) : idea.content4 === IdeaType.Audio ? (
-                    <AudioPlayer
-                        music={idea.media}
-                        type="button"
-                        style={{ marginTop: 16 }}
-                    />
+                    <>
+                        <AudioPlayer
+                            music={idea.media}
+                            type="button"
+                            style={{ marginVertical: 16 }}
+                        />
+                        {idea.content3 && (
+                            <ThemedText
+                                type="italic14"
+                                style={{ marginVertical: 12 }}
+                            >
+                                {idea.content3}
+                            </ThemedText>
+                        )}
+                    </>
                 ) : (
                     <ExternalLinkButton url={idea.media}>
                         {idea.content3}

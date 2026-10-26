@@ -145,7 +145,7 @@
                 <h1>Politique de confidentialité</h1>
                 <p class="subtitle">
                     Application « Mon calendrier de l'avent » — dernière mise à
-                    jour : 24 août 2026
+                    jour : 25 octobre 2026
                 </p>
             </header>
 
@@ -249,6 +249,21 @@
                         </td>
                         <td>Détecter, comprendre et corriger les bugs</td>
                     </tr>
+                    <tr>
+                        <td>Achats</td>
+                        <td>
+                            Si vous achetez La Hotte Magique (optionnel) : votre
+                            identifiant, le produit acheté, l'identifiant et la
+                            date de la transaction, et votre statut premium. Vos
+                            coordonnées de paiement restent chez Google Play et
+                            ne nous sont jamais transmises.
+                        </td>
+                        <td>
+                            Débloquer les fonctionnalités premium et restaurer
+                            votre achat après une réinstallation ou un
+                            changement de téléphone
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -270,8 +285,8 @@
                     pour repérer les bugs, détaillé en section 4.
                 </li>
                 <li>
-                    Aucun moyen de paiement : l'application ne propose ni achat
-                    intégré ni abonnement.
+                    Aucune donnée bancaire : le paiement de La Hotte Magique est
+                    entièrement traité par Google Play (voir section 4).
                 </li>
                 <li>
                     Aucune revente ni partage de vos données à des fins
@@ -315,12 +330,32 @@
                 supprimer le jeton côté serveur tant que vous ne l'avez pas
                 aussi désactivé dans l'application.
             </p>
+            <h3>3.4 Achats intégrés</h3>
+            <p>
+                Base légale : exécution du contrat de vente. Les données d'achat
+                (voir section 1, « Achats ») servent uniquement à débloquer et
+                restaurer les fonctionnalités achetées.
+            </p>
 
             <h2>4. Hébergement et sous-traitants</h2>
             <p>
                 Les données liées à votre identifiant, vos scores et vos groupes
                 sont hébergées et sécurisées par <strong>Neon</strong> (base de
                 données PostgreSQL managée).
+            </p>
+            <p>
+                Le serveur de l'application (API) et la version web sont
+                hébergés par <strong>Vercel</strong>. Comme tout hébergeur, il
+                reçoit les requêtes de l'application, dont votre adresse IP,
+                conservée uniquement dans des journaux techniques de courte
+                durée.
+            </p>
+            <p>
+                Les images et les musiques de l'application sont servies par
+                <strong>Cloudinary</strong>. Il reçoit les informations
+                techniques de chaque téléchargement (adresse IP, type
+                d'appareil). Les musiques sont ensuite conservées sur votre
+                appareil pour ne pas être retéléchargées.
             </p>
             <p>
                 Les mises à jour de l'application elles-mêmes sont distribuées
@@ -343,12 +378,41 @@
                 collecte de votre adresse IP y est désactivée.
             </p>
             <p>
+                Si vous achetez La Hotte Magique, l'achat est géré par
+                <strong>RevenueCat</strong>, qui reçoit votre identifiant et les
+                informations de la transaction (voir section 1, « Achats »).
+            </p>
+            <p>
                 Ces prestataires agissent en tant que sous-traitants de
                 l'éditrice et n'utilisent vos données à aucune autre fin. Les
                 échanges entre l'application et ces serveurs sont chiffrés en
                 transit (HTTPS/TLS) : aucune donnée n'est envoyée en clair sur
                 le réseau.
             </p>
+            <h3>Services tiers</h3>
+            <p>
+                Les services suivants agissent en tant que responsables de
+                traitement indépendants, selon leurs propres politiques de
+                confidentialité :
+            </p>
+            <ul>
+                <li>
+                    <strong>Google Play</strong> traite le paiement de La Hotte
+                    Magique : vos coordonnées de paiement et votre compte Google
+                    ne sont connus que de Google.
+                </li>
+                <li>
+                    <strong>YouTube (Google)</strong> : la chanson du jour et
+                    certaines vidéos sont lues via le lecteur YouTube intégré,
+                    chargé uniquement lorsque vous lancez une chanson ou ouvrez
+                    une vidéo. Google reçoit alors votre adresse IP et peut
+                    déposer des cookies, comme sur son site. Ce lecteur est
+                    chargé via une page fournie par la bibliothèque open source
+                    qui l'intègre à l'application, hébergée sur
+                    <strong>GitHub Pages (GitHub)</strong> : GitHub reçoit alors
+                    votre adresse IP et l'identifiant de la vidéo.
+                </li>
+            </ul>
 
             <h2>5. Conservation des données</h2>
             <p>
@@ -361,6 +425,11 @@
                 Les rapports de diagnostic technique envoyés à Sentry (section
                 4) sont conservés selon la durée de rétention par défaut du
                 compte Sentry de l'éditrice, puis supprimés automatiquement.
+            </p>
+            <p>
+                Les données d'achat sont conservées tant que l'achat est actif,
+                puis aussi longtemps que l'exigent les obligations légales liées
+                à la vente.
             </p>
 
             <h2>6. Vos droits</h2>

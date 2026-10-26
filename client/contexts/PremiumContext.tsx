@@ -86,7 +86,7 @@ export const PremiumProvider = ({
             return () => {};
         }
 
-        Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
+        if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
 
         let cancelled = false;
         try {

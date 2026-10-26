@@ -12,6 +12,17 @@ export class ApiError extends Error {
     }
 }
 
+// "/users/3f2a…?x=1" -> "/users/:id": one tag value per endpoint, not per user.
+const toEndpoint = (path: string): string =>
+    path
+        .split("?")[0]
+        .replace(
+            /\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?=\/|$)/gi,
+            "/:id",
+        )
+        // Not every number is an id (e.g. "/games/2048").
+        .replace(/\/(groups|users)\/\d+(?=\/|$)/g, "/$1/:id");
+
 type ApiFetchOptions = Omit<RequestInit, "body"> & {
     body?: unknown;
     timeoutMs?: number;
@@ -54,11 +65,16 @@ export async function apiFetch<T>(
 
         // “Expected” 4xx errors (404, 409...) are treated as warnings;
         // the rest (5xx, network, timeout) are treated as actual errors.
+        const endpoint = toEndpoint(path);
         Sentry.captureException(apiError, {
-            level:
-                apiError.status >= 400 && apiError.status < 500
-                    ? "warning"
-                    : "error",
+            level: apiError.status >= 500 ? "error" : "warning",
+            tags: { endpoint },
+            fingerprint: [
+                "api-error",
+                endpoint,
+                String(apiError.status),
+                apiError.message,
+            ],
             extra: { path, status: apiError.status, body: apiError.bodyText },
         });
 
