@@ -18,6 +18,7 @@ import { ContentRoutes } from "./routes/content.routes";
 import { Games2048Routes } from "./routes/games2048.routes";
 import { RevenueCatRoutes } from "./routes/revenuecat.routes";
 import { RetrospectiveRoutes } from "./routes/retrospective.routes";
+import { TvMoviesRoutes } from "./routes/tvMovies.routes";
 import { AdminAuthRoutes } from "./routes/admin/auth.routes";
 import { AdminContentsRoutes } from "./routes/admin/contents.routes";
 import { AdminStatsRoutes } from "./routes/admin/stats.routes";
@@ -97,6 +98,7 @@ registerRoutes(app, ContentRoutes);
 registerRoutes(app, Games2048Routes);
 registerRoutes(app, RevenueCatRoutes);
 registerRoutes(app, RetrospectiveRoutes);
+registerRoutes(app, TvMoviesRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Calendar API working ✅");

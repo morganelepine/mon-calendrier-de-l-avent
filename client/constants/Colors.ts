@@ -10,7 +10,7 @@ const tintColorDark = "#eee6d9";
 
 export const Colors = {
     snow: "#f7f5f6",
-    lightBlue: "#A1C6EA",
+    lightBlue: "#79A9D1",
     blue: "#0b2956",
     darkBlue: "#010f23",
     lightGreen: "#87A330",

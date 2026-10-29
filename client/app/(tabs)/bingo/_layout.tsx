@@ -13,7 +13,6 @@ export default function BingoLayout() {
             }}
         >
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="bingos" options={{ headerShown: false }} />
             <Stack.Screen name="halloween" options={{ headerShown: false }} />
             <Stack.Screen
                 name="movies"
@@ -58,12 +57,12 @@ export default function BingoLayout() {
                 }}
             />
             <Stack.Screen
-                name="daily-song"
+                name="tv-movies"
                 options={{
                     header: () => {
                         return (
                             <ScreenHeader
-                                title="La chanson du jour"
+                                title="Les téléfilms de Noël du jour"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
                             />

@@ -7,7 +7,6 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
 import { StorageKeys } from "@/constants/storageKeys";
 import { MusicPreference } from "@/types/types";
-import { useDailySong } from "@/contexts/DailySongContext";
 import { useMusicSelection } from "@/contexts/MusicSelectionContext";
 import { getCachedAudioUri } from "@/services/audioCache.service";
 
@@ -33,8 +32,6 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
     const isPlaying = status.playing;
     const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
-    const { playing: dailySongPlaying, setPlaying: setDailySongPlaying } =
-        useDailySong();
     const { previewId } = useMusicSelection();
 
     const play = async (): Promise<void> => {
@@ -67,7 +64,6 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             ) {
                 player.seekTo(0);
             }
-            setDailySongPlaying(false);
             void play();
         }
     };
@@ -95,20 +91,19 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         getMusicPreference();
     }, []);
 
-    // Never autoplay over the daily song or a preview: the user explicitly
-    // started them.
+    // Never autoplay over a preview: the user explicitly started it.
     useEffect(() => {
-        if (playMusic === "yes" && player && !dailySongPlaying && !previewId) {
+        if (playMusic === "yes" && player && !previewId) {
             void play();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playMusic, music]);
 
-    // Starting the daily song or a preview in the music selection pauses this track.
+    // Starting a preview in the music selection pauses this track.
     useEffect(() => {
-        if (dailySongPlaying || previewId) pause();
+        if (previewId) pause();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dailySongPlaying, previewId]);
+    }, [previewId]);
 
     return type === "icon" ? (
         <Pressable onPress={togglePlayPause} style={styles.button}>

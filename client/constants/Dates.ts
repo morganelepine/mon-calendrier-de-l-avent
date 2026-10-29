@@ -25,6 +25,10 @@ const calendarDay = new Date(today.getFullYear(), 11, 1);
 export const currentDay = today.getDate();
 const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
 
+// Local "yyyy-mm-dd": toISOString() would give the UTC date.
+const pad = (n: number): string => String(n).padStart(2, "0");
+export const todayIsoDate = `${today.getFullYear()}-${pad(currentMonth + 1)}-${pad(currentDay)}`;
+
 export const isDecember = currentMonth === 11;
 export const isOctober = currentMonth === 9;
 
