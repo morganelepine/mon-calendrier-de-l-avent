@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { ThemedText } from "@/components/ThemedText";
@@ -86,6 +86,40 @@ export const ShareCard = forwardRef<View, ShareCardProps>(
 
 ShareCard.displayName = "ShareCard";
 
+interface ShareCardPreviewProps extends Omit<ShareCardProps, "offscreen"> {
+    // Screen height kept free around the preview (buttons, headers...).
+    reservedHeight: number;
+}
+
+// On-screen ShareCard, scaled down to fit. The capture keeps the 360x450 layout.
+export const ShareCardPreview = forwardRef<View, ShareCardPreviewProps>(
+    ({ reservedHeight, ...cardProps }, ref) => {
+        const { width, height } = useWindowDimensions();
+        const scale = Math.min(
+            1,
+            (width - 40) / CARD_WIDTH,
+            (height - reservedHeight) / CARD_HEIGHT,
+        );
+
+        return (
+            <View
+                style={{
+                    width: CARD_WIDTH * scale,
+                    height: CARD_HEIGHT * scale,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <View style={{ transform: [{ scale }] }}>
+                    <ShareCard ref={ref} {...cardProps} offscreen={false} />
+                </View>
+            </View>
+        );
+    },
+);
+
+ShareCardPreview.displayName = "ShareCardPreview";
+
 const styles = StyleSheet.create({
     offscreen: {
         position: "absolute",
@@ -128,13 +162,13 @@ const styles = StyleSheet.create({
     },
     appName: {
         fontFamily: "PoppinsBold",
-        fontSize: 13,
+        fontSize: 11,
         lineHeight: 16,
         paddingTop: 0, // ThemedText's default paddingTop would push the block below the icon's center
         color: Colors.snow,
     },
     store: {
-        fontSize: 10,
+        fontSize: 8,
         lineHeight: 12,
         paddingTop: 1,
         color: Colors.snow,

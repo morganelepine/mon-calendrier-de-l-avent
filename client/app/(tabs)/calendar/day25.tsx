@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { ThemedText } from "@/components/ThemedText";
@@ -8,16 +8,34 @@ import { CustomButton } from "@/components/utils/buttons/Button";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import ParallaxScrollView from "@/components/utils/ParallaxScrollView";
 import { Horoscope } from "@/components/days/Day25/Horoscope";
+import { RetrospectiveStory } from "@/components/retrospective/RetrospectiveStory";
 import { Colors } from "@/constants/Colors";
+import {
+    PLAY_STORE_URL,
+    CHRISTMAS_SATISFACTION_SURVEY_URL,
+} from "@/constants/Links";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { wallpapers } from "@/data/day-25-gifts/wallpapers_data";
 import { recipes } from "@/data/day-25-gifts/recipes_data";
+import { Retrospective } from "@/interfaces/retrospectiveInterface";
+import { getRetrospective } from "@/services/retrospective.service";
 
 export default function Day25Screen() {
     const [modalVisible, setModalVisible] = useState(false);
     const openStoryModal = async () => {
         setModalVisible(true);
     };
+    const [retrospective, setRetrospective] = useState<Retrospective | null>(
+        null,
+    );
+    const [retrospectiveVisible, setRetrospectiveVisible] = useState(false);
+
+    useEffect(() => {
+        // No recap (fewer than 6 boxes, network error...): the section stays hidden.
+        getRetrospective()
+            .then(setRetrospective)
+            .catch(() => {});
+    }, []);
 
     return (
         <ParallaxScrollView
@@ -36,7 +54,7 @@ export default function Day25Screen() {
                 />
             }
         >
-            <ThemedText style={styles.title}>Joyeux Noël ☃️</ThemedText>
+            <ThemedText style={styles.title}>Joyeux Noël</ThemedText>
 
             <View>
                 <View style={styles.section}>
@@ -56,19 +74,42 @@ export default function Day25Screen() {
                     </ThemedText>
                     <ExternalLinkButton
                         style={styles.button}
-                        url="https://play.google.com/store/apps/details?id=com.mlepi.adventcalendar"
+                        url={PLAY_STORE_URL}
                     >
                         J'y vais !
                     </ExternalLinkButton>
 
                     <ThemedText style={styles.text}>
-                        Et maintenant, place aux cadeaux ! 🎁
+                        Et maintenant, place aux cadeaux !
                     </ThemedText>
                 </View>
 
+                {retrospective && (
+                    <View style={styles.section}>
+                        <ThemedText type="sectionSubtitle">
+                            Une rétrospective
+                        </ThemedText>
+                        <ThemedText type="sectionText">
+                            Cases ouvertes, séries, bonnes réponses… Revivez
+                            votre mois de décembre en quelques chiffres !
+                        </ThemedText>
+                        <CustomButton
+                            style={styles.button}
+                            onPress={() => setRetrospectiveVisible(true)}
+                        >
+                            Voir ma rétrospective
+                        </CustomButton>
+                        <RetrospectiveStory
+                            retrospective={retrospective}
+                            visible={retrospectiveVisible}
+                            onClose={() => setRetrospectiveVisible(false)}
+                        />
+                    </View>
+                )}
+
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">
-                        🖼️ Des fonds d'écran
+                        Des fonds d'écran
                     </ThemedText>
                     <ThemedText type="sectionText">
                         Ces dessins ont été créés par mon amie Annaëlle pour
@@ -84,7 +125,7 @@ export default function Day25Screen() {
 
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">
-                        ♉ L'horoscope du jour
+                        L'horoscope du jour
                     </ThemedText>
                     <ThemedText type="sectionText">
                         Que vous réserve cette journée de Noël ? Cliquez sur le
@@ -103,9 +144,7 @@ export default function Day25Screen() {
                 </View>
 
                 <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">
-                        🍽️ Des recettes
-                    </ThemedText>
+                    <ThemedText type="sectionSubtitle">Des recettes</ThemedText>
                     <ThemedText type="sectionText">
                         Vous n'avez pas eu le temps de reproduire les recettes
                         lues dans le calendrier ? Voici des versions à imprimer
@@ -159,7 +198,7 @@ export default function Day25Screen() {
 
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">
-                        📺 Le bingo des téléfilms de Noël
+                        Le bingo des téléfilms de Noël
                     </ThemedText>
                     <ThemedText type="sectionText">
                         Vous avez aimé joué au bingo des téléfilms de Noël ?
@@ -195,9 +234,7 @@ export default function Day25Screen() {
                 </View>
 
                 <View style={styles.section}>
-                    <ThemedText type="sectionSubtitle">
-                        🕵🏻‍♀️ Une enquête
-                    </ThemedText>
+                    <ThemedText type="sectionSubtitle">Une enquête</ThemedText>
                     <ThemedText type="sectionText">
                         Bon, ce cadeau, il est plutôt pour moi ! J'ai créé un
                         petit questionnaire pour recueillir votre avis
@@ -208,7 +245,7 @@ export default function Day25Screen() {
                     </ThemedText>
                     <ExternalLinkButton
                         style={styles.button}
-                        url="https://forms.gle/8PwdwpqvP6aqpyap8"
+                        url={CHRISTMAS_SATISFACTION_SURVEY_URL}
                     >
                         Répondre au questionnaire
                     </ExternalLinkButton>
@@ -224,13 +261,12 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     title: {
-        fontSize: 26,
-        letterSpacing: 2,
+        fontSize: 36,
+        letterSpacing: 0.8,
         color: Colors.blue,
         fontFamily: "FreightNeoBold",
         textAlign: "center",
         marginVertical: 20,
-        lineHeight: 34,
     },
     section: {
         marginBottom: 30,

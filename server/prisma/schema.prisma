@@ -25,6 +25,7 @@ model User {
   ownedGroups    Group[]         @relation("OwnedGroups")
   memberships    GroupMember[]
   gameHighScores GameHighScore[]
+  retrospectives UserRetrospective[]
 }
 
 // Source of truth for a user's score: their total for a given year is the
@@ -54,6 +55,30 @@ model UserYearScore {
 
   @@id([userId, year])
   @@index([year, total(sort: Desc), lastEarnedAt])
+}
+
+// December recap (days 1-24) shown on Dec 25th, precomputed by the /retrospective/compute cron.
+model UserRetrospective {
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id])
+  year           Int
+  daysOpened     Int
+  openedDays     Int[]
+  longestStreak  Int
+  correctAnswers Int
+  points         Int
+  timeProfile    String   // morning | afternoon | evening | night (French time)
+  computedAt     DateTime @default(now())
+
+  @@id([userId, year])
+}
+
+// Distributions over every UserRetrospective row of a year,
+// used to compare a player with the others ("plus que X % des joueurs").
+model RetrospectiveStats {
+  year       Int      @id
+  data       Json
+  computedAt DateTime @default(now())
 }
 
 model AppVersionRequirement {

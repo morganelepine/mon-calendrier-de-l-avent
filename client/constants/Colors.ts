@@ -17,6 +17,7 @@ export const Colors = {
     green: "#116459", // 136F63
     darkGreen: "#0b2e25",
     red: "#a0222d", // b52936
+    lightRed: "#bb2b38",
     pink: "#FAB3A9",
     darkPink: "#c25f5f",
     gold: "#e9be1a",
@@ -24,6 +25,7 @@ export const Colors = {
     disabled: "#e5e5e5",
     disabledText: "#92959a",
     black: "#1a211f",
+    beige: "#e8ddce",
 
     autumnGreenDark: "#6e9346",
     autumnGreen: "#a7a84a",

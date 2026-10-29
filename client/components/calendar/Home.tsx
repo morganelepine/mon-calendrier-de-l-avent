@@ -77,7 +77,7 @@ export const Home = () => {
             <StatusBar style="light" />
             <BackgroundImage image={backgroundImage}>
                 {isDecember && (
-                    <Snowfall count={showChristmasGreeting ? 500 : 100} />
+                    <Snowfall count={showChristmasGreeting ? 250 : 100} />
                 )}
 
                 {shareMessage && (

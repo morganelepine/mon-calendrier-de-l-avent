@@ -20,6 +20,10 @@
         {
             "path": "/notifications/send-daily-reminder",
             "schedule": "0 7 * 10 *"
+        },
+        {
+            "path": "/retrospective/compute",
+            "schedule": "0 23 24-25 12 *"
         }
     ]
 }

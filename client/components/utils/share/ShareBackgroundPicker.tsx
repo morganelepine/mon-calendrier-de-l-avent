@@ -1,19 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import {
-    Modal,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    useWindowDimensions,
-    View,
-} from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { CustomButton } from "@/components/utils/buttons/Button";
-import {
-    CARD_HEIGHT,
-    CARD_WIDTH,
-    ShareCard,
-} from "@/components/utils/share/ShareCard";
+import { ShareCardPreview } from "@/components/utils/share/ShareCard";
 import { Colors, Theme } from "@/constants/Colors";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { shareView } from "@/services/share.service";
@@ -39,7 +28,6 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
     contentPosition,
     children,
 }) => {
-    const { width, height } = useWindowDimensions();
     const shareCardRef = useRef<View>(null);
     const [selected, setSelected] = useState(0);
     const [sharing, setSharing] = useState(false);
@@ -47,13 +35,6 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
     useEffect(() => {
         if (visible) setSelected(0);
     }, [visible]);
-
-    // The card keeps its 360x450 layout for the capture, only the preview is scaled.
-    const scale = Math.min(
-        1,
-        (width - 40) / CARD_WIDTH,
-        (height - 260) / CARD_HEIGHT,
-    );
 
     const share = async () => {
         setSharing(true);
@@ -70,25 +51,14 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
             onRequestClose={onClose}
         >
             <View style={styles.overlay}>
-                <View
-                    style={{
-                        width: CARD_WIDTH * scale,
-                        height: CARD_HEIGHT * scale,
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
+                <ShareCardPreview
+                    ref={shareCardRef}
+                    backgroundImage={backgrounds[selected]}
+                    contentPosition={contentPosition}
+                    reservedHeight={260}
                 >
-                    <View style={{ transform: [{ scale }] }}>
-                        <ShareCard
-                            ref={shareCardRef}
-                            backgroundImage={backgrounds[selected]}
-                            contentPosition={contentPosition}
-                            offscreen={false}
-                        >
-                            {children}
-                        </ShareCard>
-                    </View>
-                </View>
+                    {children}
+                </ShareCardPreview>
 
                 {backgrounds.length > 1 && (
                     <ScrollView

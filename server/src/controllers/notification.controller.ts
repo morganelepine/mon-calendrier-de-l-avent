@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../lib/prisma";
 import { sendExpoPushNotifications } from "../services/expoPush.service";
+import { isCronRequest } from "../lib/cronAuth";
 
 type Season = "halloween" | "christmas";
 
@@ -47,18 +48,12 @@ export class NotificationController {
     // GET /notifications/send-daily-reminder
     // Triggered by the Vercel Cron job every morning in October
     // and in December (see server/vercel.json - two schedules, same endpoint).
-    // Vercel automatically sends `Authorization: Bearer $CRON_SECRET` on its own invocations,
-    // which is what's checked below - see https://vercel.com/docs/cron-jobs/manage-cron-jobs#securing-cron-jobs
     async sendDailyReminder(
         request: Request,
         response: Response,
         next: NextFunction,
     ) {
-        const authHeader = request.headers.authorization;
-        if (
-            !process.env.CRON_SECRET ||
-            authHeader !== `Bearer ${process.env.CRON_SECRET}`
-        ) {
+        if (!isCronRequest(request)) {
             return { status: 401, message: "Unauthorized" };
         }
 
