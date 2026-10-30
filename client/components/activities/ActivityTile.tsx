@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: isOctober ? "row" : "column",
         justifyContent: isOctober ? "flex-start" : "center",
-        alignItems: "center",
+        alignItems: isOctober ? "center" : "flex-start",
         gap: isOctober ? 16 : 4,
     },
     title: {

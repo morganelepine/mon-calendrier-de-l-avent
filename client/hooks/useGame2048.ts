@@ -34,7 +34,8 @@ interface UseGame2048Result {
     score: number;
     bestScore: number;
     status: Status;
-    hasWon: boolean;
+    hasJustWon: boolean;
+    dismissWin: () => void;
     isNewBest: boolean | null;
     maxTier: number;
     play: (direction: Direction) => void;
@@ -46,6 +47,8 @@ export function useGame2048(): UseGame2048Result {
     const maxTier = getMaxTier(isPremium);
     const [, forceRender] = useReducer((c) => c + 1, 0);
     const [isNewBest, setIsNewBest] = useState<boolean | null>(null);
+    // Only set by a live move, never on restore, so the win popup shows once per game.
+    const [hasJustWon, setHasJustWon] = useState(false);
     const [bestScore, setBestScore] = useState(0);
     const bestScoreRef = useRef(0);
     const gameRef = useRef<GameData>({
@@ -119,6 +122,7 @@ export function useGame2048(): UseGame2048Result {
             scoreSubmitted: false,
         };
         setIsNewBest(null);
+        setHasJustWon(false);
         persist();
         forceRender();
     }, [persist]);
@@ -191,6 +195,7 @@ export function useGame2048(): UseGame2048Result {
                 scoreSubmitted: false,
             };
             persist();
+            if (hasWon && !game.hasWon) setHasJustWon(true);
             forceRender();
 
             if (isOver) {
@@ -203,13 +208,16 @@ export function useGame2048(): UseGame2048Result {
         [persist, attemptSubmit, updateBestScore, maxTier],
     );
 
+    const dismissWin = useCallback((): void => setHasJustWon(false), []);
+
     const game = gameRef.current;
     return {
         board: game.board,
         score: game.score,
         bestScore,
         status: game.status,
-        hasWon: game.hasWon,
+        hasJustWon,
+        dismissWin,
         isNewBest,
         maxTier,
         play,

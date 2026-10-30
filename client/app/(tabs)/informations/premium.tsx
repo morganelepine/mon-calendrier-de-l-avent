@@ -12,7 +12,7 @@ import { WidgetsPremiumSettings } from "@/components/informations/settings/Widge
 import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFeatureCard";
 import { showToast } from "@/components/utils/Toast";
 import { Separator } from "@/components/utils/Separator";
-import { usePremium, PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
+import { usePremium } from "@/contexts/PremiumContext";
 import { logClient } from "@/services/log.service";
 import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
@@ -27,8 +27,6 @@ export default function PremiumScreen() {
     } = usePremium();
     const [purchasing, setPurchasing] = useState(false);
     const [restoring, setRestoring] = useState(false);
-
-    const isComingSoon = !PURCHASES_SUPPORTED;
 
     const handlePurchase = async () => {
         setPurchasing(true);
@@ -127,15 +125,12 @@ export default function PremiumScreen() {
                 <Separator />
 
                 <View style={styles.purchaseBox}>
-                    {isComingSoon ? (
-                        <CustomButton disabled onPress={() => {}}>
-                            Bientôt disponible ✨
-                        </CustomButton>
-                    ) : isPremium ? (
+                    {isPremium && (
                         <ThemedText type="sectionText" style={styles.intro}>
                             Merci d'avoir débloqué{"\n"}La Hotte Magique{"\n"}✨
                         </ThemedText>
-                    ) : (
+                    )}
+                    {!isPremium && premiumPackage && (
                         <>
                             <CustomButton
                                 onPress={handlePurchase}
@@ -144,9 +139,8 @@ export default function PremiumScreen() {
                                     !isReady || !premiumPackage || purchasing
                                 }
                             >
-                                {premiumPackage
-                                    ? `Débloquer pour ${premiumPackage.product.priceString}`
-                                    : "Débloquer La Hotte Magique"}
+                                Débloquer pour{" "}
+                                {premiumPackage.product.priceString} à vie
                             </CustomButton>
 
                             <ThemedText

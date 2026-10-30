@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
-import { useGoalForCurrentSeason } from "@/hooks/useGame2048";
 import { Game2048TierProgress } from "@/components/games2048/Game2048TierProgress";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
@@ -9,7 +8,6 @@ import { Colors, Theme } from "@/constants/Colors";
 interface Game2048HeaderProps {
     score: number;
     bestScore: number;
-    hasWon: boolean;
     status: string;
     maxTier: number;
 }
@@ -17,12 +15,9 @@ interface Game2048HeaderProps {
 export const Game2048Header = ({
     score,
     bestScore,
-    hasWon,
     status,
     maxTier,
 }: Game2048HeaderProps) => {
-    const goal = useGoalForCurrentSeason();
-
     return (
         <View style={styles.header}>
             <CustomButton
@@ -58,13 +53,6 @@ export const Game2048Header = ({
                     </ThemedText>
                 </View>
             </View>
-
-            {hasWon && (
-                <ThemedText style={styles.won}>
-                    Bravo, vous avez réussi à atteindre {goal} Vous pouvez
-                    continuer à jouer pour améliorer votre score.
-                </ThemedText>
-            )}
         </View>
     );
 };
@@ -89,12 +77,6 @@ const styles = StyleSheet.create({
         borderColor: Colors.snow,
     },
     score: {
-        fontSize: 14,
-        color: Colors.snow,
-        textAlign: "center",
-    },
-    won: {
-        paddingHorizontal: 20,
         fontSize: 14,
         color: Colors.snow,
         textAlign: "center",

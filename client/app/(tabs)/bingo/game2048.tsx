@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Game2048Header } from "@/components/games2048/Game2048Header";
 import { Game2048Board } from "@/components/games2048/Game2048Board";
 import { Game2048Footer } from "@/components/games2048/Game2048Footer";
+import { Game2048WinModal } from "@/components/games2048/Game2048WinModal";
 import { useGame2048 } from "@/hooks/useGame2048";
 import { Theme } from "@/constants/Colors";
 import { TOP_EDGES } from "@/constants/safeAreaEdges";
@@ -13,7 +14,8 @@ export default function Game2048Screen() {
         score,
         bestScore,
         status,
-        hasWon,
+        hasJustWon,
+        dismissWin,
         maxTier,
         play,
         startNewGame,
@@ -21,10 +23,11 @@ export default function Game2048Screen() {
 
     return (
         <SafeAreaView edges={TOP_EDGES} style={styles.container}>
+            <Game2048WinModal visible={hasJustWon} onClose={dismissWin} />
+
             <Game2048Header
                 score={score}
                 bestScore={bestScore}
-                hasWon={hasWon}
                 status={status}
                 maxTier={maxTier}
             />
