@@ -31,8 +31,8 @@ export default function TabLayout() {
                             name={
                                 isOctober
                                     ? focused
-                                        ? "ghost"
-                                        : "ghost-outline" // skull-outline
+                                        ? "skull" // ghost
+                                        : "skull-outline"
                                     : focused
                                       ? "sparkles"
                                       : "sparkles-outline"
@@ -51,8 +51,8 @@ export default function TabLayout() {
                             name={
                                 isOctober
                                     ? focused
-                                        ? "spider"
-                                        : "spider-outline" // leaf-outline
+                                        ? "leaf" // spider
+                                        : "leaf-outline"
                                     : focused
                                       ? "gift"
                                       : "gift-outline"
@@ -76,7 +76,7 @@ export default function TabLayout() {
                         <TabBarIcon
                             name={
                                 isOctober
-                                    ? "pumpkin" // bug-outline
+                                    ? "bug-outline" // pumpkin
                                     : focused
                                       ? "game-controller"
                                       : "game-controller-outline"
@@ -101,8 +101,8 @@ export default function TabLayout() {
                             name={
                                 isOctober
                                     ? focused
-                                        ? "skull"
-                                        : "skull-outline" // umbrella-outline
+                                        ? "umbrella" // skull
+                                        : "umbrella-outline"
                                     : focused
                                       ? "snow"
                                       : "snow-outline"
@@ -127,8 +127,8 @@ export default function TabLayout() {
                             name={
                                 isOctober
                                     ? focused
-                                        ? "emoticon-devil"
-                                        : "emoticon-devil-outline" // nutrition-outline
+                                        ? "nutrition" // emoticon-devil
+                                        : "nutrition-outline"
                                     : focused
                                       ? "heart-circle"
                                       : "heart-circle-outline"

@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
     beforeCalendar: {
         fontSize: 20,
         fontFamily: "FreightNeo",
-        marginBottom: 30,
     },
     christmasGreeting: {
         fontSize: 40,

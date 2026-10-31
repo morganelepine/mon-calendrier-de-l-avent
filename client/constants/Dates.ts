@@ -31,6 +31,7 @@ export const todayIsoDate = `${today.getFullYear()}-${pad(currentMonth + 1)}-${p
 
 export const isDecember = currentMonth === 11;
 export const isOctober = currentMonth === 9;
+export const isChristmasSeason = currentMonth >= 10;
 
 export const isChristmas =
     isDecember && today.getDate() === christmasDay.getDate();

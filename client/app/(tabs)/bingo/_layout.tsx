@@ -1,6 +1,12 @@
 import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
+import { BingoHeader } from "@/components/bingo/BingoHeader";
+import {
+    ActivitiesBingoRules,
+    MoviesBingoRules,
+    TelefilmsBingoRules,
+} from "@/components/bingo/BingoRules";
 
 export default function BingoLayout() {
     return (
@@ -17,43 +23,34 @@ export default function BingoLayout() {
             <Stack.Screen
                 name="movies"
                 options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Bingo des films de Noël"
-                                backgroundColor={Colors.snow}
-                                color={Colors.blue}
-                            />
-                        );
-                    },
+                    header: () => (
+                        <BingoHeader
+                            title="Bingo des films de Noël"
+                            rules={<MoviesBingoRules />}
+                        />
+                    ),
                 }}
             />
             <Stack.Screen
                 name="activities"
                 options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Bingo des activités de Noël"
-                                backgroundColor={Colors.snow}
-                                color={Colors.blue}
-                            />
-                        );
-                    },
+                    header: () => (
+                        <BingoHeader
+                            title="Bingo des activités de Noël"
+                            rules={<ActivitiesBingoRules />}
+                        />
+                    ),
                 }}
             />
             <Stack.Screen
                 name="telefilms"
                 options={{
-                    header: () => {
-                        return (
-                            <ScreenHeader
-                                title="Bingo des téléfilms de Noël"
-                                backgroundColor={Colors.snow}
-                                color={Colors.blue}
-                            />
-                        );
-                    },
+                    header: () => (
+                        <BingoHeader
+                            title="Bingo des téléfilms de Noël"
+                            rules={<TelefilmsBingoRules />}
+                        />
+                    ),
                 }}
             />
             <Stack.Screen

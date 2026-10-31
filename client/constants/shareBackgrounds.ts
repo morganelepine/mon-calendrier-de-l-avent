@@ -4,11 +4,11 @@ import { isOctober } from "@/constants/Dates";
 
 const CHRISTMAS_COUNTDOWN_BACKGROUNDS: string[] = [
     "share-countdown-1_nqcrgc",
-    "share-countdown-3_adzy6s",
+    // "share-countdown-3_adzy6s",
     "share-countdown-5_urab5g",
-    "share-countdown-2_haglos",
     "share-countdown-4_uemmif",
-    "share-countdown-6_ti7bd6",
+    "share-countdown-2_haglos",
+    // "share-countdown-6_ti7bd6",
 ];
 const HALLOWEEN_COUNTDOWN_BACKGROUNDS: string[] = [
     "share-countdown-halloween-2_askxlv",

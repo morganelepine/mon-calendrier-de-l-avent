@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { Separator } from "@/components/utils/Separator";
+import { SeasonalSections } from "@/components/utils/SeasonalSections";
 
 const HalloweenRules = () => (
     <View>
@@ -28,51 +28,29 @@ const HalloweenRules = () => (
     </View>
 );
 
-const ChristmasRules = () => (
-    <View>
-        <ThemedText type="sectionTitle">Mon calendrier de l'avent</ThemedText>
-        <ThemedText type="sectionDates">À partir du 1er novembre</ThemedText>
-
-        {/* MOVIES */}
-        <ThemedText type="sectionSubtitle">Bingo des films de Noël</ThemedText>
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Une sélection de films de Noël pour tous les goûts pour se
-                mettre immédiatement dans l'ambiance !
-            </ThemedText>
-            <ThemedText type="sectionText">
-                Chaque fois que vous regardez l’un de ces films, il vous suffit
-                de cliquer sur la case correspondante pour la valider.
-            </ThemedText>
-        </View>
-
-        {/* TELEFILMS */}
-        <ThemedText type="sectionSubtitle">
-            Bingo des téléfilms de Noël
+export const MoviesBingoRules = () => (
+    <View style={styles.section}>
+        <ThemedText type="sectionText">
+            Une sélection de films de Noël pour tous les goûts pour se mettre
+            immédiatement dans l'ambiance !
         </ThemedText>
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Vous adorez les téléfilms de Noël avec leurs histoires
-                prévisibles, mais réconfortantes, où l’esprit de Noël est
-                toujours au rendez-vous ?
-            </ThemedText>
-            <ThemedText type="sectionText">
-                Pour rendre hommage à cette passion dévorante et apprécier à
-                leur juste valeur les clichés de ces films, j’ai créé le Bingo
-                des téléfilms de Noël !
-            </ThemedText>
-        </View>
+        <ThemedText type="sectionText">
+            Chaque fois que vous regardez l’un de ces films, il vous suffit de
+            cliquer sur la case correspondante pour la valider.
+        </ThemedText>
+    </View>
+);
+
+export const TelefilmsBingoRules = () => (
+    <View>
         <View style={styles.section}>
             <ThemedText type="sectionText">Le principe est simple :</ThemedText>
             <ThemedText type="sectionText">
-                ▪️ Une grille remplie de 28 situations typiques que l’on
-                retrouve dans nombreux téléfilms de Noël est proposée dans
-                l'onglet Bingo.
+                ▪️ Installez-vous confortablement devant le téléfilm du jour.
             </ThemedText>
             <ThemedText type="sectionText">
-                ▪️ Installez-vous confortablement devant le téléfilm du jour
-                (spoiler alert : les inédits passent chaque jour vers 14h sur
-                TF1 et M6…).
+                ▪️ Ouvrez la grille remplie de 28 situations typiques que l’on
+                retrouve dans nombreux téléfilms de Noël.
             </ThemedText>
             <ThemedText type="sectionText">
                 ▪️ À chaque fois qu’une des situations se produit (comme "Un
@@ -81,47 +59,56 @@ const ChristmasRules = () => (
                 correspondante.
             </ThemedText>
         </View>
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Évidemment, plus vous cochez de cases, plus le téléfilm a de
-                chance d’atteindre le sommet du chef-d'oeuvre de Noël !
-            </ThemedText>
-        </View>
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Il vous suffit de recliquer sur les cases pour recommencer le
-                bingo de zéro.
-            </ThemedText>
-        </View>
+        <ThemedText type="sectionText">
+            Il vous suffit de recliquer sur les cases pour recommencer le bingo
+            de zéro.
+        </ThemedText>
+    </View>
+);
 
-        {/* ACTIVITIES */}
+export const ActivitiesBingoRules = () => (
+    <View style={styles.section}>
+        <ThemedText type="sectionText">
+            Une bucket list d'activités typiquement hivernales pour profiter à
+            fond du mois de décembre !
+        </ThemedText>
+        <ThemedText type="sectionText">
+            Chaque fois que vous réalisez l’une de ces activités, il vous suffit
+            de cliquer sur la case correspondante pour la valider.
+        </ThemedText>
+        <ThemedText type="sectionText">
+            L’objectif ? S’amuser, se créer de beaux souvenirs et peut-être même
+            réussir à compléter toute la grille avant Noël !
+        </ThemedText>
+    </View>
+);
+
+const ChristmasRules = () => (
+    <View>
+        <ThemedText type="sectionTitle">Mon calendrier de l'avent</ThemedText>
+        <ThemedText type="sectionDates">À partir du 1er novembre</ThemedText>
+
+        <ThemedText type="sectionSubtitle">Bingo des films de Noël</ThemedText>
+        <MoviesBingoRules />
+
+        <ThemedText type="sectionSubtitle">
+            Bingo des téléfilms de Noël
+        </ThemedText>
+        <TelefilmsBingoRules />
+
         <ThemedText type="sectionSubtitle" style={{ marginTop: 20 }}>
             Bingo des activités de Noël
         </ThemedText>
-        <View style={styles.section}>
-            <ThemedText type="sectionText">
-                Une bucket list d'activités typiquement hivernales pour profiter
-                à fond du mois de décembre !
-            </ThemedText>
-            <ThemedText type="sectionText">
-                Chaque fois que vous réalisez l’une de ces activités, il vous
-                suffit de cliquer sur la case correspondante pour la valider.
-            </ThemedText>
-            <ThemedText type="sectionText">
-                L’objectif ? S’amuser, se créer de beaux souvenirs et peut-être
-                même réussir à compléter toute la grille avant Noël !
-            </ThemedText>
-        </View>
+        <ActivitiesBingoRules />
     </View>
 );
 
 export const BingoRules = () => {
     return (
-        <>
-            <HalloweenRules />
-            <Separator />
-            <ChristmasRules />
-        </>
+        <SeasonalSections
+            autumn={<HalloweenRules />}
+            christmas={<ChristmasRules />}
+        />
     );
 };
 

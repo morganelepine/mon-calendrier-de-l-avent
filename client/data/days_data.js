@@ -16,7 +16,7 @@ export const daysArray = [
     {
         dayNumber: 8,
         isOpen: false,
-        background: "8_pent2f",
+        background: "8_bvsx5k",
         width: "32%",
         height: "17%",
         color: "#f7f5f6",
@@ -100,7 +100,7 @@ export const daysArray = [
     {
         dayNumber: 6,
         isOpen: false,
-        background: "6_wfjvls",
+        background: "6_t27gty",
         width: "16%",
         height: "9%",
         color: "#b52936",
@@ -114,7 +114,7 @@ export const daysArray = [
     {
         dayNumber: 12,
         isOpen: false,
-        background: "12_s9pjtd",
+        background: "12_kvl8ho",
         width: "32%",
         height: "17%",
         color: "#f7f5f6",
@@ -156,7 +156,7 @@ export const daysArray = [
     {
         dayNumber: 20,
         isOpen: false,
-        background: "20_hdypah",
+        background: "20_vu03po",
         width: "32%",
         height: "17%",
         color: "#f7f5f6",
@@ -338,7 +338,7 @@ export const daysArray = [
     {
         dayNumber: 25,
         isOpen: false,
-        background: "25_yeau5t",
+        background: "25_gef4lb",
         width: "100%",
         height: "9%",
         color: "#0b2956",

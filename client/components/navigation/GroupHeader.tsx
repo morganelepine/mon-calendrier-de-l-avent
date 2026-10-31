@@ -27,10 +27,13 @@ export const GroupHeader: React.FC<GroupHeaderProps> = ({
                     <Pressable
                         style={{ marginLeft: "auto" }}
                         onPress={() => setModalVisible(true)}
+                        hitSlop={10}
+                        accessibilityRole="button"
+                        accessibilityLabel="En savoir plus sur la gestion d'un groupe"
                     >
                         <Ionicons
                             name="help-circle-outline"
-                            size={28}
+                            size={24}
                             color={color}
                         />
                     </Pressable>

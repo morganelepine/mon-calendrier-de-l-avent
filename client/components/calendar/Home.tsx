@@ -94,6 +94,10 @@ export const Home = () => {
 
                 <AnnouncementModal />
 
+                <View style={styles.textContainer} pointerEvents="none">
+                    <HomeHeadline />
+                </View>
+
                 <CustomSafeAreaView>
                     <View style={[styles.actions, { top: insets.top + 10 }]}>
                         {shareMessage && (
@@ -110,10 +114,6 @@ export const Home = () => {
                             </Pressable>
                         )}
                         <AudioPlayer music={music?.url ?? ""} type="icon" />
-                    </View>
-
-                    <View style={styles.textContainer}>
-                        <HomeHeadline />
                     </View>
                 </CustomSafeAreaView>
             </BackgroundImage>
@@ -141,7 +141,11 @@ const styles = StyleSheet.create({
         opacity: 0.7,
     },
     textContainer: {
-        marginBottom: 250,
+        position: "absolute",
+        top: `${(480 / 1920) * 100}%`,
+        left: 0,
+        right: 0,
+        justifyContent: "center",
         paddingHorizontal: 20,
     },
 });

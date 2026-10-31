@@ -33,8 +33,9 @@ export default function CopyrightsScreen() {
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">Francia</ThemedText>
                     <ThemedText type="sectionText">
-                        ...qui a enregistré "Greensleeves" au piano, à écouter
-                        les 3, 9, 15 et 21 décembre.
+                        ...qui a enregistré "Greensleeves" au piano et
+                        co-construit la mécanique qui va chercher le programme
+                        des téléfilms de Noël.
                     </ThemedText>
                 </View>
 
@@ -49,14 +50,15 @@ export default function CopyrightsScreen() {
                 <View style={styles.section}>
                     <ThemedText type="sectionSubtitle">William</ThemedText>
                     <ThemedText type="sectionText">
-                        ...qui a enregistré "Petit papa Noël" au piano, à
-                        écouter les 5, 11, 17 et 23 décembre.
+                        ...qui a enregistré "Petit papa Noël" au piano et
+                        co-construit la mécanique qui va chercher le programme
+                        des téléfilms de Noël.
                     </ThemedText>
                 </View>
 
                 <ThemedText type="sectionTextItalic">
-                    Merci également aux personnes qui ont testé mon application
-                    et qui m'ont donné des idées pour l'améliorer encore !
+                    Merci également aux personnes qui me donnent chaque année
+                    des idées pour l'améliorer encore !
                 </ThemedText>
             </SafeAreaView>
         </CustomScrollView>

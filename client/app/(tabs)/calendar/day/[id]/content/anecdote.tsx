@@ -41,7 +41,7 @@ export default function AnecdoteScreen() {
             <CustomMarkdown>{anecdote.content1}</CustomMarkdown>
 
             {anecdote.content4 ? (
-                <View style={{ marginVertical: 16 }}>
+                <View style={{ marginTop: 16 }}>
                     <Video videoId={anecdote.content4} />
                 </View>
             ) : null}
@@ -55,7 +55,11 @@ export default function AnecdoteScreen() {
                         Source :{" "}
                         <ThemedText
                             type="italic14"
-                            style={{ textDecorationLine: "underline" }}
+                            style={
+                                anecdote.content3
+                                    ? { textDecorationLine: "underline" }
+                                    : {}
+                            }
                         >
                             {anecdote.content2}
                         </ThemedText>

@@ -42,7 +42,7 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
                     fontSize: 18,
                     color,
                     marginLeft: 12,
-                    paddingTop: 2,
+                    paddingTop: 4,
                 }}
             >
                 {title}

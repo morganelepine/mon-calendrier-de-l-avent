@@ -118,7 +118,8 @@ export const CountdownVariantSettings = ({ color }: { color: string }) => {
                         }
                     />
 
-                    {variant !== CountdownVariant.Nights && (
+                    {/* Always shown to non-premium users so they see the option exists. */}
+                    {(!isPremium || variant !== CountdownVariant.Nights) && (
                         <SettingsToggleRow
                             label={"Afficher les secondes"}
                             value={showSeconds}
