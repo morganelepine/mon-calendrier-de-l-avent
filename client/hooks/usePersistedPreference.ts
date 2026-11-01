@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 
 // Reads/writes a single AsyncStorage-backed preference.
 export const usePersistedPreference = <T>(

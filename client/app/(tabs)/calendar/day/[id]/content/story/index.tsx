@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import { getContentsByDay } from "@/services/content.service";
+import { getContentsByDay } from "@/services/contents/content.service";
 import { Article } from "@/components/content/story/Article";
 import { StoryIntro } from "@/components/content/story/StoryIntro";
 import { Story } from "@/components/content/story/Story";

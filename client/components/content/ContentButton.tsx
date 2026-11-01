@@ -8,7 +8,7 @@ import {
     isItemScored,
     saveItemScored,
 } from "@/services/score.service";
-import { getContentTitle } from "@/services/content.service";
+import { getContentTitle } from "@/services/contents/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
 import { isOctober } from "@/constants/Dates";

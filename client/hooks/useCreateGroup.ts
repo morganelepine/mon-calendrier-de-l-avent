@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createGroup } from "@/services/group.service";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { StorageKeys } from "@/constants/storageKeys";
 import { showToast } from "@/components/utils/Toast";
 import { Group } from "@/types/types";

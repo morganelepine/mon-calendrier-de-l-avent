@@ -14,7 +14,7 @@ import Purchases, {
     LOG_LEVEL,
 } from "react-native-purchases";
 import { useUser } from "@/contexts/UserContext";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
 import { storeWidgetsPremium } from "@/widgets/widgetState";
 

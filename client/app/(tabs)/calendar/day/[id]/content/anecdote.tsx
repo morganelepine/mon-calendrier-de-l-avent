@@ -6,7 +6,7 @@ import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWra
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Video } from "@/components/utils/custom/Video";
-import { getContentsByDay } from "@/services/content.service";
+import { getContentsByDay } from "@/services/contents/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { isOctober } from "@/constants/Dates";
 

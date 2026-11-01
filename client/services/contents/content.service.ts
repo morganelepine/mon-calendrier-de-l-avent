@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { getAllContents } from "@/services/contents.service";
+import { getAllContents } from "@/services/contents/contents.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType, GameType, Season } from "@/enums/enums";
 import { isOctober } from "@/constants/Dates";

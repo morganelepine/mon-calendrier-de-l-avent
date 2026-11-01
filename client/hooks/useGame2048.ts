@@ -14,7 +14,7 @@ import {
     loadGames2048InProgress,
     saveGames2048InProgress,
     submitGames2048Score,
-} from "@/services/games2048.service";
+} from "@/services/activities/games2048.service";
 import useAppState from "@/hooks/useAppState";
 import { usePremium } from "@/contexts/PremiumContext";
 import { isOctober } from "@/constants/Dates";

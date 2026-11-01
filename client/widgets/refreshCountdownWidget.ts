@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import { requestWidgetUpdate } from "react-native-android-widget";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import {
     renderCountdownWidget,
     WIDGET_NAMES,

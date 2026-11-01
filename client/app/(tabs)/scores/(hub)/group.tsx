@@ -3,7 +3,7 @@ import { useFocusEffect } from "expo-router";
 import { Group } from "@/types/types";
 import { useUser } from "@/contexts/UserContext";
 import { getGroup } from "@/services/group.service";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { MyGroup } from "@/components/group/MyGroup";
 import { NoGroup } from "@/components/group/NoGroup";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";

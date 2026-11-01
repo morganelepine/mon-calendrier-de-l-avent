@@ -98,6 +98,20 @@ export default function InformationsLayout() {
                 }}
             />
             <Stack.Screen
+                name="test"
+                options={{
+                    header: () => {
+                        return (
+                            <ScreenHeader
+                                title="Test"
+                                backgroundColor={Theme.goldToBlue}
+                                color={Colors.snow}
+                            />
+                        );
+                    },
+                }}
+            />
+            <Stack.Screen
                 name="premium"
                 options={{
                     header: () => {

@@ -6,7 +6,7 @@ import { NoGroup } from "@/components/group/NoGroup";
 import { Game2048LeaderboardList } from "@/components/games2048/Game2048LeaderboardList";
 import { useUser } from "@/contexts/UserContext";
 import { getGroup } from "@/services/group.service";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { Group } from "@/types/types";
 
 export default function Game2048LeaderboardGroupScreen() {
@@ -61,9 +61,7 @@ export default function Game2048LeaderboardGroupScreen() {
                 />
             )}
 
-            {!loading && userId && !error && !myGroup && (
-                <NoGroup />
-            )}
+            {!loading && userId && !error && !myGroup && <NoGroup />}
 
             {!loading && userId && !error && myGroup && (
                 <Game2048LeaderboardList groupId={myGroup.id} />

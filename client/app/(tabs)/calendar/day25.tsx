@@ -18,7 +18,7 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { wallpapers } from "@/data/day-25-gifts/wallpapers_data";
 import { recipes } from "@/data/day-25-gifts/recipes_data";
 import { Retrospective } from "@/interfaces/retrospectiveInterface";
-import { getRetrospective } from "@/services/retrospective.service";
+import { getRetrospective } from "@/services/contents/retrospective.service";
 
 export default function Day25Screen() {
     const [modalVisible, setModalVisible] = useState(false);

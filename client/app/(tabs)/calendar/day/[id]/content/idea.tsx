@@ -9,8 +9,8 @@ import { Cards } from "@/components/content/ideas/Cards";
 import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWrapper";
 import { Content } from "@/interfaces/contentInterface";
 import { IdeaType } from "@/enums/enums";
-import { formatImage } from "@/services/image.service";
-import { getContentsByDay } from "@/services/content.service";
+import { formatImage } from "@/services/cloudinary.service";
+import { getContentsByDay } from "@/services/contents/content.service";
 import { isOctober } from "@/constants/Dates";
 
 export default function IdeaScreen() {

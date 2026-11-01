@@ -1,6 +1,6 @@
 import { Pressable, TextStyle, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { getButtonStyles } from "@/services/content.service";
+import { getButtonStyles } from "@/services/contents/content.service";
 
 interface QuizAnswersProps {
     correctAnswer: string;

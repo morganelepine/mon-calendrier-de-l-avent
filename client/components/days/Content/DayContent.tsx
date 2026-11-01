@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { NoContent } from "@/components/days/Content/NoContent";
 import { ContentButton } from "@/components/content/ContentButton";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { getContentsByDay } from "@/services/content.service";
+import { getContentsByDay } from "@/services/contents/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ContentType } from "@/enums/enums";
 

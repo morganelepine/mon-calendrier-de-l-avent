@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { isOctober } from "@/constants/Dates";
-import { getTodayTvMovies } from "@/services/tvMovies.service";
+import { getTodayTvMovies } from "@/services/activities/tvMovies.service";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
 
 interface TodayTvMovies {

@@ -10,7 +10,7 @@ import { Content } from "@/interfaces/contentInterface";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 import { TOP_EDGES } from "@/constants/safeAreaEdges";
-import { getContentsByDay } from "@/services/content.service";
+import { getContentsByDay } from "@/services/contents/content.service";
 
 const defaultDays = isOctober ? octoberDaysArray : daysArray;
 const calendarStorageKey = isOctober

@@ -8,6 +8,7 @@ import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { useUser } from "@/contexts/UserContext";
 import { PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
+import { TEST_TOOLS_ENABLED } from "@/constants/testTools";
 
 export default function InformationsScreen() {
     const { username } = useUser();
@@ -83,6 +84,15 @@ export default function InformationsScreen() {
                         }
                         onPress={() => router.push("/informations/settings")}
                     />
+
+                    {TEST_TOOLS_ENABLED && (
+                        <OptionItem
+                            title="Test"
+                            iconName="flask-outline"
+                            iconColor={Colors.disabledText}
+                            onPress={() => router.push("/informations/test")}
+                        />
+                    )}
                 </View>
             </CustomSafeAreaView>
         </BlueBackground>

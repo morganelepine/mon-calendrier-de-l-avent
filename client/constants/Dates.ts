@@ -1,12 +1,11 @@
+import { getStoredFakeDate } from "@/services/tests/fakeDate.service";
+import { formatIsoDate } from "@/services/tests/fakeDate.utils";
+
 const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
-// DEBUG: force a fake "today" to test the app as if it were a specific date
-// const DEBUG_FAKE_TODAY: Date | null = new Date(
-//     new Date().getFullYear(),
-//     11,
-//     19,
-// );
-const DEBUG_FAKE_TODAY: Date | null = null;
+// Fake "today" to test the app as if it were a specific date,
+// set from the "Test" screen (informations/test).
+const DEBUG_FAKE_TODAY: Date | null = getStoredFakeDate();
 
 const today = DEBUG_FAKE_TODAY ?? new Date();
 
@@ -14,7 +13,7 @@ const today = DEBUG_FAKE_TODAY ?? new Date();
 // a "now" that keeps advancing second by second, not the single frozen
 // snapshot above. Without this it would silently fall back to the real
 // Date.now() and ignore DEBUG_FAKE_TODAY entirely.
-const isFakeToday = DEBUG_FAKE_TODAY !== null;
+export const isFakeToday = DEBUG_FAKE_TODAY !== null;
 const REAL_LOAD_TIME = Date.now();
 export const getNow = (): number =>
     isFakeToday ? today.getTime() + (Date.now() - REAL_LOAD_TIME) : Date.now();
@@ -23,11 +22,9 @@ export const christmasDay = new Date(today.getFullYear(), 11, 25);
 const calendarDay = new Date(today.getFullYear(), 11, 1);
 
 export const currentDay = today.getDate();
-const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
+export const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
 
-// Local "yyyy-mm-dd": toISOString() would give the UTC date.
-const pad = (n: number): string => String(n).padStart(2, "0");
-export const todayIsoDate = `${today.getFullYear()}-${pad(currentMonth + 1)}-${pad(currentDay)}`;
+export const todayIsoDate = formatIsoDate(today);
 
 export const isDecember = currentMonth === 11;
 export const isOctober = currentMonth === 9;

@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/score/EmptyState";
 import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { useUser } from "@/contexts/UserContext";
-import { getGames2048Leaderboard } from "@/services/games2048.service";
+import { getGames2048Leaderboard } from "@/services/activities/games2048.service";
 import { Games2048LeaderboardEntry } from "@/interfaces/games2048Interface";
 
 const PAGE_SIZE = 20;

@@ -13,7 +13,7 @@ import { PremiumFeatureCard } from "@/components/informations/settings/PremiumFe
 import { showToast } from "@/components/utils/Toast";
 import { Separator } from "@/components/utils/Separator";
 import { usePremium } from "@/contexts/PremiumContext";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { Colors, Theme } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 

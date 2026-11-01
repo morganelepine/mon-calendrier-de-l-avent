@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { getOrCreateUser } from "@/services/user.service";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 import { useUser } from "@/contexts/UserContext";
 import { StorageKeys, YEARLY_RESET_KEYS } from "@/constants/storageKeys";
 

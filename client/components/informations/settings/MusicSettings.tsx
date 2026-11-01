@@ -6,7 +6,7 @@ import { SettingsToggleRow } from "@/components/informations/settings/SettingsTo
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
 import { MusicPreference } from "@/types/types";
-import { logClient } from "@/services/log.service";
+import { logClient } from "@/services/sentry.service";
 
 export const MusicSettings = () => {
     const [playMusic, setPlayMusic] = useState<MusicPreference>("no");

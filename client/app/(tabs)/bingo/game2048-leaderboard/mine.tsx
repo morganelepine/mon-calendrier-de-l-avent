@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/score/EmptyState";
 import { LeaderboardHeaderText } from "@/components/score/LeaderboardHeaderText";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { BlueBackground } from "@/components/utils/BlueBackground";
-import { getGames2048LeaderboardAround } from "@/services/games2048.service";
+import { getGames2048LeaderboardAround } from "@/services/activities/games2048.service";
 import { Games2048LeaderboardAroundResponse } from "@/interfaces/games2048Interface";
 import { useUser } from "@/contexts/UserContext";
 

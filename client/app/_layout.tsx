@@ -11,7 +11,7 @@ import { CountdownVariantProvider } from "@/contexts/CountdownVariantContext";
 import { PremiumProvider } from "@/contexts/PremiumContext";
 import { MusicSelectionProvider } from "@/contexts/MusicSelectionContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { prefetchContents } from "@/services/content.service";
+import { prefetchContents } from "@/services/contents/content.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";

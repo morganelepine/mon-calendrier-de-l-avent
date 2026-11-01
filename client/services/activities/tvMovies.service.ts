@@ -1,7 +1,7 @@
 import { apiFetch } from "@/services/apiFetch";
 import { todayIsoDate } from "@/constants/Dates";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
-import { getMockTvMovies } from "@/services/tvMovies.mock";
+import { getMockTvMovies } from "@/services/activities/tvMovies.mock";
 
 // DEBUG: serve fake movies (one on air) to test the activities page on any date.
 const DEBUG_MOCK_TV_MOVIES = false;

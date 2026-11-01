@@ -9,7 +9,10 @@ import { Wordle } from "@/components/content/games/wordle/Wordle";
 import { InputGame } from "@/components/content/games/others/InputGame";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { showPointsToast } from "@/components/utils/Toast";
-import { classifyGames, getContentsByDay } from "@/services/content.service";
+import {
+    classifyGames,
+    getContentsByDay,
+} from "@/services/contents/content.service";
 import {
     getAnsweredQuestionsCount,
     isItemScored,

@@ -14,7 +14,7 @@ import { isShareSupported, shareView } from "@/services/share.service";
 import {
     computeProfile,
     parsePersonalityQuiz,
-} from "@/services/personalityQuiz.service";
+} from "@/services/contents/personalityQuiz.service";
 
 interface PersonalityQuizProps {
     idea: Content;

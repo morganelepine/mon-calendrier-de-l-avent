@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Theme } from "@/constants/Colors";
 import { Content } from "@/interfaces/contentInterface";
-import { parseCards } from "@/services/cards.service";
+import { parseCards } from "@/services/contents/cards.service";
 
 interface CardsProps {
     idea: Content;
