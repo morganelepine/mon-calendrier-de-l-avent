@@ -12,7 +12,7 @@ interface GamesByType {
     quiz?: Content;
 }
 
-interface DayContents {
+export interface DayContents {
     anecdote: Content | undefined;
     story: Content | undefined;
     ideas: Content[];

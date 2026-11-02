@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { HangmanModal } from "@/components/content/games/hangman/HangmanModal";
@@ -35,12 +35,14 @@ export const Wordle: React.FC<MysteryWordProps> = ({ game, setScore }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
 
-    useEffect(() => {
+    const goToWord = (index: number) => {
+        setCurrentWordIndex(index);
         setGuesses([]);
         setCurrentGuess("");
         setIsFinished(false);
         setError("");
-    }, [currentWord]);
+        setModalVisible(false);
+    };
 
     const submitGuess = () => {
         if (currentGuess.length !== answer.length) {
@@ -78,19 +80,12 @@ export const Wordle: React.FC<MysteryWordProps> = ({ game, setScore }) => {
         }
     };
 
-    const handleNextQuestion = () => {
-        setCurrentWordIndex(currentWordIndex + 1);
-        setModalVisible(false);
-    };
+    const handleNextQuestion = () => goToWord(currentWordIndex + 1);
 
-    const onClose = () => {
-        if (currentWordIndex === words.length - 1) {
-            setCurrentWordIndex(0);
-        } else {
-            setCurrentWordIndex(currentWordIndex + 1);
-        }
-        setModalVisible(false);
-    };
+    const onClose = () =>
+        goToWord(
+            currentWordIndex === words.length - 1 ? 0 : currentWordIndex + 1,
+        );
 
     return (
         <View key={game.id} style={{ alignItems: "center" }}>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { CustomButton } from "@/components/utils/buttons/Button";
@@ -32,15 +32,16 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
     const [selected, setSelected] = useState(0);
     const [sharing, setSharing] = useState(false);
 
-    useEffect(() => {
-        if (visible) setSelected(0);
-    }, [visible]);
+    const close = (): void => {
+        setSelected(0);
+        onClose();
+    };
 
     const share = async () => {
         setSharing(true);
         await shareView(shareCardRef, message);
         setSharing(false);
-        onClose();
+        close();
     };
 
     return (
@@ -48,7 +49,7 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
             visible={visible}
             transparent
             animationType="fade"
-            onRequestClose={onClose}
+            onRequestClose={close}
         >
             <View style={styles.overlay}>
                 <ShareCardPreview
@@ -97,7 +98,7 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
                     <CustomButton
                         style={styles.button}
                         color="transparent"
-                        onPress={onClose}
+                        onPress={close}
                         disabled={sharing}
                     >
                         Annuler

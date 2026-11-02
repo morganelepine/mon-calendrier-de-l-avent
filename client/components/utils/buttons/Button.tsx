@@ -33,7 +33,12 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
     return (
         <Pressable
             onPress={onPress}
-            disabled={disabled}
+            disabled={disabled || loading}
+            accessibilityRole="button"
+            accessibilityState={{
+                disabled: disabled || loading,
+                busy: loading,
+            }}
             style={({ pressed }) => [
                 styles.button,
                 style,
@@ -42,18 +47,22 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
                 pressed && !disabled && !loading && styles.pressedButton,
             ]}
         >
-            {loading ? (
-                <ActivityIndicator color={Colors.snow} />
-            ) : (
-                <ThemedText
-                    style={[
-                        styles.buttonText,
-                        { color: textColor },
-                        disabled && { color: Colors.disabledText },
-                    ]}
-                >
-                    {children}
-                </ThemedText>
+            {/* The label stays rendered while loading so screen readers still announce it. */}
+            <ThemedText
+                style={[
+                    styles.buttonText,
+                    { color: textColor },
+                    disabled && { color: Colors.disabledText },
+                    loading && styles.hiddenText,
+                ]}
+            >
+                {children}
+            </ThemedText>
+            {loading && (
+                <ActivityIndicator
+                    color={Colors.snow}
+                    style={StyleSheet.absoluteFill}
+                />
             )}
         </Pressable>
     );
@@ -74,5 +83,8 @@ const styles = StyleSheet.create({
     },
     pressedButton: {
         opacity: 0.8,
+    },
+    hiddenText: {
+        opacity: 0,
     },
 });

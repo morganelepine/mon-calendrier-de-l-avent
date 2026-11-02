@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/ThemedText";
 import { HalloweenMusicsCredits } from "@/components/informations/settings/HalloweenMusicsCredits";
 import { SettingsToggleRow } from "@/components/informations/settings/SettingsToggleRow";
 import { isOctober } from "@/constants/Dates";
-import { StorageKeys } from "@/constants/storageKeys";
-import { MusicPreference } from "@/types/types";
-import { logClient } from "@/services/sentry.service";
+import { useMusicPreference } from "@/hooks/useMusicPreference";
 
 export const MusicSettings = () => {
-    const [playMusic, setPlayMusic] = useState<MusicPreference>("no");
+    const [playMusic, setPlayMusic] = useMusicPreference();
 
-    useEffect(() => {
-        AsyncStorage.getItem(StorageKeys.playMusic).then((musicPref) => {
-            setPlayMusic(musicPref === "yes" ? "yes" : "no");
-        });
-    }, []);
-
-    const toggleMusic = async (value: boolean) => {
-        const preference: MusicPreference = value ? "yes" : "no";
-        try {
-            await AsyncStorage.setItem(StorageKeys.playMusic, preference);
-            setPlayMusic(preference);
-        } catch (error) {
-            console.error("Error setting music preference", error);
-            await logClient("Error setting music preference", {
-                error: String(error),
-            });
-        }
-    };
+    const toggleMusic = (value: boolean) => setPlayMusic(value ? "yes" : "no");
 
     return (
         <>

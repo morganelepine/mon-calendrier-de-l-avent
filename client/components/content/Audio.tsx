@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { StyleSheet, Pressable, View, ViewStyle } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { Colors, Theme } from "@/constants/Colors";
-import { StorageKeys } from "@/constants/storageKeys";
-import { MusicPreference } from "@/types/types";
 import { useMusicSelection } from "@/contexts/MusicSelectionContext";
+import { useMusicPreference } from "@/hooks/useMusicPreference";
 import { getCachedAudioUri } from "@/services/audioCache.service";
 
 interface AudioPlayerProps {
@@ -31,7 +29,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     const playRequest = useRef(0);
 
     const isPlaying = status.playing;
-    const [playMusic, setPlayMusic] = useState<MusicPreference>(null);
+    const [playMusic] = useMusicPreference();
     const { previewId } = useMusicSelection();
 
     const play = async (): Promise<void> => {
@@ -76,20 +74,6 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [music]);
-
-    useEffect(() => {
-        const getMusicPreference = async (): Promise<void> => {
-            try {
-                const musicPref = await AsyncStorage.getItem(
-                    StorageKeys.playMusic,
-                );
-                setPlayMusic(musicPref as MusicPreference);
-            } catch (error) {
-                console.error("Error fetching music preference", error);
-            }
-        };
-        getMusicPreference();
-    }, []);
 
     // Never autoplay over a preview: the user explicitly started it.
     useEffect(() => {

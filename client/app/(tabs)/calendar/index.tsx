@@ -36,21 +36,17 @@ export default function CalendarScreen() {
         getCalendar();
     }, []);
 
-    useEffect(() => {
-        const saveCalendar = async () => {
-            try {
-                await AsyncStorage.setItem(
-                    calendarStorageKey,
-                    JSON.stringify(days),
-                );
-            } catch (error) {
-                console.error("Errror saving calendar", error);
-            }
-        };
-        if (days.length) {
-            saveCalendar();
+    const updateDays = async (updatedDays: Day[]) => {
+        setDays(updatedDays);
+        try {
+            await AsyncStorage.setItem(
+                calendarStorageKey,
+                JSON.stringify(updatedDays),
+            );
+        } catch (error) {
+            console.error("Error saving calendar", error);
         }
-    }, [days]);
+    };
 
     const goToDay = async (
         day: Day,
@@ -109,7 +105,7 @@ export default function CalendarScreen() {
                 flex: 1,
             }}
         >
-            <Days days={days} setDays={setDays} goToDay={goToDay} />
+            <Days days={days} setDays={updateDays} goToDay={goToDay} />
         </SafeAreaView>
     );
 }

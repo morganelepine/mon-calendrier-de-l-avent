@@ -1,42 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { NoContent } from "@/components/days/Content/NoContent";
 import { ContentButton } from "@/components/content/ContentButton";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
-import { getContentsByDay } from "@/services/contents/content.service";
-import { Content } from "@/interfaces/contentInterface";
 import { ContentType } from "@/enums/enums";
+import { useDayContents } from "@/hooks/useDayContents";
 
 type DayContentProps = {
     dayId: number;
 };
 
 export const DayContent = ({ dayId }: DayContentProps) => {
-    const [dayContents, setDayContents] = useState<{
-        anecdote?: Content;
-        story?: Content;
-        ideas: Content[];
-        games: Content[];
-    }>({ ideas: [], games: [] });
-
-    const [hasError, setHasError] = useState(false);
-
-    const loadContents = useCallback(() => {
-        setHasError(false);
-        getContentsByDay(dayId)
-            .then(setDayContents)
-            .catch(() => setHasError(true));
-    }, [dayId]);
-
-    useEffect(() => {
-        loadContents();
-    }, [loadContents]);
-
-    const { anecdote, story, ideas, games } = dayContents;
+    const { contents, hasError, reload } = useDayContents(dayId);
 
     if (hasError) {
-        return <NoContent loadContents={loadContents} />;
+        return <NoContent loadContents={reload} />;
     }
+
+    const { anecdote, story, ideas = [], games = [] } = contents ?? {};
 
     return (
         <View style={styles.contentsContainer}>

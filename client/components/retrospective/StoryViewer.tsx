@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     LayoutRectangle,
     Modal,
@@ -84,9 +84,10 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
     const [index, setIndex] = useState(0);
     const [screen, setScreen] = useState<LayoutRectangle | null>(null);
 
-    useEffect(() => {
-        if (visible) setIndex(0);
-    }, [visible]);
+    const close = (): void => {
+        setIndex(0);
+        onClose();
+    };
 
     const slide = slides[index];
     if (!slide) return null;
@@ -98,7 +99,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
         <Modal
             visible={visible}
             animationType="fade"
-            onRequestClose={onClose}
+            onRequestClose={close}
             statusBarTranslucent
         >
             <View
@@ -153,7 +154,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                             ))}
                         </View>
                         <Pressable
-                            onPress={onClose}
+                            onPress={close}
                             style={styles.closeButton}
                             accessibilityRole="button"
                             accessibilityLabel="Fermer"

@@ -9,17 +9,14 @@ import { Wordle } from "@/components/content/games/wordle/Wordle";
 import { InputGame } from "@/components/content/games/others/InputGame";
 import { Quiz } from "@/components/content/games/quiz/Quiz";
 import { showPointsToast } from "@/components/utils/Toast";
-import {
-    classifyGames,
-    getContentsByDay,
-} from "@/services/contents/content.service";
+import { classifyGames } from "@/services/contents/content.service";
 import {
     getAnsweredQuestionsCount,
     isItemScored,
     queueScore,
     saveItemScored,
 } from "@/services/score.service";
-import { Content } from "@/interfaces/contentInterface";
+import { useDayContents } from "@/hooks/useDayContents";
 import { ScoreType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
@@ -28,14 +25,8 @@ export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const [games, setGames] = useState<Content[]>([]);
+    const games = useDayContents(dayId).contents?.games ?? [];
     const [answeredCount, setAnsweredCount] = useState(0);
-
-    useEffect(() => {
-        getContentsByDay(dayId)
-            .then((contents) => setGames(contents.games))
-            .catch(() => {});
-    }, [dayId]);
 
     useEffect(() => {
         getAnsweredQuestionsCount(dayId, ScoreType.GameAnswer)

@@ -17,7 +17,6 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
     columns,
 }) => {
     const [clickedCells, setClickedCells] = useState<Set<number>>(new Set());
-    const [isReady, setIsReady] = useState(false);
     const [containerSize, setContainerSize] = useState<{
         width: number;
         height: number;
@@ -33,8 +32,6 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
                     const parsedClicked = JSON.parse(savedClicked);
                     setClickedCells(new Set(parsedClicked));
                 }
-
-                setIsReady(true);
             } catch (e) {
                 console.error("Error loading data:", e);
             }
@@ -42,32 +39,23 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
         loadData();
     }, []);
 
-    // Save clicked cells after loading
-    useEffect(() => {
-        if (!isReady) return; // ignore first render
-        const saveClicked = async () => {
-            try {
-                await AsyncStorage.setItem(
-                    clickedCellsKey,
-                    JSON.stringify([...clickedCells]),
-                );
-            } catch (e) {
-                console.error("Error saving clicked:", e);
-            }
-        };
-        saveClicked();
-    }, [clickedCells, isReady]);
+    const handleCellClick = async (cellId: number) => {
+        const newSet = new Set(clickedCells);
+        if (newSet.has(cellId)) {
+            newSet.delete(cellId);
+        } else {
+            newSet.add(cellId);
+        }
+        setClickedCells(newSet);
 
-    const handleCellClick = (cellId: number) => {
-        setClickedCells((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(cellId)) {
-                newSet.delete(cellId);
-            } else {
-                newSet.add(cellId);
-            }
-            return newSet;
-        });
+        try {
+            await AsyncStorage.setItem(
+                clickedCellsKey,
+                JSON.stringify([...newSet]),
+            );
+        } catch (e) {
+            console.error("Error saving clicked:", e);
+        }
     };
 
     // The grid must fit entirely within the available space:

@@ -4,9 +4,9 @@ import { PillTabBar } from "@/components/navigation/PillTabBar";
 import { Theme } from "@/constants/Colors";
 
 const TABS = [
-    { key: "/bingo/game2048-leaderboard/general", label: "Top" },
-    { key: "/bingo/game2048-leaderboard/group", label: "Mon groupe" },
     { key: "/bingo/game2048-leaderboard/mine", label: "Mon classement" },
+    { key: "/bingo/game2048-leaderboard/group", label: "Mon groupe" },
+    { key: "/bingo/game2048-leaderboard/general", label: "Top" },
 ] as const;
 
 export const Game2048LeaderboardTabBar = () => {

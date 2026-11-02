@@ -21,9 +21,7 @@ export const Game2048Header = ({
     return (
         <View style={styles.header}>
             <CustomButton
-                onPress={() =>
-                    router.push("/bingo/game2048-leaderboard/general")
-                }
+                onPress={() => router.push("/bingo/game2048-leaderboard/mine")}
                 color={Theme.autumnGreenDarkToautumnGreen}
                 style={{ alignSelf: "flex-start" }}
             >

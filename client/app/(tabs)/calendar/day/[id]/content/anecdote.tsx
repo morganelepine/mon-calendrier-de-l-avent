@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Href, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
@@ -6,21 +5,14 @@ import { ContentScreenWrapper } from "@/components/utils/custom/ContentScreenWra
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { ExternalLink } from "@/components/utils/ExternalLink";
 import { Video } from "@/components/utils/custom/Video";
-import { getContentsByDay } from "@/services/contents/content.service";
-import { Content } from "@/interfaces/contentInterface";
+import { useDayContents } from "@/hooks/useDayContents";
 import { isOctober } from "@/constants/Dates";
 
 export default function AnecdoteScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
 
-    const [anecdote, setAnecdote] = useState<Content>();
-
-    useEffect(() => {
-        getContentsByDay(dayId)
-            .then((contents) => setAnecdote(contents.anecdote))
-            .catch(() => {});
-    }, [dayId]);
+    const anecdote = useDayContents(dayId).contents?.anecdote;
 
     if (!anecdote) {
         return null;

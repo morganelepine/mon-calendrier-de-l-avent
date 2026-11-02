@@ -17,7 +17,6 @@ export default function IdeaScreen() {
     const backgroundImage = isOctober
         ? "pumpkin_spice_addict_tad9te"
         : "se-regaler_mnonwh";
-    const [modalBackground, setModalBackground] = useState(backgroundImage);
 
     const { id } = useLocalSearchParams<{ id: string }>();
     const dayId = parseInt(id, 10);
@@ -30,47 +29,40 @@ export default function IdeaScreen() {
 
     useEffect(() => {
         getContentsByDay(dayId)
-            .then((contents) => setIdeas(contents.ideas))
-            .catch(() => {});
-    }, [dayId]);
-
-    const getmodalImage = (idea: Content) => {
-        if (idea.subType === IdeaType.Recipe) {
-            const imageSource = idea.media ? idea.media : "se-divertir_xvdksq";
-            setModalBackground(imageSource);
-        } else {
-            setModalBackground(backgroundImage);
-        }
-    };
-
-    useEffect(() => {
-        for (const idea of ideas) {
-            if (idea.listOfContents) {
-                for (const content of idea.listOfContents) {
+            .then((contents) => {
+                setIdeas(contents.ideas);
+                for (const idea of contents.ideas) {
+                    if (!idea.listOfContents) continue;
                     if (idea.content4 === IdeaType.Video) continue;
                     const maxHeight =
                         idea.content4 === IdeaType.Book ||
                         idea.content4 === IdeaType.TvShow
                             ? 200
                             : 150;
-                    formatImage(
-                        idea.dayNumber,
-                        content.image,
-                        maxHeight,
-                        setImageDimensions,
-                    );
+                    for (const content of idea.listOfContents) {
+                        formatImage(
+                            idea.dayNumber,
+                            content.image,
+                            maxHeight,
+                            setImageDimensions,
+                        );
+                    }
                 }
-            }
-            getmodalImage(idea);
-        }
-    }, [ideas]);
+            })
+            .catch(() => {});
+    }, [dayId]);
+
+    const getHeaderImage = (idea: Content): string => {
+        if (idea.subType !== IdeaType.Recipe) return backgroundImage;
+        return idea.media || "se-divertir_xvdksq";
+    };
 
     return (
         <>
             {ideas.map((idea) => (
                 <ContentScreenWrapper
                     typeTitle={idea.typeTitle}
-                    backgroundImage={modalBackground}
+                    backgroundImage={getHeaderImage(idea)}
                     topImage={
                         idea.subType === IdeaType.Recipe
                             ? idea.media

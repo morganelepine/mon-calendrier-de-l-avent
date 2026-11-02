@@ -7,9 +7,9 @@ export default function Game2048LeaderboardLayout() {
         <View style={{ flex: 1 }}>
             <Game2048LeaderboardTabBar />
             <Tabs screenOptions={{ headerShown: false }} tabBar={() => null}>
-                <Tabs.Screen name="general" />
-                <Tabs.Screen name="group" />
                 <Tabs.Screen name="mine" />
+                <Tabs.Screen name="group" />
+                <Tabs.Screen name="general" />
             </Tabs>
         </View>
     );
