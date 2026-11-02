@@ -17,10 +17,7 @@ export const SettingsToggleRow = ({
 }: SettingsToggleRowProps) => {
     return (
         <View style={[styles.row, disabled && styles.disabled]}>
-            <ThemedText
-                type="sectionText"
-                style={{ color: Theme.orangeToBlue }}
-            >
+            <ThemedText type="sectionText" style={styles.label}>
                 {label}
             </ThemedText>
 
@@ -43,6 +40,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingRight: 20,
         paddingVertical: 4,
+        gap: 16,
+    },
+    label: {
+        flexShrink: 1,
+        color: Theme.orangeToBlue,
     },
     disabled: {
         opacity: 0.6,

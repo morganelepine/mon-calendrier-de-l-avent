@@ -13,9 +13,14 @@ import {
     useCountdownVariant,
     useCountdownShowSeconds,
     useChristmasTargetDay,
+    useCountdownTarget,
 } from "@/contexts/CountdownVariantContext";
 import { usePremium } from "@/contexts/PremiumContext";
-import { ChristmasTargetDay, CountdownVariant } from "@/enums/enums";
+import {
+    ChristmasTargetDay,
+    CountdownTarget,
+    CountdownVariant,
+} from "@/enums/enums";
 import { Colors, Theme } from "@/constants/Colors";
 
 const DEMO_COUNTDOWN = { days: 12, hours: 15, minutes: 13, seconds: 1 };
@@ -27,6 +32,7 @@ export const CountdownVariantSettings = ({ color }: { color: string }) => {
     const [variant, setVariant] = useCountdownVariant();
     const [showSeconds, setShowSeconds] = useCountdownShowSeconds();
     const [targetDay, setTargetDay] = useChristmasTargetDay();
+    const [countdownTarget, setCountdownTarget] = useCountdownTarget();
     const [showSettings, setShowSettings] = useState(false);
 
     const options: { variant: CountdownVariant; preview: ReactNode }[] = [
@@ -57,9 +63,10 @@ export const CountdownVariantSettings = ({ color }: { color: string }) => {
             color={color}
             description={
                 <>
-                    Choisissez comment le décompte s'affiche sur l'écran
-                    d'accueil pendant le mois de décembre et décidez s’il vous
-                    accompagne jusqu’au 24 ou jusqu’au 25&nbsp;décembre.
+                    Choisissez :{"\n"}~ comment le décompte s'affiche sur
+                    l'écran d'accueil{"\n"}~ s’il suit l’ouverture du calendrier
+                    ou directement Noël{"\n"}~ s’il vous accompagne jusqu’au 24
+                    ou jusqu’au 25&nbsp;décembre
                 </>
             }
         >
@@ -106,7 +113,20 @@ export const CountdownVariantSettings = ({ color }: { color: string }) => {
                     </View>
 
                     <SettingsToggleRow
-                        label={"Décompte jusqu'au 25"}
+                        label={"Décompter l'ouverture du calendrier"}
+                        value={countdownTarget === CountdownTarget.Calendar}
+                        disabled={!isPremium}
+                        onValueChange={(value) =>
+                            setCountdownTarget(
+                                value
+                                    ? CountdownTarget.Calendar
+                                    : CountdownTarget.Christmas,
+                            )
+                        }
+                    />
+
+                    <SettingsToggleRow
+                        label={"Décompter jusqu'au 25"}
                         value={targetDay === ChristmasTargetDay.Day}
                         disabled={!isPremium}
                         onValueChange={(value) =>

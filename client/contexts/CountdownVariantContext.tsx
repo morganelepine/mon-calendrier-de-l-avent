@@ -1,12 +1,19 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { StorageKeys } from "@/constants/storageKeys";
-import { ChristmasTargetDay, CountdownVariant } from "@/enums/enums";
+import {
+    ChristmasTargetDay,
+    CountdownTarget,
+    CountdownVariant,
+} from "@/enums/enums";
 import { usePersistedPreference } from "@/hooks/usePersistedPreference";
 import { parseChristmasTargetDay } from "@/utils/christmasTargetDay";
 import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
 
 const isCountdownVariant = (value: string | null): value is CountdownVariant =>
     !!value && (Object.values(CountdownVariant) as string[]).includes(value);
+
+const isCountdownTarget = (value: string | null): value is CountdownTarget =>
+    !!value && (Object.values(CountdownTarget) as string[]).includes(value);
 
 interface CountdownVariantContextType {
     variant: CountdownVariant;
@@ -17,6 +24,9 @@ interface CountdownVariantContextType {
     // What the countdown counts down to (24th or 25th) - see enums.ts.
     targetDay: ChristmasTargetDay;
     setTargetDay: (targetDay: ChristmasTargetDay) => void;
+    // Before December: calendar opening or Christmas - see enums.ts.
+    countdownTarget: CountdownTarget;
+    setCountdownTarget: (countdownTarget: CountdownTarget) => void;
 }
 
 const CountdownVariantContext = createContext<
@@ -53,6 +63,14 @@ export const CountdownVariantProvider = ({
             (value) => String(value),
         );
 
+    const [countdownTarget, setCountdownTarget] =
+        usePersistedPreference<CountdownTarget>(
+            StorageKeys.countdownTarget,
+            CountdownTarget.Calendar,
+            (raw) => (isCountdownTarget(raw) ? raw : null),
+            (value) => value,
+        );
+
     // Keeps the home screen widget in sync with the 24th/25th choice right away,
     // instead of waiting for its next periodic update.
     const setTargetDay = useCallback(
@@ -71,6 +89,8 @@ export const CountdownVariantProvider = ({
             setShowSeconds,
             targetDay,
             setTargetDay,
+            countdownTarget,
+            setCountdownTarget,
         }),
         [
             variant,
@@ -79,6 +99,8 @@ export const CountdownVariantProvider = ({
             setShowSeconds,
             targetDay,
             setTargetDay,
+            countdownTarget,
+            setCountdownTarget,
         ],
     );
 
@@ -113,4 +135,10 @@ export const useCountdownShowSeconds = () => {
 export const useChristmasTargetDay = () => {
     const { targetDay, setTargetDay } = useCountdownVariantContext();
     return [targetDay, setTargetDay] as const;
+};
+
+export const useCountdownTarget = () => {
+    const { countdownTarget, setCountdownTarget } =
+        useCountdownVariantContext();
+    return [countdownTarget, setCountdownTarget] as const;
 };

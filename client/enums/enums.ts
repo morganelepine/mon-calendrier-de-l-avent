@@ -47,6 +47,12 @@ export enum CountdownVariant {
     Columns = "columns", // days/hours/minutes/seconds side by side, big number above small label
 }
 
+// What the home screen counts down to before December (October is always Halloween).
+export enum CountdownTarget {
+    Calendar = "calendar", // "x jours avant le départ du calendrier" - default
+    Christmas = "christmas", // same countdown as in December, straight to Noël
+}
+
 export enum ChristmasTargetDay {
     Eve = 24, // 24 décembre - réveillon
     Day = 25, // 25 décembre - default

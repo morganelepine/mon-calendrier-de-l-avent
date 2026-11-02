@@ -12,6 +12,7 @@ export const StorageKeys = {
     countdownVariant: "countdown_variant",
     countdownShowSeconds: "countdown_show_seconds",
     countdownTargetDay: "countdown_target_day",
+    countdownTarget: "countdown_target",
     // Last known premium status, for the home screen widgets.
     widgetsPremium: "widgets_premium",
     groupCreated: "groupCreated",

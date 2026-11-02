@@ -13,16 +13,18 @@ import {
     isHalloween,
     daysToHalloween,
 } from "@/constants/Dates";
-import { ChristmasTargetDay } from "@/enums/enums";
+import { ChristmasTargetDay, CountdownTarget } from "@/enums/enums";
 import { CountdownDisplay } from "@/components/calendar/Countdown/CountdownDisplay";
 import {
     useCountdownVariant,
     useCountdownShowSeconds,
     useChristmasTargetDay,
+    useCountdownTarget,
 } from "@/contexts/CountdownVariantContext";
 
 const useHomeState = () => {
     const [targetDay] = useChristmasTargetDay(); // 24 or 25
+    const [countdownTarget] = useCountdownTarget();
 
     const countdownTargetDate = new Date(
         christmasDay.getFullYear(),
@@ -31,7 +33,9 @@ const useHomeState = () => {
     );
     const nightsToTarget = getDaysUntil(countdownTargetDate);
 
-    const showCountdown = isDecember && currentDay < targetDay;
+    const showCountdown = isDecember
+        ? currentDay < targetDay
+        : !isOctober && countdownTarget === CountdownTarget.Christmas;
     const showChristmasGreeting =
         isDecember && currentDay >= targetDay && !isAfterChristmas;
     const christmasGreeting =
@@ -62,20 +66,19 @@ export const useHomeShareMessage = (): string | null => {
     } = useHomeState();
 
     const countdownSuffix = `\nFais le décompte avec Mon calendrier de l'Avent\u00a0: ${PLAY_STORE_URL}`;
-    const greetingSuffix = `\nEnvoyé depuis Mon calendrier de l'Avent\u00a0: ${PLAY_STORE_URL}`;
 
-    if (isHalloween) return `🎃 Happy Halloween ! ${greetingSuffix}`;
+    if (isHalloween) return `🎃 Happy Halloween !`;
     if (isOctober) {
         return `🎃 Plus que ${plural(daysToHalloween, "jour", "jours")} avant Halloween\u00a0! ${countdownSuffix}`;
     }
-    if (!isDecember) {
+    if (!isDecember && !showCountdown) {
         return `🎄 Plus que ${plural(daysToCalendar, "jour", "jours")} avant le départ du calendrier de l'Avent\u00a0! ${countdownSuffix}`;
     }
     if (showCountdown) {
         return `✨ Plus que ${plural(nightsToTarget, "nuit", "nuits")} avant Noël\u00a0! ${countdownSuffix}`;
     }
     if (showChristmasGreeting) {
-        return `🎄 ${christmasGreeting} ${greetingSuffix}`;
+        return `🎄 ${christmasGreeting}`;
     }
     return null;
 };
@@ -116,7 +119,7 @@ export const HomeHeadline = () => {
 
             {/* Before calendar departure */}
 
-            {!isDecember && !isOctober && (
+            {!isDecember && !isOctober && !showCountdown && (
                 <>
                     <ThemedText style={[styles.title, styles.countdown]}>
                         {daysToCalendar} {daysToCalendar > 1 ? "jours" : "jour"}
@@ -127,7 +130,7 @@ export const HomeHeadline = () => {
                 </>
             )}
 
-            {/* During calendar period */}
+            {/* During calendar period, or before it when counting down to Christmas */}
 
             {showCountdown && (
                 <CountdownDisplay
