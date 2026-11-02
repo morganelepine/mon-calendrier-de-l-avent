@@ -12,6 +12,7 @@ import { PremiumProvider } from "@/contexts/PremiumContext";
 import { MusicSelectionProvider } from "@/contexts/MusicSelectionContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { prefetchContents } from "@/services/contents/content.service";
+import { prefetchTvMovies } from "@/services/activities/tvMovies.service";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";
@@ -55,6 +56,7 @@ function RootLayout() {
         // Warm the contents cache now so opening the first day
         // doesn't block on the network round-trip.
         prefetchContents();
+        prefetchTvMovies();
     }, []);
 
     if (!loaded) {

@@ -31,12 +31,9 @@ const MOCK_MOVIES: Omit<TvMovie, "startHour" | "endHour">[] = [
 const MOVIE_DURATION = 90;
 export const getMockTvMovies = (): TvMovie[] => {
     const now = new Date(getNow());
-    // Started 30 min ago (1/3 of the progress bar), but never before
-    // midnight: a start at 23h43 would be tonight, not on air.
-    const firstStart = Math.max(
-        0,
-        now.getHours() * 60 + now.getMinutes() - 30,
-    );
+    // Started 30 min ago (1/3 of the progress bar),
+    // but not before midnight (a fake date starts at 00:00).
+    const firstStart = Math.max(0, now.getHours() * 60 + now.getMinutes() - 30);
 
     return MOCK_MOVIES.map((movie, index) => {
         const start = firstStart + index * MOVIE_DURATION;

@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
-import { Image } from "expo-image";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedText } from "@/components/ThemedText";
 import {
     activityCardBase,
     activityPressed,
-    tvMovieImage,
 } from "@/components/activities/activityStyles";
+import { TvMovieImage } from "@/components/activities/TvMovieImage";
 import { Colors } from "@/constants/Colors";
-import { getNow } from "@/constants/Dates";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
-import { MINUTES_IN_DAY, formatHour, toMinutes } from "@/utils/hours";
-
-const getCurrentMinutes = (): number => {
-    const now = new Date(getNow());
-    return now.getHours() * 60 + now.getMinutes();
-};
+import { TvMovieStatusBadge } from "@/components/activities/TvMovieStatusBadge";
+import { useCurrentMinutes } from "@/hooks/useCurrentMinutes";
+import { formatHour, toMinutes } from "@/utils/hours";
 
 interface FeaturedMovie {
     movie: TvMovie;
@@ -44,17 +38,15 @@ const byChannelPriority = (a: TimedMovie, b: TimedMovie): number =>
     channelRank(a.movie.channel) - channelRank(b.movie.channel);
 
 // On air first, else the next one to start.
-// Device time is assumed to be French time, like the schedule.
 const getFeaturedMovie = (
     movies: TvMovie[],
     nowMinutes: number,
 ): FeaturedMovie | null => {
-    const timed: TimedMovie[] = movies.map((movie) => {
-        const start = toMinutes(movie.startHour);
-        let end = toMinutes(movie.endHour);
-        if (end <= start) end += MINUTES_IN_DAY; // ends after midnight
-        return { movie, start, end };
-    });
+    const timed: TimedMovie[] = movies.map((movie) => ({
+        movie,
+        start: toMinutes(movie.startHour),
+        end: toMinutes(movie.endHour),
+    }));
 
     const [live] = timed
         .filter(({ start, end }) => nowMinutes >= start && nowMinutes < end)
@@ -76,15 +68,7 @@ const getFeaturedMovie = (
 };
 
 export const TvMoviesCard: React.FC<{ movies: TvMovie[] }> = ({ movies }) => {
-    const [nowMinutes, setNowMinutes] = useState(getCurrentMinutes);
-
-    useEffect(() => {
-        const interval = setInterval(
-            () => setNowMinutes(getCurrentMinutes()),
-            60 * 1000,
-        );
-        return (): void => clearInterval(interval);
-    }, []);
+    const nowMinutes = useCurrentMinutes();
 
     const featured = getFeaturedMovie(movies, nowMinutes);
     const isLive = featured?.progress != null;
@@ -94,12 +78,7 @@ export const TvMoviesCard: React.FC<{ movies: TvMovie[] }> = ({ movies }) => {
             {featured ? (
                 <>
                     <View style={styles.statusRow}>
-                        <View style={styles.status}>
-                            {isLive ? <View style={styles.liveDot} /> : null}
-                            <ThemedText style={styles.statusText}>
-                                {isLive ? "En cours" : "À suivre"}
-                            </ThemedText>
-                        </View>
+                        <TvMovieStatusBadge live={isLive} />
                         <ThemedText style={styles.schedule}>
                             {isLive
                                 ? `sur ${featured.movie.channel} jusqu'à ${formatHour(featured.movie.endHour)}`
@@ -108,13 +87,7 @@ export const TvMoviesCard: React.FC<{ movies: TvMovie[] }> = ({ movies }) => {
                     </View>
 
                     <View style={styles.movie}>
-                        <Image
-                            source={{ uri: featured.movie.image }}
-                            style={tvMovieImage}
-                            contentFit="cover"
-                            cachePolicy="memory-disk"
-                            accessible={false}
-                        />
+                        <TvMovieImage uri={featured.movie.image} />
                         <View style={styles.movieTexts}>
                             <ThemedText
                                 style={styles.title}
@@ -184,28 +157,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexWrap: "wrap",
         gap: 8,
-    },
-    status: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 6,
-        backgroundColor: Colors.blue,
-        borderRadius: 50,
-        paddingHorizontal: 12,
-        paddingTop: 2,
-    },
-    liveDot: {
-        width: 6,
-        height: 6,
-        borderRadius: 3,
-        backgroundColor: Colors.snow,
-    },
-    statusText: {
-        fontSize: 12,
-        fontFamily: "PoppinsBold",
-        color: Colors.snow,
-        paddingTop: 1,
-        textTransform: "uppercase",
     },
     schedule: {
         // Wraps instead of being cut off at the row edge (Android).

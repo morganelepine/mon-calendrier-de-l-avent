@@ -23,6 +23,8 @@ export const StorageKeys = {
     // Last contents successfully fetched from the backoffice API, used as an
     // offline/outage fallback so a down API doesn't blank out day content.
     contentsCache: "contents_cache",
+    // Today's TV movies schedule.
+    tvMoviesCache: "tv_movies_cache",
 
     // This year's calendar/game progress.
     // Reset every year, see YEARLY_RESET_KEYS below.

@@ -1,33 +1,32 @@
 import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
-import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ThemedText } from "@/components/ThemedText";
-import { tvMovieImage } from "@/components/activities/activityStyles";
+import { TvMovieImage } from "@/components/activities/TvMovieImage";
+import { TvMovieStatusBadge } from "@/components/activities/TvMovieStatusBadge";
 import { Colors } from "@/constants/Colors";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 import { useTodayTvMovies } from "@/hooks/useTodayTvMovies";
+import { useCurrentMinutes } from "@/hooks/useCurrentMinutes";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
-import { formatHour } from "@/utils/hours";
+import { formatHour, isBetween } from "@/utils/hours";
 
-const TvMovieCard: React.FC<{ movie: TvMovie }> = ({ movie }) => {
+const TvMovieCard: React.FC<{ movie: TvMovie; onAir: boolean }> = ({
+    movie,
+    onAir,
+}) => {
     const startHour = formatHour(movie.startHour);
     const endHour = formatHour(movie.endHour);
 
     return (
-        <View style={styles.card}>
-            <View style={styles.header}>
-                <Image
-                    source={{ uri: movie.image }}
-                    style={tvMovieImage}
-                    contentFit="cover"
-                    cachePolicy="memory-disk"
-                    accessible={false}
-                />
+        <View style={[styles.card, onAir && styles.onAirCard]}>
+            {onAir ? <TvMovieStatusBadge live /> : null}
+            <View style={[styles.header, { marginTop: onAir ? 10 : 0 }]}>
+                <TvMovieImage uri={movie.image} />
                 <View
                     style={styles.schedule}
                     accessible
-                    accessibilityLabel={`De ${startHour} à ${endHour} sur ${movie.channel}`}
+                    accessibilityLabel={`${onAir ? "En cours, " : ""}De ${startHour} à ${endHour} sur ${movie.channel}`}
                 >
                     <ThemedText style={styles.hour}>
                         {startHour} – {endHour}
@@ -40,15 +39,18 @@ const TvMovieCard: React.FC<{ movie: TvMovie }> = ({ movie }) => {
             <ThemedText style={styles.title} accessibilityRole="header">
                 {movie.title}
             </ThemedText>
-            <ThemedText style={styles.description}>
-                {movie.description}
-            </ThemedText>
+            {movie.description && (
+                <ThemedText style={styles.description}>
+                    {movie.description}
+                </ThemedText>
+            )}
         </View>
     );
 };
 
 export default function TvMoviesScreen() {
     const { movies, error } = useTodayTvMovies();
+    const nowMinutes = useCurrentMinutes();
 
     return (
         <BlueBackground>
@@ -71,6 +73,11 @@ export default function TvMoviesScreen() {
                             <TvMovieCard
                                 key={`${movie.channel}-${movie.startHour}`}
                                 movie={movie}
+                                onAir={isBetween(
+                                    nowMinutes,
+                                    movie.startHour,
+                                    movie.endHour,
+                                )}
                             />
                         ))
                     )}
@@ -82,7 +89,8 @@ export default function TvMoviesScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingTop: 20,
     },
     list: {
         gap: 16,
@@ -93,6 +101,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.snow,
         opacity: 0.9,
         gap: 4,
+    },
+    onAirCard: {
+        borderWidth: 4,
+        borderColor: Colors.red,
+        opacity: 1,
     },
     header: {
         flexDirection: "row",

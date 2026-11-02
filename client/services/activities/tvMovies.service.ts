@@ -1,10 +1,33 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Image } from "expo-image";
 import { apiFetch } from "@/services/apiFetch";
-import { todayIsoDate } from "@/constants/Dates";
+import { isChristmasSeason, todayIsoDate } from "@/constants/Dates";
+import { StorageKeys } from "@/constants/storageKeys";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
 import { getMockTvMovies } from "@/services/activities/tvMovies.mock";
 
 // DEBUG: serve fake movies (one on air) to test the activities page on any date.
 const DEBUG_MOCK_TV_MOVIES = false;
+
+// Christmas TV movies air in November and December.
+export const isTvMoviesSeason = isChristmasSeason;
+
+interface CachedTvMovies {
+    date: string;
+    movies: TvMovie[];
+}
+
+// Today's schedule from the last successful fetch, or null.
+export const getCachedTodayTvMovies = async (): Promise<TvMovie[] | null> => {
+    try {
+        const raw = await AsyncStorage.getItem(StorageKeys.tvMoviesCache);
+        if (!raw) return null;
+        const cached = JSON.parse(raw) as CachedTvMovies;
+        return cached.date === todayIsoDate ? cached.movies : null;
+    } catch {
+        return null;
+    }
+};
 
 // Fetched once per session: shared by the activities hub (to know whether
 // to show the card) and the schedule screen. Cleared on failure so the
@@ -17,10 +40,32 @@ export const getTodayTvMovies = (): Promise<TvMovie[]> => {
     tvMoviesPromise ??= apiFetch<{ movies: TvMovie[] }>(
         `/tv-movies?date=${todayIsoDate}`,
     )
-        .then((data) => data.movies)
-        .catch((error) => {
+        .then(({ movies }) => {
+            // Fire-and-forget: neither should delay the schedule.
+            const cached: CachedTvMovies = { date: todayIsoDate, movies };
+            AsyncStorage.setItem(
+                StorageKeys.tvMoviesCache,
+                JSON.stringify(cached),
+            ).catch(() => {});
+            // So thumbnails show with the text instead of after it.
+            void Image.prefetch(
+                movies.flatMap((movie) => (movie.image ? [movie.image] : [])),
+                "memory-disk",
+            );
+            return movies;
+        })
+        .catch(async (error) => {
             tvMoviesPromise = null;
+            // Offline or API down: today's schedule from an earlier launch.
+            const cached = await getCachedTodayTvMovies();
+            if (cached) return cached;
             throw error;
         });
     return tvMoviesPromise;
+};
+
+// Called at app launch so the schedule is usually there by the time the activities page opens.
+export const prefetchTvMovies = (): void => {
+    if (!isTvMoviesSeason) return;
+    getTodayTvMovies().catch(() => {});
 };

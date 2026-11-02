@@ -16,7 +16,7 @@ interface RawTvMovie {
 export interface TvMovie {
     title: string;
     description: string;
-    image: string;
+    image: string | null;
     channel: string;
     startHour: string;
     endHour: string;
@@ -28,6 +28,11 @@ const CHANNEL_NAMES: Record<string, string> = {
 
 const toChannelName = (channel: string): string =>
     CHANNEL_NAMES[channel] ?? channel.replace(/\.fr$/, "");
+
+const toSecureImage = (url: string): string | null => {
+    const secureUrl = url.replace(/^http:\/\//, "https://");
+    return secureUrl.startsWith("https://") ? secureUrl : null;
+};
 
 // "14:25:00" -> "14:25"
 const toShortHour = (hour: string): string => hour.slice(0, 5);
@@ -55,7 +60,7 @@ export async function getTvMoviesByDate(date: string): Promise<TvMovie[]> {
             .map((program) => ({
                 title: program.title,
                 description: program.description,
-                image: program.image,
+                image: toSecureImage(program.image),
                 channel: toChannelName(program.channel),
                 startHour: toShortHour(program.startTime.hour),
                 endHour: toShortHour(program.endTime.hour),

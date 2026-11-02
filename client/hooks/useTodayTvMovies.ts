@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { isOctober } from "@/constants/Dates";
-import { getTodayTvMovies } from "@/services/activities/tvMovies.service";
+import {
+    getCachedTodayTvMovies,
+    getTodayTvMovies,
+    isTvMoviesSeason,
+} from "@/services/activities/tvMovies.service";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
 
 interface TodayTvMovies {
@@ -10,14 +13,22 @@ interface TodayTvMovies {
 
 export const useTodayTvMovies = (): TodayTvMovies => {
     const [movies, setMovies] = useState<TvMovie[] | null>(
-        // Hidden during the Halloween season, even if some are on air.
-        isOctober ? [] : null,
+        isTvMoviesSeason ? null : [],
     );
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (isOctober) return undefined;
+        if (!isTvMoviesSeason) return undefined;
         let cancelled = false;
+
+        // Today's cached schedule first, for an instant render;
+        // never over fresher data if the network answered first.
+        getCachedTodayTvMovies().then((cached) => {
+            if (!cancelled && cached) {
+                setMovies((current) => current ?? cached);
+            }
+        });
+
         getTodayTvMovies()
             .then((result) => {
                 if (!cancelled) setMovies(result);
@@ -25,6 +36,7 @@ export const useTodayTvMovies = (): TodayTvMovies => {
             .catch(() => {
                 if (!cancelled) setError(true);
             });
+
         return (): void => {
             cancelled = true;
         };
