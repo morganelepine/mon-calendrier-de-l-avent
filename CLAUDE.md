@@ -58,8 +58,8 @@ npm run build        # tsc --noEmit && vite build
 - All date logic goes through `constants/Dates.ts`. To test as a specific date, use the Informations > "Test" screen (`app/(tabs)/informations/test.tsx`, shown when `TEST_TOOLS_ENABLED`: dev, preview, closed-testing, never on the PWA): the fake date is stored synchronously in a file (`services/tests/fakeDate.service.ts`) and read at module load, then the app reloads. Use `getNow()` for ticking displays, never `Date.now()` directly. The same screen can reset the user (wipes AsyncStorage, new UUID on reload).
 - API calls go through `services/apiFetch.ts` (timeout, `ApiError`, Sentry reporting: 4xx as warnings). `API_URL` comes from `EXPO_PUBLIC_API_URL_DEV` when `__DEV__`, else `EXPO_PUBLIC_API_URL_PROD`.
 - Platform splits: `*.web.ts` files (e.g. `share.service.web.ts`) and `Platform.OS === "web"` checks. Sharing is disabled on the PWA and in Expo Go.
-- Premium ("La Hotte Magique", RevenueCat, Android only) in `contexts/PremiumContext.tsx`, gated by `EXPO_PUBLIC_PREMIUM_ENABLED` (set per EAS profile in `eas.json`; `true` in preview/closed-testing, `false` in production) or `__DEV__`. Expo Go uses `EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY`.
-- Android home-screen widgets live in `client/widgets/`; the headless task handler is registered in `client/index.ts`. The widget plugin is added in `app.config.js` except in production builds while `WIDGETS_ENABLED` is false.
+- Premium ("La Hotte Magique", RevenueCat, Android only) in `contexts/PremiumContext.tsx`, disabled on the preview APK (unknown package id). Expo Go uses `EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY`.
+- Android home-screen widgets live in `client/widgets/`; the headless task handler is registered in `client/index.ts`. The widget plugin is declared in `app.json` (native: changes need a new build). `app.config.js` only renames the preview build.
 - Images are served from Cloudinary (`client/services/cloudinary.service.ts`, IDs referenced in code).
 
 ## Conventions

@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { Platform } from "react-native";
 import Constants, { ExecutionEnvironment } from "expo-constants";
+import * as Updates from "expo-updates";
 import Purchases, {
     CustomerInfo,
     PurchasesPackage,
@@ -27,12 +28,11 @@ const REVENUECAT_ANDROID_KEY = IS_EXPO_GO
     ? process.env.EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY
     : process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
 
-// Set per EAS build profile: the closed testing build ships the premium offer,
-// while production keeps RevenueCat entirely off until the offer goes live.
-const PREMIUM_ENABLED =
-    __DEV__ || process.env.EXPO_PUBLIC_PREMIUM_ENABLED === "true";
+// The preview APK uses a separate package id that Google Play and RevenueCat don't know.
+const IS_PREVIEW_BUILD = Updates.channel === "preview";
 
-export const PURCHASES_SUPPORTED = Platform.OS === "android" && PREMIUM_ENABLED;
+export const PURCHASES_SUPPORTED =
+    Platform.OS === "android" && !IS_PREVIEW_BUILD;
 
 interface PremiumContextType {
     isPremium: boolean;
@@ -51,15 +51,17 @@ function hasActiveEntitlement(info: CustomerInfo | null): boolean {
     return !!info?.entitlements.active[ENTITLEMENT_ID];
 }
 
-// Being offline at launch is expected and would flood Sentry on every start.
-const OFFLINE_ERROR_CODES: string[] = [
+// Device-side failures we can't act on (offline, outdated Play Store),
+// which would otherwise flood Sentry on every start.
+const IGNORED_ERROR_CODES: string[] = [
     Purchases.PURCHASES_ERROR_CODE.NETWORK_ERROR,
     Purchases.PURCHASES_ERROR_CODE.OFFLINE_CONNECTION_ERROR,
+    Purchases.PURCHASES_ERROR_CODE.PURCHASE_NOT_ALLOWED_ERROR,
 ];
 
 function logPurchasesError(message: string, error: unknown) {
     const code = (error as { code?: string } | null)?.code;
-    if (code && OFFLINE_ERROR_CODES.includes(code)) return Promise.resolve();
+    if (code && IGNORED_ERROR_CODES.includes(code)) return Promise.resolve();
     return logClient(message, { code, error: String(error) });
 }
 
