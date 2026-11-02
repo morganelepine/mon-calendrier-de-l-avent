@@ -25,6 +25,9 @@ export const currentDay = today.getDate();
 export const currentMonth = today.getMonth(); // 0 = janvier, 11 = décembre
 
 export const todayIsoDate = formatIsoDate(today);
+export const tomorrowIsoDate = formatIsoDate(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1),
+);
 
 export const isDecember = currentMonth === 11;
 export const isOctober = currentMonth === 9;

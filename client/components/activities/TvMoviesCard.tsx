@@ -9,7 +9,11 @@ import {
 import { TvMovieImage } from "@/components/activities/TvMovieImage";
 import { Colors } from "@/constants/Colors";
 import { TvMovie } from "@/interfaces/tvMovieInterface";
-import { TvMovieStatusBadge } from "@/components/activities/TvMovieStatusBadge";
+import {
+    TvMovieStatus,
+    TvMovieStatusBadge,
+} from "@/components/activities/TvMovieStatusBadge";
+import { TvMoviesDay } from "@/hooks/useTvMoviesSchedule";
 import { useCurrentMinutes } from "@/hooks/useCurrentMinutes";
 import { formatHour, toMinutes } from "@/utils/hours";
 
@@ -67,18 +71,30 @@ const getFeaturedMovie = (
     return { movie: next.movie, progress: null };
 };
 
-export const TvMoviesCard: React.FC<{ movies: TvMovie[] }> = ({ movies }) => {
-    const nowMinutes = useCurrentMinutes();
+interface TvMoviesCardProps {
+    movies: TvMovie[];
+    day: TvMoviesDay;
+}
 
-    const featured = getFeaturedMovie(movies, nowMinutes);
+export const TvMoviesCard: React.FC<TvMoviesCardProps> = ({ movies, day }) => {
+    const nowMinutes = useCurrentMinutes();
+    const isTomorrow = day === "tomorrow";
+
+    // Tomorrow: the day's first movie, as if it were just before it.
+    const featured = getFeaturedMovie(movies, isTomorrow ? -1 : nowMinutes);
     const isLive = featured?.progress != null;
+    const status: TvMovieStatus = isTomorrow
+        ? "tomorrow"
+        : isLive
+          ? "live"
+          : "next";
 
     return (
         <View style={styles.card}>
             {featured ? (
                 <>
                     <View style={styles.statusRow}>
-                        <TvMovieStatusBadge live={isLive} />
+                        <TvMovieStatusBadge status={status} />
                         <ThemedText style={styles.schedule}>
                             {isLive
                                 ? `sur ${featured.movie.channel} jusqu'à ${formatHour(featured.movie.endHour)}`
@@ -134,7 +150,9 @@ export const TvMoviesCard: React.FC<{ movies: TvMovie[] }> = ({ movies }) => {
             >
                 <Ionicons name="time-outline" size={20} color={Colors.blue} />
                 <ThemedText style={styles.buttonText}>
-                    Tous les téléfilms du jour
+                    {isTomorrow
+                        ? "Le programme de demain"
+                        : "Tous les téléfilms du jour"}
                 </ThemedText>
                 <Ionicons
                     name="chevron-forward"

@@ -15,7 +15,7 @@ import { Game2048RulesModal } from "@/components/games2048/Game2048RulesModal";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { getTodaySong } from "@/constants/DailySongs";
-import { useTodayTvMovies } from "@/hooks/useTodayTvMovies";
+import { useTvMoviesSchedule } from "@/hooks/useTvMoviesSchedule";
 
 const BINGOS = isOctober
     ? [
@@ -53,7 +53,7 @@ const TILES_GAP = 10;
 export default function GamesHubScreen() {
     const [game2048RulesVisible, setGame2048RulesVisible] = useState(false);
 
-    const { movies: tvMovies } = useTodayTvMovies();
+    const { day: tvMoviesDay, movies: tvMovies } = useTvMoviesSchedule();
     const todaySong = getTodaySong();
 
     // Square tiles when three share the row.
@@ -72,7 +72,7 @@ export default function GamesHubScreen() {
                     />
 
                     {tvMovies && tvMovies.length > 0 ? (
-                        <TvMoviesCard movies={tvMovies} />
+                        <TvMoviesCard movies={tvMovies} day={tvMoviesDay} />
                     ) : null}
 
                     <View style={styles.tiles}>

@@ -2,12 +2,20 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 
-export const TvMovieStatusBadge: React.FC<{ live: boolean }> = ({ live }) => (
+export type TvMovieStatus = "live" | "next" | "tomorrow";
+
+const LABELS: Record<TvMovieStatus, string> = {
+    live: "En cours",
+    next: "À suivre",
+    tomorrow: "Demain",
+};
+
+export const TvMovieStatusBadge: React.FC<{ status: TvMovieStatus }> = ({
+    status,
+}) => (
     <View style={styles.badge}>
-        {live ? <View style={styles.liveDot} /> : null}
-        <ThemedText style={styles.text}>
-            {live ? "En cours" : "À suivre"}
-        </ThemedText>
+        {status === "live" ? <View style={styles.liveDot} /> : null}
+        <ThemedText style={styles.text}>{LABELS[status]}</ThemedText>
     </View>
 );
 
