@@ -17,7 +17,6 @@
             },
             "env": {
                 "EXPO_PUBLIC_API_URL_PROD": "https://advent-calendar-v3.vercel.app",
-                "EXPO_PUBLIC_PREMIUM_ENABLED": "true",
                 "EXPO_PUBLIC_TEST_TOOLS_ENABLED": "true"
             }
         },
@@ -27,7 +26,6 @@
             "env": {
                 "SENTRY_ORG": "mon-calendrier-de-lavent",
                 "SENTRY_PROJECT": "react-native",
-                "EXPO_PUBLIC_PREMIUM_ENABLED": "true",
                 "EXPO_PUBLIC_TEST_TOOLS_ENABLED": "true"
             }
         },
@@ -40,7 +38,6 @@
             "env": {
                 "SENTRY_ORG": "mon-calendrier-de-lavent",
                 "SENTRY_PROJECT": "react-native",
-                "EXPO_PUBLIC_PREMIUM_ENABLED": "false",
                 "EXPO_PUBLIC_TEST_TOOLS_ENABLED": "false"
             }
         }

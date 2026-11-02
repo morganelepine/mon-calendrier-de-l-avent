@@ -130,22 +130,33 @@ export default function PremiumScreen() {
                             Merci d'avoir débloqué{"\n"}La Hotte Magique{"\n"}✨
                         </ThemedText>
                     )}
-                    {!isPremium && premiumPackage && (
+                    {!isPremium && (
                         <>
-                            <CustomButton
-                                onPress={handlePurchase}
-                                loading={purchasing}
-                                disabled={
-                                    !isReady || !premiumPackage || purchasing
-                                }
-                            >
-                                Débloquer pour{" "}
-                                {premiumPackage.product.priceString} à vie
-                            </CustomButton>
+                            {premiumPackage || !isReady ? (
+                                <CustomButton
+                                    onPress={handlePurchase}
+                                    loading={purchasing || !isReady}
+                                    disabled={!premiumPackage || purchasing}
+                                >
+                                    {premiumPackage
+                                        ? `Débloquer pour ${premiumPackage.product.priceString} à vie`
+                                        : "Débloquer La Hotte Magique"}
+                                </CustomButton>
+                            ) : (
+                                <ThemedText
+                                    type="sectionText"
+                                    style={styles.intro}
+                                >
+                                    La Hotte Magique est momentanément
+                                    indisponible, réessayez plus tard.
+                                </ThemedText>
+                            )}
 
                             <ThemedText
                                 type="sectionText"
                                 style={styles.restoreLink}
+                                accessibilityRole="button"
+                                accessibilityState={{ busy: restoring }}
                                 onPress={restoring ? undefined : handleRestore}
                             >
                                 {restoring

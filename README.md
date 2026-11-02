@@ -85,8 +85,6 @@ En production, elle lit `EXPO_PUBLIC_API_URL_PROD`.
 
 `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` est la clé publique RevenueCat du projet Google Play, utilisée pour l'achat premium ("La Hotte Magique"). Dans Expo Go, c'est `EXPO_PUBLIC_REVENUECAT_TEST_STORE_KEY` qui est utilisée.
 
-`EXPO_PUBLIC_PREMIUM_ENABLED` est défini par profil de build dans `client/eas.json` (`true` pour `preview` et `closed-testing`, `false` pour `production`). Le premium est toujours actif en développement.
-
 ### Serveur
 
 Fichier : `server/.env`
