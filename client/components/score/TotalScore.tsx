@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
         width: "100%",
+        paddingBottom: 10,
     },
     score: {
         fontSize: 50,
