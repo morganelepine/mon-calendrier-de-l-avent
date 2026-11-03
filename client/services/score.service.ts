@@ -128,6 +128,36 @@ export const getScoreSummary = async (): Promise<ScoreSummary> => {
     return apiFetch<ScoreSummary>(`/scores/total/user/${userUuid}`);
 };
 
+export const checkIn = async (day: number): Promise<number> => {
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
+
+    const { bonusAwarded } = await apiFetch<{ bonusAwarded: number }>(
+        "/scores/check-in",
+        {
+            method: "POST",
+            body: { userUuid, day },
+        },
+    );
+    return bonusAwarded;
+};
+
+// Premium: hangs a missed day's bauble. Resolves with the jokers left.
+export const spendCheckInJoker = async (
+    day: number,
+    today: number,
+): Promise<number> => {
+    const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
+
+    const { jokersLeft } = await apiFetch<{ jokersLeft: number }>(
+        "/scores/check-in/joker",
+        {
+            method: "POST",
+            body: { userUuid, day, today },
+        },
+    );
+    return jokersLeft;
+};
+
 export const getTotalScore = async (): Promise<number> => {
     const { totalScore } = await getScoreSummary();
     return totalScore;

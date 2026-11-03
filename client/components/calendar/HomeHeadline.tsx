@@ -21,6 +21,7 @@ import {
     useChristmasTargetDay,
     useCountdownTarget,
 } from "@/contexts/CountdownVariantContext";
+import { pluralize } from "@/utils/pluralize";
 
 const useHomeState = () => {
     const [targetDay] = useChristmasTargetDay(); // 24 or 25
@@ -52,9 +53,6 @@ const useHomeState = () => {
     };
 };
 
-const plural = (n: number, singular: string, pluralForm: string) =>
-    `${n} ${n > 1 ? pluralForm : singular}`;
-
 // Caption of the shared home image, or null when there is nothing to share
 // (after Christmas).
 export const useHomeShareMessage = (): string | null => {
@@ -69,13 +67,13 @@ export const useHomeShareMessage = (): string | null => {
 
     if (isHalloween) return `🎃 Happy Halloween !`;
     if (isOctober) {
-        return `🎃 Plus que ${plural(daysToHalloween, "jour", "jours")} avant Halloween\u00a0! ${countdownSuffix}`;
+        return `🎃 Plus que ${pluralize(daysToHalloween, "jour")} avant Halloween\u00a0! ${countdownSuffix}`;
     }
     if (!isDecember && !showCountdown) {
-        return `🎄 Plus que ${plural(daysToCalendar, "jour", "jours")} avant le départ du calendrier de l'Avent\u00a0! ${countdownSuffix}`;
+        return `🎄 Plus que ${pluralize(daysToCalendar, "jour")} avant le départ du calendrier de l'Avent\u00a0! ${countdownSuffix}`;
     }
     if (showCountdown) {
-        return `✨ Plus que ${plural(nightsToTarget, "nuit", "nuits")} avant Noël\u00a0! ${countdownSuffix}`;
+        return `✨ Plus que ${pluralize(nightsToTarget, "nuit")} avant Noël\u00a0! ${countdownSuffix}`;
     }
     if (showChristmasGreeting) {
         return `🎄 ${christmasGreeting}`;
@@ -102,8 +100,7 @@ export const HomeHeadline = () => {
             {isOctober && !isHalloween && (
                 <>
                     <ThemedText style={[styles.title, styles.countdown]}>
-                        {daysToHalloween}{" "}
-                        {daysToHalloween > 1 ? "jours" : "jour"}
+                        {pluralize(daysToHalloween, "jour")}
                     </ThemedText>
                     <ThemedText style={[styles.title, styles.beforeCalendar]}>
                         avant Halloween
@@ -122,7 +119,7 @@ export const HomeHeadline = () => {
             {!isDecember && !isOctober && !showCountdown && (
                 <>
                     <ThemedText style={[styles.title, styles.countdown]}>
-                        {daysToCalendar} {daysToCalendar > 1 ? "jours" : "jour"}
+                        {pluralize(daysToCalendar, "jour")}
                     </ThemedText>
                     <ThemedText style={[styles.title, styles.beforeCalendar]}>
                         avant le départ du calendrier

@@ -8,6 +8,18 @@ export const ScoreRoutes = [
         action: "saveScore",
     },
     {
+        method: "post",
+        route: "/scores/check-in",
+        controller: ScoreController,
+        action: "checkIn",
+    },
+    {
+        method: "post",
+        route: "/scores/check-in/joker",
+        controller: ScoreController,
+        action: "useCheckInJoker",
+    },
+    {
         method: "get",
         route: "/scores/user/:uuid",
         controller: ScoreController,

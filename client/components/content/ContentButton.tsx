@@ -11,7 +11,7 @@ import {
 import { getContentTitle } from "@/services/contents/content.service";
 import { Content } from "@/interfaces/contentInterface";
 import { ScoreType } from "@/enums/enums";
-import { isOctober } from "@/constants/Dates";
+import { currentDay, isOctober } from "@/constants/Dates";
 
 interface ContentButtonProps {
     content?: Content;
@@ -45,8 +45,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     const registerContentOpening = async () => {
         if (isOctober) return;
 
-        const today = new Date().getDate();
-        const score = dayId === today ? 20 : 10;
+        const score = dayId === currentDay ? 20 : 10;
 
         const alreadyPlayed = await isItemScored(
             dayId,

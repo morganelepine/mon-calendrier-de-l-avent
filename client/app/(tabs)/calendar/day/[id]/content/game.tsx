@@ -19,7 +19,8 @@ import {
 import { useDayContents } from "@/hooks/useDayContents";
 import { ScoreType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
-import { isOctober } from "@/constants/Dates";
+import { currentDay, isOctober } from "@/constants/Dates";
+import { pluralize } from "@/utils/pluralize";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -47,8 +48,8 @@ export default function GameScreen() {
 
     const totalQuestionsText =
         gamesByType.hangman || gamesByType.wordle || gamesByType.inputGame
-            ? `Vous avez joué ${answeredCount} ${answeredCount > 1 ? "mots" : "mot"} sur ${totalQuestions}`
-            : `Vous avez répondu à ${answeredCount} ${answeredCount > 1 ? "questions" : "question"} sur ${totalQuestions}`;
+            ? `Vous avez joué ${pluralize(answeredCount, "mot")} sur ${totalQuestions}`
+            : `Vous avez répondu à ${pluralize(answeredCount, "question")} sur ${totalQuestions}`;
 
     // Replaying a question is always allowed - it just never scores twice.
     // The verdict is locked in locally *before* the network call,
@@ -69,8 +70,8 @@ export default function GameScreen() {
         await saveItemScored(dayId, ScoreType.GameAnswer, questionNumber);
         setAnsweredCount((count) => count + 1);
 
-        const today = new Date().getDate();
-        const score = dayId === today && isCorrect ? 20 : isCorrect ? 10 : 0;
+        const score =
+            dayId === currentDay && isCorrect ? 15 : isCorrect ? 5 : 0;
         void queueScore(
             dayId,
             score,

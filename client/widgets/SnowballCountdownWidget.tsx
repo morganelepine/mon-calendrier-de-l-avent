@@ -10,13 +10,13 @@ import {
     CountdownWidgetProps,
     fitFontSize,
     fitTextStack,
-    getNightsLabel,
     getWidgetClickProps,
     WIDGET_FONT_BOLD,
     WIDGET_FONT_SEMI,
     WIDGET_TEXT_COLOR,
     WIDGET_TEXT_PROPS,
 } from "@/widgets/widgetCommon";
+import { pluralize, pluralWord } from "@/utils/pluralize";
 
 // Must match the "name" of the widget declared in app.json.
 export const SNOWBALL_WIDGET_NAME = "SnowballCountdown";
@@ -49,7 +49,7 @@ export const SnowballCountdownWidget = ({
 
     const isNights = countdown.kind === "nights";
     const text = isNights
-        ? `${countdown.nights} ${getNightsLabel(countdown.nights)} avant Noël`
+        ? `${pluralize(countdown.nights, "nuit")} avant Noël`
         : countdown.kind === "greeting"
           ? countdown.lines.join(" ")
           : LOCKED_TEXT;
@@ -119,7 +119,7 @@ export const SnowballCountdownWidget = ({
                             {...WIDGET_TEXT_PROPS}
                             text={
                                 isNights
-                                    ? `${getNightsLabel(countdown.nights)} avant Noël`
+                                    ? `${pluralWord(countdown.nights, "nuit")} avant Noël`
                                     : text
                             }
                             style={{

@@ -6,7 +6,7 @@ import {
     OverlapWidget,
     TextWidget,
 } from "react-native-android-widget";
-import { formatUnitLabel } from "@/components/calendar/Countdown/countdownUnits";
+import { pluralize, pluralWord } from "@/utils/pluralize";
 import {
     CountdownWidgetProps,
     fitFontSize,
@@ -192,7 +192,7 @@ export const GiftsCountdownWidget = ({
             {...getWidgetClickProps(countdown)}
             accessibilityLabel={
                 isNights
-                    ? `${countdown.days} ${formatUnitLabel(countdown.days, "jour", "jours")} et ${countdown.hours} ${formatUnitLabel(countdown.hours, "heure", "heures")} avant Noël`
+                    ? `${pluralize(countdown.days, "jour")} et ${pluralize(countdown.hours, "heure")} avant Noël`
                     : countdown.message
             }
             style={{
@@ -226,7 +226,7 @@ export const GiftsCountdownWidget = ({
                 {isNights && (
                     <Unit
                         value={countdown.days}
-                        label={formatUnitLabel(countdown.days, "jour", "jours")}
+                        label={pluralWord(countdown.days, "jour")}
                         columnWidth={columnWidth}
                         stack={unitStack}
                     />
@@ -234,11 +234,7 @@ export const GiftsCountdownWidget = ({
                 {isNights && (
                     <Unit
                         value={countdown.hours}
-                        label={formatUnitLabel(
-                            countdown.hours,
-                            "heure",
-                            "heures",
-                        )}
+                        label={pluralWord(countdown.hours, "heure")}
                         columnWidth={columnWidth}
                         stack={unitStack}
                     />

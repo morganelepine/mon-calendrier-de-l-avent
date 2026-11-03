@@ -2,15 +2,14 @@ import { CountdownValues } from "@/hooks/useCountdown";
 
 export interface CountdownUnit {
     key: keyof CountdownValues;
-    singular: string;
-    plural: string;
+    label: string; // singular, see pluralWord
 }
 
 const ALL_COUNTDOWN_UNITS: CountdownUnit[] = [
-    { key: "days", singular: "jour", plural: "jours" },
-    { key: "hours", singular: "heure", plural: "heures" },
-    { key: "minutes", singular: "minute", plural: "minutes" },
-    { key: "seconds", singular: "seconde", plural: "secondes" },
+    { key: "days", label: "jour" },
+    { key: "hours", label: "heure" },
+    { key: "minutes", label: "minute" },
+    { key: "seconds", label: "seconde" },
 ];
 
 // Drops "seconds" unless showSeconds, and drops "days" once it's reached 0
@@ -24,9 +23,3 @@ export const getCountdownUnits = (
         if (unit.key === "days") return days > 0;
         return true;
     });
-
-export const formatUnitLabel = (
-    value: number,
-    singular: string,
-    plural: string,
-): string => (value > 1 ? plural : singular);

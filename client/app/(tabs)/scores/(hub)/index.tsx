@@ -2,12 +2,15 @@ import { useCallback } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { TotalScore } from "@/components/score/TotalScore";
+import { ThemedText } from "@/components/ThemedText";
+import { CheckInStreak } from "@/components/score/streak/CheckInStreak";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Score } from "@/interfaces/scoreInterface";
 import { useScore } from "@/contexts/ScoreContext";
 import { isDecember } from "@/constants/Dates";
+import { Colors } from "@/constants/Colors";
 
 export default function ScoreScreen() {
     const {
@@ -38,13 +41,6 @@ export default function ScoreScreen() {
                     refreshScores={refreshScores}
                 />
 
-                {!error && !loading && (
-                    <TotalScore
-                        score={scoreTotal}
-                        previousYearScore={previousYearScore}
-                    />
-                )}
-
                 {isDecember && !error && !loading && (
                     <ScrollView
                         contentContainerStyle={{
@@ -52,6 +48,17 @@ export default function ScoreScreen() {
                         }}
                         persistentScrollbar={true} // Android only
                     >
+                        <TotalScore
+                            score={scoreTotal}
+                            previousYearScore={previousYearScore}
+                        />
+                        <CheckInStreak
+                            scoreHistory={scoreHistory}
+                            refreshScores={refreshScores}
+                        />
+                        <ThemedText style={styles.title}>
+                            Points par jour
+                        </ThemedText>
                         <View style={styles.cardsWrapper}>
                             {scoreHistory.map((score: Score) => (
                                 <ScoreHistory
@@ -72,6 +79,12 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         justifyContent: "center",
+    },
+    title: {
+        padding: 20,
+        fontFamily: "FreightNeoBold",
+        color: Colors.snow,
+        fontSize: 20,
     },
     cardsWrapper: {
         paddingHorizontal: 20,

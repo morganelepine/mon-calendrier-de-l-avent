@@ -6,6 +6,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Colors } from "@/constants/Colors";
+import { pluralWord } from "@/utils/pluralize";
 import { isDecember } from "@/constants/Dates";
 import { OffSeasonMessage } from "@/components/score/OffSeasonMessage";
 import { usePremium } from "@/contexts/PremiumContext";
@@ -21,7 +22,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
 }) => {
     const { isPremium } = usePremium();
     const minScoreToWin = 2512;
-    const maxScoreWinnable = 4320;
+    const maxScoreWinnable = 4170;
     const hasReachedObjective = isPremium
         ? score >= maxScoreWinnable
         : score >= minScoreToWin;
@@ -39,7 +40,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                         <ThemedText type="freightNeoBoldSnow">
                             {score}
                         </ThemedText>{" "}
-                        {score > 1 ? "points" : "point"}
+                        {pluralWord(score, "point")}
                     </ThemedText>
 
                     {hasReachedObjective ? (
@@ -52,17 +53,6 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                             >
                                 Objectif atteint ✨
                             </ThemedText>
-                            <ThemedText
-                                type="italic14"
-                                style={{
-                                    marginBottom: 30,
-                                    color: Colors.snow,
-                                    textAlign: "center",
-                                }}
-                            >
-                                Rendez-vous le 25 décembre
-                                pour&nbsp;la&nbsp;surprise&nbsp;!
-                            </ThemedText>
                         </>
                     ) : (
                         <>
@@ -71,16 +61,12 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                                     style={[styles.completion, animatedStyle]}
                                 />
                             </View>
-                            <ThemedText
-                                style={{
-                                    marginBottom: 20,
-                                    color: Colors.snow,
-                                    fontSize: 14,
-                                }}
-                            >
-                                {isPremium
-                                    ? `${Math.round(progress)}% des points de l'Avent récoltés`
-                                    : `${Math.round(progress)}% de l'objectif atteint`}
+                            <ThemedText style={styles.goal}>
+                                {progress === 0
+                                    ? "Ouvrez la case du jour pour commencer à gagner des points"
+                                    : isPremium
+                                      ? `${Math.round(progress)}% des points de l'Avent récoltés`
+                                      : `${Math.round(progress)}% de l'objectif atteint`}
                             </ThemedText>
                         </>
                     )}
@@ -98,6 +84,7 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
         width: "100%",
+        paddingBottom: 10,
     },
     score: {
         fontSize: 50,
@@ -116,7 +103,13 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignSelf: "stretch",
         height: "100%",
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.autumnGold,
         borderRadius: 50,
+    },
+    goal: {
+        marginBottom: 20,
+        color: Colors.snow,
+        fontSize: 14,
+        textAlign: "center",
     },
 });
