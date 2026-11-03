@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
     ActivityIndicator,
+    Animated as RNAnimated,
     Pressable,
     StyleSheet,
     Text,
@@ -10,7 +11,11 @@ import { Colors } from "@/constants/Colors";
 import { currentDay } from "@/constants/Dates";
 import { CHECK_IN_LAST_DAY } from "@/constants/checkIn";
 import { showToast } from "@/components/utils/Toast";
-import Animated from "react-native-reanimated";
+import Animated, { useReducedMotion } from "react-native-reanimated";
+import {
+    ConfettiBurst,
+    CONFETTI_DURATION,
+} from "@/components/utils/ConfettiBurst";
 import { GarlandSwag } from "@/components/score/streak/GarlandSwag";
 import { useBaubleSwing } from "@/components/score/streak/useBaubleSwing";
 
@@ -46,7 +51,7 @@ interface CheckInDayProps {
     dayPoints: number;
     bonusPoints?: number;
     pending: boolean;
-    onCheckIn: () => void;
+    onCheckIn: () => Promise<boolean>;
 }
 
 // One bauble of the garland: its hook, the bauble itself, the bonus it would earn
@@ -67,6 +72,22 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
     const isLast = day === CHECK_IN_LAST_DAY;
     const baubleColors = getBaubleColors(dayPoints);
     const swingStyle = useBaubleSwing(day);
+    const reduceMotion = useReducedMotion();
+    const confetti = useRef(new RNAnimated.Value(0)).current;
+    // Only mounted while bursting: no idle particles on the 23 other baubles.
+    const [celebrating, setCelebrating] = useState(false);
+
+    const handleCheckIn = async (): Promise<void> => {
+        const hung = await onCheckIn();
+        if (!hung || reduceMotion) return;
+        setCelebrating(true);
+        confetti.setValue(0);
+        RNAnimated.timing(confetti, {
+            toValue: 1,
+            duration: CONFETTI_DURATION,
+            useNativeDriver: true,
+        }).start(() => setCelebrating(false));
+    };
 
     return (
         <View style={styles.column}>
@@ -111,7 +132,7 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
                 <View style={[styles.cap, isActive && styles.activeCap]} />
                 {isToday && !isChecked ? (
                     <Pressable
-                        onPress={onCheckIn}
+                        onPress={handleCheckIn}
                         disabled={pending}
                         accessibilityRole="button"
                         accessibilityLabel={`Accrocher la boule du ${day} décembre${bonusLabel}`}
@@ -176,6 +197,11 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
                         </Text>
                     </Pressable>
                 )}
+                {celebrating && (
+                    <View style={styles.confetti}>
+                        <ConfettiBurst progress={confetti} />
+                    </View>
+                )}
             </Animated.View>
             {/* Already part of the cell's accessibility label. */}
             <Text
@@ -206,12 +232,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
         transformOrigin: "top",
     },
+    // Zero-height anchor at the cell's center: the burst starts from the bauble.
+    confetti: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: CHECK_IN_DAY_WIDTH / 2,
+    },
     hook: {
         width: 1.5,
         backgroundColor: Colors.disabled,
     },
     activeHook: {
-        backgroundColor: Colors.gold,
+        backgroundColor: Colors.blue,
     },
     ring: {
         width: 7,

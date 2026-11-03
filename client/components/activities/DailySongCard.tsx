@@ -7,7 +7,7 @@ import { DailySong } from "@/constants/DailySongs";
 
 export const DailySongCard: React.FC<{ song: DailySong }> = ({ song }) => {
     const subtitle = song.artist
-        ? `${song.artist} · ${song.title}`
+        ? `${song.title} · ${song.artist}`
         : song.title;
 
     return (

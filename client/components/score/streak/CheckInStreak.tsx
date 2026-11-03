@@ -10,6 +10,7 @@ import {
 } from "@/constants/checkIn";
 import { Score } from "@/interfaces/scoreInterface";
 import { checkIn } from "@/services/score.service";
+import { showPointsToast } from "@/components/utils/Toast";
 import { StreakHeader } from "@/components/score/streak/StreakHeader";
 import {
     CheckInDay,
@@ -52,16 +53,19 @@ export const CheckInStreak: React.FC<CheckInStreakProps> = ({
         currentDay,
     );
 
-    const handleCheckIn = async (): Promise<void> => {
+    const handleCheckIn = async (): Promise<boolean> => {
         setPending(true);
         setError(null);
         try {
-            await checkIn(currentDay);
+            const bonus = await checkIn(currentDay);
             await refreshScores();
+            if (bonus > 0) showPointsToast(bonus);
+            return true;
         } catch {
             setError(
                 "Impossible d'accrocher la boule... Vérifiez votre connexion Internet.",
             );
+            return false;
         } finally {
             setPending(false);
         }

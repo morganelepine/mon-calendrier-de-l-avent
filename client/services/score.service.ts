@@ -128,13 +128,17 @@ export const getScoreSummary = async (): Promise<ScoreSummary> => {
     return apiFetch<ScoreSummary>(`/scores/total/user/${userUuid}`);
 };
 
-export const checkIn = async (day: number): Promise<void> => {
+export const checkIn = async (day: number): Promise<number> => {
     const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
 
-    await apiFetch("/scores/check-in", {
-        method: "POST",
-        body: { userUuid, day },
-    });
+    const { bonusAwarded } = await apiFetch<{ bonusAwarded: number }>(
+        "/scores/check-in",
+        {
+            method: "POST",
+            body: { userUuid, day },
+        },
+    );
+    return bonusAwarded;
 };
 
 export const getTotalScore = async (): Promise<number> => {
