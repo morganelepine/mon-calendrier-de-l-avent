@@ -31,13 +31,6 @@ export default function HomeScreen() {
             router.replace("/notifications-notice");
             return;
         }
-
-        // ------- For testing purposes
-        // await AsyncStorage.multiRemove([
-        //     "calendar",
-        //     "october_calendar",
-        //     "gameState",
-        // ]);
     };
 
     useEffect(() => {

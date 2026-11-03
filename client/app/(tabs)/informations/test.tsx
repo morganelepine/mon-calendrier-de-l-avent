@@ -11,7 +11,11 @@ import { currentDay, currentMonth, isFakeToday } from "@/constants/Dates";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 import { useUser } from "@/contexts/UserContext";
 import { setStoredFakeDate } from "@/services/tests/fakeDate.service";
-import { reloadApp, resetUser } from "@/services/tests/testTools.service";
+import {
+    reloadApp,
+    resetUser,
+    resetCalendar,
+} from "@/services/tests/testTools.service";
 
 const MONTHS = [
     { index: 9, label: "Octobre" },
@@ -170,6 +174,24 @@ export default function TestScreen() {
                         Revenir à la date réelle
                     </TextButton>
                 )}
+
+                <Separator />
+
+                <ThemedText type="sectionText" style={styles.title}>
+                    Calendrier
+                </ThemedText>
+                <ThemedText type="sectionText">
+                    Supprime les ouvertures du calendrier, l'état des jeux et
+                    les objectifs célébrés.
+                </ThemedText>
+
+                <CustomButton
+                    style={styles.button}
+                    color={Theme.goldToBlue}
+                    onPress={() => resetCalendar()}
+                >
+                    Réinitialiser le calendrier
+                </CustomButton>
 
                 <Separator />
 

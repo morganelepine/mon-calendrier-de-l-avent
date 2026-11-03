@@ -80,6 +80,8 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                         style={[
                             styles.cardTitle,
                             { fontFamily: "PoppinsBold" },
+                            !score.dayIsOpen &&
+                                !isToday && { color: Colors.disabledText },
                         ]}
                     >
                         {scorePerDay} pts

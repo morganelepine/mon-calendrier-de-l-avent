@@ -40,6 +40,8 @@ export const StorageKeys = {
     bingoTelefilmsClickedCells: "bingo_telefilms_clicked_cells",
     bingoActivitiesClickedCells: "bingo_activities_clicked_cells",
     game2048InProgress: "game2048_in_progress",
+    // Highest score objective already celebrated on the scores screen.
+    objectiveCelebrated: "objective_celebrated",
     dismissedUpdateVersion: "dismissed_update_version",
 
     // Reset bookkeeping.
@@ -62,5 +64,6 @@ export const YEARLY_RESET_KEYS = [
     StorageKeys.bingoTelefilmsClickedCells,
     StorageKeys.bingoActivitiesClickedCells,
     StorageKeys.game2048InProgress,
+    StorageKeys.objectiveCelebrated,
     StorageKeys.dismissedUpdateVersion,
 ] as const;

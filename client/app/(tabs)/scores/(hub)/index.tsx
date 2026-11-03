@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { TotalScore } from "@/components/score/TotalScore";
 import { ThemedText } from "@/components/ThemedText";
+import { TotalScore } from "@/components/score/TotalScore";
+import { OffSeasonMessage } from "@/components/score/OffSeasonMessage";
 import { CheckInStreak } from "@/components/score/streak/CheckInStreak";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { BlueBackground } from "@/components/utils/BlueBackground";
@@ -41,6 +42,10 @@ export default function ScoreScreen() {
                     refreshScores={refreshScores}
                 />
 
+                {!isDecember && (
+                    <OffSeasonMessage previousYearScore={previousYearScore} />
+                )}
+
                 {isDecember && !error && !loading && (
                     <ScrollView
                         contentContainerStyle={{
@@ -48,10 +53,7 @@ export default function ScoreScreen() {
                         }}
                         persistentScrollbar={true} // Android only
                     >
-                        <TotalScore
-                            score={scoreTotal}
-                            previousYearScore={previousYearScore}
-                        />
+                        <TotalScore score={scoreTotal} />
                         <CheckInStreak
                             scoreHistory={scoreHistory}
                             refreshScores={refreshScores}

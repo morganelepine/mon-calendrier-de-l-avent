@@ -1,5 +1,6 @@
 import { DevSettings } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StorageKeys } from "@/constants/storageKeys";
 import * as Updates from "expo-updates";
 
 // Dates and most seasonal values are computed once at module load,
@@ -16,5 +17,15 @@ export const reloadApp = async (): Promise<void> => {
 // creates a brand-new user.
 export const resetUser = async (): Promise<void> => {
     await AsyncStorage.clear();
+    await reloadApp();
+};
+
+export const resetCalendar = async (): Promise<void> => {
+    await AsyncStorage.multiRemove([
+        StorageKeys.calendar,
+        StorageKeys.octoberCalendar,
+        StorageKeys.gameState,
+        StorageKeys.objectiveCelebrated,
+    ]);
     await reloadApp();
 };

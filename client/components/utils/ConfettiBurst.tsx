@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { Colors } from "@/constants/Colors";
 
@@ -7,25 +8,26 @@ const CONFETTI_OPACITIES = [1, 0.7, 0.5, 0.3];
 // Widens the horizontal spread of the burst without touching how high it goes.
 const CONFETTI_WIDTH_SPREAD = 1.4;
 
-const CONFETTI_PIECES = Array.from({ length: 10 }).map((_, i) => {
-    // Spread evenly across a wide arc centered on "straight up".
-    const angle = -100 + (200 / 9) * i; // Angle for the confetti piece relative to straight up
-    const rad = (angle * Math.PI) / 180; // Convert angle to radians
-    const distance = 30 + (i % 3) * 8; // Distance the confetti piece will travel
-    const burstY = -Math.cos(rad) * distance; // Vertical offset for the burst phase of the confetti piece
-    const height = i % 3 === 0 ? 7 : 5; // Height of the confetti piece
+const buildConfettiPieces = (count: number, spread: number) =>
+    Array.from({ length: count }).map((_, i) => {
+        // Spread evenly across a wide arc centered on "straight up".
+        const angle = -100 + (200 / (count - 1)) * i; // Angle for the confetti piece relative to straight up
+        const rad = (angle * Math.PI) / 180; // Convert angle to radians
+        const distance = (30 + (i % 3) * 8) * spread; // Distance the confetti piece will travel
+        const burstY = -Math.cos(rad) * distance; // Vertical offset for the burst phase of the confetti piece
+        const height = i % 3 === 0 ? 7 : 5; // Height of the confetti piece
 
-    return {
-        dx: Math.sin(rad) * distance * CONFETTI_WIDTH_SPREAD, // Horizontal offset
-        burstY,
-        fallY: burstY + 18, // Vertical offset for the falling phase
-        rotate: (i % 2 === 0 ? 1 : -1) * (120 + i * 20), // Rotation angle
-        color: CONFETTI_COLOR,
-        baseOpacity: CONFETTI_OPACITIES[i % CONFETTI_OPACITIES.length],
-        height,
-        width: Math.round(height * 1.4),
-    };
-});
+        return {
+            dx: Math.sin(rad) * distance * CONFETTI_WIDTH_SPREAD, // Horizontal offset
+            burstY,
+            fallY: burstY + 18 * spread, // Vertical offset for the falling phase
+            rotate: (i % 2 === 0 ? 1 : -1) * (120 + i * 20), // Rotation angle
+            color: CONFETTI_COLOR,
+            baseOpacity: CONFETTI_OPACITIES[i % CONFETTI_OPACITIES.length],
+            height,
+            width: Math.round(height * 1.4),
+        };
+    });
 
 // How long the burst needs to fully play out - callers driving `progress`
 // should time their Animated.timing to this.
@@ -35,13 +37,25 @@ interface ConfettiBurstProps {
     // Shared 0 -> 1 progress driving every particle - keeps this component
     // a pure function of one value instead of running its own animation.
     progress: Animated.Value;
+    count?: number;
+    // Multiplies how far the pieces fly, for bursts bigger than a bauble.
+    spread?: number;
 }
 
-export function ConfettiBurst({ progress }: Readonly<ConfettiBurstProps>) {
+export function ConfettiBurst({
+    progress,
+    count = 10,
+    spread = 1,
+}: Readonly<ConfettiBurstProps>) {
+    const pieces = useMemo(
+        () => buildConfettiPieces(count, spread),
+        [count, spread],
+    );
+
     return (
         <View style={styles.layer} pointerEvents="none">
             <View style={styles.origin}>
-                {CONFETTI_PIECES.map((piece, i) => (
+                {pieces.map((piece, i) => (
                     <Animated.View
                         key={i}
                         style={[
