@@ -4,10 +4,8 @@ import {
     countdownTitleStyle,
     scaleTextStyle,
 } from "@/components/calendar/Countdown/countdownStyles";
-import {
-    formatUnitLabel,
-    getCountdownUnits,
-} from "@/components/calendar/Countdown/countdownUnits";
+import { getCountdownUnits } from "@/components/calendar/Countdown/countdownUnits";
+import { pluralWord } from "@/utils/pluralize";
 import { CountdownValues } from "@/hooks/useCountdown";
 
 interface ColumnsCountdownProps extends CountdownValues {
@@ -26,7 +24,7 @@ export const ColumnsCountdown = ({
 
     return (
         <View style={styles.row}>
-            {units.map(({ key, singular, plural }) => {
+            {units.map(({ key, label }) => {
                 const value = values[key];
 
                 return (
@@ -55,7 +53,7 @@ export const ColumnsCountdown = ({
                                 ),
                             ]}
                         >
-                            {formatUnitLabel(value, singular, plural)}
+                            {pluralWord(value, label)}
                         </ThemedText>
                     </View>
                 );

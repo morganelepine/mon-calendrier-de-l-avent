@@ -11,7 +11,6 @@ import {
     fitFontSize,
     fitTextStack,
     getImageSize,
-    getNightsLabel,
     getWidgetClickProps,
     LOCKED_VEIL_COLOR,
     WIDGET_FONT_BOLD,
@@ -19,6 +18,7 @@ import {
     WIDGET_TEXT_COLOR,
     WIDGET_TEXT_PROPS,
 } from "@/widgets/widgetCommon";
+import { pluralize, pluralWord } from "@/utils/pluralize";
 
 // Must match the "name" of the widget declared in app.json.
 export const HOUSE_WIDGET_NAME = "HouseCountdown";
@@ -63,7 +63,7 @@ export const HouseCountdownWidget = ({
     const lines = isNights
         ? [
               String(countdown.nights),
-              getNightsLabel(countdown.nights),
+              pluralWord(countdown.nights, "nuit"),
               "avant",
               "Noël",
           ]
@@ -98,7 +98,7 @@ export const HouseCountdownWidget = ({
             {...getWidgetClickProps(countdown)}
             accessibilityLabel={
                 isNights
-                    ? `${countdown.nights} ${getNightsLabel(countdown.nights)} avant Noël`
+                    ? `${pluralize(countdown.nights, "nuit")} avant Noël`
                     : countdown.message
             }
             style={{ height: "match_parent", width: "match_parent" }}

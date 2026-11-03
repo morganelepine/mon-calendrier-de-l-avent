@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { pluralize } from "@/utils/pluralize";
 import {
     countdownTitleStyle,
     scaleTextStyle,
@@ -22,7 +23,7 @@ export const NightsCountdown = ({
                 scaleTextStyle(styles.countdown, scale),
             ]}
         >
-            {nights} {nights > 1 ? "nuits" : "nuit"}
+            {pluralize(nights, "nuit")}
         </ThemedText>
         <ThemedText
             style={[

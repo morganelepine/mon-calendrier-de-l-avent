@@ -152,6 +152,3 @@ export const getWidgetClickProps = (
               clickActionData: { uri: PREMIUM_SCREEN_URI },
           }
         : { clickAction: "OPEN_APP" };
-
-export const getNightsLabel = (nights: number): string =>
-    nights > 1 ? "nuits" : "nuit";

@@ -6,6 +6,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Colors } from "@/constants/Colors";
+import { pluralWord } from "@/utils/pluralize";
 import { isDecember } from "@/constants/Dates";
 import { OffSeasonMessage } from "@/components/score/OffSeasonMessage";
 import { usePremium } from "@/contexts/PremiumContext";
@@ -39,7 +40,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                         <ThemedText type="freightNeoBoldSnow">
                             {score}
                         </ThemedText>{" "}
-                        {score > 1 ? "points" : "point"}
+                        {pluralWord(score, "point")}
                     </ThemedText>
 
                     {hasReachedObjective ? (

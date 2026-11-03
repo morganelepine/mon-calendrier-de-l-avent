@@ -6,6 +6,7 @@ import {
     getTopText,
 } from "@/components/retrospective/retrospectiveTexts";
 import { Colors } from "@/constants/Colors";
+import { pluralWord } from "@/utils/pluralize";
 import { Retrospective } from "@/interfaces/retrospectiveInterface";
 
 // Content of the shareable recap card (goes inside a ShareCard).
@@ -27,7 +28,11 @@ export const RecapCard: React.FC<{ retrospective: Retrospective }> = ({
             {correctAnswers > 0 && (
                 <ThemedText style={styles.line}>
                     {formatNumber(correctAnswers)}{" "}
-                    {correctAnswers > 1 ? "bonnes réponses" : "bonne réponse"}
+                    {pluralWord(
+                        correctAnswers,
+                        "bonne réponse",
+                        "bonnes réponses",
+                    )}
                 </ThemedText>
             )}
             <View style={styles.grid}>
