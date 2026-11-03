@@ -4,6 +4,7 @@ import { listContents } from "../services/contents.service";
 import { logout } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
 import { TYPE_LABELS } from "../constants/contentTypes";
+import { SUBTYPES_BY_TYPE } from "../constants/contentSubtypes";
 import { YearsFilter, YearsFilterValue } from "../components/YearsFilter";
 import { ContentFamily, ContentSummary, Season } from "../types";
 
@@ -16,6 +17,7 @@ export function ContentsListPage() {
     const [contents, setContents] = useState<ContentSummary[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const typeFilter = (searchParams.get("type") ?? "") as ContentFamily | "";
+    const subTypeFilter = searchParams.get("subType") ?? "";
     const seasonFilter = (searchParams.get("season") ?? "christmas") as
         | Season
         | "";
@@ -36,6 +38,19 @@ export function ContentsListPage() {
             (params) => {
                 if (value) params.set("type", value);
                 else params.delete("type");
+                // A subtype belongs to a single type.
+                params.delete("subType");
+                return params;
+            },
+            { replace: true },
+        );
+    };
+
+    const setSubTypeFilter = (value: string) => {
+        setSearchParams(
+            (params) => {
+                if (value) params.set("subType", value);
+                else params.delete("subType");
                 return params;
             },
             { replace: true },
@@ -75,13 +90,14 @@ export function ContentsListPage() {
         () =>
             contents
                 .filter((c) => !typeFilter || c.type === typeFilter)
+                .filter((c) => !subTypeFilter || c.subType === subTypeFilter)
                 .filter((c) => !seasonFilter || c.season === seasonFilter)
                 .filter((c) =>
                     yearFilter === "none"
                         ? c.years.length === 0
                         : yearFilter.every((year) => c.years.includes(year)),
                 ),
-        [contents, typeFilter, seasonFilter, yearFilter],
+        [contents, typeFilter, subTypeFilter, seasonFilter, yearFilter],
     );
 
     const byDay = useMemo(() => {
@@ -144,6 +160,26 @@ export function ContentsListPage() {
                         <option value="story">Histoire</option>
                     </select>
 
+                    <select
+                        aria-label="Sous-type"
+                        value={subTypeFilter}
+                        onChange={(e) => setSubTypeFilter(e.target.value)}
+                    >
+                        <option value="">Sous-type</option>
+                        {(typeFilter
+                            ? [typeFilter]
+                            : (Object.keys(SUBTYPES_BY_TYPE) as ContentFamily[])
+                        ).map((type) => (
+                            <optgroup key={type} label={TYPE_LABELS[type]}>
+                                {SUBTYPES_BY_TYPE[type].map((subType) => (
+                                    <option key={subType} value={subType}>
+                                        {subType}
+                                    </option>
+                                ))}
+                            </optgroup>
+                        ))}
+                    </select>
+
                     <YearsFilter value={yearFilter} onChange={setYearFilter} />
                 </div>
 
@@ -151,7 +187,7 @@ export function ContentsListPage() {
                     to={`/contents/new?${searchParams.toString()}`}
                     className="button primary"
                 >
-                    + Nouveau
+                    +
                 </Link>
             </div>
 
