@@ -18,6 +18,7 @@ export const StorageKeys = {
     groupCreated: "groupCreated",
     halloweenNoticeSeen: "halloween_notice_seen",
     notificationsNoticeSeen: "notifications_notice_seen",
+    game2048WinSeen: "game2048_win_seen",
     // Web/PWA only — see components/navigation/AccessGate.tsx.
     webAccessGranted: "web_access_granted",
 

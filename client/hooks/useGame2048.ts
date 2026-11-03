@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     Board,
     Direction,
@@ -18,6 +19,7 @@ import {
 import useAppState from "@/hooks/useAppState";
 import { usePremium } from "@/contexts/PremiumContext";
 import { isOctober } from "@/constants/Dates";
+import { StorageKeys } from "@/constants/storageKeys";
 
 type Status = "loading" | "playing" | "gameover";
 
@@ -47,7 +49,6 @@ export function useGame2048(): UseGame2048Result {
     const maxTier = getMaxTier(isPremium);
     const [, forceRender] = useReducer((c) => c + 1, 0);
     const [isNewBest, setIsNewBest] = useState<boolean | null>(null);
-    // Only set by a live move, never on restore, so the win popup shows once per game.
     const [hasJustWon, setHasJustWon] = useState(false);
     const [bestScore, setBestScore] = useState(0);
     const bestScoreRef = useRef(0);
@@ -195,7 +196,21 @@ export function useGame2048(): UseGame2048Result {
                 scoreSubmitted: false,
             };
             persist();
-            if (hasWon && !game.hasWon) setHasJustWon(true);
+            // Only shown the first time the goal is ever reached on this device
+            if (hasWon && !game.hasWon) {
+                AsyncStorage.getItem(StorageKeys.game2048WinSeen)
+                    .then((winSeen) => {
+                        if (winSeen === "true") return;
+                        setHasJustWon(true);
+                        void AsyncStorage.setItem(
+                            StorageKeys.game2048WinSeen,
+                            "true",
+                        );
+                    })
+                    .catch(() => {
+                        // Best-effort - the popup is only informative.
+                    });
+            }
             forceRender();
 
             if (isOver) {
