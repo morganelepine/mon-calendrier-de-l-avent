@@ -21,7 +21,7 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
 }) => {
     const { isPremium } = usePremium();
     const minScoreToWin = 2512;
-    const maxScoreWinnable = 4320;
+    const maxScoreWinnable = 4170;
     const hasReachedObjective = isPremium
         ? score >= maxScoreWinnable
         : score >= minScoreToWin;
@@ -52,17 +52,6 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                             >
                                 Objectif atteint ✨
                             </ThemedText>
-                            <ThemedText
-                                type="italic14"
-                                style={{
-                                    marginBottom: 30,
-                                    color: Colors.snow,
-                                    textAlign: "center",
-                                }}
-                            >
-                                Rendez-vous le 25 décembre
-                                pour&nbsp;la&nbsp;surprise&nbsp;!
-                            </ThemedText>
                         </>
                     ) : (
                         <>
@@ -78,9 +67,11 @@ export const TotalScore: React.FC<TotalScoreProps> = ({
                                     fontSize: 14,
                                 }}
                             >
-                                {isPremium
-                                    ? `${Math.round(progress)}% des points de l'Avent récoltés`
-                                    : `${Math.round(progress)}% de l'objectif atteint`}
+                                {progress === 0
+                                    ? "Ouvrez la case du jour pour commencer à gagner des points"
+                                    : isPremium
+                                      ? `${Math.round(progress)}% des points de l'Avent récoltés`
+                                      : `${Math.round(progress)}% de l'objectif atteint`}
                             </ThemedText>
                         </>
                     )}

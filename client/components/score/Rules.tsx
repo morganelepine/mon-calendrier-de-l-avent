@@ -37,8 +37,8 @@ const ChristmasRules = () => (
                 si elle est ouverte le jour même.
             </ThemedText>
             <ThemedText type="sectionText">
-                Attention : si vous ouvrez la case en retard, vous ne gagnerez{" "}
-                <Text style={styles.bold}> aucun point </Text>!
+                Si vous ouvrez la case en retard, vous ne gagnerez{" "}
+                <Text style={styles.bold}>aucun point </Text>!
             </ThemedText>
         </View>
 
@@ -65,11 +65,39 @@ const ChristmasRules = () => (
             <ThemedText type="sectionText">
                 Pour chaque bonne réponse donnée au jeu du jour (3 maximum),
                 vous gagnez
-                <Text style={styles.bold}> 20 points</Text>.
+                <Text style={styles.bold}> 15 points</Text>.
             </ThemedText>
             <ThemedText type="sectionText">
                 Si vous participez aux jeux en retard, vous ne gagnez que
-                <Text style={styles.bold}> 10 points</Text>.
+                <Text style={styles.bold}> 5 points</Text>.
+            </ThemedText>
+        </View>
+
+        <View style={styles.section}>
+            <ThemedText type="sectionSubtitle">
+                Construire sa guirlande
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Chaque jour, accrochez une boule à votre guirlande en cliquant
+                sur la boule du jour dans l'onglet{" "}
+                <Text style={styles.bold}>Scores &gt; Mes scores</Text>.
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Toutes les 4 boules accrochées d'affilée, vous gagnez un bonus
+                qui augmente avec la longueur de la guirlande :
+                <Text style={styles.bold}> 10 points</Text> à la 4e boule,
+                <Text style={styles.bold}> 20 points</Text> à la 8e,
+                <Text style={styles.bold}> 30 points</Text> à la 12e... jusqu'à
+                <Text style={styles.bold}> 60 points</Text> le 24 décembre.
+            </ThemedText>
+            <ThemedText type="sectionText">
+                La couleur des boules dépend du nombre de points que vous avez
+                gagné dans la journée.
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Si vous oubliez d'accrocher la boule d'un jour, votre guirlande
+                se casse et repart de zéro. Les bonus déjà gagnés restent
+                cependant acquis.
             </ThemedText>
         </View>
 
@@ -79,7 +107,7 @@ const ChristmasRules = () => (
             </ThemedText>
             <ThemedText type="sectionText">
                 Vous pouvez ainsi accumuler jusqu'à
-                <Text style={styles.bold}> 180 points </Text>
+                <Text style={styles.bold}> 165 points </Text>
                 par jour :
             </ThemedText>
             <ThemedText type="sectionText">
@@ -91,8 +119,11 @@ const ChristmasRules = () => (
                 chaque contenus
             </ThemedText>
             <ThemedText type="sectionText">
-                ▪️ <Text style={styles.bold}>60 points</Text> en répondant
+                ▪️ <Text style={styles.bold}>45 points</Text> en répondant
                 correctement aux jeux
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Les bonus de guirlande s'ajoutent à cette limite.
             </ThemedText>
         </View>
 

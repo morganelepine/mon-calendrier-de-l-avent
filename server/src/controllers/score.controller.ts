@@ -12,6 +12,7 @@ export interface ScoreDetail {
     dayOpening: number;
     contentOpening: number;
     gameAnswer: number;
+    checkIn: number;
 }
 
 export enum ScoreType {
@@ -294,6 +295,7 @@ export class ScoreController {
                     dayOpening: 0,
                     contentOpening: 0,
                     gameAnswer: 0,
+                    checkIn: 0,
                 },
             };
         }
@@ -302,6 +304,7 @@ export class ScoreController {
             if (!scoresByDay[score.day]) continue;
             if (score.reason === ScoreType.CheckIn) {
                 scoresByDay[score.day].checkedIn = true;
+                scoresByDay[score.day].scoreDetails.checkIn += score.points;
                 continue;
             }
             scoresByDay[score.day].dayIsOpen = true;

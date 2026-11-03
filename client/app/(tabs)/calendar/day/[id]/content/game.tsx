@@ -19,7 +19,7 @@ import {
 import { useDayContents } from "@/hooks/useDayContents";
 import { ScoreType } from "@/enums/enums";
 import { Colors } from "@/constants/Colors";
-import { isOctober } from "@/constants/Dates";
+import { currentDay, isOctober } from "@/constants/Dates";
 
 export default function GameScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -69,8 +69,8 @@ export default function GameScreen() {
         await saveItemScored(dayId, ScoreType.GameAnswer, questionNumber);
         setAnsweredCount((count) => count + 1);
 
-        const today = new Date().getDate();
-        const score = dayId === today && isCorrect ? 20 : isCorrect ? 10 : 0;
+        const score =
+            dayId === currentDay && isCorrect ? 15 : isCorrect ? 5 : 0;
         void queueScore(
             dayId,
             score,

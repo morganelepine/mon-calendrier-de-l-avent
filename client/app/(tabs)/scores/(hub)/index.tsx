@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { TotalScore } from "@/components/score/TotalScore";
 import { ThemedText } from "@/components/ThemedText";
-import { CheckInStreak } from "@/components/score/CheckInStreak";
+import { CheckInStreak } from "@/components/score/streak/CheckInStreak";
 import { ScoreHistory } from "@/components/score/ScoreHistory";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
