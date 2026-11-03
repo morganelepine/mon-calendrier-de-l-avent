@@ -2,6 +2,7 @@ export interface Score {
     dayNumber: number;
     dayIsOpen: boolean;
     checkedIn: boolean;
+    usedJoker: boolean;
     scoreDetails: ScoreDetail;
 }
 

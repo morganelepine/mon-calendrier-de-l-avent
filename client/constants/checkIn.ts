@@ -1,5 +1,6 @@
 // Keep in sync with server/src/controllers/score.controller.ts
 export const CHECK_IN_LAST_DAY = 24;
+export const CHECK_IN_JOKERS = 3; // Premium only, per season
 const CHECK_IN_BONUS_INTERVAL = 4;
 const CHECK_IN_BONUS_STEP = 10;
 

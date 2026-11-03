@@ -2,9 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
-
-const pluralize = (count: number, word: string): string =>
-    `${count} ${word}${count > 1 ? "s" : ""}`;
+import { pluralize } from "@/utils/pluralize";
 
 interface StreakHeaderProps {
     streak: number;

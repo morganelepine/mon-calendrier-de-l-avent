@@ -5,6 +5,7 @@ export interface Score {
     dayNumber: number;
     dayIsOpen: boolean;
     checkedIn: boolean;
+    usedJoker: boolean;
     scoreDetails: ScoreDetail;
 }
 
@@ -20,6 +21,7 @@ export enum ScoreType {
     GameAnswer = "GameAnswer",
     DayOpening = "DayOpening",
     CheckIn = "CheckIn",
+    CheckInJoker = "CheckInJoker", // Premium: a missed day hung afterwards, never worth points
     OctoberOpening = "OctoberOpening", // Just a record that the day was opened
 }
 
@@ -27,6 +29,8 @@ export enum ScoreType {
 const CHECK_IN_LAST_DAY = 24;
 const CHECK_IN_BONUS_INTERVAL = 4;
 const CHECK_IN_BONUS_STEP = 10;
+const CHECK_IN_JOKERS = 3;
+const CHECK_IN_REASONS = [ScoreType.CheckIn, ScoreType.CheckInJoker];
 
 // Growing bonus: +10 on the 4th consecutive day, +20 on the 8th, +30 on the 12th...
 const getCheckInBonus = (streak: number): number =>
@@ -204,7 +208,7 @@ export class ScoreController {
             where: {
                 userId: user.id,
                 year,
-                reason: ScoreType.CheckIn,
+                reason: { in: CHECK_IN_REASONS },
                 day: { lte: day },
             },
             select: { day: true },
@@ -259,6 +263,66 @@ export class ScoreController {
         return { status: 200, message: "Checked in", bonusAwarded: bonus };
     }
 
+    // Premium: hangs a missed day's bauble so the streak holds..
+    async useCheckInJoker(request: Request) {
+        const { userUuid, day, today } = request.body;
+        if (
+            !Number.isInteger(day) ||
+            !Number.isInteger(today) ||
+            day < 1 ||
+            day > CHECK_IN_LAST_DAY ||
+            day >= today
+        ) {
+            return { status: 400, message: "Invalid day" };
+        }
+
+        const user = await this.getUser(userUuid);
+        if (!user) return { status: 404, message: "User not found" };
+        if (!user.isPremium) return { status: 403, message: "Premium only" };
+
+        const year = new Date().getFullYear();
+        const [alreadyCheckedIn, jokersUsed] = await Promise.all([
+            prisma.score.findFirst({
+                where: {
+                    userId: user.id,
+                    year,
+                    day,
+                    reason: { in: CHECK_IN_REASONS },
+                },
+            }),
+            prisma.score.count({
+                where: {
+                    userId: user.id,
+                    year,
+                    reason: ScoreType.CheckInJoker,
+                },
+            }),
+        ]);
+        if (alreadyCheckedIn) {
+            return { status: 409, message: "Day already checked in" };
+        }
+        if (jokersUsed >= CHECK_IN_JOKERS) {
+            return { status: 409, message: "No joker left" };
+        }
+
+        // 0 point: no UserYearScore update, so the leaderboard tie-breaker stays put.
+        await prisma.score.create({
+            data: {
+                userId: user.id,
+                day,
+                points: 0,
+                reason: ScoreType.CheckInJoker,
+                year,
+            },
+        });
+
+        return {
+            status: 200,
+            message: "Joker used",
+            jokersLeft: CHECK_IN_JOKERS - jokersUsed - 1,
+        };
+    }
+
     async getUserTotalScore(request: Request) {
         const uuid = request.params.uuid;
         const user = await this.getUser(uuid);
@@ -291,6 +355,7 @@ export class ScoreController {
                 dayNumber: day,
                 dayIsOpen: false,
                 checkedIn: false,
+                usedJoker: false,
                 scoreDetails: {
                     dayOpening: 0,
                     contentOpening: 0,
@@ -305,6 +370,11 @@ export class ScoreController {
             if (score.reason === ScoreType.CheckIn) {
                 scoresByDay[score.day].checkedIn = true;
                 scoresByDay[score.day].scoreDetails.checkIn += score.points;
+                continue;
+            }
+            if (score.reason === ScoreType.CheckInJoker) {
+                scoresByDay[score.day].checkedIn = true;
+                scoresByDay[score.day].usedJoker = true;
                 continue;
             }
             scoresByDay[score.day].dayIsOpen = true;

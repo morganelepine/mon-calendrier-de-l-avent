@@ -96,17 +96,17 @@ export default function PremiumScreen() {
 
                 <WidgetsPremiumSettings color={Colors.blue} />
 
-                {/* <PremiumFeatureCard
-                    title="3 bonus pour votre série de connexion"
-                    color={Colors.green}
-                    description="Trois bonus pour vous aider à faire durer votre série et ne jamais perdre le fil de votre Avent !"
-                /> */}
+                <PremiumFeatureCard
+                    title="3 boules pour votre guirlande"
+                    color={Colors.autumnGreen}
+                    description="Trois boules bonus pour rattraper les jours oubliés et faire briller votre guirlande jusqu'à Noël !"
+                />
 
-                <MusicSelection color={Colors.autumnGreen} />
+                <MusicSelection color={Colors.red} />
 
                 <PremiumFeatureCard
                     title="Une surprise pour Noël"
-                    color={Colors.red}
+                    color={Colors.green}
                     description={
                         <>
                             Avec La Hotte Magique, vous remportez
@@ -118,7 +118,7 @@ export default function PremiumScreen() {
 
                 <PremiumFeatureCard
                     title="Une bonne action"
-                    color={Colors.green}
+                    color={Colors.blue}
                     description="La Hotte Magique, c’est aussi une façon de soutenir le développement de l’application et de donner un petit coup de pouce à sa créatrice. Merci de faire partie de l’aventure 🤍"
                 />
 

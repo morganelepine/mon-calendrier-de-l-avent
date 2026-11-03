@@ -47,11 +47,13 @@ const getBaubleColors = (
 interface CheckInDayProps {
     day: number;
     isChecked: boolean;
+    usedJoker: boolean;
     isNextChecked: boolean;
     dayPoints: number;
     bonusPoints?: number;
     pending: boolean;
     onCheckIn: () => Promise<boolean>;
+    onMissedPress: () => Promise<boolean>;
 }
 
 // One bauble of the garland: its hook, the bauble itself, the bonus it would earn
@@ -59,11 +61,13 @@ interface CheckInDayProps {
 export const CheckInDay: React.FC<CheckInDayProps> = ({
     day,
     isChecked,
+    usedJoker,
     isNextChecked,
     dayPoints,
     bonusPoints,
     pending,
     onCheckIn,
+    onMissedPress,
 }) => {
     const bonusLabel = bonusPoints ? `, bonus de ${bonusPoints} points` : "";
     const isToday = day === currentDay;
@@ -77,8 +81,9 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
     // Only mounted while bursting: no idle particles on the 23 other baubles.
     const [celebrating, setCelebrating] = useState(false);
 
-    const handleCheckIn = async (): Promise<void> => {
-        const hung = await onCheckIn();
+    // Bursts confetti once the bauble is really hung.
+    const celebrateIf = async (hang: () => Promise<boolean>): Promise<void> => {
+        const hung = await hang();
         if (!hung || reduceMotion) return;
         setCelebrating(true);
         confetti.setValue(0);
@@ -132,7 +137,7 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
                 <View style={[styles.cap, isActive && styles.activeCap]} />
                 {isToday && !isChecked ? (
                     <Pressable
-                        onPress={handleCheckIn}
+                        onPress={() => celebrateIf(onCheckIn)}
                         disabled={pending}
                         accessibilityRole="button"
                         accessibilityLabel={`Accrocher la boule du ${day} décembre${bonusLabel}`}
@@ -160,17 +165,19 @@ export const CheckInDay: React.FC<CheckInDayProps> = ({
                         onPress={
                             isChecked
                                 ? undefined
-                                : () =>
-                                      showToast(
-                                          isMissed
-                                              ? "La boule a été rangée dans le carton..."
-                                              : "La boule sortira du carton plus tard !",
-                                      )
+                                : isMissed
+                                  ? () => celebrateIf(onMissedPress)
+                                  : () =>
+                                        showToast(
+                                            "La boule sortira du carton plus tard !",
+                                        )
                         }
                         accessible
                         accessibilityLabel={`Boule du ${day} décembre, ${
                             isChecked
-                                ? "accrochée"
+                                ? usedJoker
+                                    ? "accrochée avec une boule bonus"
+                                    : "accrochée"
                                 : isMissed
                                   ? "manquée"
                                   : "à venir"

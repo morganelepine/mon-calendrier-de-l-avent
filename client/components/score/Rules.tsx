@@ -99,6 +99,13 @@ const ChristmasRules = () => (
                 se casse et repart de zéro. Les bonus déjà gagnés restent
                 cependant acquis.
             </ThemedText>
+            <ThemedText type="sectionText">
+                Avec La Hotte Magique, vous pouvez disposer de
+                <Text style={styles.bold}> 3 boules bonus </Text>
+                pour rattraper un jour manqué et réparer votre guirlande. Une
+                boule bonus ne rapporte pas de points, mais les points bonus
+                suivants seront plus gros.
+            </ThemedText>
         </View>
 
         <View style={styles.section}>
