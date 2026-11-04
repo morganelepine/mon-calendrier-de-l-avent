@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable, Platform } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ListVideo } from "@/components/content/ideas/ListVideo";
 import { ListReco } from "@/components/content/ideas/ListReco";
@@ -10,8 +10,8 @@ import { Content } from "@/interfaces/contentInterface";
 
 interface ListProps {
     idea: Content;
-    imageWidth: number;
-    imageHeight: number;
+    imageWidth: number | undefined;
+    imageHeight: number | undefined;
 }
 
 export const List: React.FC<ListProps> = ({
@@ -42,6 +42,12 @@ export const List: React.FC<ListProps> = ({
                                 styles.switchButtonActive,
                         ]}
                         onPress={() => setSelectedIndex(index)}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Choix ${index + 1} sur ${list.length}`}
+                        accessibilityState={{
+                            selected: selectedIndex === index,
+                        }}
+                        hitSlop={4}
                     >
                         <ThemedText
                             style={[
@@ -57,16 +63,16 @@ export const List: React.FC<ListProps> = ({
             </View>
 
             {/* --- CONTENT --- */}
-            {idea.content4 === IdeaType.Video ? (
-                <ListVideo {...current} />
-            ) : (
-                <ListReco
-                    type={idea.content4}
-                    content={current}
-                    imageWidth={imageWidth}
-                    imageHeight={imageHeight}
-                />
-            )}
+            {current &&
+                (idea.content4 === IdeaType.Video ? (
+                    <ListVideo {...current} />
+                ) : (
+                    <ListReco
+                        content={current}
+                        imageWidth={imageWidth}
+                        imageHeight={imageHeight}
+                    />
+                ))}
         </View>
     );
 };

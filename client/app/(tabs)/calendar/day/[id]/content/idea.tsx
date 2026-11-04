@@ -35,10 +35,7 @@ export default function IdeaScreen() {
                     if (!idea.listOfContents) continue;
                     if (idea.content4 === IdeaType.Video) continue;
                     const maxHeight =
-                        idea.content4 === IdeaType.Book ||
-                        idea.content4 === IdeaType.TvShow
-                            ? 200
-                            : 150;
+                        idea.content4 === IdeaType.Book ? 200 : 150;
                     for (const content of idea.listOfContents) {
                         formatImage(
                             idea.dayNumber,

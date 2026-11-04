@@ -170,7 +170,7 @@ export const daysArray = [
     {
         dayNumber: 22,
         isOpen: false,
-        background: "22_nsjilw",
+        background: "22_jyoqjv", // 22_nsjilw
         width: "16%",
         height: "17%",
         color: "#b52936",

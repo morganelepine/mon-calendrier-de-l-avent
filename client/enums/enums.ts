@@ -9,12 +9,10 @@ export enum ContentType {
 export enum IdeaType {
     Book = "book",
     Recipe = "recipe",
-    TvShow = "tvshow",
     Idea = "idea",
     List = "list",
     Video = "video",
     Game = "game",
-    Creator = "creator",
     PersonalityQuiz = "personality_quiz",
     Cards = "cards",
     Audio = "audio",
