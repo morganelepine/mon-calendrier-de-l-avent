@@ -3,6 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { Day25 } from "@/components/days/Day25/Day25";
 import { DayContent } from "@/components/days/Content/DayContent";
+import { notifyDayPageReady } from "@/components/days/DayReveal";
 
 export default function DayScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -10,7 +11,11 @@ export default function DayScreen() {
 
     return (
         <View style={styles.background}>
-            {dayId === 25 ? <Day25 /> : <DayContent dayId={dayId} />}
+            {dayId === 25 ? (
+                <Day25 />
+            ) : (
+                <DayContent dayId={dayId} onImagesReady={notifyDayPageReady} />
+            )}
         </View>
     );
 }

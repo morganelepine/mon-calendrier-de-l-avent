@@ -1,29 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
 import { DayButton } from "@/components/days/Button/DayButton";
+import { DayCellRect, showDayReveal } from "@/components/days/DayReveal";
+import { showToast, showPointsToast } from "@/components/utils/Toast";
 import { Colors } from "@/constants/Colors";
+import { currentDay, isDecember, isOctober } from "@/constants/Dates";
+import { getDayCatImageUrl } from "@/data/day_cats";
 import { queueScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ScoreType } from "@/enums/enums";
-import { currentDay, isDecember, isOctober } from "@/constants/Dates";
-import { showToast, showPointsToast } from "@/components/utils/Toast";
 
 interface DaysProps {
     days: Day[];
     setDays: (days: Day[]) => void;
-    goToDay: (
-        day: Day,
-        setModalVisible: (modalVisible: boolean) => void,
-    ) => void;
+    goToDay: (day: Day) => void;
 }
 
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
-    const [dayModal, setDayModal] = useState<number | null>(null);
+    const containerRef = useRef<View>(null);
 
-    const registerDayOpening = (
-        dayNumber: number,
-        wasAlreadyOpen: boolean,
-    ) => {
+    useEffect(() => {
+        if (!isDecember && !isOctober) return;
+        const imageUrls = days
+            .filter((day) => day.dayNumber <= currentDay)
+            .map(getDayCatImageUrl)
+            .filter((url) => url !== null);
+        Image.prefetch(imageUrls, "memory-disk");
+    }, [days]);
+
+    const registerDayOpening = (dayNumber: number, wasAlreadyOpen: boolean) => {
         if (dayNumber !== currentDay) return;
 
         if (isDecember) {
@@ -35,9 +41,29 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         }
     };
 
-    const handleDayOpening = (dayNumber: number) => {
-        const wasAlreadyOpen =
-            days.find((day) => day.dayNumber === dayNumber)?.isOpen ?? false;
+    const openDay = (day: Day, cell: DayCellRect) => {
+        const imageUrl = getDayCatImageUrl(day);
+        if (!imageUrl || !containerRef.current) {
+            goToDay(day);
+            return;
+        }
+
+        containerRef.current.measure((_x, _y, width, height, _pageX, pageY) => {
+            showDayReveal({
+                day,
+                imageUrl,
+                cell,
+                // The grid starts below the status bar, the day screen doesn't.
+                page: { width, height: pageY + height },
+                onCovered: () => goToDay(day),
+            });
+        });
+    };
+
+    const handleDayOpening = (dayNumber: number, cell: DayCellRect) => {
+        const clickedDay = days.find((day) => day.dayNumber === dayNumber);
+        if (!clickedDay) return;
+        const wasAlreadyOpen = clickedDay.isOpen;
 
         const updatedDays = days.map((day) => {
             return (isDecember || isOctober) &&
@@ -50,7 +76,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         setDays(updatedDays);
 
         if ((isDecember || isOctober) && dayNumber <= currentDay) {
-            setDayModal(dayNumber);
+            openDay(clickedDay, cell);
             registerDayOpening(dayNumber, wasAlreadyOpen);
         } else {
             const emoji = isOctober ? "👻" : "🎅";
@@ -64,9 +90,6 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
             day={day}
             flexSpan={flexSpan}
             handleDayOpening={handleDayOpening}
-            modalVisible={dayModal === day.dayNumber}
-            setModalVisible={() => setDayModal(null)}
-            goToDay={goToDay}
         />
     );
 
@@ -81,7 +104,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         );
 
         return (
-            <View style={styles.octoberContainer}>
+            <View ref={containerRef} style={styles.octoberContainer}>
                 {rows.map((row) => (
                     <View key={row[0].day.dayNumber} style={styles.octoberRow}>
                         {row.map(({ day, span }) => renderDayButton(day, span))}
@@ -92,7 +115,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     }
 
     return (
-        <View style={styles.daysContainer}>
+        <View ref={containerRef} style={styles.daysContainer}>
             {days.map((d) => renderDayButton(d))}
         </View>
     );

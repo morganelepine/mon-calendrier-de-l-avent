@@ -19,6 +19,7 @@ import { configureNotificationHandler } from "@/services/notifications.service";
 import { AccessGate } from "@/components/navigation/AccessGate";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
 import { ToastHost } from "@/components/utils/Toast";
+import { DayRevealHost } from "@/components/days/DayReveal";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
 import { initSentry, Sentry } from "@/services/sentry.service";
@@ -67,6 +68,7 @@ function RootLayout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider>
                 <ToastHost />
+                <DayRevealHost />
                 <ErrorBoundary>
                     <UserProvider>
                         <AccessGate>

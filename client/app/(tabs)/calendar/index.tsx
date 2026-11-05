@@ -48,12 +48,7 @@ export default function CalendarScreen() {
         }
     };
 
-    const goToDay = async (
-        day: Day,
-        setModalVisible: (modalVisible: boolean) => void,
-    ) => {
-        setModalVisible(false);
-
+    const goToDay = async (day: Day) => {
         // December: 4 contents per day
         if (!isOctober) {
             router.navigate({

@@ -21,6 +21,7 @@ interface ContentButtonProps {
     backgroundImage: string;
     contentType: "story" | "idea" | "anecdote" | "game";
     contentNumber: number;
+    onImageLoaded?: () => void;
 }
 
 export const ContentButton: React.FC<ContentButtonProps> = ({
@@ -41,6 +42,7 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
     backgroundImage,
     contentType,
     contentNumber,
+    onImageLoaded,
 }) => {
     const registerContentOpening = async () => {
         if (isOctober) return;
@@ -78,6 +80,8 @@ export const ContentButton: React.FC<ContentButtonProps> = ({
             source={{ uri: backgroundImage }}
             contentFit="cover"
             cachePolicy="memory-disk"
+            onLoad={onImageLoaded}
+            onError={onImageLoaded}
             style={styles.backgroundImage}
         >
             <Pressable style={styles.button} onPress={handleContentOpening}>
