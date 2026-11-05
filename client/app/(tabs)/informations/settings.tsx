@@ -4,7 +4,7 @@ import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import Constants from "expo-constants";
 import { ThemedText } from "@/components/ThemedText";
 import { NotificationsSettings } from "@/components/informations/settings/NotificationsSettings";
-import { PrivacyPolicySettings } from "@/components/informations/settings/PrivacyPolicySettings";
+import { LegalLinksSettings } from "@/components/informations/settings/LegalLinksSettings";
 import { MusicSettings } from "@/components/informations/settings/MusicSettings";
 import { Separator } from "@/components/utils/Separator";
 import { Colors } from "@/constants/Colors";
@@ -27,7 +27,7 @@ export default function SettingsScreen() {
 
                 <Separator />
 
-                <PrivacyPolicySettings />
+                <LegalLinksSettings />
 
                 <Separator />
 
