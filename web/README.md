@@ -1,9 +1,12 @@
 # Web
 
-Page statique de la politique de confidentialité de « Mon calendrier de l'avent », destinée à être
-référencée comme *privacy policy URL* dans les fiches App Store / Google Play.
+Pages statiques de « Mon calendrier de l'avent » : présentation ([index.html](./index.html)), politique de confidentialité
+([privacy.html](./privacy.html)), référencée comme
+_privacy policy URL_ dans les fiches App Store / Google Play, et conditions d'utilisation et de vente
+([terms.html](./terms.html)), référencées dans la page « Contenu de l'application » de la Play Console.
 
-Aucune dépendance, aucun build : un seul fichier HTML autonome.
+Aucune dépendance, aucun build : des fichiers HTML qui partagent [styles.css](./styles.css), ainsi que
+les polices de `fonts/` et les images de `images/`.
 
 ## Aperçu local
 
@@ -20,5 +23,5 @@ Netlify, Vercel, etc.) : il suffit de pointer l'hébergeur sur `web/` en tant qu
 
 ## Mise à jour du contenu
 
-Pense à mettre à jour la date « dernière mise à jour » en haut de [index.html](./index.html) à chaque
+Penser à mettre à jour la date « dernière mise à jour » en haut de chaque page à chaque
 modification substantielle du contenu (nouvelle donnée collectée, nouveau service tiers, etc.).

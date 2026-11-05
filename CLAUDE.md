@@ -7,7 +7,7 @@
 - `client/` — Expo (SDK 54) / React Native 0.81 / Expo Router app. Ships as an Android app (EAS) and as an iOS-oriented web PWA (`expo export --platform web`, deployed on Vercel).
 - `server/` — Express + TypeScript API on PostgreSQL via Prisma, deployed on Vercel as a serverless function.
 - `admin/` — Vite + React SPA backoffice for editing `Content` rows (separate Vercel project).
-- `web/` — single static `index.html` privacy policy page (separate Vercel project).
+- `web/` — static site: `index.html` landing page, `privacy.html`, `terms.html` (separate Vercel project).
 
 ## Commands
 

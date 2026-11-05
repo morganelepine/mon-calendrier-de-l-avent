@@ -1,0 +1,302 @@
+@font-face {
+    font-family: "Poppins";
+    src: url("fonts/poppins-regular.woff") format("woff");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("fonts/poppins-semibold.woff") format("woff");
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Spectral";
+    src: url("fonts/spectral-bold.woff") format("woff");
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* Values mirror client/constants/Colors.ts. */
+:root {
+    color-scheme: light dark;
+    --snow: #f7f5f6;
+    --gold: #e9be1a;
+    --hero: #0b2956;
+    --bg: var(--snow);
+    --surface: #ffffff;
+    --text: #010f23;
+    --text-muted: #4c5667;
+    --accent: #0b2956;
+    --accent-alt: #116459;
+    --cta: #116459;
+    --border: #e8ddce;
+    --font-body:
+        "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    --font-title: "Spectral", Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #010f23;
+        --surface: #0b2956;
+        --text: #f7f5f6;
+        --text-muted: #c5cedb;
+        --accent: #79a9d1;
+        --accent-alt: #b3cf5c;
+        --border: #24446f;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+}
+
+header {
+    margin-bottom: 2.5rem;
+}
+
+h1,
+h2 {
+    font-family: var(--font-title);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.25rem;
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 2.25rem 0 0.75rem;
+    color: var(--accent);
+}
+
+h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--accent-alt);
+}
+
+p,
+li {
+    font-size: 0.98rem;
+    color: var(--text);
+}
+
+ul {
+    padding-left: 1.25rem;
+}
+
+li {
+    margin-bottom: 0.4rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--accent-alt);
+    vertical-align: top;
+}
+
+th {
+    background: var(--accent-alt);
+    font-weight: 600;
+    color: var(--surface);
+}
+
+a {
+    color: var(--accent);
+}
+
+a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+}
+
+.brand {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.25rem 0;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-alt);
+    text-decoration: none;
+}
+
+footer {
+    margin-top: 3rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+footer a {
+    color: inherit;
+}
+
+.hero {
+    margin: 0;
+    padding: 3.5rem 1.5rem;
+    background: var(--hero);
+    color: var(--snow);
+    text-align: center;
+}
+
+.hero img {
+    display: block;
+    width: 100%;
+    max-width: 1090px;
+    height: auto;
+    margin: 0 auto 1.5rem;
+}
+
+.hero h1 {
+    font-size: 2.75rem;
+    color: var(--snow);
+}
+
+.hero p {
+    max-width: 34rem;
+    margin: 0 auto 1.5rem;
+    font-size: 1.1rem;
+    color: var(--snow);
+}
+
+.cta {
+    display: inline-block;
+    min-height: 44px;
+    padding: 0.7rem 1.75rem;
+    border: 1px solid var(--snow);
+    border-radius: 999px;
+    background: var(--cta);
+    color: var(--snow);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cta:hover {
+    filter: brightness(1.15);
+}
+
+.landing main {
+    max-width: 960px;
+}
+
+.landing section > h2:first-child {
+    margin-top: 0;
+    text-align: center;
+}
+
+.landing section + section {
+    margin-top: 3.5rem;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.features h3 {
+    margin-top: 0;
+}
+
+.features p {
+    margin-bottom: 0;
+}
+
+/* Three columns can't fit a phone: each row becomes a card. */
+@media (max-width: 600px) {
+    table,
+    tbody,
+    tr,
+    td {
+        display: block;
+    }
+
+    thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    tr {
+        margin-bottom: 0.75rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+    }
+
+    td {
+        padding: 0.25rem 0;
+        border: 0;
+    }
+
+    td:first-child {
+        font-weight: 600;
+        color: var(--accent-alt);
+    }
+
+    td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 600;
+    }
+}
