@@ -46,9 +46,11 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
         score.scoreDetails.dayOpening +
         score.scoreDetails.contentOpening +
         score.scoreDetails.gameAnswer +
-        score.scoreDetails.checkIn;
+        score.scoreDetails.checkIn +
+        score.scoreDetails.challenge;
     // The streak bonus comes from the daily check-in, so a day can have one without being opened.
     const hasCheckInBonus = score.scoreDetails.checkIn > 0;
+    const hasChallengePoints = score.scoreDetails.challenge > 0;
 
     const isToday = score.dayNumber === currentDay;
 
@@ -75,7 +77,9 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                 >
                     Jour {score.dayNumber}
                 </Text>
-                {(score.dayIsOpen || hasCheckInBonus) && (
+                {(score.dayIsOpen ||
+                    hasCheckInBonus ||
+                    hasChallengePoints) && (
                     <Text
                         style={[
                             styles.cardTitle,
@@ -121,6 +125,14 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                                 isToday={isToday}
                             />
                         )}
+                        {hasChallengePoints && (
+                            <ScoreLine
+                                icon="trophy"
+                                label="Défis"
+                                points={score.scoreDetails.challenge}
+                                isToday={isToday}
+                            />
+                        )}
                     </>
                 ) : (
                     <>
@@ -138,6 +150,14 @@ export const ScoreHistory: React.FC<ScoreHistoryProps> = ({ score }) => {
                                 icon="sparkles"
                                 label="Guirlande"
                                 points={score.scoreDetails.checkIn}
+                                isToday={isToday}
+                            />
+                        )}
+                        {hasChallengePoints && (
+                            <ScoreLine
+                                icon="trophy"
+                                label="Défis"
+                                points={score.scoreDetails.challenge}
                                 isToday={isToday}
                             />
                         )}

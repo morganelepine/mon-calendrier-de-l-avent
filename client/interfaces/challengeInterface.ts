@@ -4,4 +4,5 @@ export interface Challenge {
     image: string; // Cloudinary public ID
     hint: string;
     reason: string;
+    nativeOnly?: boolean; // impossible on the PWA, so hidden there
 }

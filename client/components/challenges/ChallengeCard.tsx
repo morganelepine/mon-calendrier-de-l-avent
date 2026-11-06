@@ -12,42 +12,57 @@ import { Challenge } from "@/interfaces/challengeInterface";
 
 interface ChallengeCardProps {
     challenge: Challenge;
+    number: number; // Position in the list: ids have gaps on the PWA
+    completed: boolean;
     onPress: (challenge: Challenge) => void;
 }
 
 export const ChallengeCard: React.FC<ChallengeCardProps> = ({
     challenge,
+    number,
+    completed,
     onPress,
 }) => {
+    const status = completed ? "réussi" : "pas encore réussi";
+    const textColor = { color: completed ? Colors.blue : Colors.snow };
+
     return (
         <Pressable
             onPress={() => onPress(challenge)}
             accessibilityRole="button"
-            accessibilityLabel={`Défi ${challenge.id}, ${challenge.title}, pas encore réussi`}
-            accessibilityHint="Affiche un indice"
-            style={({ pressed }) => [styles.card, pressed && activityPressed]}
+            accessibilityLabel={`Défi ${number}, ${challenge.title}, ${status}`}
+            accessibilityHint={completed ? undefined : "Affiche un indice"}
+            style={({ pressed }) => [
+                styles.card,
+                completed && styles.completedCard,
+                pressed && activityPressed,
+            ]}
         >
             <View>
-                <View style={styles.lockedImage}>
+                <View style={!completed && styles.lockedImage}>
                     <ActivityIcon
                         image={challenge.image}
                         transformation={GAME_2048_ICON_TRANSFORMATION}
                         backgroundColor={Colors.lightBlue}
                     />
                 </View>
-                <View style={styles.lockBadge}>
+                <View
+                    style={[styles.badge, completed && styles.completedBadge]}
+                >
                     <Ionicons
-                        name="lock-closed"
+                        name={completed ? "checkmark-sharp" : "lock-closed"}
                         size={12}
-                        color={Colors.snow}
+                        color={completed ? Colors.blue : Colors.snow}
                     />
                 </View>
             </View>
             <View style={styles.texts}>
-                <ThemedText style={styles.label}>
-                    DÉFI {challenge.id}
+                <ThemedText style={[styles.label, textColor]}>
+                    DÉFI {number}
                 </ThemedText>
-                <ThemedText style={styles.title}>{challenge.title}</ThemedText>
+                <ThemedText style={[styles.title, textColor]}>
+                    {challenge.title}
+                </ThemedText>
             </View>
         </Pressable>
     );
@@ -60,10 +75,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 16,
     },
+    completedCard: {
+        backgroundColor: Colors.snow,
+    },
+    completedBadge: {
+        backgroundColor: Colors.gold,
+    },
     lockedImage: {
         opacity: 0.6,
     },
-    lockBadge: {
+    badge: {
         position: "absolute",
         right: -4,
         bottom: -4,

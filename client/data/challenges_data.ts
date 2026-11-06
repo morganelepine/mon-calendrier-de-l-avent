@@ -1,6 +1,7 @@
+import { Platform } from "react-native";
 import { Challenge } from "@/interfaces/challengeInterface";
 
-export const CHALLENGES: Challenge[] = [
+const ALL_CHALLENGES: Challenge[] = [
     {
         id: 1,
         image: "2_shko2c",
@@ -17,14 +18,14 @@ export const CHALLENGES: Challenge[] = [
     },
     {
         id: 3,
-        image: "3_neb8cm",
+        image: "4_syk4ba",
         hint: "Les plus beaux rêves sont parfois ceux que l'on prend le temps de découvrir jusqu'au bout.",
         title: "Le grimoire des lutins",
         reason: "Regarder toutes les recommandations d'un jour",
     },
     {
         id: 4,
-        image: "4_syk4ba",
+        image: "snowflake_ucgrhg",
         hint: "Certaines portes n'apparaissent qu'à ceux qui savent insister.",
         title: "La clé du grand Nord",
         reason: "Taper 3 fois sur une case encore fermée",
@@ -35,6 +36,7 @@ export const CHALLENGES: Challenge[] = [
         hint: "Une lumière partagée brille toujours un peu plus fort.",
         title: "Le messager de Noël",
         reason: "Partager le décompte",
+        nativeOnly: true,
     },
     {
         id: 6,
@@ -49,6 +51,7 @@ export const CHALLENGES: Challenge[] = [
         hint: "Ce que l'on voit dans le miroir n'est pas toujours ce que l'on croit.",
         title: "Le miroir des âmes",
         reason: "Partager son profil à un quiz",
+        nativeOnly: true,
     },
     {
         id: 8,
@@ -84,5 +87,15 @@ export const CHALLENGES: Challenge[] = [
         hint: "Une promesse suffit parfois à ouvrir les portes d'un monde merveilleux.",
         title: "Le trésor de la Mère Noël",
         reason: "Acheter La Hotte Magique",
+        nativeOnly: true,
     },
 ];
+
+const isPwa = Platform.OS === "web";
+
+export const CHALLENGES = isPwa
+    ? ALL_CHALLENGES.filter((challenge) => !challenge.nativeOnly)
+    : ALL_CHALLENGES;
+
+// Keep in sync with server/src/controllers/score.controller.ts
+export const CHALLENGE_POINTS = isPwa ? 20 : 15;

@@ -14,6 +14,7 @@ export interface ScoreDetail {
     contentOpening: number;
     gameAnswer: number;
     checkIn: number;
+    challenge: number;
 }
 
 export enum ScoreType {
@@ -23,6 +24,7 @@ export enum ScoreType {
     CheckIn = "CheckIn",
     CheckInJoker = "CheckInJoker", // Premium: a missed day hung afterwards, never worth points
     OctoberOpening = "OctoberOpening", // Just a record that the day was opened
+    Challenge = "Challenge", // itemNumber = challenge id, once a year whatever the day
 }
 
 // Keep in sync with client/constants/checkIn.ts
@@ -31,6 +33,25 @@ const CHECK_IN_BONUS_INTERVAL = 4;
 const CHECK_IN_BONUS_STEP = 10;
 const CHECK_IN_JOKERS = 3;
 const CHECK_IN_REASONS = [ScoreType.CheckIn, ScoreType.CheckInJoker];
+
+// Keep in sync with client/data/challenges_data.ts
+const CHALLENGE_COUNT = 12;
+const CHALLENGE_POINTS = 15;
+// The PWA can't do the native-only challenges: its other ones are worth
+// more so that both platforms can reach the same total.
+const CHALLENGE_POINTS_PWA = 20;
+const NATIVE_ONLY_CHALLENGE_IDS = [5, 7, 12];
+
+const isValidChallengeScore = (id: unknown, points: unknown): boolean => {
+    if (!Number.isInteger(id)) return false;
+    const challengeId = id as number;
+    if (challengeId < 1 || challengeId > CHALLENGE_COUNT) return false;
+    if (points === CHALLENGE_POINTS) return true;
+    return (
+        points === CHALLENGE_POINTS_PWA &&
+        !NATIVE_ONLY_CHALLENGE_IDS.includes(challengeId)
+    );
+};
 
 // Growing bonus: +10 on the 4th consecutive day, +20 on the 8th, +30 on the 12th...
 const getCheckInBonus = (streak: number): number =>
@@ -145,6 +166,31 @@ export class ScoreController {
                     status: 200,
                     message:
                         "All points for the game have already been awarded",
+                    alreadyAwarded: true,
+                    totalScore,
+                };
+            }
+        }
+
+        if (reason === ScoreType.Challenge) {
+            if (!isValidChallengeScore(itemNumber, points)) {
+                return { status: 400, message: "Invalid challenge score" };
+            }
+
+            const challengeAlreadyDone = await prisma.score.findFirst({
+                where: {
+                    userId: user.id,
+                    year,
+                    reason: ScoreType.Challenge,
+                    itemNumber,
+                },
+            });
+
+            if (challengeAlreadyDone) {
+                return {
+                    status: 200,
+                    message:
+                        "Points for this challenge have already been awarded",
                     alreadyAwarded: true,
                     totalScore,
                 };
@@ -361,6 +407,7 @@ export class ScoreController {
                     contentOpening: 0,
                     gameAnswer: 0,
                     checkIn: 0,
+                    challenge: 0,
                 },
             };
         }
@@ -375,6 +422,11 @@ export class ScoreController {
             if (score.reason === ScoreType.CheckInJoker) {
                 scoresByDay[score.day].checkedIn = true;
                 scoresByDay[score.day].usedJoker = true;
+                continue;
+            }
+            // Doable without opening the day, so it says nothing about dayIsOpen.
+            if (score.reason === ScoreType.Challenge) {
+                scoresByDay[score.day].scoreDetails.challenge += score.points;
                 continue;
             }
             scoresByDay[score.day].dayIsOpen = true;

@@ -11,6 +11,7 @@ export interface ScoreDetail {
     contentOpening: number;
     gameAnswer: number;
     checkIn: number; // streak bonus, 0 on most days
+    challenge: number; // doable without opening the day
 }
 
 export interface GameState {

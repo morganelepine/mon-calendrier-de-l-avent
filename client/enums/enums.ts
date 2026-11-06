@@ -37,6 +37,7 @@ export enum ScoreType {
     ContentOpening = "ContentOpening",
     GameAnswer = "GameAnswer",
     DayOpening = "DayOpening",
+    Challenge = "Challenge",
     OctoberOpening = "OctoberOpening", // Just a record that the day was opened
 }
 

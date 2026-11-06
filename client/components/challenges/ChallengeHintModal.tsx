@@ -15,11 +15,13 @@ const HINT_ENTERING = FadeIn.delay(350).duration(500);
 
 interface ChallengeHintModalProps {
     challenge: Challenge | null;
+    completed: boolean;
     onClose: () => void;
 }
 
 export const ChallengeHintModal: React.FC<ChallengeHintModalProps> = ({
     challenge,
+    completed,
     onClose,
 }) => (
     <ModalWithCloseButton visible={challenge !== null} onRequestClose={onClose}>
@@ -42,7 +44,7 @@ export const ChallengeHintModal: React.FC<ChallengeHintModalProps> = ({
                         {challenge.title}
                     </ThemedText>
                     <ThemedText type="sectionText" style={styles.hint}>
-                        {challenge.hint}
+                        {completed ? "Défi réussi, bravo !" : challenge.hint}
                     </ThemedText>
                 </Animated.View>
             </>

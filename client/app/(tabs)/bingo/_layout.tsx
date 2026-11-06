@@ -1,5 +1,6 @@
 import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
+import { CHALLENGES } from "@/data/challenges_data";
 import { Stack } from "expo-router";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { ChallengesRules } from "@/components/challenges/ChallengesRules";
@@ -79,7 +80,7 @@ export default function BingoLayout() {
                 options={{
                     header: () => (
                         <BingoHeader
-                            title="Les 12 défis de l'Avent"
+                            title={`Les ${CHALLENGES.length} défis de l'Avent`}
                             rules={<ChallengesRules />}
                         />
                     ),
