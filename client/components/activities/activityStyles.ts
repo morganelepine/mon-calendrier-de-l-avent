@@ -15,3 +15,23 @@ export const tvMovieImage = {
     aspectRatio: 16 / 9,
     borderRadius: 8,
 } as const;
+
+// Light row card: icon on the left, title and subtitle on the right.
+export const activityRowCard = {
+    ...activityCardBase,
+    backgroundColor: "#EEF0F2",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+} as const;
+
+export const activityRowTitle = {
+    fontSize: 20,
+    fontFamily: "FreightNeoBold",
+    paddingTop: 0,
+} as const;
+
+export const activityRowSubtitle = {
+    fontSize: 13,
+    paddingTop: 0,
+} as const;

@@ -25,7 +25,7 @@ export const BingoHeader: React.FC<BingoHeaderProps> = ({ title, rules }) => {
                         onPress={() => setModalVisible(true)}
                         hitSlop={10}
                         accessibilityRole="button"
-                        accessibilityLabel="Voir les règles du bingo"
+                        accessibilityLabel={`${title} : voir les règles`}
                     >
                         <Ionicons
                             name="help-circle-outline"

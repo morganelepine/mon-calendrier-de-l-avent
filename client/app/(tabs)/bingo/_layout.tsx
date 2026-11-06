@@ -2,6 +2,7 @@ import { ScreenHeader } from "@/components/navigation/ScreenHeader";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
+import { ChallengesRules } from "@/components/challenges/ChallengesRules";
 import {
     ActivitiesBingoRules,
     MoviesBingoRules,
@@ -71,6 +72,17 @@ export default function BingoLayout() {
                 name="game2048"
                 options={{
                     headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="challenges"
+                options={{
+                    header: () => (
+                        <BingoHeader
+                            title="Les 12 défis de l'Avent"
+                            rules={<ChallengesRules />}
+                        />
+                    ),
                 }}
             />
             <Stack.Screen

@@ -1,7 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ActivityIcon } from "@/components/activities/ActivityIcon";
-import { activityCardBase } from "@/components/activities/activityStyles";
+import {
+    activityRowCard,
+    activityRowSubtitle,
+    activityRowTitle,
+} from "@/components/activities/activityStyles";
 import { Colors } from "@/constants/Colors";
 import { DailySong } from "@/constants/DailySongs";
 
@@ -28,24 +32,13 @@ export const DailySongCard: React.FC<{ song: DailySong }> = ({ song }) => {
 };
 
 const styles = StyleSheet.create({
-    card: {
-        ...activityCardBase,
-        backgroundColor: "#EEF0F2",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-    },
+    card: activityRowCard,
     texts: {
         flex: 1,
     },
     title: {
-        fontSize: 20,
-        fontFamily: "FreightNeoBold",
+        ...activityRowTitle,
         color: Colors.autumnGold,
-        paddingTop: 0,
     },
-    subtitle: {
-        fontSize: 13,
-        paddingTop: 0,
-    },
+    subtitle: activityRowSubtitle,
 });

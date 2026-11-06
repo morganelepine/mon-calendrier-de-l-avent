@@ -9,11 +9,12 @@ import { BlueBackground } from "@/components/utils/BlueBackground";
 import { CustomSafeAreaView } from "@/components/utils/custom/CustomSafeAreaView";
 import { ActivityTile } from "@/components/activities/ActivityTile";
 import { Game2048Card } from "@/components/activities/Game2048Card";
+import { ChallengesCard } from "@/components/activities/ChallengesCard";
 import { DailySongCard } from "@/components/activities/DailySongCard";
 import { TvMoviesCard } from "@/components/activities/TvMoviesCard";
 import { Game2048RulesModal } from "@/components/games2048/Game2048RulesModal";
 import { Colors } from "@/constants/Colors";
-import { isOctober } from "@/constants/Dates";
+import { isDecember, isOctober } from "@/constants/Dates";
 import { getTodaySong } from "@/constants/DailySongs";
 import { useTvMoviesSchedule } from "@/hooks/useTvMoviesSchedule";
 
@@ -67,6 +68,8 @@ export default function GamesHubScreen() {
                     style={styles.scrollView}
                     contentContainerStyle={styles.cardsContainer}
                 >
+                    {isDecember ? <ChallengesCard /> : null}
+
                     <Game2048Card
                         onRulesPress={() => setGame2048RulesVisible(true)}
                     />

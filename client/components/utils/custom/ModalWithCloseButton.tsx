@@ -23,7 +23,12 @@ export const ModalWithCloseButton: React.FC<CustomModalProps> = ({
             contentStyle={styles.modalView}
         >
             {children}
-            <Pressable onPress={onRequestClose} style={styles.closeButton}>
+            <Pressable
+                onPress={onRequestClose}
+                accessibilityRole="button"
+                accessibilityLabel="Fermer"
+                style={styles.closeButton}
+            >
                 <Ionicons
                     name={"close-outline"}
                     size={35}

@@ -32,7 +32,12 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
                 paddingVertical: 8,
             }}
         >
-            <Pressable onPress={() => router.back()}>
+            <Pressable
+                onPress={() => router.back()}
+                accessibilityRole="button"
+                accessibilityLabel="Retour"
+                hitSlop={8}
+            >
                 <Ionicons name="arrow-back" size={24} color={color} />
             </Pressable>
 
