@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     Board,
@@ -47,9 +48,11 @@ interface UseGame2048Result {
     startNewGame: () => void;
 }
 
+const IS_PWA = Platform.OS === "web";
+
 export function useGame2048(): UseGame2048Result {
     const { isPremium } = usePremium();
-    const maxTier = getMaxTier(isPremium);
+    const maxTier = getMaxTier(isPremium || IS_PWA);
     const [, forceRender] = useReducer((c) => c + 1, 0);
     const [isNewBest, setIsNewBest] = useState<boolean | null>(null);
     const [hasJustWon, setHasJustWon] = useState(false);
@@ -252,9 +255,9 @@ export function useGame2048(): UseGame2048Result {
 
 export const useGoalForCurrentSeason = (): string => {
     const { isPremium } = usePremium();
-    const octoberGoal = isPremium ? "le chaudron magique !" : "la courge 🎃";
-    const decemberGoal = isPremium
-        ? "le Père Noël 🎅"
-        : "la couronne de Noël !";
+    const octoberGoal =
+        isPremium || IS_PWA ? "le chaudron magique !" : "la courge 🎃";
+    const decemberGoal =
+        isPremium || IS_PWA ? "le Père Noël 🎅" : "la couronne de Noël !";
     return isOctober ? octoberGoal : decemberGoal;
 };

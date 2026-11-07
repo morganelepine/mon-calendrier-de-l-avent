@@ -24,6 +24,10 @@ export interface TvMovie {
 
 const CHANNEL_NAMES: Record<string, string> = {
     "TF1SeriesFilms.fr": "TF1 Séries Films",
+    "NT1.fr": "TFX",
+    "CanalPlus.fr": "Canal+",
+    "CanalPlusCinema.fr": "Canal+ Cinéma",
+    "Cherie25.fr": "Chérie 25",
 };
 
 const toChannelName = (channel: string): string =>
