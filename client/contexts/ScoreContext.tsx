@@ -4,8 +4,12 @@ import {
     getScoreSummary,
     flushPendingScores,
 } from "@/services/score.service";
+import { completeChallenge } from "@/services/challenge.service";
 import { Score } from "@/interfaces/scoreInterface";
 import useAppState from "@/hooks/useAppState";
+import { getCurrentMinutes } from "@/hooks/useCurrentMinutes";
+import { ChallengeId } from "@/enums/enums";
+import { isBetween } from "@/utils/hours";
 
 type ScoreContextType = {
     scoreTotal: number;
@@ -66,6 +70,9 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     const appState = useAppState();
     useEffect(() => {
         if (appState !== "active") return;
+        if (isBetween(getCurrentMinutes(), "00:31", "07:00")) {
+            void completeChallenge(ChallengeId.NightOpening);
+        }
         flushPendingScores()
             .then((hasConfirmed) => {
                 if (hasConfirmed) refreshScores();

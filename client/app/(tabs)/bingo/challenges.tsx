@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { useFocusEffect } from "expo-router";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { ChallengeCard } from "@/components/challenges/ChallengeCard";
 import { ChallengeHintModal } from "@/components/challenges/ChallengeHintModal";
@@ -12,11 +13,13 @@ export default function ChallengesScreen() {
         useState<Challenge | null>(null);
     const [completedIds, setCompletedIds] = useState<Set<number>>(new Set());
 
-    useEffect(() => {
-        getCompletedChallengeIds()
-            .then(setCompletedIds)
-            .catch(() => {});
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            getCompletedChallengeIds()
+                .then(setCompletedIds)
+                .catch(() => {});
+        }, []),
+    );
 
     return (
         <BlueBackground>

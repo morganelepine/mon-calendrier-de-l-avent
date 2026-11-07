@@ -13,11 +13,14 @@ import { MusicSelectionProvider } from "@/contexts/MusicSelectionContext";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { prefetchContents } from "@/services/contents/content.service";
 import { prefetchTvMovies } from "@/services/activities/tvMovies.service";
+import { getChallengeImageUrls } from "@/data/challenges_data";
+import { isDecember } from "@/constants/Dates";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 import { MAX_TIER } from "@/utils/games2048/engine";
 import { configureNotificationHandler } from "@/services/notifications.service";
 import { AccessGate } from "@/components/navigation/AccessGate";
 import { InitializationGate } from "@/components/navigation/InitializationGate";
+import { ChallengeToastHost } from "@/components/challenges/ChallengeToast";
 import { ToastHost } from "@/components/utils/Toast";
 import { DayRevealHost } from "@/components/days/DayReveal";
 import { VersionGate } from "@/components/navigation/VersionGate";
@@ -54,6 +57,8 @@ function RootLayout() {
             Image.prefetch(getGame2048IconUrl(tier), "memory-disk");
         }
 
+        if (isDecember) Image.prefetch(getChallengeImageUrls(), "memory-disk");
+
         // Warm the contents cache now so opening the first day
         // doesn't block on the network round-trip.
         prefetchContents();
@@ -68,6 +73,7 @@ function RootLayout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider>
                 <ToastHost />
+                <ChallengeToastHost />
                 <DayRevealHost />
                 <ErrorBoundary>
                     <UserProvider>

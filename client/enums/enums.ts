@@ -41,6 +41,22 @@ export enum ScoreType {
     OctoberOpening = "OctoberOpening", // Just a record that the day was opened
 }
 
+// Values match the ids in data/challenges_data.ts
+export enum ChallengeId {
+    TvMoviesSchedule = 1,
+    Thanks = 2,
+    AllDayRecommendations = 3,
+    ClosedDayTaps = 4,
+    ShareCountdown = 5,
+    DailySong = 6,
+    ShareQuizProfile = 7,
+    NightOpening = 8,
+    Game2048Score = 9,
+    MidnightDayOpening = 10,
+    BingoCells = 11,
+    Premium = 12,
+}
+
 export enum CountdownVariant {
     Nights = "nights", // "x nuits avant Noël" - default
     Columns = "columns", // days/hours/minutes/seconds side by side, big number above small label

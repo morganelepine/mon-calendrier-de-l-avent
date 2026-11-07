@@ -16,8 +16,10 @@ import Purchases, {
 } from "react-native-purchases";
 import { useUser } from "@/contexts/UserContext";
 import { logClient } from "@/services/sentry.service";
+import { completeChallenge } from "@/services/challenge.service";
 import { refreshCountdownWidget } from "@/widgets/refreshCountdownWidget";
 import { storeWidgetsPremium } from "@/widgets/widgetState";
+import { ChallengeId } from "@/enums/enums";
 
 // Must match the entitlement identifier configured in the RevenueCat dashboard.
 const ENTITLEMENT_ID = "com_merrymate_moncalendrierdelavent_pro";
@@ -179,6 +181,11 @@ export const PremiumProvider = ({
                 });
             });
     }, [isPremium, customerInfo]);
+
+    // Also rewards the purchases made before December.
+    useEffect(() => {
+        if (isPremium) void completeChallenge(ChallengeId.Premium);
+    }, [isPremium]);
 
     const value = useMemo(
         () => ({

@@ -7,7 +7,6 @@ import {
     activityPressed,
 } from "@/components/activities/activityStyles";
 import { Colors } from "@/constants/Colors";
-import { GAME_2048_ICON_TRANSFORMATION } from "@/constants/game2048Icons";
 import { Challenge } from "@/interfaces/challengeInterface";
 
 interface ChallengeCardProps {
@@ -42,8 +41,7 @@ export const ChallengeCard: React.FC<ChallengeCardProps> = ({
                 <View style={!completed && styles.lockedImage}>
                     <ActivityIcon
                         image={challenge.image}
-                        transformation={GAME_2048_ICON_TRANSFORMATION}
-                        backgroundColor={Colors.lightBlue}
+                        backgroundColor={Colors.green}
                     />
                 </View>
                 <View

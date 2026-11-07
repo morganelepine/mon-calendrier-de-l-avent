@@ -4,7 +4,6 @@ import { ThemedText } from "@/components/ThemedText";
 import { ActivityIcon } from "@/components/activities/ActivityIcon";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
 import { Colors } from "@/constants/Colors";
-import { GAME_2048_ICON_TRANSFORMATION } from "@/constants/game2048Icons";
 import { Challenge } from "@/interfaces/challengeInterface";
 
 const IMAGE_ENTERING = ZoomIn.duration(600).easing(
@@ -30,8 +29,7 @@ export const ChallengeHintModal: React.FC<ChallengeHintModalProps> = ({
                 <Animated.View entering={IMAGE_ENTERING} style={styles.image}>
                     <ActivityIcon
                         image={challenge.image}
-                        transformation={GAME_2048_ICON_TRANSFORMATION}
-                        backgroundColor={Colors.goldLight}
+                        backgroundColor={Colors.blue}
                         size={120}
                     />
                 </Animated.View>
@@ -44,8 +42,26 @@ export const ChallengeHintModal: React.FC<ChallengeHintModalProps> = ({
                         {challenge.title}
                     </ThemedText>
                     <ThemedText type="sectionText" style={styles.hint}>
-                        {completed ? "Défi réussi, bravo !" : challenge.hint}
+                        {challenge.hint}
                     </ThemedText>
+                    {challenge.author && (
+                        <ThemedText type="sectionText" style={styles.author}>
+                            {challenge.author}
+                        </ThemedText>
+                    )}
+                    {completed && (
+                        <>
+                            <ThemedText
+                                type="sectionText"
+                                style={styles.reason}
+                            >
+                                {challenge.reason}
+                            </ThemedText>
+                            <ThemedText type="sectionText" style={styles.won}>
+                                Défi réussi, bravo !
+                            </ThemedText>
+                        </>
+                    )}
                 </Animated.View>
             </>
         )}
@@ -64,5 +80,27 @@ const styles = StyleSheet.create({
     hint: {
         textAlign: "center",
         marginTop: 12,
+    },
+    author: {
+        fontFamily: "PoppinsItalic",
+        fontSize: 12,
+        textAlign: "center",
+    },
+    reason: {
+        backgroundColor: Colors.lightBlue,
+        color: Colors.snow,
+        textAlign: "center",
+        marginTop: 16,
+        marginHorizontal: 16,
+        paddingHorizontal: 16,
+        paddingTop: 4,
+        borderRadius: 24,
+        alignSelf: "center",
+    },
+    won: {
+        fontSize: 14,
+        color: Colors.lightBlue,
+        textAlign: "center",
+        marginTop: 4,
     },
 });

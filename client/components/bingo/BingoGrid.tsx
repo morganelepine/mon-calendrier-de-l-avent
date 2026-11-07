@@ -4,6 +4,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BingoCell } from "@/components/bingo/BingoCell";
 import { BlueBackground } from "@/components/utils/BlueBackground";
 import { Bingo } from "@/interfaces/bingoInterface";
+import { CHALLENGE_BINGO_CELLS } from "@/data/challenges_data";
+import { ChallengeId } from "@/enums/enums";
+import { completeChallenge } from "@/services/challenge.service";
 
 interface BingoGridProps {
     clickedCellsKey: string;
@@ -45,6 +48,9 @@ export const BingoGrid: React.FC<BingoGridProps> = ({
             newSet.delete(cellId);
         } else {
             newSet.add(cellId);
+            if (newSet.size >= CHALLENGE_BINGO_CELLS) {
+                void completeChallenge(ChallengeId.BingoCells);
+            }
         }
         setClickedCells(newSet);
 

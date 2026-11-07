@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ListVideo } from "@/components/content/ideas/ListVideo";
 import { ListReco } from "@/components/content/ideas/ListReco";
 import { CustomMarkdown } from "@/components/utils/custom/Markdown";
 import { Theme } from "@/constants/Colors";
-import { IdeaType } from "@/enums/enums";
+import { ChallengeId, IdeaType } from "@/enums/enums";
 import { Content } from "@/interfaces/contentInterface";
+import { completeChallenge } from "@/services/challenge.service";
 
 interface ListProps {
     idea: Content;
@@ -22,6 +23,15 @@ export const List: React.FC<ListProps> = ({
     const [selectedIndex, setSelectedIndex] = useState(0);
     const list = idea.listOfContents ?? [];
     const current = list[selectedIndex];
+    const seenIndexes = useRef(new Set([0]));
+
+    const selectItem = (index: number): void => {
+        setSelectedIndex(index);
+        seenIndexes.current.add(index);
+        if (seenIndexes.current.size === list.length) {
+            void completeChallenge(ChallengeId.AllDayRecommendations);
+        }
+    };
 
     return (
         <View>
@@ -41,7 +51,7 @@ export const List: React.FC<ListProps> = ({
                             selectedIndex === index &&
                                 styles.switchButtonActive,
                         ]}
-                        onPress={() => setSelectedIndex(index)}
+                        onPress={() => selectItem(index)}
                         accessibilityRole="button"
                         accessibilityLabel={`Choix ${index + 1} sur ${list.length}`}
                         accessibilityState={{

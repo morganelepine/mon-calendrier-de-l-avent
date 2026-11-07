@@ -15,6 +15,7 @@ interface ShareBackgroundPickerProps {
     onClose: () => void;
     backgrounds: string[]; // Cloudinary ids, the first one selected by default
     message: string;
+    onShared?: () => void;
     contentPosition?: "center" | "top";
     children: React.ReactNode; // content of the card
 }
@@ -25,6 +26,7 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
     onClose,
     backgrounds,
     message,
+    onShared,
     contentPosition,
     children,
 }) => {
@@ -42,6 +44,7 @@ export const ShareBackgroundPicker: React.FC<ShareBackgroundPickerProps> = ({
         await shareView(shareCardRef, message);
         setSharing(false);
         close();
+        onShared?.();
     };
 
     return (

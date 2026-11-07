@@ -6,15 +6,12 @@ interface ActivityIconProps {
     image: string; // Cloudinary public ID
     backgroundColor: string;
     size?: number;
-    // Overrides the size-based default, to share a URL already prefetched elsewhere.
-    transformation?: string;
 }
 
 export const ActivityIcon: React.FC<ActivityIconProps> = ({
     image,
     backgroundColor,
     size = 56,
-    transformation,
 }) => (
     <View
         accessible={false}
@@ -24,13 +21,7 @@ export const ActivityIcon: React.FC<ActivityIconProps> = ({
         ]}
     >
         <Image
-            // 3x the display size, for high-density screens.
-            source={{
-                uri: getCloudinaryImageUrl(
-                    image,
-                    transformation ?? `w_${size * 3},h_${size * 3},c_fit`,
-                ),
-            }}
+            source={{ uri: getCloudinaryImageUrl(image) }}
             contentFit="contain"
             cachePolicy="memory-disk"
             style={styles.image}
@@ -45,7 +36,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: "75%",
-        height: "75%",
+        width: "85%",
+        height: "85%",
     },
 });

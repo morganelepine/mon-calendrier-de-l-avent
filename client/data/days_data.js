@@ -331,9 +331,9 @@ export const daysArray = [
         textColor: "#0b2956",
         image: "21-_echnhj",
         aspectRatio: 0.5,
-        quote: "Quand on mange au chaud le gâteau (de Noël), on mange les oeufs (de Pâques) derrière le fourneau.",
-        quoteAuthor: "Dicton français",
-        quoteSource: "",
+        quote: "Chacun recèle en lui une forêt vierge, une étendue de neige où nul oiseau n'a laissé son empreinte.",
+        quoteAuthor: "Virginia Woolf",
+        quoteSource: "De la maladie",
     },
     {
         dayNumber: 25,

@@ -30,6 +30,8 @@ import {
 } from "@/constants/Musics";
 import { COUNTDOWN_SHARE_BACKGROUNDS } from "@/constants/shareBackgrounds";
 import { isShareSupported } from "@/services/share.service";
+import { completeChallenge } from "@/services/challenge.service";
+import { ChallengeId } from "@/enums/enums";
 import { AnnouncementModal } from "@/components/utils/AnnouncementModal";
 
 // BACKGROUND IMAGES
@@ -37,6 +39,10 @@ const today = new Date().getDate();
 const WINTER_BACKGROUND = "3_thng7s";
 const HALLOWEEN_BACKGROUND =
     today < 20 ? "Rumeysa_Cinar_nhebdq" : "halloween_txyg5n"; // october
+
+const completeDailySongChallenge = (): void => {
+    void completeChallenge(ChallengeId.DailySong);
+};
 
 export const Home = () => {
     const insets = useSafeAreaInsets();
@@ -86,6 +92,9 @@ export const Home = () => {
                         onClose={() => setPickerVisible(false)}
                         backgrounds={shareBackgrounds}
                         message={shareMessage}
+                        onShared={() =>
+                            void completeChallenge(ChallengeId.ShareCountdown)
+                        }
                         contentPosition={isOctober ? "center" : "top"}
                     >
                         <HomeHeadline />
@@ -113,7 +122,11 @@ export const Home = () => {
                                 />
                             </Pressable>
                         )}
-                        <AudioPlayer music={music?.url ?? ""} type="icon" />
+                        <AudioPlayer
+                            music={music?.url ?? ""}
+                            type="icon"
+                            onFinished={completeDailySongChallenge}
+                        />
                     </View>
                 </CustomSafeAreaView>
             </BackgroundImage>

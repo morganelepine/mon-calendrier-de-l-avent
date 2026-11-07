@@ -6,9 +6,11 @@ import { ThemedText } from "@/components/ThemedText";
 import { OptionItem } from "@/components/informations/OptionItem";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
+import { TEST_TOOLS_ENABLED } from "@/constants/testTools";
 import { useUser } from "@/contexts/UserContext";
 import { PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
-import { TEST_TOOLS_ENABLED } from "@/constants/testTools";
+import { ChallengeId } from "@/enums/enums";
+import { completeChallenge } from "@/services/challenge.service";
 
 export default function InformationsScreen() {
     const { username } = useUser();
@@ -61,9 +63,10 @@ export default function InformationsScreen() {
                             title="Remerciements"
                             iconName="heart-outline"
                             iconColor={Colors.red}
-                            onPress={() =>
-                                router.push("/informations/copyrights")
-                            }
+                            onPress={() => {
+                                void completeChallenge(ChallengeId.Thanks);
+                                router.push("/informations/copyrights");
+                            }}
                         />
                     )}
 

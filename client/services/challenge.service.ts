@@ -1,4 +1,4 @@
-import { showPointsToast } from "@/components/utils/Toast";
+import { showChallengeToast } from "@/components/challenges/ChallengeToast";
 import { currentDay, isDecember } from "@/constants/Dates";
 import { CHALLENGE_POINTS, CHALLENGES } from "@/data/challenges_data";
 import { ScoreType } from "@/enums/enums";
@@ -14,6 +14,10 @@ const LOCAL_STATE_DAY = 0;
 // The score history only has lines up to the calendar's last day.
 const LAST_HISTORY_DAY = 24;
 
+// Two triggers can fire at once (app launch + foreground): without this,
+// both would pass the async "already scored" check and show the toast twice.
+const claimedIds = new Set<number>();
+
 const isCompleted = (id: number): Promise<boolean> =>
     isItemScored(LOCAL_STATE_DAY, ScoreType.Challenge, id);
 
@@ -27,14 +31,22 @@ export const getCompletedChallengeIds = async (): Promise<Set<number>> => {
 };
 
 export const completeChallenge = async (id: number): Promise<void> => {
-    if (!isDecember || (await isCompleted(id))) return;
+    if (!isDecember || claimedIds.has(id)) return;
+    claimedIds.add(id);
 
-    await saveItemScored(LOCAL_STATE_DAY, ScoreType.Challenge, id);
-    void queueScore(
-        Math.min(currentDay, LAST_HISTORY_DAY),
-        CHALLENGE_POINTS,
-        String(ScoreType.Challenge),
-        id,
-    );
-    showPointsToast(CHALLENGE_POINTS);
+    try {
+        const challenge = CHALLENGES.find((item) => item.id === id);
+        if (!challenge || (await isCompleted(id))) return;
+
+        await saveItemScored(LOCAL_STATE_DAY, ScoreType.Challenge, id);
+        void queueScore(
+            Math.min(currentDay, LAST_HISTORY_DAY),
+            CHALLENGE_POINTS,
+            String(ScoreType.Challenge),
+            id,
+        );
+        showChallengeToast(challenge);
+    } catch {
+        claimedIds.delete(id); // Storage failure: the next trigger retries.
+    }
 };

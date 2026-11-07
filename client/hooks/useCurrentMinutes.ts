@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNow } from "@/constants/Dates";
 
-const getCurrentMinutes = (): number => {
+export const getCurrentMinutes = (): number => {
     const now = new Date(getNow());
     return now.getHours() * 60 + now.getMinutes();
 };

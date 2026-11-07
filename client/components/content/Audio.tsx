@@ -12,12 +12,14 @@ interface AudioPlayerProps {
     music: string;
     type: "button" | "icon";
     style?: ViewStyle;
+    onFinished?: () => void;
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     music,
     type = "icon",
     style = {},
+    onFinished,
 }) => {
     // No source until the track is about to play: passing it upfront makes the
     // player download it on mount, even if the user never presses play.
@@ -88,6 +90,10 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         if (previewId) pause();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [previewId]);
+
+    useEffect(() => {
+        if (status.didJustFinish) onFinished?.();
+    }, [status.didJustFinish, onFinished]);
 
     return type === "icon" ? (
         <Pressable onPress={togglePlayPause} style={styles.button}>

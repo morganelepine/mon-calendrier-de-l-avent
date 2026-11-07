@@ -7,9 +7,13 @@ import { showToast, showPointsToast } from "@/components/utils/Toast";
 import { Colors } from "@/constants/Colors";
 import { currentDay, isDecember, isOctober } from "@/constants/Dates";
 import { getDayCatImageUrl } from "@/data/day_cats";
+import { CHALLENGE_CLOSED_DAY_TAPS } from "@/data/challenges_data";
+import { getCurrentMinutes } from "@/hooks/useCurrentMinutes";
+import { completeChallenge } from "@/services/challenge.service";
 import { queueScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
-import { ScoreType } from "@/enums/enums";
+import { ChallengeId, ScoreType } from "@/enums/enums";
+import { isBetween } from "@/utils/hours";
 
 interface DaysProps {
     days: Day[];
@@ -19,6 +23,7 @@ interface DaysProps {
 
 export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
     const containerRef = useRef<View>(null);
+    const closedDayTaps = useRef({ dayNumber: 0, count: 0 });
 
     useEffect(() => {
         if (!isDecember && !isOctober) return;
@@ -35,6 +40,12 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         if (isDecember) {
             void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
             if (!wasAlreadyOpen) showPointsToast(40);
+            if (
+                !wasAlreadyOpen &&
+                isBetween(getCurrentMinutes(), "00:00", "00:31")
+            ) {
+                void completeChallenge(ChallengeId.MidnightDayOpening);
+            }
         } else if (isOctober) {
             void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
             // showPointsToast(10);
@@ -60,6 +71,15 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         });
     };
 
+    const registerClosedDayTap = (dayNumber: number): void => {
+        const { current: taps } = closedDayTaps;
+        taps.count = taps.dayNumber === dayNumber ? taps.count + 1 : 1;
+        taps.dayNumber = dayNumber;
+        if (taps.count >= CHALLENGE_CLOSED_DAY_TAPS) {
+            void completeChallenge(ChallengeId.ClosedDayTaps);
+        }
+    };
+
     const handleDayOpening = (dayNumber: number, cell: DayCellRect) => {
         const clickedDay = days.find((day) => day.dayNumber === dayNumber);
         if (!clickedDay) return;
@@ -81,6 +101,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         } else {
             const emoji = isOctober ? "👻" : "🎅";
             showToast(`Un peu de patience ${emoji}`);
+            registerClosedDayTap(dayNumber);
         }
     };
 

@@ -16,10 +16,13 @@ import {
     saveGames2048InProgress,
     submitGames2048Score,
 } from "@/services/activities/games2048.service";
+import { completeChallenge } from "@/services/challenge.service";
 import useAppState from "@/hooks/useAppState";
 import { usePremium } from "@/contexts/PremiumContext";
 import { isOctober } from "@/constants/Dates";
 import { StorageKeys } from "@/constants/storageKeys";
+import { CHALLENGE_2048_SCORE } from "@/data/challenges_data";
+import { ChallengeId } from "@/enums/enums";
 
 type Status = "loading" | "playing" | "gameover";
 
@@ -212,6 +215,13 @@ export function useGame2048(): UseGame2048Result {
                     });
             }
             forceRender();
+
+            if (
+                game.score < CHALLENGE_2048_SCORE &&
+                nextScore >= CHALLENGE_2048_SCORE
+            ) {
+                void completeChallenge(ChallengeId.Game2048Score);
+            }
 
             if (isOver) {
                 const wasNewBest = nextScore > bestScoreRef.current;

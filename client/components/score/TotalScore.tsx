@@ -32,7 +32,7 @@ interface TotalScoreProps {
 export const TotalScore: React.FC<TotalScoreProps> = ({ score }) => {
     const { isPremium, isReady } = usePremium();
     const minScoreToWin = 2512;
-    const maxScoreWinnable = 4170;
+    const maxScoreWinnable = 4350;
     const objective = isPremium ? maxScoreWinnable : minScoreToWin;
     const hasReachedObjective = score >= objective;
     const progress = Math.min((score / objective) * 100, 100);

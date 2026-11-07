@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { SeasonalSections } from "@/components/utils/SeasonalSections";
+import { CHALLENGE_POINTS, CHALLENGES } from "@/data/challenges_data";
 
 const AutumnRules = () => (
     <View style={styles.section}>
@@ -109,6 +110,19 @@ const ChristmasRules = () => (
         </View>
 
         <View style={styles.section}>
+            <ThemedText type="sectionSubtitle">Défis de l'Avent</ThemedText>
+            <ThemedText type="sectionText">
+                {CHALLENGES.length} défis mystères sont à percer dans l'onglet{" "}
+                <Text style={styles.bold}>Activités</Text> du 1er au 24
+                décembre.
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Chaque défi réussi vous rapporte
+                <Text style={styles.bold}> {CHALLENGE_POINTS} points</Text>.
+            </ThemedText>
+        </View>
+
+        <View style={styles.section}>
             <ThemedText type="sectionSubtitle">
                 Limite de points par jour
             </ThemedText>
@@ -130,7 +144,7 @@ const ChristmasRules = () => (
                 correctement aux jeux
             </ThemedText>
             <ThemedText type="sectionText">
-                Les bonus de guirlande s'ajoutent à cette limite.
+                Les bonus de guirlande et les défis s'ajoutent à cette limite.
             </ThemedText>
         </View>
 

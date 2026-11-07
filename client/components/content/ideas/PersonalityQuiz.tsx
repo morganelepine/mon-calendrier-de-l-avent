@@ -11,10 +11,12 @@ import { QUIZ_SHARE_BACKGROUND } from "@/constants/shareBackgrounds";
 import { Content, PersonalityQuizAnswer } from "@/interfaces/contentInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 import { isShareSupported, shareView } from "@/services/share.service";
+import { completeChallenge } from "@/services/challenge.service";
 import {
     computeProfile,
     parsePersonalityQuiz,
 } from "@/services/contents/personalityQuiz.service";
+import { ChallengeId } from "@/enums/enums";
 
 interface PersonalityQuizProps {
     idea: Content;
@@ -114,12 +116,15 @@ export const PersonalityQuiz: React.FC<PersonalityQuizProps> = ({ idea }) => {
                         {isShareSupported && (
                             <CustomButton
                                 color={Theme.orangeToRed}
-                                onPress={() =>
-                                    shareView(
+                                onPress={async () => {
+                                    await shareView(
                                         shareCardRef,
                                         `J'ai fait le quiz "${idea.title}" et je suis "${profile.title}" ✨ et toi ?\nFais-le dans l'app Mon calendrier de l'avent : ${PLAY_STORE_URL}`,
-                                    )
-                                }
+                                    );
+                                    void completeChallenge(
+                                        ChallengeId.ShareQuizProfile,
+                                    );
+                                }}
                             >
                                 Partager
                             </CustomButton>

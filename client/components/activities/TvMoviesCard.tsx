@@ -7,12 +7,14 @@ import {
     activityPressed,
 } from "@/components/activities/activityStyles";
 import { TvMovieImage } from "@/components/activities/TvMovieImage";
-import { Colors } from "@/constants/Colors";
-import { TvMovie } from "@/interfaces/tvMovieInterface";
 import {
     TvMovieStatus,
     TvMovieStatusBadge,
 } from "@/components/activities/TvMovieStatusBadge";
+import { Colors } from "@/constants/Colors";
+import { ChallengeId } from "@/enums/enums";
+import { TvMovie } from "@/interfaces/tvMovieInterface";
+import { completeChallenge } from "@/services/challenge.service";
 import { TvMoviesDay } from "@/hooks/useTvMoviesSchedule";
 import { useCurrentMinutes } from "@/hooks/useCurrentMinutes";
 import { formatHour, toMinutes } from "@/utils/hours";
@@ -141,7 +143,10 @@ export const TvMoviesCard: React.FC<TvMoviesCardProps> = ({ movies, day }) => {
             ) : null}
 
             <Pressable
-                onPress={() => router.push("/bingo/tv-movies" as never)}
+                onPress={() => {
+                    void completeChallenge(ChallengeId.TvMoviesSchedule);
+                    router.push("/bingo/tv-movies" as never);
+                }}
                 accessibilityRole="button"
                 style={({ pressed }) => [
                     styles.button,
