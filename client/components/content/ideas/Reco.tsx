@@ -18,11 +18,13 @@ export const Reco: React.FC<RecoProps> = ({ idea }) => {
         <View>
             <ThemedText type="contentSubtitle">{idea.title}</ThemedText>
 
-            <CustomMarkdown style={{ color: Colors.green }}>
-                {idea.content1}
-            </CustomMarkdown>
+            {idea.content2 && (
+                <CustomMarkdown style={{ color: Colors.green }}>
+                    {idea.content2}
+                </CustomMarkdown>
+            )}
 
-            <CustomMarkdown>{idea.content2}</CustomMarkdown>
+            <CustomMarkdown>{idea.content1}</CustomMarkdown>
 
             {/* IMAGE OR AUDIO OR BUTTON */}
             {idea.media &&

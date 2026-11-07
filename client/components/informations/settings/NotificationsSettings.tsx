@@ -68,7 +68,7 @@ export const NotificationsSettings = () => {
             </ThemedText>
             <ThemedText type="sectionText">
                 {notificationsEnabled
-                    ? "Vous recevrez un petit rappel chaque matin pour ne pas oublier d'ouvrir la case du jour."
+                    ? "Vous recevrez un rappel chaque matin pour ne pas oublier d'ouvrir la case du jour."
                     : "Activez les notifications pour recevoir un rappel chaque matin vous invitant à ouvrir la case du jour."}
             </ThemedText>
 

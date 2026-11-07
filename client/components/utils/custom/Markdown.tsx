@@ -1,5 +1,6 @@
 import React from "react";
-import { Linking, StyleSheet, Text, TextStyle, View } from "react-native";
+import { StyleSheet, Text, TextStyle, View } from "react-native";
+import { openExternalUrl } from "@/utils/openExternalUrl";
 import { Colors, Theme } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 
@@ -145,7 +146,7 @@ function renderInline(text: string) {
                     <Text
                         key={key}
                         style={styles.link}
-                        onPress={() => Linking.openURL(segment.href)}
+                        onPress={() => openExternalUrl(segment.href)}
                     >
                         {segment.content}
                     </Text>

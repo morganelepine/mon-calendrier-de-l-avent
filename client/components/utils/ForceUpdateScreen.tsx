@@ -1,7 +1,8 @@
-import { StyleSheet, Linking, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BackgroundImage } from "@/components/utils/BackgroundImage";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { ThemedText } from "@/components/ThemedText";
+import { openExternalUrl } from "@/utils/openExternalUrl";
 import { Colors } from "@/constants/Colors";
 import { PLAY_STORE_URL } from "@/constants/Links";
 
@@ -19,7 +20,7 @@ export default function ForceUpdateScreen({
                 </ThemedText>
 
                 <CustomButton
-                    onPress={() => Linking.openURL(PLAY_STORE_URL)}
+                    onPress={() => openExternalUrl(PLAY_STORE_URL)}
                     color={Colors.snow}
                     textColor={Colors.blue}
                 >

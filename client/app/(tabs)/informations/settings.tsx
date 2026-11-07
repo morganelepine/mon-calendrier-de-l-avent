@@ -1,10 +1,9 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import Constants from "expo-constants";
 import { ThemedText } from "@/components/ThemedText";
 import { NotificationsSettings } from "@/components/informations/settings/NotificationsSettings";
-import { LegalLinksSettings } from "@/components/informations/settings/LegalLinksSettings";
+import { LegalLinks } from "@/components/informations/LegalLinks";
 import { MusicSettings } from "@/components/informations/settings/MusicSettings";
 import { Separator } from "@/components/utils/Separator";
 import { Colors } from "@/constants/Colors";
@@ -14,37 +13,38 @@ export default function SettingsScreen() {
     const appVersion = Constants.expoConfig?.version ?? "0.0.0";
 
     return (
-        <CustomScrollView>
-            <SafeAreaView edges={NO_TOP_EDGES} style={styles.container}>
+        <SafeAreaView edges={NO_TOP_EDGES} style={styles.container}>
+            <View>
                 {Platform.OS !== "web" && (
                     <>
                         <NotificationsSettings />
                         <Separator />
                     </>
                 )}
-
                 <MusicSettings />
-
                 <Separator />
+            </View>
 
-                <LegalLinksSettings />
-
-                <Separator />
-
+            <View>
+                <LegalLinks />
                 <ThemedText style={styles.version}>
                     Version {appVersion}
                 </ThemedText>
-            </SafeAreaView>
-        </CustomScrollView>
+            </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { backgroundColor: Colors.snow, flex: 1, paddingTop: 20 },
+    container: {
+        backgroundColor: Colors.snow,
+        flex: 1,
+        paddingTop: 20,
+        justifyContent: "space-between",
+    },
     version: {
         textAlign: "center",
-        color: "#999",
-        fontSize: 13,
-        marginTop: 16,
+        fontSize: 11,
+        color: Colors.light.icon,
     },
 });

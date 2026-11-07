@@ -123,10 +123,14 @@ function DayRevealOverlay({
     const appear = useSharedValue(reduceMotion ? 0 : 1);
     const fade = useSharedValue(0);
 
+    const [isPageInteractive, setIsPageInteractive] = useState(false);
     const hasStarted = useRef(false);
+    const isLeaving = useRef(false);
     const imageTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const leave = (): void => {
+        if (isLeaving.current) return;
+        isLeaving.current = true;
         pageReadyListener = null;
         fade.value = withTiming(1, { duration: FADE_DURATION }, (finished) => {
             if (finished) scheduleOnRN(onDone);
@@ -142,6 +146,9 @@ function DayRevealOverlay({
               });
 
         onCovered();
+        // The page looks finished from now on, so its copy has to respond:
+        // its buttons open the same content screens as the real ones.
+        setIsPageInteractive(true);
 
         Promise.race([
             Promise.all([pageReady, wait(SWAP_DELAY)]),
@@ -308,7 +315,8 @@ function DayRevealOverlay({
             )}
 
             <Animated.View
-                pointerEvents="none"
+                pointerEvents={isPageInteractive ? "auto" : "none"}
+                onTouchEnd={leave}
                 needsOffscreenAlphaCompositing
                 style={[
                     styles.page,

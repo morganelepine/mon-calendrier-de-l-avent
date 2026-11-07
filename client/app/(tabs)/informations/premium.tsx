@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Linking, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Purchases, { PurchasesError } from "react-native-purchases";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { CustomButton } from "@/components/utils/buttons/Button";
+import { LegalLinks } from "@/components/informations/LegalLinks";
 import { CountdownVariantSettings } from "@/components/informations/settings/CountdownVariantSettings";
 import { Game2048PremiumSettings } from "@/components/informations/settings/Game2048PremiumSettings";
 import { MusicSelection } from "@/components/informations/settings/MusicSelection";
@@ -15,7 +16,6 @@ import { Separator } from "@/components/utils/Separator";
 import { usePremium } from "@/contexts/PremiumContext";
 import { logClient } from "@/services/sentry.service";
 import { Colors, Theme } from "@/constants/Colors";
-import { TERMS_URL, PRIVACY_URL } from "@/constants/Links";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
 
 export default function PremiumScreen() {
@@ -154,7 +154,7 @@ export default function PremiumScreen() {
                             )}
 
                             <ThemedText
-                                style={[styles.link, styles.restoreLink]}
+                                style={styles.restoreLink}
                                 accessibilityRole="button"
                                 accessibilityState={{ busy: restoring }}
                                 onPress={restoring ? undefined : handleRestore}
@@ -164,29 +164,7 @@ export default function PremiumScreen() {
                                     : "Restaurer mon achat"}
                             </ThemedText>
 
-                            <View style={styles.links}>
-                                <ThemedText
-                                    style={styles.link}
-                                    accessibilityRole="link"
-                                    onPress={() => Linking.openURL(TERMS_URL)}
-                                >
-                                    Conditions d'utilisation
-                                </ThemedText>
-                                <Text
-                                    style={{ color: Colors.disabledText }}
-                                    accessibilityElementsHidden
-                                    importantForAccessibility="no"
-                                >
-                                    ·
-                                </Text>
-                                <ThemedText
-                                    style={styles.link}
-                                    accessibilityRole="link"
-                                    onPress={() => Linking.openURL(PRIVACY_URL)}
-                                >
-                                    Politique de confidentialité
-                                </ThemedText>
-                            </View>
+                            <LegalLinks />
                         </>
                     )}
                 </View>
@@ -207,19 +185,9 @@ const styles = StyleSheet.create({
         gap: 12,
         marginTop: 20,
     },
-    links: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 8,
-    },
-    link: {
+    restoreLink: {
         textAlign: "center",
         textDecorationLine: "underline",
-        fontSize: 11,
-        color: Colors.disabledText,
-    },
-    restoreLink: {
         fontSize: 13,
         color: Colors.autumnGreen,
     },

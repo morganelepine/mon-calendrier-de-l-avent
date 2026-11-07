@@ -1,8 +1,9 @@
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Theme } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
+import { openExternalUrl } from "@/utils/openExternalUrl";
 import { useAnnouncement } from "@/hooks/useAnnouncement";
 
 export const AnnouncementModal = () => {
@@ -19,7 +20,7 @@ export const AnnouncementModal = () => {
             <CustomButton
                 color={Theme.orangeToGreen}
                 onPress={() => {
-                    Linking.openURL(announcement.url);
+                    openExternalUrl(announcement.url);
                     dismiss();
                 }}
             >

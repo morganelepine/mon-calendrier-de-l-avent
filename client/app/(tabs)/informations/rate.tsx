@@ -1,10 +1,10 @@
-import { Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomScrollView } from "@/components/utils/custom/ScrollView";
 import { CustomButton } from "@/components/utils/buttons/Button";
 import { ExternalLinkButton } from "@/components/utils/buttons/ExternalLinkButton";
 import { Separator } from "@/components/utils/Separator";
+import { openExternalUrl } from "@/utils/openExternalUrl";
 import { Colors, Theme } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
 import { NO_TOP_EDGES } from "@/constants/safeAreaEdges";
@@ -88,7 +88,7 @@ export default function RateScreen() {
                     partager votre avis...
                 </ThemedText>
                 <CustomButton
-                    onPress={() => Linking.openURL(CONTACT_FORM_URL)}
+                    onPress={() => openExternalUrl(CONTACT_FORM_URL)}
                     color={Theme.orangeToRed}
                     style={{ marginTop: 12 }}
                 >
