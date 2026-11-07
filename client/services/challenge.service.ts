@@ -1,5 +1,6 @@
 import { showChallengeToast } from "@/components/challenges/ChallengeToast";
 import { currentDay, isDecember } from "@/constants/Dates";
+import { LAST_SCORED_DAY } from "@/constants/score";
 import { CHALLENGE_POINTS, CHALLENGES } from "@/data/challenges_data";
 import { ScoreType } from "@/enums/enums";
 import {
@@ -11,8 +12,6 @@ import {
 // A challenge counts once a year whatever the day it's completed on,
 // so its local "already scored" flag isn't stored under a real day.
 const LOCAL_STATE_DAY = 0;
-// The score history only has lines up to the calendar's last day.
-const LAST_HISTORY_DAY = 24;
 
 // Two triggers can fire at once (app launch + foreground): without this,
 // both would pass the async "already scored" check and show the toast twice.
@@ -31,7 +30,8 @@ export const getCompletedChallengeIds = async (): Promise<Set<number>> => {
 };
 
 export const completeChallenge = async (id: number): Promise<void> => {
-    if (!isDecember || claimedIds.has(id)) return;
+    if (!isDecember || currentDay > LAST_SCORED_DAY) return;
+    if (claimedIds.has(id)) return;
     claimedIds.add(id);
 
     try {
@@ -40,7 +40,7 @@ export const completeChallenge = async (id: number): Promise<void> => {
 
         await saveItemScored(LOCAL_STATE_DAY, ScoreType.Challenge, id);
         void queueScore(
-            Math.min(currentDay, LAST_HISTORY_DAY),
+            currentDay,
             CHALLENGE_POINTS,
             String(ScoreType.Challenge),
             id,

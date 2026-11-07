@@ -1,4 +1,9 @@
-export type TimeProfile = "morning" | "afternoon" | "evening" | "night";
+export type TimeProfile =
+    | "dawn"
+    | "morning"
+    | "afternoon"
+    | "evening"
+    | "night";
 
 // Percentages of players (0-100) with the same value / strictly lower.
 export interface RetrospectiveComparison {
@@ -15,6 +20,7 @@ export interface Retrospective {
     daysOpened: RetrospectiveComparison;
     longestStreak: RetrospectiveComparison;
     correctAnswers: RetrospectiveComparison;
+    challengesCompleted: RetrospectiveComparison;
     timeProfile: { value: TimeProfile; samePercent: number };
     points: { value: number; topPercent: number };
 }

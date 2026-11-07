@@ -33,6 +33,7 @@ export const DaysSlide: React.FC<DaysSlideProps> = ({
                     openedDays={openedDays}
                     cellSize={30}
                     surface="light"
+                    animated
                 />
             </View>
             <Comparison

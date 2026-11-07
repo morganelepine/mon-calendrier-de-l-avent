@@ -35,7 +35,7 @@ const CHECK_IN_JOKERS = 3;
 const CHECK_IN_REASONS = [ScoreType.CheckIn, ScoreType.CheckInJoker];
 
 // Keep in sync with client/data/challenges_data.ts
-const CHALLENGE_COUNT = 12;
+export const CHALLENGE_COUNT = 12;
 const CHALLENGE_POINTS = 15;
 // The PWA can't do the native-only challenges: its other ones are worth
 // more so that both platforms can reach the same total.
@@ -54,7 +54,7 @@ const isValidChallengeScore = (id: unknown, points: unknown): boolean => {
 };
 
 // Growing bonus: +10 on the 4th consecutive day, +20 on the 8th, +30 on the 12th...
-const getCheckInBonus = (streak: number): number =>
+export const getCheckInBonus = (streak: number): number =>
     streak % CHECK_IN_BONUS_INTERVAL === 0
         ? (streak / CHECK_IN_BONUS_INTERVAL) * CHECK_IN_BONUS_STEP
         : 0;
@@ -74,6 +74,8 @@ export class ScoreController {
 
     async saveScore(request: Request) {
         const { userUuid, dayId, points, reason, itemNumber } = request.body;
+        // October's points stay on their own rows, out of the Advent total.
+        const countsInTotal = reason !== ScoreType.OctoberOpening;
         const year = new Date().getFullYear();
 
         const user = await this.getUser(userUuid);
@@ -214,26 +216,31 @@ export class ScoreController {
                     earnedAt,
                 },
             }),
-            prisma.userYearScore.upsert({
-                where: { userId_year: { userId: user.id, year } },
-                create: {
-                    userId: user.id,
-                    year,
-                    total: points,
-                    lastEarnedAt: earnedAt,
-                },
-                update: {
-                    total: { increment: points },
-                    lastEarnedAt: earnedAt,
-                },
-            }),
+            // Must not touch lastEarnedAt, the leaderboard tie-breaker.
+            ...(countsInTotal
+                ? [
+                      prisma.userYearScore.upsert({
+                          where: { userId_year: { userId: user.id, year } },
+                          create: {
+                              userId: user.id,
+                              year,
+                              total: points,
+                              lastEarnedAt: earnedAt,
+                          },
+                          update: {
+                              total: { increment: points },
+                              lastEarnedAt: earnedAt,
+                          },
+                      }),
+                  ]
+                : []),
         ]);
 
         return {
             status: 200,
             message: "Score is saved",
             score: createdScore,
-            totalScore: totalScore + points,
+            totalScore: countsInTotal ? totalScore + points : totalScore,
         };
 
         // Errors (DB, etc.) are forwarded to the centralized handler in index.ts,

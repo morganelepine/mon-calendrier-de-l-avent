@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Snowfall } from "@/components/utils/Snow";
 import { Colors } from "@/constants/Colors";
+import { MIN_SCORE_TO_WIN } from "@/constants/score";
 
 export const Day25Lost = () => {
     return (
@@ -12,8 +13,8 @@ export const Day25Lost = () => {
                     Vous y étiez presque&nbsp;!
                 </ThemedText>
                 <ThemedText style={styles.text}>
-                    Le seuil de 2512 points n’a pas été atteint cette fois-ci,
-                    mais votre parcours était impressionnant&nbsp;!
+                    Le seuil de {MIN_SCORE_TO_WIN} points n’a pas été atteint
+                    cette fois-ci, mais votre parcours était impressionnant&nbsp;!
                 </ThemedText>
                 <ThemedText style={styles.text}>
                     Préparez-vous : la magie de Noël revient chaque année…

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { currentDay } from "@/constants/Dates";
 import { pluralize } from "@/utils/pluralize";
 
 interface StreakHeaderProps {
@@ -21,7 +22,7 @@ export const StreakHeader: React.FC<StreakHeaderProps> = ({
                     : "Construisez votre guirlande"}
             </ThemedText>
         </View>
-        {!checkedInToday && (
+        {!checkedInToday && currentDay < 25 && (
             <ThemedText style={styles.hint}>
                 Cliquez sur la boule du jour pour l'accrocher à votre guirlande
                 {"\u00A0"}!

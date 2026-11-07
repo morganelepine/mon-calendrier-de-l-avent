@@ -6,6 +6,7 @@ import { DayCellRect, showDayReveal } from "@/components/days/DayReveal";
 import { showToast, showPointsToast } from "@/components/utils/Toast";
 import { Colors } from "@/constants/Colors";
 import { currentDay, isDecember, isOctober } from "@/constants/Dates";
+import { LAST_SCORED_DAY } from "@/constants/score";
 import { getDayCatImageUrl } from "@/data/day_cats";
 import { CHALLENGE_CLOSED_DAY_TAPS } from "@/data/challenges_data";
 import { getCurrentMinutes } from "@/hooks/useCurrentMinutes";
@@ -38,8 +39,9 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
         if (dayNumber !== currentDay) return;
 
         if (isDecember) {
-            void queueScore(dayNumber, 40, String(ScoreType.DayOpening));
-            if (!wasAlreadyOpen) showPointsToast(40);
+            const points = dayNumber <= LAST_SCORED_DAY ? 40 : 0;
+            void queueScore(dayNumber, points, String(ScoreType.DayOpening));
+            if (!wasAlreadyOpen && points > 0) showPointsToast(points);
             if (
                 !wasAlreadyOpen &&
                 isBetween(getCurrentMinutes(), "00:00", "00:31")

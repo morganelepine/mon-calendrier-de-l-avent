@@ -2,13 +2,19 @@ import { Request } from "express";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma";
 import { isCronRequest } from "../lib/cronAuth";
-import { ScoreType } from "./score.controller";
+import { CHALLENGE_COUNT, ScoreType } from "./score.controller";
 
 // Below this many opened boxes, a user isn't counted as a player.
 const RETROSPECTIVE_MIN_DAYS = 6;
 const LAST_DAY = 24;
 const MAX_CORRECT_ANSWERS = LAST_DAY * 3;
-const TIME_PROFILES = ["morning", "afternoon", "evening", "night"] as const;
+const TIME_PROFILES = [
+    "dawn",
+    "morning",
+    "afternoon",
+    "evening",
+    "night",
+] as const;
 // 0, 0.01, ..., 1 - points thresholds, one per percent.
 const PERCENTILE_FRACTIONS = Array.from({ length: 101 }, (_, i) => i / 100);
 
@@ -18,6 +24,7 @@ interface RetrospectiveStatsData {
     daysOpened: number[];
     longestStreak: number[];
     correctAnswers: number[];
+    challengesCompleted: number[];
     timeProfiles: Record<string, number>;
     pointsPercentiles: number[];
 }
@@ -127,6 +134,11 @@ export class RetrospectiveController {
                 retrospective.correctAnswers,
                 total,
             ),
+            challengesCompleted: compare(
+                data.challengesCompleted,
+                retrospective.challengesCompleted,
+                total,
+            ),
             timeProfile: {
                 value: retrospective.timeProfile,
                 samePercent: toPercent(
@@ -190,9 +202,10 @@ export class RetrospectiveController {
                 FROM (
                     SELECT "userId",
                            CASE
-                               WHEN hour >= 5 AND hour < 12 THEN 'morning'
-                               WHEN hour >= 12 AND hour < 18 THEN 'afternoon'
-                               WHEN hour >= 18 AND hour < 22 THEN 'evening'
+                               WHEN hour >= 5 AND hour < 9 THEN 'dawn'
+                               WHEN hour >= 9 AND hour < 12 THEN 'morning'
+                               WHEN hour >= 12 AND hour < 17 THEN 'afternoon'
+                               WHEN hour >= 17 AND hour < 22 THEN 'evening'
                                ELSE 'night'
                            END AS slot
                     FROM (
@@ -207,18 +220,19 @@ export class RetrospectiveController {
             totals AS (
                 SELECT "userId",
                        SUM("points")::int AS points,
-                       (COUNT(*) FILTER (WHERE "reason" = ${ScoreType.GameAnswer} AND "points" > 0))::int AS "correctAnswers"
+                       (COUNT(*) FILTER (WHERE "reason" = ${ScoreType.GameAnswer} AND "points" > 0))::int AS "correctAnswers",
+                       (COUNT(DISTINCT "itemNumber") FILTER (WHERE "reason" = ${ScoreType.Challenge}))::int AS "challengesCompleted"
                 FROM "Score"
                 WHERE "year" = ${year}
                   AND "day" BETWEEN 1 AND ${LAST_DAY}
-                  AND "reason" IN (${ScoreType.DayOpening}, ${ScoreType.ContentOpening}, ${ScoreType.GameAnswer})
+                  AND "reason" IN (${ScoreType.DayOpening}, ${ScoreType.ContentOpening}, ${ScoreType.GameAnswer}, ${ScoreType.CheckIn}, ${ScoreType.Challenge})
                   AND "userId" IN (SELECT "userId" FROM players)
                 GROUP BY "userId"
             )
             INSERT INTO "UserRetrospective"
-                ("userId", "year", "daysOpened", "openedDays", "longestStreak", "correctAnswers", "points", "timeProfile")
+                ("userId", "year", "daysOpened", "openedDays", "longestStreak", "correctAnswers", "challengesCompleted", "points", "timeProfile")
             SELECT p."userId", ${year}, p."daysOpened", p."openedDays", COALESCE(s."longestStreak", 0),
-                   t."correctAnswers", t.points, pr."timeProfile"
+                   t."correctAnswers", t."challengesCompleted", t.points, pr."timeProfile"
             FROM players p
             LEFT JOIN streaks s USING ("userId")
             JOIN profiles pr USING ("userId")
@@ -228,6 +242,7 @@ export class RetrospectiveController {
                 "openedDays" = EXCLUDED."openedDays",
                 "longestStreak" = EXCLUDED."longestStreak",
                 "correctAnswers" = EXCLUDED."correctAnswers",
+                "challengesCompleted" = EXCLUDED."challengesCompleted",
                 "points" = EXCLUDED."points",
                 "timeProfile" = EXCLUDED."timeProfile",
                 "computedAt" = CURRENT_TIMESTAMP`;
@@ -246,12 +261,14 @@ export class RetrospectiveController {
             daysOpened,
             longestStreak,
             correctAnswers,
+            challengesCompleted,
             timeProfiles,
             [percentiles],
         ] = await Promise.all([
             histogram(Prisma.sql`"daysOpened"`),
             histogram(Prisma.sql`"longestStreak"`),
             histogram(Prisma.sql`"correctAnswers"`),
+            histogram(Prisma.sql`"challengesCompleted"`),
             prisma.userRetrospective.groupBy({
                 by: ["timeProfile"],
                 where: { year },
@@ -279,6 +296,10 @@ export class RetrospectiveController {
             daysOpened: toHistogram(daysOpened, LAST_DAY),
             longestStreak: toHistogram(longestStreak, LAST_DAY),
             correctAnswers: toHistogram(correctAnswers, MAX_CORRECT_ANSWERS),
+            challengesCompleted: toHistogram(
+                challengesCompleted,
+                CHALLENGE_COUNT,
+            ),
             timeProfiles: timeProfileCounts,
             pointsPercentiles: percentiles?.thresholds ?? [],
         };

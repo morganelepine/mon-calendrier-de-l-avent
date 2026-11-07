@@ -4,6 +4,7 @@ import { Day25Win } from "@/components/days/Day25/Day25Win";
 import { Day25Lost } from "@/components/days/Day25/Day25Lost";
 import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Colors } from "@/constants/Colors";
+import { MIN_SCORE_TO_WIN } from "@/constants/score";
 import { usePremium } from "@/contexts/PremiumContext";
 import { getTotalScore } from "@/services/score.service";
 
@@ -43,7 +44,7 @@ export const Day25 = () => {
                 />
             );
         }
-        if (isPremium || totalScore >= 2512) {
+        if (isPremium || totalScore >= MIN_SCORE_TO_WIN) {
             return <Day25Win totalScore={totalScore} isPremium={isPremium} />;
         }
         return <Day25Lost />;

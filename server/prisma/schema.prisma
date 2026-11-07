@@ -66,8 +66,9 @@ model UserRetrospective {
   openedDays     Int[]
   longestStreak  Int
   correctAnswers Int
+  challengesCompleted Int @default(0)
   points         Int
-  timeProfile    String   // morning | afternoon | evening | night (French time)
+  timeProfile    String   // dawn | morning | afternoon | evening | night (French time)
   computedAt     DateTime @default(now())
 
   @@id([userId, year])

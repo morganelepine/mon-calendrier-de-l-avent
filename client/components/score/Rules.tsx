@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { SeasonalSections } from "@/components/utils/SeasonalSections";
 import { CHALLENGE_POINTS, CHALLENGES } from "@/data/challenges_data";
+import { MIN_SCORE_TO_WIN } from "@/constants/score";
 
 const AutumnRules = () => (
     <View style={styles.section}>
@@ -152,7 +153,7 @@ const ChristmasRules = () => (
             <ThemedText type="sectionSubtitle">Objectif atteint</ThemedText>
             <ThemedText type="sectionText">
                 Et si le 25 décembre vous avez réussi à accumuler au moins
-                <Text style={styles.bold}> 2512 points</Text>
+                <Text style={styles.bold}> {MIN_SCORE_TO_WIN} points</Text>
                 ... surprise !
             </ThemedText>
         </View>

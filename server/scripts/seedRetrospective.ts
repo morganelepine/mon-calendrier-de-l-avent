@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { prisma } from "../src/lib/prisma";
-import { ScoreType } from "../src/controllers/score.controller";
+import {
+    getCheckInBonus,
+    ScoreType,
+} from "../src/controllers/score.controller";
 
 // Dev only: fills December (days 1-24) with scores for one user plus
 // fake players, so /retrospective/compute has something to work on.
@@ -22,6 +25,7 @@ interface Profile {
     parisHours: [number, number];
     contentsPerDay: number;
     correctRate: number;
+    challengesDone: number;
 }
 
 // Deterministic PRNG (mulberry32) so reruns produce the same data.
@@ -56,7 +60,7 @@ const buildScores = (userId: number, profile: Profile, random: () => number) =>
             })),
             ...[1, 2, 3].map((itemNumber) => ({
                 ...base,
-                points: random() < profile.correctRate ? 20 : 0,
+                points: random() < profile.correctRate ? 15 : 0,
                 reason: ScoreType.GameAnswer,
                 itemNumber,
                 earnedAt: at(5 + itemNumber),
@@ -64,9 +68,52 @@ const buildScores = (userId: number, profile: Profile, random: () => number) =>
         ];
     });
 
+const buildChallengeScores = (userId: number, count: number) =>
+    Array.from({ length: count }, (_, i) => ({
+        userId,
+        day: i + 1,
+        year,
+        points: 15,
+        reason: ScoreType.Challenge,
+        itemNumber: i + 1,
+        earnedAt: parisDate(i + 1, 12, 0),
+    }));
+
+// Every opened box also gets its bauble, so a missed box breaks the garland.
+const buildCheckInScores = (userId: number, days: number[]) => {
+    let streak = 0;
+    return days.map((day, index) => {
+        streak = day === days[index - 1] + 1 ? streak + 1 : 1;
+        return {
+            userId,
+            day,
+            year,
+            points: getCheckInBonus(streak),
+            reason: ScoreType.CheckIn,
+            earnedAt: parisDate(day, 12, 30),
+        };
+    });
+};
+
+const buildPlayerScores = (
+    userId: number,
+    profile: Profile,
+    random: () => number,
+) => [
+    ...buildScores(userId, profile, random),
+    ...buildChallengeScores(userId, profile.challengesDone),
+    ...buildCheckInScores(userId, profile.openDays),
+];
+
 const randomProfile = (random: () => number): Profile => {
     const openRate = 0.2 + random() * 0.8;
-    const slots: [number, number][] = [[6, 11], [12, 17], [18, 21], [22, 25]];
+    const slots: [number, number][] = [
+        [5, 8],
+        [9, 11],
+        [12, 16],
+        [17, 21],
+        [22, 25],
+    ];
     return {
         openDays: Array.from({ length: 24 }, (_, i) => i + 1).filter(
             () => random() < openRate,
@@ -74,6 +121,7 @@ const randomProfile = (random: () => number): Profile => {
         parisHours: slots[Math.floor(random() * slots.length)],
         contentsPerDay: Math.floor(random() * 5),
         correctRate: random(),
+        challengesDone: Math.floor(random() * 13),
     };
 };
 
@@ -87,21 +135,29 @@ async function addYearPoints(userId: number, points: number): Promise<void> {
 }
 
 async function seed(userId: number): Promise<void> {
+    // A second run would double every score.
+    const alreadySeeded = await prisma.user.count({
+        where: { uuid: { startsWith: FAKE_PREFIX } },
+    });
+    if (alreadySeeded > 0) {
+        throw new Error("Already seeded: run with --clean first.");
+    }
+
+    console.log(`Seeding user ${userId} and ${FAKE_PLAYER_COUNT} fake players...`);
     const random = createRandom(userId);
 
-    // Misses days 7 and 15: 22 boxes, longest streak 9 (16-24), mostly mornings.
-    const targetScores = buildScores(
-        userId,
-        {
-            openDays: Array.from({ length: 24 }, (_, i) => i + 1).filter(
-                (day) => day !== 7 && day !== 15,
-            ),
-            parisHours: [7, 9],
-            contentsPerDay: 4,
-            correctRate: 0.8,
-        },
-        random,
-    );
+    // Misses days 7 and 15: 22 boxes, longest streak 9 (16-24), mostly at dawn,
+    // 50 garland points.
+    const targetProfile: Profile = {
+        openDays: Array.from({ length: 24 }, (_, i) => i + 1).filter(
+            (day) => day !== 7 && day !== 15,
+        ),
+        parisHours: [7, 9],
+        contentsPerDay: 4,
+        correctRate: 0.8,
+        challengesDone: 8,
+    };
+    const targetScores = buildPlayerScores(userId, targetProfile, random);
     await prisma.score.createMany({ data: targetScores });
     await addYearPoints(
         userId,
@@ -115,13 +171,18 @@ async function seed(userId: number): Promise<void> {
             create: { uuid: name, username: name },
             update: {},
         });
-        const scores = buildScores(fake.id, randomProfile(random), random);
+        const scores = buildPlayerScores(
+            fake.id,
+            randomProfile(random),
+            random,
+        );
         if (scores.length === 0) continue;
         await prisma.score.createMany({ data: scores });
         await addYearPoints(
             fake.id,
             scores.reduce((sum, score) => sum + score.points, 0),
         );
+        if (i % 10 === 0) console.log(`${i}/${FAKE_PLAYER_COUNT} fake players`);
     }
 
     console.log(
@@ -144,6 +205,8 @@ async function clean(userId: number): Promise<void> {
                 ScoreType.DayOpening,
                 ScoreType.ContentOpening,
                 ScoreType.GameAnswer,
+                ScoreType.Challenge,
+                ScoreType.CheckIn,
             ],
         },
     };

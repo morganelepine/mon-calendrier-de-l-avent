@@ -15,6 +15,7 @@ import { DaysSlide } from "@/components/retrospective/slides/DaysSlide";
 import { StreakSlide } from "@/components/retrospective/slides/StreakSlide";
 import { ProfileSlide } from "@/components/retrospective/slides/ProfileSlide";
 import { GamesSlide } from "@/components/retrospective/slides/GamesSlide";
+import { ChallengesSlide } from "@/components/retrospective/slides/ChallengesSlide";
 import { PointsSlide } from "@/components/retrospective/slides/PointsSlide";
 import { Theme } from "@/constants/Colors";
 import { COUNTDOWN_SHARE_BACKGROUNDS } from "@/constants/shareBackgrounds";
@@ -26,12 +27,13 @@ import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 const RECAP_RESERVED_HEIGHT = 240;
 
 const BACKGROUNDS = {
-    lattice: { image: "5_px9eyq", centerY: 0.55 },
-    checks: { image: "4_fjyvf5", centerY: 0.49 },
-    gingham: { image: "1_vbmz7f", centerY: 0.54 },
-    stripes: { image: "2_dd66wr", centerY: 0.53 },
-    tartan: { image: "3_gnqoay", centerY: 0.51 },
-    knot: { image: "6_r7w69n", centerY: 0.53 },
+    intro: { image: "5_px9eyq", centerY: 0.55 },
+    days: { image: "4_fjyvf5", centerY: 0.49 },
+    streak: { image: "1_vbmz7f", centerY: 0.54 },
+    profile: { image: "2_dd66wr", centerY: 0.53 },
+    points: { image: "3_gnqoay", centerY: 0.51 },
+    games: { image: "7_ni2fex", centerY: 0.5 },
+    challenges: { image: "6_r7w69n", centerY: 0.52 },
 } satisfies Record<string, StoryBackground>;
 
 const ICONS = {
@@ -40,6 +42,7 @@ const ICONS = {
     profile: "gingerbread_vv4eqe",
     points: "bell_lxv9tw",
     games: "snowman_bjriwh",
+    challenges: "hot_chocolate_zd4xcc",
 };
 
 interface RetrospectiveStoryProps {
@@ -70,25 +73,26 @@ export const RetrospectiveStory: React.FC<RetrospectiveStoryProps> = ({
         }
     }, [visible]);
 
-    const { year, correctAnswers, longestStreak } = retrospective;
+    const { year, correctAnswers, challengesCompleted, longestStreak } =
+        retrospective;
     const shareMessage = `Voici la rétrospective de mon Avent 🎄 Quelle est la tienne ?`;
 
     const slides: StorySlide[] = [
         {
             key: "intro",
-            background: BACKGROUNDS.lattice,
+            background: BACKGROUNDS.intro,
             content: <IntroSlide year={year} />,
         },
         {
             key: "days",
-            background: BACKGROUNDS.checks,
+            background: BACKGROUNDS.days,
             content: <DaysSlide {...retrospective} icon={ICONS.days} />,
         },
         ...(longestStreak.value > 1
             ? [
                   {
                       key: "streak",
-                      background: BACKGROUNDS.gingham,
+                      background: BACKGROUNDS.streak,
                       content: (
                           <StreakSlide {...retrospective} icon={ICONS.streak} />
                       ),
@@ -97,21 +101,35 @@ export const RetrospectiveStory: React.FC<RetrospectiveStoryProps> = ({
             : []),
         {
             key: "profile",
-            background: BACKGROUNDS.stripes,
+            background: BACKGROUNDS.profile,
             content: <ProfileSlide {...retrospective} icon={ICONS.profile} />,
         },
         {
             key: "points",
-            background: BACKGROUNDS.tartan,
+            background: BACKGROUNDS.points,
             content: <PointsSlide {...retrospective} icon={ICONS.points} />,
         },
         ...(correctAnswers.value > 0
             ? [
                   {
                       key: "games",
-                      background: BACKGROUNDS.knot,
+                      background: BACKGROUNDS.games,
                       content: (
                           <GamesSlide {...retrospective} icon={ICONS.games} />
+                      ),
+                  },
+              ]
+            : []),
+        ...(challengesCompleted.value > 0
+            ? [
+                  {
+                      key: "challenges",
+                      background: BACKGROUNDS.challenges,
+                      content: (
+                          <ChallengesSlide
+                              {...retrospective}
+                              icon={ICONS.challenges}
+                          />
                       ),
                   },
               ]

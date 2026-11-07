@@ -1,94 +1,54 @@
-import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import {
+    EMPTY_CELL_COLORS,
+    GridSurface,
+    WaveGrid,
+} from "@/components/retrospective/WaveGrid";
 import { Colors } from "@/constants/Colors";
 
-const DAYS = Array.from({ length: 24 }, (_, i) => i + 1);
-const COLUMNS = 6;
-const GAP = 4;
+const DAYS_COUNT = 24;
+const WAVE_DELAY = 20;
 
 interface DaysGridProps {
     openedDays: number[];
     cellSize: number;
     // What the grid sits on, for the missed boxes' outline.
-    surface: "light" | "dark";
+    surface: GridSurface;
+    animated?: boolean;
 }
 
 export const DaysGrid: React.FC<DaysGridProps> = ({
     openedDays,
     cellSize,
     surface,
+    animated = false,
 }) => {
     const opened = new Set(openedDays);
 
     return (
-        <View
-            accessible
-            accessibilityLabel={`${opened.size} cases ouvertes sur 24`}
-            style={[
-                styles.grid,
-                { width: COLUMNS * cellSize + (COLUMNS - 1) * GAP },
-            ]}
-        >
-            {DAYS.map((day) => (
-                <View
-                    key={day}
+        <WaveGrid
+            count={DAYS_COUNT}
+            filled={opened}
+            cellSize={cellSize}
+            surface={surface}
+            filledColor={Colors.autumnGreen}
+            accessibilityLabel={`${opened.size} cases ouvertes sur ${DAYS_COUNT}`}
+            waveDelay={animated ? WAVE_DELAY : undefined}
+            renderContent={(day, isOpened) => (
+                <ThemedText
                     style={[
-                        styles.cell,
-                        { width: cellSize, height: cellSize },
-                        opened.has(day)
-                            ? styles.opened
-                            : [styles.missed, missedStyles[surface].cell],
+                        {
+                            fontFamily: "PoppinsBold",
+                            fontSize: cellSize * 0.4,
+                            color: isOpened
+                                ? Colors.snow
+                                : EMPTY_CELL_COLORS[surface].content,
+                        },
                     ]}
                 >
-                    <ThemedText
-                        style={[
-                            styles.day,
-                            { fontSize: cellSize * 0.4 },
-                            opened.has(day)
-                                ? styles.openedDay
-                                : missedStyles[surface].day,
-                        ]}
-                    >
-                        {day}
-                    </ThemedText>
-                </View>
-            ))}
-        </View>
+                    {day}
+                </ThemedText>
+            )}
+        />
     );
-};
-
-const styles = StyleSheet.create({
-    grid: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: GAP,
-    },
-    cell: {
-        borderRadius: 50,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    opened: {
-        backgroundColor: Colors.autumnGreen,
-    },
-    missed: {
-        borderWidth: 1,
-    },
-    day: {
-        fontFamily: "PoppinsBold",
-    },
-    openedDay: {
-        color: Colors.snow,
-    },
-});
-
-const missedStyles = {
-    light: StyleSheet.create({
-        cell: { borderColor: "rgba(1,15,35,0.35)" },
-        day: { color: "rgba(1,15,35,0.4)" },
-    }),
-    dark: StyleSheet.create({
-        cell: { borderColor: "rgba(247,245,246,0.35)" },
-        day: { color: "rgba(247,245,246,0.6)" },
-    }),
 };

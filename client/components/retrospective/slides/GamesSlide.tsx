@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/ThemedText";
 import { Comparison } from "@/components/retrospective/slides/Comparison";
+import { CountUpNumber } from "@/components/retrospective/slides/CountUpNumber";
 import { slideStyles } from "@/components/retrospective/slides/slideStyles";
 import {
     formatPercent,
@@ -19,13 +20,14 @@ export const GamesSlide: React.FC<GamesSlideProps> = ({
     icon,
 }) => (
     <>
-        <ThemedText style={slideStyles.bigNumber}>
-            {formatPercent(
-                Math.round((correctAnswers.value / MAX_CORRECT_ANSWERS) * 100),
+        <CountUpNumber
+            value={Math.round(
+                (correctAnswers.value / MAX_CORRECT_ANSWERS) * 100,
             )}
-        </ThemedText>
+            format={formatPercent}
+        />
         <ThemedText style={slideStyles.title}>
-            de bonnes réponses{"\n"}aux jeux
+            de bonnes{"\n"}réponses{"\n"}aux jeux
         </ThemedText>
         <Comparison text={getHigherThanText(correctAnswers)} image={icon} />
     </>
