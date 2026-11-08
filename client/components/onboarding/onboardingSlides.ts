@@ -21,7 +21,7 @@ export const NOTIFICATIONS_NOTICE_SLIDE: OnboardingSlideContent = {
     imageId: "24-_txjyhs",
     backgroundColor: Colors.red,
     title: "Ne ratez plus une case !",
-    body: `Si vous ouvrez la case du jour en retard, les lutins oublieront peut-être de vous attribuer des points...\n\n Alors activez les notifications pour recevoir un petit rappel chaque matin ${isOctober ? "d'octobre et de décembre" : "de décembre"} !`,
+    body: `Si vous ouvrez la case du jour en retard, les lutins oublieront peut-être de vous attribuer des points...\n\n Alors activez les notifications pour recevoir un petit rappel chaque jour ${isOctober ? "d'octobre et de décembre" : "de décembre"} !`,
 };
 
 export const ONBOARDING_SLIDES: OnboardingSlideContent[] = [

@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { apiFetch } from "@/services/apiFetch";
 import { Sentry } from "@/services/sentry.service";
+import type { ReminderSlot } from "@/types/types";
 
 export function configureNotificationHandler(): void {
     Notifications.setNotificationHandler({
@@ -59,5 +60,23 @@ export const clearPushToken = async (uuid: string): Promise<void> => {
         Sentry.captureException(error, {
             extra: { context: "clearPushToken" },
         });
+    }
+};
+
+// Rethrows so the settings screen can roll back its optimistic update.
+export const saveReminderSlot = async (
+    uuid: string,
+    reminderSlot: ReminderSlot,
+): Promise<void> => {
+    try {
+        await apiFetch(`/users/${uuid}/reminder-slot`, {
+            method: "POST",
+            body: { reminderSlot },
+        });
+    } catch (error) {
+        Sentry.captureException(error, {
+            extra: { context: "saveReminderSlot" },
+        });
+        throw error;
     }
 };

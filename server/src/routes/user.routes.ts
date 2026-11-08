@@ -31,4 +31,10 @@ export const UserRoutes = [
         controller: UserController,
         action: "savePushToken",
     },
+    {
+        method: "post",
+        route: "/users/:uuid/reminder-slot",
+        controller: UserController,
+        action: "saveReminderSlot",
+    },
 ];

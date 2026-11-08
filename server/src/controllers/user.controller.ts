@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { usernames } from "../data/usernames";
 import { prisma } from "../lib/prisma";
+import { isReminderSlot } from "../lib/reminderSlot";
 
 const FALLBACK_SEGMENTS = ["de_Noël", "du_Nord", "de_Minuit"];
 const MAX_FALLBACK_ATTEMPTS = 200;
@@ -159,6 +160,30 @@ export class UserController {
         return await prisma.user.update({
             where: { uuid },
             data: { pushToken: pushToken || null },
+        });
+    }
+
+    // POST /users/:uuid/reminder-slot
+    async saveReminderSlot(
+        request: Request,
+        response: Response,
+        next: NextFunction,
+    ) {
+        const uuid = request.params.uuid;
+        const { reminderSlot } = request.body;
+
+        if (!isReminderSlot(reminderSlot)) {
+            return { status: 400, message: "Invalid reminder slot" };
+        }
+
+        const user = await prisma.user.findUnique({ where: { uuid } });
+        if (!user) {
+            return { status: 404, message: "Unregistered user" };
+        }
+
+        return await prisma.user.update({
+            where: { uuid },
+            data: { reminderSlot },
         });
     }
 

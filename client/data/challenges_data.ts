@@ -3,7 +3,7 @@ import { Challenge } from "@/interfaces/challengeInterface";
 import { getCloudinaryImageUrl } from "@/services/cloudinary.service";
 
 export const CHALLENGE_CLOSED_DAY_TAPS = 3;
-export const CHALLENGE_2048_SCORE = 10000;
+export const CHALLENGE_2048_SCORE = 5000;
 export const CHALLENGE_BINGO_CELLS = 7;
 
 const ALL_CHALLENGES: Challenge[] = [
@@ -78,7 +78,7 @@ const ALL_CHALLENGES: Challenge[] = [
         hint: "Rien ne se perd,\r\nrien ne se crée,\r\ntout se transforme.",
         author: "Lavoisier",
         title: "Le nombre magique",
-        reason: "Atteindre 10 000 points au 2048",
+        reason: "Atteindre 5 000 points au 2048",
     },
     {
         id: 10,

@@ -37,7 +37,7 @@ export const OffSeasonMessage: React.FC<OffSeasonMessageProps> = ({
 };
 
 const styles = StyleSheet.create({
-    container: { alignItems: "center" },
+    container: { alignItems: "center", paddingHorizontal: 20 },
     text: {
         marginBottom: 20,
         marginTop: 10,

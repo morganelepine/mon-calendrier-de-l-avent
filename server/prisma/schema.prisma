@@ -15,6 +15,8 @@ model User {
   // Null until the user accepts the notifications prompt;
   // cleared again if Expo reports the token as no longer registered.
   pushToken    String?
+  // "morning" or "evening": which daily cron run sends this user's reminder.
+  reminderSlot String   @default("morning")
   isPremium    Boolean  @default(false)
   premiumSince DateTime?
   scoreHistory Score[]

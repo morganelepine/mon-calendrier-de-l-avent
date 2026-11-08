@@ -1,11 +1,14 @@
 export type MusicPreference = "yes" | "no" | null;
 
+export type ReminderSlot = "morning" | "evening";
+
 export type User = {
     id: number;
     uuid: string;
     username: string;
     score: number;
     pushToken?: string | null;
+    reminderSlot?: ReminderSlot;
     isPremium?: boolean;
     premiumSince?: string | null;
 };

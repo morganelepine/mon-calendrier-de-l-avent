@@ -2,8 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import { prisma } from "../lib/prisma";
 import { sendExpoPushNotifications } from "../services/expoPush.service";
 import { isCronRequest } from "../lib/cronAuth";
+import { isReminderSlot, ReminderSlot } from "../lib/reminderSlot";
 
 type Season = "halloween" | "christmas";
+
+// Read from the clock rather than a cron path query so a delayed run still
+// lands on the right slot: the crons fire at 8:00 and 18:00 UTC.
+function getCurrentSlot(): ReminderSlot {
+    return new Date().getUTCHours() < 12 ? "morning" : "evening";
+}
 
 function getParisNow(): Date {
     return new Date(
@@ -46,8 +53,9 @@ function buildReminderContent(
 
 export class NotificationController {
     // GET /notifications/send-daily-reminder
-    // Triggered by the Vercel Cron job every morning in October
-    // and in December (see server/vercel.json - two schedules, same endpoint).
+    // Triggered by the Vercel Cron jobs every morning and evening in October
+    // and in December (see server/vercel.json - four schedules, same endpoint).
+    // Each run only notifies the users who picked that slot.
     async sendDailyReminder(
         request: Request,
         response: Response,
@@ -72,8 +80,13 @@ export class NotificationController {
             return { status: 200, message: "Outside calendar window, skipped" };
         }
 
+        // ?slot=morning|evening picks the slot for manual testing.
+        const slot = isReminderSlot(request.query.slot)
+            ? request.query.slot
+            : getCurrentSlot();
+
         const users = await prisma.user.findMany({
-            where: { pushToken: { not: null } },
+            where: { pushToken: { not: null }, reminderSlot: slot },
             select: { id: true, pushToken: true },
         });
 

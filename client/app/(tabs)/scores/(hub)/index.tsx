@@ -42,7 +42,7 @@ export default function ScoreScreen() {
                     refreshScores={refreshScores}
                 />
 
-                {!isDecember && (
+                {!isDecember && !error && !loading && (
                     <OffSeasonMessage previousYearScore={previousYearScore} />
                 )}
 
