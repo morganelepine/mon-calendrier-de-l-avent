@@ -91,6 +91,16 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [previewId]);
 
+    // The native player is released on unmount: a download still in flight
+    // must not call replace/play on it afterwards.
+    useEffect(() => {
+        return () => {
+            // Intentionally the latest value: it's a counter, not a DOM node.
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            playRequest.current++;
+        };
+    }, []);
+
     useEffect(() => {
         if (status.didJustFinish) onFinished?.();
     }, [status.didJustFinish, onFinished]);
