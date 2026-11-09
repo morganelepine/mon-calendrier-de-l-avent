@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { getGame2048IconUrl } from "@/constants/game2048Icons";
 
-const PREVIEW_TIERS = [1, 2, 3, 4];
+const PREVIEW_TIERS = [1, 2, 3, 4, 5, 6];
 
 // Same URLs as the game's tiles, so they come from the cache once played.
 export const Game2048Preview: React.FC = () => (
@@ -25,7 +25,7 @@ const GAP = 6;
 
 const styles = StyleSheet.create({
     grid: {
-        width: TILE_SIZE * 2 + GAP,
+        width: TILE_SIZE * 3 + GAP * 2,
         flexDirection: "row",
         flexWrap: "wrap",
         gap: GAP,

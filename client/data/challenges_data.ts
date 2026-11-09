@@ -78,7 +78,7 @@ const ALL_CHALLENGES: Challenge[] = [
         hint: "Rien ne se perd,\r\nrien ne se crée,\r\ntout se transforme.",
         author: "Lavoisier",
         title: "Le nombre magique",
-        reason: "Atteindre 5 000 points au 2048",
+        reason: "Atteindre 5 000 points à Mixmas",
     },
     {
         id: 10,

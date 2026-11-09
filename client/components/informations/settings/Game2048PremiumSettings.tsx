@@ -13,7 +13,7 @@ const BONUS_TIERS = Array.from(
 export const Game2048PremiumSettings = ({ color }: { color: string }) => {
     return (
         <PremiumFeatureCard
-            title="Un 2048 plus complet"
+            title="Un Mixmas plus complet"
             color={color}
             description={
                 <>

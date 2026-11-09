@@ -20,13 +20,14 @@ export const Game2048RulesModal: React.FC<Props> = ({
 
     return (
         <ModalWithCloseButton visible={modalVisible} onRequestClose={onClose}>
-            <ThemedText type="modalTitle">
-                {isOctober ? "Le 2048 d'automne" : "Le 2048 de Noël"}
-            </ThemedText>
+            <ThemedText type="modalTitle">Mixmas</ThemedText>
             <ThemedText type="sectionText">
                 Faites glisser les cases vers le haut, le bas, la gauche ou la
-                droite. Quand deux cases affichant le même symbole se touchent,
-                elles fusionnent en la suivante.
+                droite.
+            </ThemedText>
+            <ThemedText type="sectionText">
+                Quand deux cases affichant le même symbole se touchent, elles
+                fusionnent en la suivante.
             </ThemedText>
             <ThemedText type="sectionText">
                 Le but ? Enchaîner les fusions jusqu'à faire apparaître {goal}

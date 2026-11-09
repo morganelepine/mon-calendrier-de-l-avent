@@ -8,19 +8,16 @@ import {
     activityPressed,
 } from "@/components/activities/activityStyles";
 import { Colors, Theme } from "@/constants/Colors";
-import { isOctober } from "@/constants/Dates";
 
 export const Game2048Card: React.FC<{ onRulesPress: () => void }> = ({
     onRulesPress,
 }) => {
-    const title = `Le 2048 ${isOctober ? "d'automne" : "de Noël"}`;
-
     return (
         <View>
             <Pressable
                 onPress={() => router.push("/bingo/game2048" as never)}
                 accessibilityRole="button"
-                accessibilityLabel={`${title} : jouer`}
+                accessibilityLabel="Mixmas : jouer"
                 style={({ pressed }) => [
                     styles.card,
                     pressed && activityPressed,
@@ -28,7 +25,7 @@ export const Game2048Card: React.FC<{ onRulesPress: () => void }> = ({
             >
                 <Game2048Preview />
                 <View style={styles.texts}>
-                    <ThemedText style={styles.title}>{title}</ThemedText>
+                    <ThemedText style={styles.title}>Mixmas</ThemedText>
                     <View style={styles.action}>
                         <ThemedText style={styles.actionLabel}>
                             Jouer
@@ -47,7 +44,7 @@ export const Game2048Card: React.FC<{ onRulesPress: () => void }> = ({
             <Pressable
                 onPress={onRulesPress}
                 accessibilityRole="button"
-                accessibilityLabel={`${title} : règles du jeu`}
+                accessibilityLabel="Mixmas : règles du jeu"
                 hitSlop={8}
                 style={styles.rulesButton}
             >

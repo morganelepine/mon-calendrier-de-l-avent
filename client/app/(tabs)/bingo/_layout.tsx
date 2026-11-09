@@ -92,7 +92,7 @@ export default function BingoLayout() {
                     header: () => {
                         return (
                             <ScreenHeader
-                                title="Classement au 2048"
+                                title="Classement à Mixmas"
                                 backgroundColor={Colors.snow}
                                 color={Colors.blue}
                             />
