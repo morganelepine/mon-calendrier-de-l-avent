@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
-import { Stack } from "expo-router";
+import { Stack, useNavigationContainerRef } from "expo-router";
 import { UserProvider } from "@/contexts/UserContext";
 import { ScoreProvider } from "@/contexts/ScoreContext";
 import { CountdownVariantProvider } from "@/contexts/CountdownVariantContext";
@@ -25,7 +25,11 @@ import { ToastHost } from "@/components/utils/Toast";
 import { DayRevealHost } from "@/components/days/DayReveal";
 import { VersionGate } from "@/components/navigation/VersionGate";
 import { ErrorBoundary } from "@/components/utils/ErrorBoundary";
-import { initSentry, Sentry } from "@/services/sentry.service";
+import {
+    initSentry,
+    navigationIntegration,
+    Sentry,
+} from "@/services/sentry.service";
 
 initSentry();
 
@@ -39,6 +43,11 @@ function RootLayout() {
         FreightNeo: require("../assets/fonts/FreightNeo/Fonts/FreightNeo W03 Semi.ttf"),
         FreightNeoBold: require("../assets/fonts/FreightNeo/Fonts/FreightNeo W03 Bold.ttf"),
     });
+    const navigationRef = useNavigationContainerRef();
+
+    useEffect(() => {
+        navigationIntegration.registerNavigationContainer(navigationRef);
+    }, [navigationRef]);
 
     useEffect(() => {
         [

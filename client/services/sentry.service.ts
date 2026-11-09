@@ -5,11 +5,14 @@ import { StorageKeys } from "@/constants/storageKeys";
 
 const dsn = process.env.EXPO_PUBLIC_SENTRY_DSN;
 
+export const navigationIntegration = Sentry.reactNavigationIntegration();
+
 export const initSentry = (): void => {
     Sentry.init({
         dsn,
         enabled: !!dsn,
         environment: __DEV__ ? "development" : "production",
+        integrations: [navigationIntegration],
 
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
         // We recommend adjusting this value in production, or using tracesSampler for finer control
@@ -19,7 +22,10 @@ export const initSentry = (): void => {
 
 export { Sentry };
 
-export const logClient = async (message: string, data?: any): Promise<void> => {
+export const logClient = async (
+    message: string,
+    data?: unknown,
+): Promise<void> => {
     try {
         const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
 
@@ -30,7 +36,7 @@ export const logClient = async (message: string, data?: any): Promise<void> => {
                 appVersion: Constants.expoConfig?.version ?? null,
             },
         });
-    } catch (_) {
-        // volontairement silencieux
+    } catch {
+        // Intentionally silent: logging must never break the caller.
     }
 };
