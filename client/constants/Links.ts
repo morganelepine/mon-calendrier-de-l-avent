@@ -13,3 +13,5 @@ export const SATISFACTION_SURVEY_URL = "https://forms.gle/5k8akYeNQ3s8zsCH7";
 
 export const CHRISTMAS_SATISFACTION_SURVEY_URL =
     "https://forms.gle/dG843xMi2bktQ7hn6";
+
+export const INSTAGRAM_URL = "https://www.instagram.com/moncalendrierdelavent/";

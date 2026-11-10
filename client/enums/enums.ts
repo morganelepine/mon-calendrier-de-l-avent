@@ -52,7 +52,7 @@ export enum ChallengeId {
     ShareQuizProfile = 7,
     NightOpening = 8,
     Game2048Score = 9,
-    MidnightDayOpening = 10,
+    FollowInstagram = 10,
     BingoCells = 11,
     Premium = 12,
 }

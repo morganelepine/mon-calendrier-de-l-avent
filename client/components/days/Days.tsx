@@ -9,12 +9,10 @@ import { currentDay, isDecember, isOctober } from "@/constants/Dates";
 import { LAST_SCORED_DAY } from "@/constants/score";
 import { getDayCatImageUrl } from "@/data/day_cats";
 import { CHALLENGE_CLOSED_DAY_TAPS } from "@/data/challenges_data";
-import { getCurrentMinutes } from "@/hooks/useCurrentMinutes";
 import { completeChallenge } from "@/services/challenge.service";
 import { queueScore } from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ChallengeId, ScoreType } from "@/enums/enums";
-import { isBetween } from "@/utils/hours";
 
 interface DaysProps {
     days: Day[];
@@ -42,12 +40,6 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
             const points = dayNumber <= LAST_SCORED_DAY ? 40 : 0;
             void queueScore(dayNumber, points, String(ScoreType.DayOpening));
             if (!wasAlreadyOpen && points > 0) showPointsToast(points);
-            if (
-                !wasAlreadyOpen &&
-                isBetween(getCurrentMinutes(), "00:00", "00:31")
-            ) {
-                void completeChallenge(ChallengeId.MidnightDayOpening);
-            }
         } else if (isOctober) {
             void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
             // showPointsToast(10);

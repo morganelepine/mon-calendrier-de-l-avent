@@ -6,11 +6,13 @@ import { ThemedText } from "@/components/ThemedText";
 import { OptionItem } from "@/components/informations/OptionItem";
 import { Colors } from "@/constants/Colors";
 import { isOctober } from "@/constants/Dates";
+import { INSTAGRAM_URL } from "@/constants/Links";
 import { TEST_TOOLS_ENABLED } from "@/constants/testTools";
 import { useUser } from "@/contexts/UserContext";
 import { PURCHASES_SUPPORTED } from "@/contexts/PremiumContext";
 import { ChallengeId } from "@/enums/enums";
 import { completeChallenge } from "@/services/challenge.service";
+import { openExternalUrl } from "@/utils/openExternalUrl";
 
 export default function InformationsScreen() {
     const { username } = useUser();
@@ -25,7 +27,9 @@ export default function InformationsScreen() {
                     <OptionItem
                         title="Contenu de l'application"
                         iconName="gift-outline"
-                        iconColor={isOctober ? Colors.autumnRed : Colors.blue}
+                        iconColor={
+                            isOctober ? Colors.autumnRed : Colors.lightRed
+                        }
                         onPress={() => router.push("/informations/content")}
                     />
 
@@ -34,9 +38,7 @@ export default function InformationsScreen() {
                             title="La Hotte Magique"
                             iconName="sparkles-outline"
                             iconColor={
-                                isOctober
-                                    ? Colors.autumnGold
-                                    : Colors.autumnGreen
+                                isOctober ? Colors.autumnGold : Colors.lightBlue
                             }
                             onPress={() => router.push("/informations/premium")}
                         />
@@ -54,7 +56,7 @@ export default function InformationsScreen() {
                     <OptionItem
                         title={"Fonctionnement des bingos"}
                         iconName="eye-outline"
-                        iconColor={isOctober ? Colors.gold : Colors.lightBlue}
+                        iconColor={isOctober ? Colors.gold : Colors.autumnGreen}
                         onPress={() => router.push("/informations/bingo")}
                     />
 
@@ -62,7 +64,7 @@ export default function InformationsScreen() {
                         <OptionItem
                             title="Remerciements"
                             iconName="heart-outline"
-                            iconColor={Colors.red}
+                            iconColor={Colors.lightRed}
                             onPress={() => {
                                 void completeChallenge(ChallengeId.Thanks);
                                 router.push("/informations/copyrights");
@@ -74,16 +76,26 @@ export default function InformationsScreen() {
                         title="Noter l'application"
                         iconName="star-outline"
                         iconColor={
-                            isOctober ? Colors.autumnOrange : Colors.gold
+                            isOctober ? Colors.autumnOrange : Colors.lightBlue
                         }
                         onPress={() => router.push("/informations/rate")}
+                    />
+
+                    <OptionItem
+                        title="Me rejoindre sur Instagram"
+                        iconName="logo-instagram"
+                        iconColor={isOctober ? Colors.autumnRed : Colors.green}
+                        onPress={() => {
+                            void completeChallenge(ChallengeId.FollowInstagram);
+                            openExternalUrl(INSTAGRAM_URL);
+                        }}
                     />
 
                     <OptionItem
                         title="Paramètres"
                         iconName="settings-outline"
                         iconColor={
-                            isOctober ? Colors.autumnGreen : Colors.darkBlue
+                            isOctober ? Colors.autumnGreen : Colors.autumnGreen
                         }
                         onPress={() => router.push("/informations/settings")}
                     />

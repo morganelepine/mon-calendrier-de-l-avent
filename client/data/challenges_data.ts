@@ -83,10 +83,10 @@ const ALL_CHALLENGES: Challenge[] = [
     {
         id: 10,
         image: "10_zoh56d",
-        hint: "Je m'étais toujours juré de ne pas m'endormir la veille de Noël.\r\nJe voulais entendre caracoler le renne sur le toit et me trouver en bas devant la cheminée pour serrer la main du Père Noël.",
-        author: "Truman Capote",
+        hint: "Les vases ont des fleurs de givre,\nsous la charmille aux blancs réseaux ; et sur la neige on voit se suivre les pas étoilés des oiseaux.",
+        author: "Théophile Gautier",
         title: "Le passage enchanté",
-        reason: "Ouvrir une case dans les 30 premières minutes après minuit",
+        reason: "Suivre Mon calendrier de l'avent sur Instagram",
     },
     {
         id: 11,
