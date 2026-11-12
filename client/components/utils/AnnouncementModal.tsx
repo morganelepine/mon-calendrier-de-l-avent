@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { Theme } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/utils/buttons/Button";
-import { ModalWithCloseButton } from "@/components/utils/custom/ModalWithCloseButton";
+import { CenteredModal } from "@/components/utils/custom/CenteredModal";
 import { openExternalUrl } from "@/utils/openExternalUrl";
 import { useAnnouncement } from "@/hooks/useAnnouncement";
 
@@ -12,13 +12,20 @@ export const AnnouncementModal = () => {
     if (!announcement) return null;
 
     return (
-        <ModalWithCloseButton visible onRequestClose={dismiss}>
+        <CenteredModal
+            visible={true}
+            onRequestClose={dismiss}
+            overlayOpacity={0.7}
+            contentStyle={styles.modalView}
+            dismissOnBackdropPress={true}
+        >
             <ThemedText style={styles.title}>{announcement.title}</ThemedText>
             <ThemedText type="sectionText" style={styles.message}>
                 {announcement.message}
             </ThemedText>
             <CustomButton
-                color={Theme.orangeToGreen}
+                color={Colors.gold}
+                textColor={Colors.blue}
                 onPress={() => {
                     openExternalUrl(announcement.url);
                     dismiss();
@@ -26,20 +33,30 @@ export const AnnouncementModal = () => {
             >
                 {announcement.buttonLabel}
             </CustomButton>
-        </ModalWithCloseButton>
+        </CenteredModal>
     );
 };
 
 const styles = StyleSheet.create({
+    modalView: {
+        maxHeight: "75%",
+        minWidth: "90%",
+        margin: 30,
+        padding: 20,
+        gap: 16,
+        backgroundColor: Colors.blue,
+        borderWidth: 1,
+        borderColor: Colors.snow,
+    },
     title: {
         fontFamily: "FreightNeoBold",
         textAlign: "center",
-        marginTop: 20,
         fontSize: 22,
-        color: Theme.orangeToGreen,
+        color: Colors.snow,
+        paddingTop: 0,
     },
     message: {
         textAlign: "center",
-        paddingHorizontal: 20,
+        color: Colors.snow,
     },
 });

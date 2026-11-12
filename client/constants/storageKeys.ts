@@ -48,7 +48,7 @@ export const StorageKeys = {
     lastResetYear: "lastResetYear",
 } as const;
 
-// One key per home announcement (see constants/Announcements.ts).
+// One key per home announcement (Announcement table, served by /version).
 export const announcementSeenKey = (id: string): string =>
     `announcement_seen_${id}`;
 

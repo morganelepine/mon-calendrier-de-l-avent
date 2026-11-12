@@ -96,6 +96,21 @@ model AppVersionRequirement {
   updatedAt           DateTime @updatedAt
 }
 
+// Home screen pop-ins, returned by GET /version.
+model Announcement {
+  // Stable: used client-side as the "seen" storage key.
+  id          String   @id
+  title       String
+  message     String
+  buttonLabel String
+  url         String
+  // Inclusive.
+  startDate   DateTime
+  // Exclusive.
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+}
+
 model Group {
   id        Int           @id @default(autoincrement())
   name      String

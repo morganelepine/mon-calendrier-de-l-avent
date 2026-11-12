@@ -135,7 +135,7 @@ npm run prisma:generate
 npm run prisma:migrate
 ```
 
-Le client a besoin d'une ligne dans `AppVersionRequirement` (`minSupportedVersion`, `latestVersion`) pour la vérification de version.
+Le client a besoin d'une ligne dans `AppVersionRequirement` (`minSupportedVersion`, `latestVersion`) pour la vérification de version. Les annonces (pop-ins de l'accueil) sont des lignes de la table `Announcement` : un `id` stable (clé « déjà vue »), `startDate` incluse, `endDate` exclue.
 
 ### 2. Lancer l'API
 
@@ -256,7 +256,7 @@ Détails du modèle de contenu : [server/README.md](./server/README.md).
 
 ### Version applicative
 
-- `GET /version` : retourne `min_supported_version` (mise à jour obligatoire), `latest_version` (mise à jour recommandée) et `min_required_version` (conservé pour les anciennes versions de l'app)
+- `GET /version` : retourne `min_supported_version` (mise à jour obligatoire), `latest_version` (mise à jour recommandée) `announcements` (pop-ins de l'accueil non terminées, table `Announcement`) et `min_required_version` (conservé pour les anciennes versions de l'app)
 
 ### Backoffice (cookie de session, CORS restreint)
 

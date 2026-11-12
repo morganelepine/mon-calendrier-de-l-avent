@@ -42,7 +42,7 @@ npm run build        # tsc --noEmit && vite build
 - `src/lib/prisma.ts` exports two Prisma clients on the same schema: `prisma` (`DATABASE_URL`, per-environment data: users, scores, groups...) and `contentPrisma` (`CONTENT_DATABASE_URL`, a database shared between dev and prod for `Content` / `ContentListItem`). Use `contentPrisma` for content queries; content models must keep zero FK relations to the other models. `postinstall` runs `prisma generate`.
 - Vercel crons call `/notifications/send-daily-reminder` (Dec 1–25 and all of October) which pushes via Expo push tokens stored on `User.pushToken`.
 - RevenueCat webhook (`/webhooks/revenuecat`) syncs `User.isPremium` / `premiumSince`.
-- `GET /version` returns `min_supported_version` (force update) and `latest_version` (recommended update) from `AppVersionRequirement`.
+- `GET /version` returns `min_supported_version` (force update) and `latest_version` (recommended update) from `AppVersionRequirement`, plus `announcements` (home pop-ins from the `Announcement` table, ended ones excluded; the client checks `startDate` with `getNow()` and stores "seen" by `id`).
 
 ## Content model (split by edit frequency)
 
