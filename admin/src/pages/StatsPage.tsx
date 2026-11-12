@@ -22,7 +22,9 @@ const SEASON_MONTH: Record<Season, number> = {
 };
 
 const DEFAULT_SEASON: Season =
-    new Date().getMonth() === SEASON_MONTH.halloween ? "halloween" : "christmas";
+    new Date().getMonth() === SEASON_MONTH.halloween
+        ? "halloween"
+        : "christmas";
 
 export function StatsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -62,6 +64,50 @@ export function StatsPage() {
             atLeast += users.get(days) ?? 0;
             return { label: `≥ ${days}`, value: atLeast };
         }).reverse();
+    }, [stats]);
+
+    const challengeBars = useMemo(() => {
+        if (!stats?.challenges) return null;
+        const { count, byChallenge, byChallengesDone, completionsByDay } =
+            stats.challenges;
+        const usersById = new Map(
+            byChallenge.map((row) => [row.id, row.users]),
+        );
+        const usersByDone = new Map(
+            byChallengesDone.map((row) => [row.challenges, row.users]),
+        );
+        const completions = new Map(
+            completionsByDay.map((row) => [row.day, row.completions]),
+        );
+        // Same cumulative "at least N" reading as the attendance chart.
+        let atLeast = 0;
+        const byDone = Array.from({ length: count }, (_, i) => {
+            const done = count - i;
+            atLeast += usersByDone.get(done) ?? 0;
+            return { label: `≥ ${done}`, value: atLeast };
+        }).reverse();
+        const participants = byChallengesDone.reduce(
+            (sum, row) => sum + row.users,
+            0,
+        );
+        const totalDone = byChallengesDone.reduce(
+            (sum, row) => sum + row.challenges * row.users,
+            0,
+        );
+        return {
+            participants,
+            average: participants ? totalDone / participants : 0,
+            byChallenge: Array.from({ length: count }, (_, i) => ({
+                label: `Défi ${i + 1}`,
+                value: usersById.get(i + 1) ?? 0,
+            })),
+            byDone,
+            // Challenges completed after the 24th are recorded on the 24th.
+            byDay: Array.from({ length: 24 }, (_, i) => ({
+                label: String(i + 1),
+                value: completions.get(i + 1) ?? 0,
+            })),
+        };
     }, [stats]);
 
     const dayBars = useMemo(() => {
@@ -151,6 +197,7 @@ export function StatsPage() {
                                 <Kpi
                                     label="Utilisateur·ice·s"
                                     value={String(stats.notifications.total)}
+                                    href="#nouveaux-membres"
                                 />
                                 <Kpi
                                     label="Actif·ve·s"
@@ -159,7 +206,29 @@ export function StatsPage() {
                                         stats.notifications.total,
                                     )}
                                     detail={`${stats.dayOpeners.active} ont ouvert au moins une case`}
+                                    href="#ouvertures-par-case"
                                 />
+                                {challengeBars && (
+                                    <>
+                                        <Kpi
+                                            label="Défis · actif·ve·s"
+                                            value={percent(
+                                                challengeBars.participants,
+                                                stats.dayOpeners.active,
+                                            )}
+                                            detail={`${challengeBars.participants} ont réussi au moins un défi`}
+                                            href="#defis"
+                                        />
+                                        <Kpi
+                                            label="Défis · moyenne"
+                                            value={challengeBars.average.toFixed(
+                                                1,
+                                            )}
+                                            detail="défis réussis par participant·e"
+                                            href="#defis"
+                                        />
+                                    </>
+                                )}
                                 <Kpi
                                     label="Groupes"
                                     value={String(stats.groups.count)}
@@ -188,6 +257,7 @@ export function StatsPage() {
                                         stats.premium.total,
                                     )}
                                     detail={`${stats.premium.premium} utilisateur·ice·s`}
+                                    href="#nouveaux-premium"
                                 />
                             </div>
                         </div>
@@ -252,7 +322,7 @@ export function StatsPage() {
                             />
                         </div>
 
-                        <div>
+                        <div id="ouvertures-par-case">
                             <h2>Ouvertures par case</h2>
                             <p className="hint">Cases ouvertes le jour même</p>
                             {dayOpeningsSummary && (
@@ -336,12 +406,38 @@ export function StatsPage() {
                             )}
                         </div>
 
-                        <div>
+                        {challengeBars && (
+                            <div id="defis">
+                                <h2>Défis</h2>
+
+                                <h3>Réussite par défi</h3>
+                                <p className="hint">En % des participant·e·s</p>
+                                <ColumnChart
+                                    bars={challengeBars.byChallenge}
+                                    percentOf={challengeBars.participants}
+                                />
+
+                                <h3>Défis réussis par personne</h3>
+                                <p className="hint">
+                                    Au moins N défis réussis,{"\n"}en % des
+                                    participant·e·s
+                                </p>
+                                <ColumnChart
+                                    bars={challengeBars.byDone}
+                                    percentOf={challengeBars.participants}
+                                />
+
+                                <h3>Défis réussis par jour</h3>
+                                <ColumnChart bars={challengeBars.byDay} />
+                            </div>
+                        )}
+
+                        <div id="nouveaux-membres">
                             <h2>Nouveaux membres</h2>
                             <MonthlyDateChart rows={stats.newUsersByDate} />
                         </div>
 
-                        <div>
+                        <div id="nouveaux-premium">
                             <h2>Nouveaux premium</h2>
                             <DateChart rows={stats.premium.byDate} />
                         </div>

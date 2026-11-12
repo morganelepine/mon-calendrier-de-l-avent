@@ -92,4 +92,11 @@ export interface Stats {
         usersInGroup: number;
         totalUsers: number;
     };
+    // null for October: challenges only exist at Christmas.
+    challenges: {
+        count: number; // challenges in the app (fewer on the PWA)
+        byChallenge: { id: number; users: number }[];
+        byChallengesDone: { challenges: number; users: number }[]; // most first
+        completionsByDay: { day: number; completions: number }[];
+    } | null;
 }

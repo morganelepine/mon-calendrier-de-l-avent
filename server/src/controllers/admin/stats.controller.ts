@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
-import { ScoreType } from "../score.controller";
+import { CHALLENGE_COUNT, ScoreType } from "../score.controller";
 import { POSSIBLE_USERNAMES_COUNT } from "../user.controller";
 import { usernames } from "../../data/usernames";
 
@@ -27,6 +27,11 @@ interface CohortRow {
 
 interface DaysOpenedRow {
     days: number;
+    users: bigint;
+}
+
+interface ChallengesDoneRow {
+    challenges: number;
     users: bigint;
 }
 
@@ -85,6 +90,9 @@ export class AdminStatsController {
             groupMemberCount,
             usersInGroup,
             assignedCuratedUsernames,
+            challengeUsers,
+            challengesDone,
+            challengesByDay,
         ] = await Promise.all([
             prisma.$queryRaw<CountRow[]>`
                 SELECT "day" AS key, COUNT(DISTINCT "userId") AS users
@@ -149,6 +157,37 @@ export class AdminStatsController {
             prisma.user.count({
                 where: { username: { in: curatedUsernames } },
             }),
+            // Challenges only exist at Christmas.
+            isChristmas
+                ? prisma.$queryRaw<CountRow[]>`
+                    SELECT "itemNumber" AS key, COUNT(DISTINCT "userId") AS users
+                    FROM "Score"
+                    WHERE "year" = ${year} AND "reason" = ${ScoreType.Challenge}
+                    GROUP BY 1
+                    ORDER BY 1`
+                : Promise.resolve([]),
+            // For each user who completed at least one challenge: how many.
+            isChristmas
+                ? prisma.$queryRaw<ChallengesDoneRow[]>`
+                    SELECT challenges::int AS challenges, COUNT(*) AS users
+                    FROM (
+                        SELECT "userId", COUNT(DISTINCT "itemNumber") AS challenges
+                        FROM "Score"
+                        WHERE "year" = ${year} AND "reason" = ${ScoreType.Challenge}
+                        GROUP BY "userId"
+                    ) per_user
+                    GROUP BY challenges
+                    ORDER BY challenges DESC`
+                : Promise.resolve([]),
+            // Completions (not distinct users) per day of December.
+            isChristmas
+                ? prisma.$queryRaw<CountRow[]>`
+                    SELECT "day" AS key, COUNT(*) AS users
+                    FROM "Score"
+                    WHERE "year" = ${year} AND "reason" = ${ScoreType.Challenge}
+                    GROUP BY "day"
+                    ORDER BY "day"`
+                : Promise.resolve([]),
         ]);
 
         const toDateSeries = (rows: DateRow[]) =>
@@ -209,6 +248,27 @@ export class AdminStatsController {
                 curatedAvailable:
                     curatedUsernames.length - assignedCuratedUsernames,
             },
+            challenges: isChristmas
+                ? {
+                      count: CHALLENGE_COUNT,
+                      byChallenge: challengeUsers.map((row: CountRow) => ({
+                          id: row.key,
+                          users: Number(row.users),
+                      })),
+                      byChallengesDone: challengesDone.map(
+                          (row: ChallengesDoneRow) => ({
+                              challenges: row.challenges,
+                              users: Number(row.users),
+                          }),
+                      ),
+                      completionsByDay: challengesByDay.map(
+                          (row: CountRow) => ({
+                              day: row.key,
+                              completions: Number(row.users),
+                          }),
+                      ),
+                  }
+                : null,
             groups: {
                 count: groupCount,
                 avgSize: groupCount ? groupMemberCount / groupCount : 0,
