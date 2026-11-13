@@ -10,6 +10,12 @@ export type UpdateStatus =
     | { kind: "required"; message: string | null }
     | { kind: "recommended"; message: string | null; latestVersion: string };
 
+// Foreground checks are throttled: the app is brought back many times a day in December,
+// while version requirements change a few times a year.
+// Module-level so every cold start still checks once.
+const FOREGROUND_CHECK_INTERVAL_MS = 60 * 60 * 1000;
+let lastCheckAt = 0;
+
 function isOlderVersion(v1: string, v2: string): boolean {
     const a = v1.split(".").map(Number);
     const b = v2.split(".").map(Number);
@@ -33,6 +39,8 @@ export function useVersionCheck(): {
     // open in the background for days in December.
     useEffect(() => {
         if (appState !== "active") return;
+        if (Date.now() - lastCheckAt < FOREGROUND_CHECK_INTERVAL_MS) return;
+        lastCheckAt = Date.now();
 
         async function check(): Promise<void> {
             try {
@@ -65,6 +73,7 @@ export function useVersionCheck(): {
 
                 setStatus({ kind: "upToDate" });
             } catch (e) {
+                lastCheckAt = 0; // offline: retry on the next foreground
                 console.log("Erreur version check:", e);
             }
         }

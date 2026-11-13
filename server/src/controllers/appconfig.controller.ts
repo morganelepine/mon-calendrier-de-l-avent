@@ -29,6 +29,16 @@ export class AppConfigController {
             };
         }
 
+        // Same answer for everyone, re-fetched on every app foreground:
+        // served by Vercel's CDN so it doesn't wake Neon.
+        // A new min/latest version or announcement takes up to ~10 min to show.
+        // Ended announcements may linger as long, but the client also filters on endDate.
+        // Set after the 404 check so a missing row is never cached.
+        response.setHeader(
+            "Cache-Control",
+            "public, s-maxage=600, stale-while-revalidate=86400",
+        );
+
         return {
             status: 200,
             min_supported_version: requirement.minSupportedVersion,
