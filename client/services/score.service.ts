@@ -164,16 +164,14 @@ export const spendCheckInJoker = async (
     return jokersLeft;
 };
 
-export const getTotalScore = async (): Promise<number> => {
-    const { totalScore } = await getScoreSummary();
-    return totalScore;
-};
+export type ScoreDetails = ScoreSummary & { days: Score[] };
 
-export const getUserScoresByDay = async (): Promise<Score[]> => {
+// Totals and per-day details in a single request.
+export const getScoreDetails = async (): Promise<ScoreDetails> => {
     const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
-    if (!userUuid) return [];
+    if (!userUuid) return { totalScore: 0, previousYearScore: 0, days: [] };
 
-    return apiFetch<Score[]>(`/scores/user/${userUuid}`);
+    return apiFetch<ScoreDetails>(`/scores/summary/${userUuid}`);
 };
 
 type LeaderboardEntry = { username: string; score: number };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Day25Win } from "@/components/days/Day25/Day25Win";
 import { Day25Lost } from "@/components/days/Day25/Day25Lost";
@@ -6,33 +6,22 @@ import { ErrorLoading } from "@/components/utils/ErrorLoading";
 import { Colors } from "@/constants/Colors";
 import { MIN_SCORE_TO_WIN } from "@/constants/score";
 import { usePremium } from "@/contexts/PremiumContext";
-import { getTotalScore } from "@/services/score.service";
+import { useScore } from "@/contexts/ScoreContext";
 
 export const Day25 = () => {
     const { isPremium } = usePremium();
-    const [totalScore, setTotalScore] = useState<number>(0);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const fetchTotalScore = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const totalScore = await getTotalScore();
-            setTotalScore(totalScore ?? 0);
-        } catch (err) {
-            console.error("Error fetching total score:", err);
-            setError(
-                "Impossible de charger votre score. Vérifiez votre connexion Internet.",
-            );
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    // Shared with the scores screen: no extra request if it's already loaded.
+    const {
+        scoreTotal: totalScore,
+        loading,
+        error,
+        refreshScores,
+        refreshScoresIfStale,
+    } = useScore();
 
     useEffect(() => {
-        fetchTotalScore();
-    }, [fetchTotalScore]);
+        void refreshScoresIfStale();
+    }, [refreshScoresIfStale]);
 
     const renderContent = () => {
         if (loading || error) {
@@ -40,7 +29,7 @@ export const Day25 = () => {
                 <ErrorLoading
                     loading={loading}
                     error={error}
-                    refreshScores={fetchTotalScore}
+                    refreshScores={refreshScores}
                 />
             );
         }

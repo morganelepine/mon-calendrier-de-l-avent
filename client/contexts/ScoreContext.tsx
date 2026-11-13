@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import {
-    getUserScoresByDay,
-    getScoreSummary,
+    getScoreDetails,
     getPreviousYearScore,
     getLastAwardAt,
     flushPendingScores,
@@ -52,13 +51,10 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
         lastFetchAtRef.current = Date.now();
         try {
             if (isDecember) {
-                const [scores, summary] = await Promise.all([
-                    getUserScoresByDay(),
-                    getScoreSummary(),
-                ]);
-                setScoreHistory(Array.isArray(scores) ? scores : []);
-                setScoreTotal(summary.totalScore ?? 0);
-                setPreviousYearScore(summary.previousYearScore ?? 0);
+                const details = await getScoreDetails();
+                setScoreHistory(Array.isArray(details.days) ? details.days : []);
+                setScoreTotal(details.totalScore ?? 0);
+                setPreviousYearScore(details.previousYearScore ?? 0);
             } else {
                 // Off season, the screen only shows last season's total.
                 setPreviousYearScore(await getPreviousYearScore());

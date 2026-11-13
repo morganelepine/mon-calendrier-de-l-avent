@@ -61,7 +61,10 @@ export const getCheckInBonus = (streak: number): number =>
 
 export class ScoreController {
     async getUser(uuid: string) {
-        return prisma.user.findUnique({ where: { uuid } });
+        return prisma.user.findUnique({
+            where: { uuid },
+            select: { id: true, isPremium: true },
+        });
     }
 
     async getUserYearScore(userId: number, year: number): Promise<number> {
@@ -376,6 +379,35 @@ export class ScoreController {
         };
     }
 
+    // GET /scores/summary/:uuid - everything the scores screen needs in one call
+    // (one user lookup instead of one per endpoint).
+    async getUserScoreSummary(request: Request) {
+        const user = await this.getUser(request.params.uuid);
+        if (!user) return { status: 404, message: "User not found" };
+
+        const currentYear = new Date().getFullYear();
+        const [scores, yearScores] = await Promise.all([
+            this.findYearScores(user.id, currentYear),
+            prisma.userYearScore.findMany({
+                where: {
+                    userId: user.id,
+                    year: { in: [currentYear, currentYear - 1] },
+                },
+                select: { year: true, total: true },
+            }),
+        ]);
+        const totalByYear = new Map(
+            yearScores.map((yearScore) => [yearScore.year, yearScore.total]),
+        );
+
+        return {
+            days: this.groupScoresByDay(scores),
+            totalScore: totalByYear.get(currentYear) ?? 0,
+            previousYearScore: totalByYear.get(currentYear - 1) ?? 0,
+        };
+    }
+
+    // Kept for app versions released before /scores/summary.
     async getUserTotalScore(request: Request) {
         const uuid = request.params.uuid;
         const user = await this.getUser(uuid);
@@ -390,17 +422,30 @@ export class ScoreController {
         return { totalScore, previousYearScore };
     }
 
+    // Kept for app versions released before /scores/summary.
     async getUserScoresByDay(request: Request) {
         const uuid = request.params.uuid;
         const user = await this.getUser(uuid);
         if (!user) return { status: 404, message: "User not found" };
 
-        const currentYear = new Date().getFullYear();
-        const scores = await prisma.score.findMany({
-            where: { userId: user.id, year: currentYear },
-            orderBy: { day: "asc" },
-        });
+        const scores = await this.findYearScores(
+            user.id,
+            new Date().getFullYear(),
+        );
+        return this.groupScoresByDay(scores);
+    }
 
+    private findYearScores(userId: number, year: number) {
+        return prisma.score.findMany({
+            where: { userId, year },
+            orderBy: { day: "asc" },
+            select: { day: true, points: true, reason: true },
+        });
+    }
+
+    private groupScoresByDay(
+        scores: { day: number; points: number; reason: string }[],
+    ): Score[] {
         const scoresByDay: Record<number, Score> = {};
 
         for (let day = 1; day <= 24; day++) {
