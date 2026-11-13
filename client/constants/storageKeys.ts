@@ -6,6 +6,8 @@ export const StorageKeys = {
     userUuid: "userUuid",
     username: "username",
     userId: "userId",
+    // Timestamp (ms) of the last successful background get-or-create.
+    lastUserRefresh: "last_user_refresh",
     hasLaunched: "hasLaunched",
     playMusic: "playMusic",
     excludedMusics: "excluded_musics",

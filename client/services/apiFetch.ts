@@ -12,6 +12,29 @@ export class ApiError extends Error {
     }
 }
 
+// Messages the server returns with a 404 when this uuid has no User row.
+const UNKNOWN_USER_MESSAGES = new Set(["User not found", "Unregistered user"]);
+
+// Set by useInitialization, which owns the account recovery: kept as a
+// callback so the API layer doesn't depend on the hook.
+let unknownUserHandler: (() => void) | null = null;
+
+export const setUnknownUserHandler = (handler: (() => void) | null): void => {
+    unknownUserHandler = handler;
+};
+
+const reportIfUnknownUser = (status: number, bodyText: string): void => {
+    if (status !== 404 || !unknownUserHandler) return;
+    try {
+        const { message } = JSON.parse(bodyText) as { message?: unknown };
+        if (typeof message === "string" && UNKNOWN_USER_MESSAGES.has(message)) {
+            unknownUserHandler();
+        }
+    } catch {
+        // Not a JSON body, so not one of our "unknown user" answers.
+    }
+};
+
 // "/users/3f2a…?x=1" -> "/users/:id": one tag value per endpoint, not per user.
 const toEndpoint = (path: string): string =>
     path
@@ -46,7 +69,9 @@ export async function apiFetch<T>(
         });
 
         if (!res.ok) {
-            throw new ApiError(res.status, await res.text().catch(() => ""));
+            const bodyText = await res.text().catch(() => "");
+            reportIfUnknownUser(res.status, bodyText);
+            throw new ApiError(res.status, bodyText);
         }
 
         if (res.status === 204) return undefined as T;
