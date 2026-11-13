@@ -2,8 +2,11 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import {
     getUserScoresByDay,
     getScoreSummary,
+    getPreviousYearScore,
+    getLastAwardAt,
     flushPendingScores,
 } from "@/services/score.service";
+import { isDecember } from "@/constants/Dates";
 import { completeChallenge } from "@/services/challenge.service";
 import { Score } from "@/interfaces/scoreInterface";
 import useAppState from "@/hooks/useAppState";
@@ -18,7 +21,10 @@ type ScoreContextType = {
     loading: boolean;
     error: string | null;
     refreshScores: () => Promise<void>;
+    refreshScoresIfStale: () => Promise<void>;
 };
+
+const MAX_SCORES_AGE_MS = 10 * 60 * 1000;
 
 const ScoreContext = createContext<ScoreContextType | undefined>(undefined);
 
@@ -35,22 +41,31 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
     // Only the very first fetch should show the full-screen loader.
     // Later ones refresh quietly in the background.
     const loadedOnceRef = React.useRef(false);
+    const lastFetchAtRef = React.useRef(0);
 
+    // Not fetched at launch: only when the scores screen asks for it.
     const refreshScores = React.useCallback(async () => {
         if (!loadedOnceRef.current) {
             setLoading(true);
         }
         setError(null);
+        lastFetchAtRef.current = Date.now();
         try {
-            const [scores, summary] = await Promise.all([
-                getUserScoresByDay(),
-                getScoreSummary(),
-            ]);
-            setScoreHistory(Array.isArray(scores) ? scores : []);
-            setScoreTotal(summary.totalScore ?? 0);
-            setPreviousYearScore(summary.previousYearScore ?? 0);
+            if (isDecember) {
+                const [scores, summary] = await Promise.all([
+                    getUserScoresByDay(),
+                    getScoreSummary(),
+                ]);
+                setScoreHistory(Array.isArray(scores) ? scores : []);
+                setScoreTotal(summary.totalScore ?? 0);
+                setPreviousYearScore(summary.previousYearScore ?? 0);
+            } else {
+                // Off season, the screen only shows last season's total.
+                setPreviousYearScore(await getPreviousYearScore());
+            }
             loadedOnceRef.current = true;
         } catch (error) {
+            lastFetchAtRef.current = 0; // retry on the next focus
             console.error("Erreur loading scores:", error);
             setError(
                 "Impossible de charger les scores... Vérifiez votre connexion Internet.",
@@ -60,13 +75,21 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
         }
     }, []);
 
-    useEffect(() => {
-        refreshScores();
+    // For the scores screen's focus: skips the network unless points were
+    // awarded since the last fetch (or it's been a while, as a safety net).
+    const refreshScoresIfStale = React.useCallback(async () => {
+        const lastFetchAt = lastFetchAtRef.current;
+        const isStale =
+            !loadedOnceRef.current ||
+            getLastAwardAt() >= lastFetchAt ||
+            Date.now() - lastFetchAt > MAX_SCORES_AGE_MS;
+        if (isStale) await refreshScores();
     }, [refreshScores]);
 
     // Retries any score that couldn't reach the server yet,
     // on app launch and every time the app comes back to the foreground.
-    // Only refreshes the displayed total when points were actually awarded.
+    // Only refreshes the displayed total when points were actually awarded,
+    // and once the scores screen has loaded them.
     const appState = useAppState();
     useEffect(() => {
         if (appState !== "active") return;
@@ -75,7 +98,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
         }
         flushPendingScores()
             .then((hasAwarded) => {
-                if (hasAwarded) void refreshScores();
+                if (hasAwarded && loadedOnceRef.current) void refreshScores();
             })
             .catch(() => {
                 // Best-effort - it'll retry again on the next foreground.
@@ -90,6 +113,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
             loading,
             error,
             refreshScores,
+            refreshScoresIfStale,
         }),
         [
             scoreTotal,
@@ -98,6 +122,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
             loading,
             error,
             refreshScores,
+            refreshScoresIfStale,
         ],
     );
 

@@ -3,6 +3,11 @@ import { GameState, Score } from "@/interfaces/scoreInterface";
 import { apiFetch } from "@/services/apiFetch";
 import { StorageKeys } from "@/constants/storageKeys";
 
+// When points were last actually awarded. A user's scores only change through
+// their own device's actions, so the scores screen can skip refetching until then.
+let lastAwardAt = 0;
+export const getLastAwardAt = (): number => lastAwardAt;
+
 // Resolves with true when the server actually awarded the points,
 // false when they had already been awarded.
 export const saveScore = async (
@@ -20,6 +25,7 @@ export const saveScore = async (
             body: { userUuid, dayId, points, reason, itemNumber },
         },
     );
+    if (!alreadyAwarded) lastAwardAt = Date.now();
     return !alreadyAwarded;
 };
 
@@ -108,6 +114,24 @@ export const getScoreSummary = async (): Promise<ScoreSummary> => {
     if (!userUuid) return { totalScore: 0, previousYearScore: 0 };
 
     return apiFetch<ScoreSummary>(`/scores/total/user/${userUuid}`);
+};
+
+// Off season, the scores screen only shows last season's total, which can no
+// longer change: fetched once, then cached for the rest of the calendar year.
+export const getPreviousYearScore = async (): Promise<number> => {
+    const year = new Date().getFullYear();
+    const cached = await AsyncStorage.getItem(StorageKeys.previousYearScore);
+    if (cached) {
+        const parsed = JSON.parse(cached) as { year: number; score: number };
+        if (parsed.year === year) return parsed.score;
+    }
+
+    const { previousYearScore } = await getScoreSummary();
+    await AsyncStorage.setItem(
+        StorageKeys.previousYearScore,
+        JSON.stringify({ year, score: previousYearScore }),
+    );
+    return previousYearScore;
 };
 
 export const checkIn = async (day: number): Promise<number> => {

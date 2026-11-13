@@ -21,16 +21,13 @@ export default function ScoreScreen() {
         loading,
         error,
         refreshScores,
+        refreshScoresIfStale,
     } = useScore();
 
     useFocusEffect(
         useCallback(() => {
-            // Do something when the screen is focused
-            refreshScores();
-            return () => {
-                // Do something when the screen is unfocused
-            };
-        }, [refreshScores]),
+            void refreshScoresIfStale();
+        }, [refreshScoresIfStale]),
     );
 
     return (
