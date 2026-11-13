@@ -66,7 +66,7 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
 
     // Retries any score that couldn't reach the server yet,
     // on app launch and every time the app comes back to the foreground.
-    // Only refreshes the displayed total when something was actually confirmed.
+    // Only refreshes the displayed total when points were actually awarded.
     const appState = useAppState();
     useEffect(() => {
         if (appState !== "active") return;
@@ -74,8 +74,8 @@ export const ScoreProvider: React.FC<{ children: React.ReactNode }> = ({
             void completeChallenge(ChallengeId.NightOpening);
         }
         flushPendingScores()
-            .then((hasConfirmed) => {
-                if (hasConfirmed) refreshScores();
+            .then((hasAwarded) => {
+                if (hasAwarded) void refreshScores();
             })
             .catch(() => {
                 // Best-effort - it'll retry again on the next foreground.

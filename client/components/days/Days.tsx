@@ -10,9 +10,16 @@ import { LAST_SCORED_DAY } from "@/constants/score";
 import { getDayCatImageUrl } from "@/data/day_cats";
 import { CHALLENGE_CLOSED_DAY_TAPS } from "@/data/challenges_data";
 import { completeChallenge } from "@/services/challenge.service";
-import { queueScore } from "@/services/score.service";
+import {
+    isItemScored,
+    queueScore,
+    saveItemScored,
+} from "@/services/score.service";
 import { Day } from "@/interfaces/dayInterface";
 import { ChallengeId, ScoreType } from "@/enums/enums";
+
+// A day has a single opening score: its local "already scored" flag uses this item number.
+const DAY_OPENING_ITEM = 0;
 
 interface DaysProps {
     days: Day[];
@@ -30,20 +37,28 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
             .filter((day) => day.dayNumber <= currentDay)
             .map(getDayCatImageUrl)
             .filter((url) => url !== null);
-        Image.prefetch(imageUrls, "memory-disk");
+        void Image.prefetch(imageUrls, "memory-disk");
     }, [days]);
 
-    const registerDayOpening = (dayNumber: number, wasAlreadyOpen: boolean) => {
-        if (dayNumber !== currentDay) return;
+    const registerDayOpening = async (
+        dayNumber: number,
+        wasAlreadyOpen: boolean,
+    ): Promise<void> => {
+        if (dayNumber !== currentDay || (!isDecember && !isOctober)) return;
 
+        let reason = String(ScoreType.OctoberOpening);
+        let points = 10;
         if (isDecember) {
-            const points = dayNumber <= LAST_SCORED_DAY ? 40 : 0;
-            void queueScore(dayNumber, points, String(ScoreType.DayOpening));
+            reason = String(ScoreType.DayOpening);
+            points = dayNumber <= LAST_SCORED_DAY ? 40 : 0;
             if (!wasAlreadyOpen && points > 0) showPointsToast(points);
-        } else if (isOctober) {
-            void queueScore(dayNumber, 10, String(ScoreType.OctoberOpening));
-            // showPointsToast(10);
         }
+
+        // Tapping today's box again must not re-send its score: the server
+        // would only answer "already awarded", after waking the database.
+        if (await isItemScored(dayNumber, reason, DAY_OPENING_ITEM)) return;
+        await saveItemScored(dayNumber, reason, DAY_OPENING_ITEM);
+        void queueScore(dayNumber, points, reason);
     };
 
     const openDay = (day: Day, cell: DayCellRect) => {
@@ -91,7 +106,7 @@ export const Days: React.FC<DaysProps> = ({ days, setDays, goToDay }) => {
 
         if ((isDecember || isOctober) && dayNumber <= currentDay) {
             openDay(clickedDay, cell);
-            registerDayOpening(dayNumber, wasAlreadyOpen);
+            registerDayOpening(dayNumber, wasAlreadyOpen).catch(() => {});
         } else {
             const emoji = isOctober ? "👻" : "🎅";
             showToast(`Un peu de patience ${emoji}`);

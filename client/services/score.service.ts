@@ -3,18 +3,24 @@ import { GameState, Score } from "@/interfaces/scoreInterface";
 import { apiFetch } from "@/services/apiFetch";
 import { StorageKeys } from "@/constants/storageKeys";
 
+// Resolves with true when the server actually awarded the points,
+// false when they had already been awarded.
 export const saveScore = async (
     dayId: number | null,
     points: number,
     reason: string,
     itemNumber?: number,
-): Promise<void> => {
+): Promise<boolean> => {
     const userUuid = await AsyncStorage.getItem(StorageKeys.userUuid);
 
-    await apiFetch("/scores", {
-        method: "POST",
-        body: { userUuid, dayId, points, reason, itemNumber },
-    });
+    const { alreadyAwarded } = await apiFetch<{ alreadyAwarded?: boolean }>(
+        "/scores",
+        {
+            method: "POST",
+            body: { userUuid, dayId, points, reason, itemNumber },
+        },
+    );
+    return !alreadyAwarded;
 };
 
 interface PendingScore {
@@ -35,32 +41,6 @@ const savePendingScores = async (queue: PendingScore[]): Promise<void> => {
         StorageKeys.pendingScores,
         JSON.stringify(queue),
     );
-    notifyPendingScoresChanged();
-};
-
-// Lets ScoreContext know the pending queue moved (an entry was added, or
-// some were confirmed and dropped) so it can keep an optimistic total in
-// sync without polling - see getPendingPointsTotal below.
-type PendingScoresListener = () => void;
-const pendingScoresListeners = new Set<PendingScoresListener>();
-
-export const subscribeToPendingScores = (
-    listener: PendingScoresListener,
-): (() => void) => {
-    pendingScoresListeners.add(listener);
-    return () => pendingScoresListeners.delete(listener);
-};
-
-const notifyPendingScoresChanged = (): void => {
-    pendingScoresListeners.forEach((listener) => listener());
-};
-
-// Sum of points not yet confirmed by the server - what to optimistically
-// add on top of the last confirmed total so it doesn't look stale while
-// offline (see ScoreContext).
-export const getPendingPointsTotal = async (): Promise<number> => {
-    const queue = await loadPendingScores();
-    return queue.reduce((sum, entry) => sum + entry.points, 0);
 };
 
 export const queueScore = async (
@@ -86,6 +66,8 @@ export const queueScore = async (
 let flushInFlight: Promise<boolean> | null = null;
 
 // Retries every not-yet-confirmed score, oldest first.
+// Resolves with true only if some points were actually awarded,
+// so callers don't refetch the scores for nothing.
 export const flushPendingScores = (): Promise<boolean> => {
     flushInFlight ??= (async (): Promise<boolean> => {
         try {
@@ -93,22 +75,22 @@ export const flushPendingScores = (): Promise<boolean> => {
             if (queue.length === 0) return false;
 
             const remaining: PendingScore[] = [];
-            let anyConfirmed = false;
+            let anyAwarded = false;
             for (const entry of queue) {
                 try {
-                    await saveScore(
+                    const awarded = await saveScore(
                         entry.dayId,
                         entry.points,
                         entry.reason,
                         entry.itemNumber,
                     );
-                    anyConfirmed = true;
+                    if (awarded) anyAwarded = true;
                 } catch {
                     remaining.push(entry); // still not confirmed - try again later
                 }
             }
             await savePendingScores(remaining);
-            return anyConfirmed;
+            return anyAwarded;
         } finally {
             flushInFlight = null;
         }
